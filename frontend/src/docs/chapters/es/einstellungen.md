@@ -306,6 +306,17 @@ Las **claves de API** de los proveedores de IA nunca se escriben en la copia, ni
 
 **Restaurar desde archivo** primero comprueba el archivo por completo: formato, la suma de comprobación de cada archivo, la base de datos y cada flujo de trabajo y ejecución guardados. Solo entonces Nodestro muestra qué contiene la copia, comparado con el estado actual. Los datos solo se sustituyen tras una confirmación expresa y solo si no hay ninguna ejecución activa. Antes, Nodestro guarda automáticamente una copia del estado actual (`before-restore-….zip` en la carpeta `backups` del directorio de datos); aparece entre las copias de este equipo y se puede restaurar igual. Si algo falla, los datos anteriores no cambian.
 
+Las claves, los tokens y las contraseñas nunca están en una copia de seguridad, tampoco los tokens de los servicios MCP ni los secretos de las conexiones de servicio. Si este equipo no los tiene, la comprobación y la página tras la restauración muestran la lista **secretos que volver a introducir**: un enlace al proveedor de IA, servicio MCP o conexión donde lo vuelves a introducir. Solo se muestra lo que falta, nunca un valor.
+
+## Exportar y eliminar datos {#daten}
+<!-- keywords: exportar, exportar todo, eliminar datos, eliminar todo, llevar, privacidad -->
+
+→ [Abrir en Nodestro](/settings#settings-data)
+
+**Exportar todo** descarga un archivo ZIP con archivos legibles: flujos de trabajo, ejecuciones, plantillas de agentes, herramientas, conocimiento, memoria, conversaciones y ajustes, sin claves, tokens ni otros secretos. La exportación sirve para guardar y llevar los datos; solo una copia de seguridad se puede restaurar.
+
+**Eliminar todos los datos** quita todo de este equipo para siempre, también los secretos; no se guarda ninguna copia de seguridad. Para confirmar, escribes exactamente `delete all data`, en inglés en todos los idiomas. La eliminación solo empieza cuando no hay ninguna ejecución ni otro trabajo activo en segundo plano, y mientras dura no empieza ninguna ejecución. Después la instalación empieza de nuevo como una nueva. Si algo no se pudo quitar (por ejemplo, un archivo en uso), se indica; eliminar de nuevo quita el resto.
+
 ## Diagnóstico del sistema {#diagnose}
 <!-- keywords: diagnóstico, comprobar, buscar errores, conexión, docker, sandbox, versión, problema -->
 

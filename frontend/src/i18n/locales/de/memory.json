@@ -17,5 +17,32 @@
   "deleteAll": "Alle Dateien löschen",
   "clearText": "Alle Dateien in „{{name}}“ werden gelöscht. Agenten beginnen danach ohne Erinnerungen.",
   "deleteFile": "Datei löschen",
-  "contentOf": "Inhalt von {{path}}"
+  "contentOf": "Inhalt von {{path}}",
+  "consents": {
+    "title": "Zustimmungen für geteilte Workflows",
+    "intro": "Workflows, die einen deiner Memory-Räume nutzen, brauchen deine Zustimmung für genau ihren aktuellen Inhalt. Ein geänderter Workflow braucht eine neue Zustimmung.",
+    "space": "Memory-Raum",
+    "chooseSpace": "Memory-Raum wählen",
+    "workflow": "Workflow",
+    "workflowHint": "Die Zustimmung gilt auch für jeden Workflow, den er startet, in seiner aktuellen Version.",
+    "chooseWorkflow": "Workflow wählen",
+    "review": "Prüfen",
+    "covers_one": "Eine Zustimmung für „{{space}}“ gilt für diesen Workflow:",
+    "covers_other": "Eine Zustimmung für „{{space}}“ gilt für diese {{count}} Workflows:",
+    "latest": "(neueste Version)",
+    "version": "(Version {{version}})",
+    "exactly": "Sie gilt für genau diesen Inhalt. Ändert sich später einer dieser Workflows oder ein Tool oder eine Verbindung, die sie nutzen, wirst du erneut gefragt.",
+    "stale": "Seit deiner Prüfung hat sich etwas geändert: ein Workflow oder ein Tool oder eine Verbindung, die er nutzt. Prüfe erneut und stimme dann zu.",
+    "reviewAgain": "Erneut prüfen",
+    "allow": "Zustimmen",
+    "granted": "Zustimmung für „{{space}}“ gegeben",
+    "revoked": "Zustimmung zurückgezogen",
+    "none": "Du hast noch keine Zustimmung gegeben.",
+    "for": "Für",
+    "at": "Gegeben",
+    "actions": "Aktionen",
+    "agentTest": "Ein Agententest",
+    "revoke": "Zustimmung zurückziehen",
+    "revokeConfirm": "Zurückziehen?"
+  }
 }

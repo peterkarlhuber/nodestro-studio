@@ -1,6 +1,6 @@
 # The lock of the platform's internal packages, studio profile: generated from platform/versions.json by
 # scripts/check_versions.py --write-lock (do not edit). Install with: pip install -r <this file> <target>
-nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@29c1515ffe4ceccd2a378a23b2e5305b09b848d2
+nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@ebd0fe5fb7f262a3df5c5ef5b67e1042df29a007
 nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@c5f466244c48db105e6588bbe709bba83509fcae
 nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@2a17fbe0fb6277d3591ef6896928e5e8fedb810e
 nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@92ce594e95a81c7373af4344bae55ecba98a0652

@@ -17,5 +17,32 @@
   "deleteAll": "Eliminar todos los archivos",
   "clearText": "Se eliminarán todos los archivos de «{{name}}». Después los agentes empiezan sin recuerdos.",
   "deleteFile": "Eliminar archivo",
-  "contentOf": "Contenido de {{path}}"
+  "contentOf": "Contenido de {{path}}",
+  "consents": {
+    "title": "Consentimientos para flujos de trabajo compartidos",
+    "intro": "Los flujos de trabajo que usan uno de tus espacios de memoria necesitan tu consentimiento para exactamente su contenido actual. Un flujo de trabajo modificado necesita un nuevo consentimiento.",
+    "space": "Espacio de memoria",
+    "chooseSpace": "Elige un espacio de memoria",
+    "workflow": "Flujo de trabajo",
+    "workflowHint": "El consentimiento también cubre cada flujo de trabajo que inicia, en sus versiones actuales.",
+    "chooseWorkflow": "Elige un flujo de trabajo",
+    "review": "Revisar",
+    "covers_one": "Un consentimiento para «{{space}}» cubre este flujo de trabajo:",
+    "covers_other": "Un consentimiento para «{{space}}» cubre estos {{count}} flujos de trabajo:",
+    "latest": "(versión más reciente)",
+    "version": "(versión {{version}})",
+    "exactly": "Se aplica exactamente a este contenido. Si más adelante cambia alguno de estos flujos de trabajo, o una herramienta o conexión que usan, se te volverá a preguntar.",
+    "stale": "Algo cambió desde que lo revisaste: un flujo de trabajo, o una herramienta o conexión que usa. Revísalo de nuevo y luego permítelo.",
+    "reviewAgain": "Revisar de nuevo",
+    "allow": "Permitir",
+    "granted": "Consentimiento para «{{space}}» dado",
+    "revoked": "Consentimiento retirado",
+    "none": "Todavía no has dado ningún consentimiento.",
+    "for": "Para",
+    "at": "Dado",
+    "actions": "Acciones",
+    "agentTest": "Una prueba de agente",
+    "revoke": "Retirar el consentimiento",
+    "revokeConfirm": "¿Retirar?"
+  }
 }

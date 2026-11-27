@@ -272,6 +272,45 @@
     },
     "openRun": "Ouvrir l’exécution",
     "openConversation": "Ouvrir la conversation",
-    "link": "Dossiers partagés"
+    "link": "Dossiers partagés",
+    "browse": {
+      "open": "Parcourir …",
+      "title": "Choisir un dossier",
+      "choose": "Choisir ce dossier",
+      "text": "Seuls les dossiers sont affichés, jamais les fichiers. Les dossiers système, ceux d’autres personnes et ceux qui contiennent des clés ou des mots de passe ne sont pas affichés.",
+      "places": "Emplacements",
+      "place": {
+        "home": "Dossier personnel",
+        "root": "Cet ordinateur",
+        "drive": "Lecteur",
+        "media": "Support amovible"
+      },
+      "home": "Revenir au dossier personnel",
+      "current": "Dossier :",
+      "folders": "Dossiers dans {{path}}",
+      "up": "Remonter d’un niveau",
+      "link": "(lien)",
+      "empty": "Ce dossier n’a pas de sous-dossiers.",
+      "truncated": "Tous les dossiers ne sont pas affichés. Ouvrez un sous-dossier ou saisissez le chemin."
+    },
+    "index": {
+      "toggle": "Tenir un index de recherche",
+      "toggleHint": "Les agents cherchent alors dans les fichiers texte et PDF du dossier selon le sens, pas seulement selon les mots. L’index est construit en arrière-plan et supprimé dès que le partage prend fin.",
+      "states": {
+        "off": "Aucun index",
+        "indexing": "Indexation …",
+        "ready": "Index prêt",
+        "budget_exceeded": "Index incomplet",
+        "failed": "Échec de l’index"
+      },
+      "counts_one": "{{count}} fichier indexé ({{chunks}} passages)",
+      "counts_other": "{{count}} fichiers indexés ({{chunks}} passages)",
+      "skipped_one": "{{count}} fichier ignoré",
+      "skipped_other": "{{count}} fichiers ignorés",
+      "at": "dernière mise à jour {{time}}",
+      "budget": "Certains fichiers ont été laissés de côté à une limite (la limite de fichiers du partage ou la limite de taille de l’index). Une recherche ne trouve que ce qui est indexé.",
+      "failed": "Le dossier n’a pas pu être lu.",
+      "offEnded": "Le partage a pris fin, son index a donc été supprimé."
+    }
   }
 }

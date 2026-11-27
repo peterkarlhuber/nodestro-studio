@@ -128,6 +128,110 @@ describe("FoldersPage", () => {
     await waitFor(() => expect(screen.queryByTestId("folder-grant-form")).not.toBeInTheDocument());
   });
 
+  it("chooses the path in the folder browser: sub-folders only, up a level, and the chosen folder fills the path", async () => {
+    const listing = (path: string, parent: string | null, folders: string[]) =>
+      json({
+        path,
+        parent,
+        folders: folders.map((name) => ({ name, path: `${path}/${name}`, link: false })),
+        truncated: false,
+        places: [{ kind: "home", path: "/Users/alex" }],
+        separator: "/",
+      });
+    const fetch = serve(true, (url, init) => {
+      if (url !== "/api/folders/browse") return undefined;
+      const { path } = JSON.parse(String(init?.body)) as { path: string | null };
+      if (path === null || path === "/Users/alex") return listing("/Users/alex", "/Users", ["Contracts", "Photos"]);
+      if (path === "/Users/alex/Contracts") return listing("/Users/alex/Contracts", "/Users/alex", ["2026"]);
+      return json({ detail: "hidden", code: "folder.not_browsable", params: { reason: "hidden" } }, 422);
+    });
+    show(<FoldersPage />);
+    await userEvent.click(await screen.findByTestId("folder-grant-open"));
+    // The browser opens at the typed path; a hidden place says so and offers the way home.
+    await userEvent.type(screen.getByTestId("folder-path"), "/etc");
+    await userEvent.click(screen.getByTestId("folder-browse"));
+    const browser = await screen.findByTestId("folder-browser");
+    expect(await within(browser).findByTestId("folder-browse-error")).toHaveTextContent("Dieser Ort ist geschützt");
+    await userEvent.click(within(browser).getByRole("button", { name: "Zurück zum Benutzerordner" }));
+    expect(await within(browser).findByTestId("folder-browse-path")).toHaveTextContent("/Users/alex");
+    await userEvent.click(within(browser).getByRole("button", { name: /Contracts/ }));
+    expect(await within(browser).findByText("2026")).toBeInTheDocument();
+    expect(within(browser).getByTestId("folder-browse-path")).toHaveTextContent("/Users/alex/Contracts");
+    // One level up is the parent the server named.
+    await userEvent.click(within(browser).getByTestId("folder-browse-up"));
+    expect(await within(browser).findByText("Photos")).toBeInTheDocument();
+    await userEvent.click(within(browser).getByRole("button", { name: /Contracts/ }));
+    await within(browser).findByText("2026");
+    await userEvent.click(screen.getByTestId("folder-browse-choose"));
+    expect(screen.getByTestId("folder-path")).toHaveValue("/Users/alex/Contracts");
+    expect(screen.queryByTestId("folder-browser")).not.toBeInTheDocument();
+    // Browsing never grants anything: only POSTs to the browser so far.
+    expect(fetch.mock.calls.filter(([url, init]) => init?.method === "POST" && url !== "/api/folders/browse")).toEqual([]);
+  });
+
+  it("keeps the typed path when the browser needs the window's own session", async () => {
+    serve(true, (url) =>
+      url === "/api/folders/browse" ? json({ detail: "session", code: "folder.session_required", params: {} }, 403) : undefined,
+    );
+    show(<FoldersPage />);
+    await userEvent.click(await screen.findByTestId("folder-grant-open"));
+    await userEvent.type(screen.getByTestId("folder-path"), "/Users/alex/Contracts");
+    await userEvent.click(screen.getByTestId("folder-browse"));
+    expect(await screen.findByTestId("folder-browse-error")).toHaveTextContent("Gib stattdessen den vollständigen Pfad");
+    expect(screen.getByTestId("folder-browse-choose")).toBeDisabled();
+    const dialog = screen.getByTestId("folder-browser").closest("dialog")!;
+    await userEvent.click(within(dialog as HTMLElement).getByRole("button", { name: "Abbrechen" }));
+    expect(screen.getByTestId("folder-path")).toHaveValue("/Users/alex/Contracts");
+  });
+
+  it("shows the state of each grant's search index, never a file name", async () => {
+    const indexed = (id: string, index_state: FolderGrantView["index_state"]): FolderGrantView => ({
+      ...VIEW,
+      folder: { ...VIEW.folder, id, name: `Folder ${id}`, index: true },
+      index_state,
+    });
+    serve(true, (url, init) =>
+      url === "/api/folders" && (init?.method ?? "GET") === "GET"
+        ? json([
+            VIEW,
+            indexed("fld_r", { state: "ready", files: 12, chunks: 40, skipped: 1, last_indexed_at: "2026-11-27T08:00:00Z", code: null }),
+            indexed("fld_i", { state: "indexing", files: 0, chunks: 0, skipped: 0, last_indexed_at: null, code: null }),
+            indexed("fld_b", { state: "budget_exceeded", files: 2000, chunks: 50000, skipped: 0, last_indexed_at: "2026-11-27T08:00:00Z", code: null }),
+            indexed("fld_f", { state: "failed", files: 0, chunks: 0, skipped: 0, last_indexed_at: null, code: "fs.root_changed" }),
+            { ...indexed("fld_x", { state: "off" }), status: "revoked" },
+          ])
+        : undefined,
+    );
+    show(<FoldersPage />);
+    const ready = await screen.findByTestId("folder-index-fld_r");
+    expect(ready).toHaveTextContent("Index bereit");
+    expect(ready).toHaveTextContent("12 Dateien indexiert (40 Abschnitte)");
+    expect(ready).toHaveTextContent("1 Datei übersprungen");
+    expect(screen.getByTestId("folder-index-fld_i")).toHaveTextContent("Wird indexiert");
+    expect(screen.getByTestId("folder-index-fld_b")).toHaveTextContent("Index unvollständig");
+    expect(screen.getByTestId("folder-index-fld_b")).toHaveTextContent("an einer Grenze ausgelassen");
+    expect(screen.getByTestId("folder-index-fld_f")).toHaveTextContent("Index fehlgeschlagen");
+    expect(screen.getByTestId("folder-index-fld_f")).toHaveTextContent("verschoben oder durch einen anderen Ordner ersetzt");
+    expect(screen.getByTestId("folder-index-fld_x")).toHaveTextContent("Kein Index");
+    // A grant without an index shows nothing about one.
+    expect(screen.queryByTestId("folder-index-fld_1")).not.toBeInTheDocument();
+  });
+
+  it("grants a folder with a search index only when it is turned on", async () => {
+    const fetch = serve(true, (url, init) => (url === "/api/folders" && init?.method === "POST" ? json(VIEW, 201) : undefined));
+    show(<FoldersPage />);
+    await userEvent.click(await screen.findByTestId("folder-grant-open"));
+    const index = screen.getByRole("switch", { name: /Suchindex anlegen/ });
+    expect(index).toHaveAttribute("aria-checked", "false");
+    await userEvent.click(index);
+    await userEvent.type(screen.getByTestId("folder-name"), "Contracts");
+    await userEvent.type(screen.getByTestId("folder-path"), "/Users/alex/Contracts");
+    await userEvent.click(screen.getByTestId("folder-grant-submit"));
+    await waitFor(() => expect(fetch.mock.calls.some(([url, init]) => url === "/api/folders" && init?.method === "POST")).toBe(true));
+    const posted = fetch.mock.calls.find(([url, init]) => url === "/api/folders" && init?.method === "POST");
+    expect(JSON.parse(String(posted?.[1]?.body)).index).toBe(true);
+  });
+
   it("revokes an active grant after a confirmation", async () => {
     const fetch = serve(true);
     show(<FoldersPage />);
@@ -182,7 +286,7 @@ describe("FoldersLink", () => {
 describe("grantBody", () => {
   it("sends one pattern or agent per line and names agents only for that scope", () => {
     expect(lines(" *.pdf \n\nreports/**\n")).toEqual(["*.pdf", "reports/**"]);
-    expect(grantBody({ ...EMPTY_DRAFT, name: " A ", path: " /x ", agents: "wf_1/a" })).toMatchObject({ name: "A", path: "/x", agents: [], expires_at: null });
+    expect(grantBody({ ...EMPTY_DRAFT, name: " A ", path: " /x ", agents: "wf_1/a" })).toMatchObject({ name: "A", path: "/x", agents: [], expires_at: null, index: false });
     expect(grantBody({ ...EMPTY_DRAFT, scope: "agents", agents: "wf_1/a\nwf_2/b" }).agents).toEqual(["wf_1/a", "wf_2/b"]);
     expect(grantBody({ ...EMPTY_DRAFT, expires: "2030-01-02T03:04" }).expires_at).toMatch(/^2030-01-0[12]T\d\d:04:00\.000Z$/);
   });

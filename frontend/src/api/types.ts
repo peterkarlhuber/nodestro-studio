@@ -718,8 +718,24 @@ export interface FolderGrant {
   created_at: string;
 }
 
+/**
+ * The search index of a folder grant (N-12, nodestro-api FolderIndexInfo): its state and counts, never a file name.
+ * ``off``: no index, or the grant ended; ``budget_exceeded``: ready, but files were left out at a limit.
+ */
+export interface FolderIndexInfo {
+  state: "off" | "indexing" | "ready" | "failed" | "budget_exceeded";
+  files?: number;
+  chunks?: number;
+  skipped?: number;
+  last_indexed_at?: string | null;
+  /** Why it failed (an ``fs.*`` or ``folder.*`` code). */
+  code?: string | null;
+}
+
 /** A folder grant with the state of its access grant (nodestro_runtime.folder_grants.FolderGrantView). */
 export interface FolderGrantView {
+  /** The state of its search index; older APIs leave it out. */
+  index_state?: FolderIndexInfo;
   folder: FolderGrant;
   status: "active" | "revoked" | "expired";
   scope: AccessScope;
@@ -730,6 +746,19 @@ export interface FolderGrantView {
   revoked_by?: string | null;
 }
 
+/** One folder of the folder browser (N-11): its sub-folders (names and paths, never files) and the starting points. */
+export interface FolderBrowse {
+  /** The canonical folder that was listed. */
+  path: string;
+  /** Its parent; null at the root of a file system or drive. */
+  parent: string | null;
+  folders: { name: string; path: string; link?: boolean }[];
+  /** More folders than answered, or the listing took too long. */
+  truncated: boolean;
+  places: { kind: "home" | "root" | "drive" | "media"; path: string }[];
+  separator: string;
+}
+
 /** The body of POST /api/folders; the server fills in who and when, and checks the path. */
 export interface FolderGrantIn {
   name: string;
@@ -738,6 +767,8 @@ export interface FolderGrantIn {
   include?: string[];
   exclude?: string[];
   limits?: FolderLimits | null;
+  /** Keep a search index of the folder (N-12); ``search_files`` then searches it. */
+  index?: boolean;
   default_excludes?: boolean;
   scope?: "all" | "agents";
   /** ``<workflow id>/<node id>`` of each agent, with scope ``agents``. */
@@ -1618,6 +1649,37 @@ export interface MemorySpaceInfo {
   size: number;
 }
 
+/**
+ * The owner of a memory space allows exactly one content to use it on a server (RT-089d): a workflow in the version
+ * with the digest ``digest``, or an agent configuration for agent tests. A changed workflow needs a new consent.
+ */
+export interface MemoryConsent {
+  id: string;
+  space: string;
+  owner: string;
+  subject: "workflow" | "agent";
+  digest: string;
+  workflow_id?: string | null;
+  workflow_version?: number | null;
+  workflow_name?: string;
+  at?: string;
+}
+
+/** One workflow a consent covers, as it would run now. */
+export interface ConsentTarget {
+  workflow_id: string;
+  name?: string;
+  version?: number | null;
+  digest: string;
+}
+
+/** What a consent for a workflow covers now; ``digest`` is the one the grant must name. */
+export interface MemoryConsentPreview {
+  workflow_id: string;
+  digest: string;
+  targets: ConsentTarget[];
+}
+
 export interface MemoryFile {
   path: string;
   size: number;
@@ -1913,6 +1975,30 @@ export interface BackupInfo {
   current: BackupContents;
   /** nodestro-api backup.py: "backup.other_version" when another version wrote the backup. */
   notes: "backup.other_version"[];
+  /**
+   * The secrets the backup left out that this computer does not have (N-15): labels `provider:<name>`, `mcp:<id>`,
+   * `connection:<id>`. Never a secret value. Older APIs leave it out.
+   */
+  secrets_to_reenter?: string[];
+}
+
+export interface RestoreResult {
+  contents: BackupContents;
+  safety_backup: string;
+  /** What has to be entered again after the restore (see BackupInfo.secrets_to_reenter). */
+  secrets_to_reenter?: string[];
+}
+
+/** What POST /api/data/delete-all removed (nodestro-api data_lifecycle.DeleteResult). */
+export interface DeleteResult {
+  deleted_at: string;
+  contents: BackupContents;
+  removed_entries: number;
+  /** Nothing is left in the data directory. */
+  complete: boolean;
+  log_emptied: boolean;
+  /** Entries that could not be removed (e.g. a file in use); deleting again removes the rest. */
+  left?: string[];
 }
 
 export interface LocalBackup {

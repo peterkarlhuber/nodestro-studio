@@ -272,6 +272,45 @@
     },
     "openRun": "Apri l’esecuzione",
     "openConversation": "Apri la conversazione",
-    "link": "Cartelle condivise"
+    "link": "Cartelle condivise",
+    "browse": {
+      "open": "Sfoglia …",
+      "title": "Scegli una cartella",
+      "choose": "Scegli questa cartella",
+      "text": "Vengono mostrate solo cartelle, mai file. Le cartelle di sistema, quelle di altre persone e quelle con chiavi o password non vengono mostrate.",
+      "places": "Posizioni",
+      "place": {
+        "home": "Cartella personale",
+        "root": "Questo computer",
+        "drive": "Unità",
+        "media": "Unità rimovibile"
+      },
+      "home": "Torna alla cartella personale",
+      "current": "Cartella:",
+      "folders": "Cartelle in {{path}}",
+      "up": "Su di un livello",
+      "link": "(collegamento)",
+      "empty": "Questa cartella non ha sottocartelle.",
+      "truncated": "Non vengono mostrate tutte le cartelle. Apri una sottocartella o scrivi il percorso."
+    },
+    "index": {
+      "toggle": "Mantieni un indice di ricerca",
+      "toggleHint": "Gli agenti cercano allora nei file di testo e PDF della cartella per significato, non solo per parole. L’indice viene creato in background e rimosso appena la condivisione termina.",
+      "states": {
+        "off": "Nessun indice",
+        "indexing": "Indicizzazione …",
+        "ready": "Indice pronto",
+        "budget_exceeded": "Indice incompleto",
+        "failed": "Indice non riuscito"
+      },
+      "counts_one": "{{count}} file indicizzato ({{chunks}} passaggi)",
+      "counts_other": "{{count}} file indicizzati ({{chunks}} passaggi)",
+      "skipped_one": "{{count}} file saltato",
+      "skipped_other": "{{count}} file saltati",
+      "at": "ultimo aggiornamento {{time}}",
+      "budget": "Alcuni file sono stati esclusi a un limite (il limite di file della condivisione o il limite di dimensione dell’indice). Una ricerca trova solo ciò che è indicizzato.",
+      "failed": "Non è stato possibile leggere la cartella.",
+      "offEnded": "La condivisione è terminata, quindi il suo indice è stato rimosso."
+    }
   }
 }

@@ -306,6 +306,17 @@ The **API keys** of the AI providers are never written into the backup, nor are 
 
 **Restore from file** first checks the file completely: format, the checksum of every file, the database and every stored workflow and run. Only then does Nodestro show what the backup contains, compared with the current state. Data is only replaced after explicit confirmation and only when no run is active. Before that, Nodestro automatically saves a backup of the current state (`before-restore-….zip` in the `backups` folder of the data directory); it appears among the safety backups on this computer and can be restored the same way. If anything fails, the previous data stays unchanged.
 
+Keys, tokens and passwords are never in a backup, nor are the tokens of MCP services and the secrets of service connections. When this computer does not have them, the check and the page after the restore show the list **secrets to enter again**: one link each to the AI provider, MCP service or connection where you enter it again. Only what is missing is shown, never a value.
+
+## Export and delete data {#daten}
+<!-- keywords: export, export everything, delete data, delete everything, take along, privacy -->
+
+→ [Open in Nodestro](/settings#settings-data)
+
+**Export everything** downloads a ZIP file of readable files: workflows, runs, agent templates, tools, knowledge, memory, conversations and settings, without keys, tokens or other secrets. The export is for keeping and taking along; only a backup can be restored.
+
+**Delete all data** removes everything on this computer for good, the secrets too; no safety backup is kept. To confirm, you type exactly `delete all data`, in English in every language. Deleting starts only while no run and no other background work is active, and no run starts while it deletes. Afterwards the installation starts over like a new one. If something could not be removed (such as a file in use), it is named; deleting again removes the rest.
+
 ## System diagnosis {#diagnose}
 <!-- keywords: diagnosis, system check, check, troubleshoot, connection, docker, sandbox, version, problem -->
 

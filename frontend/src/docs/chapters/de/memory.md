@@ -46,6 +46,13 @@ Die Seite **Memory** zeigt alle Räume mit Anzahl und Größe der Dateien. Wähl
 
 Du kannst Memory so jederzeit prüfen, korrigieren oder vorbefüllen. Im Inspektor führt **Inhalt ansehen** direkt zum Raum des Agenten.
 
+## Zustimmungen für geteilte Workflows {#zustimmungen}
+<!-- keywords: zustimmung, einwilligung, privat, server, geteilter workflow, memory-raum, zurückziehen -->
+
+Auf einem Server gehört jeder Memory-Raum der Person, die ihn angelegt hat. Ein geteilter Workflow darf ihn nur nutzen, wenn diese Person **genau seinem aktuellen Inhalt** zugestimmt hat: dem Workflow und jedem Workflow, den er startet, jeweils in einer bestimmten Version. Ohne Zustimmung wird der Lauf abgelehnt.
+
+Unter **Zustimmungen für geteilte Workflows** wählst du einen deiner Memory-Räume und einen Workflow und wählst **Prüfen**. Gezeigt wird, welche Workflows die Zustimmung abdeckt; erst **Zustimmen** gibt sie. Hat sich seit dem Prüfen etwas geändert (ein Workflow, ein Tool oder eine Verbindung), wird die Zustimmung nicht gegeben: Wähle **Erneut prüfen** und stimme dem gezeigten Stand zu. Die Liste zeigt alle deine Zustimmungen; **Zustimmung zurückziehen** wirkt ab dem nächsten Schritt, der sie braucht. Auf dem Desktop gibt es nur eine Person, deshalb fehlt der Abschnitt dort.
+
 ## Memory mit KI einrichten {#assistent}
 <!-- keywords: memory assistent, mit ki einrichten, vorschlag, struktur, startdateien -->
 

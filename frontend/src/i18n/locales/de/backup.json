@@ -34,5 +34,38 @@
   "safetyNote": "Vorher wird automatisch eine Sicherung des aktuellen Stands angelegt; du findest sie danach in der Liste der Sicherungen.",
   "confirm": "Ich habe verstanden, dass meine aktuellen Daten ersetzt werden.",
   "restoreNow": "Jetzt wiederherstellen",
-  "restored": "Backup wiederhergestellt. Der vorherige Stand liegt in „{{name}}“. Die Seite wird neu geladen."
+  "restored": "Backup wiederhergestellt. Der vorherige Stand liegt in „{{name}}“. Die Seite wird neu geladen.",
+  "reenter": {
+    "title_one": "{{count}} Geheimnis neu eingeben",
+    "title_other": "{{count}} Geheimnisse neu eingeben",
+    "text": "Ein Backup enthält nie Schlüssel, Tokens oder Passwörter. Gib sie dort neu ein, wo sie gebraucht werden; bis dahin funktioniert nicht, was sie braucht.",
+    "kinds": {
+      "provider": "KI-Anbieter",
+      "mcp": "MCP-Dienst",
+      "connection": "Dienstverbindung"
+    },
+    "open": "Neu eingeben",
+    "done": "Erledigt, Liste ausblenden"
+  },
+  "data": {
+    "title": "Daten exportieren und löschen",
+    "intro": "Nimm alle deine Daten als lesbare Dateien mit, oder lösche alles auf diesem Rechner.",
+    "export": "Alles exportieren",
+    "exportNote": "Der Export ist eine ZIP-Datei mit lesbaren Dateien (Workflows, Läufe, Agentenvorlagen, Tools, Wissen, Memory, Unterhaltungen und Einstellungen), ohne Schlüssel, Tokens oder andere Geheimnisse. Er lässt sich nicht wiederherstellen; dafür ist das Backup da.",
+    "delete": "Alle Daten löschen …",
+    "deleteTitle": "Alle Daten löschen",
+    "deleteWarning": "Das löscht alle Workflows, Läufe, Agentenvorlagen, Tools, Wissensdateien, Memory, Unterhaltungen, Einstellungen und Geheimnisse auf diesem Rechner.",
+    "deleteNoUndo": "Das lässt sich nicht rückgängig machen.",
+    "deleteNoBackup": "Es wird keine Sicherung angelegt. Lade vorher ein Backup oder einen Export herunter, wenn du etwas behalten willst.",
+    "deleteRuns": "Es beginnt nur, wenn nichts läuft, und solange gelöscht wird, startet kein Lauf.",
+    "backupFirst": "Vorher ein Backup herunterladen",
+    "typeLabel": "Bestätigung",
+    "typeHint": "Gib zur Bestätigung genau „{{phrase}}“ ein (auf Englisch).",
+    "deleteNow": "Alles löschen",
+    "deletedTitle": "Daten gelöscht",
+    "deleted": "Alles wurde gelöscht. Diese Installation beginnt jetzt wie neu.",
+    "deletedPartly_one": "Fast alles wurde gelöscht, aber {{count}} Eintrag ließ sich nicht entfernen (zum Beispiel eine Datei in Benutzung). Lösche noch einmal, um den Rest zu entfernen.",
+    "deletedPartly_other": "Fast alles wurde gelöscht, aber {{count}} Einträge ließen sich nicht entfernen (zum Beispiel Dateien in Benutzung). Lösche noch einmal, um den Rest zu entfernen.",
+    "restart": "Neu beginnen"
+  }
 }

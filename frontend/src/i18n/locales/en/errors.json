@@ -395,7 +395,8 @@
     "runs_active": "Workflows are still running. Wait until they have finished, then restore the backup.",
     "not_confirmed": "Restoring replaces all data and must be confirmed.",
     "restore_running": "A backup is being restored already. Wait until it has finished.",
-    "too_large": "Unpacking the backup needs {{needed_mb}} MB, but only {{free_mb}} MB are free."
+    "too_large": "Unpacking the backup needs {{needed_mb}} MB, but only {{free_mb}} MB are free.",
+    "product_mismatch": "This backup belongs to another application ({{found}}) and cannot be restored here."
   },
   "preview": {
     "not_agent": "Only agents have an input preview."
@@ -679,7 +680,8 @@
     "too_large_limit": "The request is too large: at most {{limit_mb}} MB are accepted.",
     "malformed": "The request cannot be read. Reload the page and try again.",
     "origin_required": "This change does not say which page sent it and was refused. Use Nodestro itself.",
-    "json_only": "This change must be sent as JSON (or as a form with files) and was refused."
+    "json_only": "This change must be sent as JSON (or as a form with files) and was refused.",
+    "cross_site": "This request came from another website and was refused."
   },
   "publication": {
     "disabled": "This API is switched off.",
@@ -1034,6 +1036,10 @@
     },
     "check": {
       "local_model_missing": "Install it with “Fix” or under Settings, Local models, then start the run again. Automatic runs never download models themselves."
+    },
+    "memory": {
+      "consent_required": "The owner of the memory space can allow it on the “Memory” page under “Consents for shared workflows”.",
+      "consent_stale": "Choose Review again: the current content is shown, and you can allow it."
     }
   },
   "setupProvider": "Set up AI provider",
@@ -1335,7 +1341,16 @@
     "not_found": "This folder grant no longer exists.",
     "not_grantable": "This folder cannot be granted. System folders, the home folder, the shared temporary folder itself, folders with keys or passwords and Nodestro's own data are never open to agents.",
     "unavailable": "No folders are granted here.",
-    "unknown": "No granted folder has this name."
+    "unknown": "No granted folder has this name.",
+    "not_browsable": "This folder cannot be opened.",
+    "not_browsable_hidden": "This place is protected and is not shown: system folders, other people's folders, folders with keys or passwords and the application's own data.",
+    "not_browsable_not_found": "This folder does not exist (any more).",
+    "not_browsable_not_a_folder": "This is a file, not a folder.",
+    "not_browsable_no_access": "This computer does not let you open this folder.",
+    "not_browsable_changed": "The folder changed while it was opened. Try again.",
+    "not_browsable_invalid_path": "Enter a full path, such as /Users/alex/Documents or C:\\Users\\alex\\Documents.",
+    "not_browsable_network_path": "Network folders cannot be browsed or granted.",
+    "session_required": "Browsing folders works only in the window the app opened. Type the folder's full path instead."
   },
   "fs": {
     "hard_link": "Files with several hard links are not read, since they can belong to another folder.",
@@ -1348,5 +1363,10 @@
     "too_complex": "The file is too complex to read within the limits.",
     "too_large": "The file is larger than this folder's limit. Choose a smaller file or raise the limit.",
     "unsupported_type": "This kind of file cannot be read as text ({{path}})."
+  },
+  "data": {
+    "busy": "Runs or other background work are still active. Wait until they have finished, then delete again.",
+    "deleting": "All data is being deleted right now, so nothing can start. Start it again afterwards.",
+    "not_confirmed": "Deleting all data must be confirmed with the exact text."
   }
 }
