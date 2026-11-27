@@ -5,6 +5,8 @@ Aqui você encontra soluções para mensagens comuns e respostas a perguntas tí
 ## Erros comuns {#haeufige-fehler}
 <!-- keywords: erros, problema, solução, mensagem, troubleshooting, não funciona -->
 
+Ao lado de muitas mensagens de erro há um **?**: ele explica em uma ou duas frases o que esse tipo de erro significa e o que fazer, e **Saiba mais** leva ao capítulo correspondente. Na visão geral da documentação, a busca **Ajuda sobre mensagens de erro** também encontra essas explicações por um código de erro colado (por exemplo `approval.expired`); ela busca offline, no navegador.
+
 | Mensagem ou sintoma | Causa | Solução |
 |---|---|---|
 | “Não há chave de API para …” | O provedor do modelo não está configurado. | Informe a chave em *Configurações → Provedores de IA* ou defina a variável de ambiente do provedor, por exemplo `ANTHROPIC_API_KEY`. |

@@ -113,19 +113,21 @@ from #121). Both have status `Needs external review`.
 
 - **Priority:** P3 Low · **Status:** Open (first step done) · **Refs:** N-16, N-17, nodestro-ui `docs/TODO.md`,
   `platform/internal-ui.txt`
-- **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`; core and ai 0.1.1) are vendored as
+- **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`, `ui-help`; core and ai 0.2.0) are vendored as
   tarballs in `frontend/vendor/`, pinned with their SHA-256 in `platform/internal-ui.txt`, checked by
   `frontend/scripts/check-vendor.mjs` before every `npm ci` and against `node_modules` after it, compared in CI with
   nodestro-ui's `artifacts/manifest.json` at the pinned commit (`frontend/scripts/verify-ui-pin.mjs`), moved with `scripts/bump_pins.py` (pin kind `npm-tarball`) plus `frontend/scripts/vendor-ui.mjs`. The studio loads
   the tokens, the `nodestro` brand theme and the component styles (`src/main.tsx`); the first component in use is the
   package's `RememberOptions` in the tool approval card, with the studio's own texts. Contract tests:
   `src/runs/uiPackages.contract.test.tsx`, `scripts/ui-vendor.test.mjs`.
+  The shared help of `ui-help` (N-17) explains error codes next to `ProblemText` (the package's `HelpTip` under
+  `HelpProvider`, `src/lib/platformHelp.tsx`) and in the help search of the documentation overview.
 - **Next steps, in order:** (1) re-pin to the nodestro-ui merge commit of its pull request #2 (same tarballs, only the
   commit moves); (2) the step approval card (`runs/ApprovalCard.tsx`) and the tool approval card
   (`runs/ToolApprovalCard.tsx`) onto `ApprovalCard`, keeping the data hooks here; (3) the budget decision card
   (`runs/BudgetDecisionCard.tsx`); (4) tool call rows, chat messages (`assistant/MessageView.tsx`) and web sources
-  (`runs/WebSources.tsx` onto `SourceList`); (5) `HelpTip` onto the package's HelpTip with the studio's help registry
-  and the error-code coverage test (N-17); (6) buttons, fields, dialogs and sections from `components/ui.tsx`; (7) an
+  (`runs/WebSources.tsx` onto `SourceList`); (5) the studio's own `HelpTip` (`components/Tooltip.tsx`, `help.json`) onto the
+  package's HelpTip with the studio's help registry, and a `helpCoverage` test of the studio's API error codes (N-17); (6) buttons, fields, dialogs and sections from `components/ui.tsx`; (7) an
   alias layer `--nd-*: var(--ui-*)` and a codemod, then drop `midnight-citron.css`. Each step keeps the existing
   tests and browser suites unchanged.
 - **Also:** nodestro-server (`image/Dockerfile`) and nodestro-desktop (`scripts/build_backend.sh`) run `npm ci` on a
@@ -437,6 +439,7 @@ from #121). Both have status `Needs external review`.
 | (in review, RT-089c) | nodestro-runtime, nodestro-api | runtime #218, api PR of branch `claude/w3s-rt089c` (RT-089c, API-075) | Memory spaces have an owner on a server: owner-only list, read, write and runs; spaces without an owner are nobody's until the operator assigns one (`nodestro-server memory backfill-owners`, audited as `memory_space_owner_assigned`). The studio has the error text of `memory.space_not_found` and the lock bump; the SDK syncs the audit kind. Pin the merges once they are merged |
 | (in review, N-02 step 1) | nodestro-session, nodestro-api | nodestro-session [#1](https://github.com/peterkarlhuber/nodestro-session/pull/1) (merge dd96704), [#2](https://github.com/peterkarlhuber/nodestro-session/pull/2) (merge eb9de91), [#3](https://github.com/peterkarlhuber/nodestro-session/pull/3) (merge 2d06f0a) (NS-002, NS-006), nodestro-api [#164](https://github.com/peterkarlhuber/nodestro-api/pull/164) (merge 6783a52) | New platform library `nodestro-session` (K-33: `kind: library`, edge `nodestro-api -> nodestro-session`), in both locks. The independent review passed (no Critical, High or Medium); the lock pins nodestro-session 2d06f0a (with the review Lows, #2, and the re-check leftovers, #3) and nodestro-api 6783a52 (`bump_pins.py set`, verified on master). The studio has no direct dependency and no new switch |
 | (in review, NS-002, Welle 3 P1) | nodestro-api, nodestro-session, nodestro-desktop | nodestro-session TODO NS-002 (design.md 5.2), nodestro-api branch `claude/w3-ns002` | The six hardening switches of the desktop launch, all off by default (api README "Hardening switches of the desktop launch"). The studio side: the API client sends the launch session's CSRF value (`X-Nodestro-CSRF`, from `sessionStorage` `nodestro.session`, which only the launch page writes) with every change and the trace import as JSON; the top bar offers **Sign out** on the desktop when the launch page says so, and the signed-out page replaces the studio; `nodestro` opens a 0600 redirect file instead of the link when the command issued its own secret. With the switches off nothing is stored or sent and every browser suite runs as before; browser suite `launch` (`scripts/e2e.sh launch`) runs the studio with fragment link, CSRF, sign-out and TTL on. The lock pins the api branch head. Open: the desktop shell's counterparts (nodestro-desktop); the owner's decision to turn each switch on |
+| (in review, Welle 5 UIs) | nodestro-api | api #175 (N-11), #176 (N-15), #179 (RT-089d) | Branch `claude/w5-studio-ui`: memory consents on the Memory page (server members only), export and delete everything in Settings (`install`), secrets to re-enter after a restore with links, the folder browser on the Granted folders page. The index state of granted folders (N-12) is on `claude/w5-index-state` (api #182, sdk #151, paired lock: re-pin the merge commits once they are merged) |
 | (pointer) | nodestro-runtime | RT-001 (independent S-2 review, includes the studio approval surfaces) | Full entry in runtime |
 | (pointer) | nodestro-api | API-054 (independent review of the portable export, api #85/#87, studio #121) | Full entry in api |
 | ST-021 | nodestro-server | Development stack | Used for the browser pass |

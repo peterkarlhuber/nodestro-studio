@@ -46,6 +46,13 @@ The **Memory** page shows all spaces with the number and size of their files. Ch
 
 This way you can check, correct or prefill memory at any time. In the inspector, **View content** leads straight to the agent's space.
 
+## Consents for shared workflows {#zustimmungen}
+<!-- keywords: consent, private, server, shared workflow, memory space, withdraw -->
+
+On a server, each memory space belongs to the person who created it. A shared workflow may use it only after that person allowed **exactly its current content**: the workflow and every workflow it starts, each in one version. Without a consent the run is refused.
+
+Under **Consents for shared workflows**, choose one of your memory spaces and a workflow, then choose **Review**. You see which workflows the consent covers; only **Allow** gives it. If something changed since the review (a workflow, a tool or a connection), the consent is not given: choose **Review again** and allow what is shown now. The list shows all your consents; **Withdraw consent** takes effect from the next step that needs it. The desktop has only one person, so the section does not appear there.
+
 ## Setting up memory with AI {#assistent}
 <!-- keywords: memory assistant, set up with ai, suggestion, structure, starter files -->
 

@@ -306,6 +306,17 @@ Les **clés API** des fournisseurs d’IA ne sont jamais écrites dans la sauveg
 
 **Restaurer depuis un fichier** vérifie d’abord entièrement le fichier : format, somme de contrôle de chaque fichier, base de données et chaque workflow et exécution enregistrés. Ce n’est qu’ensuite que Nodestro montre ce que contient la sauvegarde, comparé à l’état actuel. Les données ne sont remplacées qu’après confirmation explicite et seulement si aucune exécution n’est active. Avant cela, Nodestro enregistre automatiquement une sauvegarde de l’état actuel (`before-restore-….zip` dans le dossier `backups` du répertoire de données) ; elle apparaît parmi les sauvegardes de cet ordinateur et se restaure de la même façon. Si quelque chose échoue, les données précédentes restent inchangées.
 
+Les clés, jetons et mots de passe ne sont jamais dans une sauvegarde, pas plus que les jetons des services MCP et les secrets des connexions de service. Si cet ordinateur ne les a pas, la vérification et la page après la restauration affichent la liste **secrets à saisir de nouveau** : un lien vers le fournisseur d’IA, le service MCP ou la connexion où vous le saisissez de nouveau. Seul ce qui manque est affiché, jamais une valeur.
+
+## Exporter et supprimer les données {#daten}
+<!-- keywords: export, tout exporter, supprimer les données, tout supprimer, emporter, confidentialité -->
+
+→ [Ouvrir dans Nodestro](/settings#settings-data)
+
+**Tout exporter** télécharge un fichier ZIP de fichiers lisibles : workflows, exécutions, modèles d’agents, outils, connaissances, mémoire, conversations et paramètres, sans clés, jetons ni autres secrets. L’export sert à conserver et à emporter vos données ; seule une sauvegarde peut être restaurée.
+
+**Supprimer toutes les données** retire définitivement tout de cet ordinateur, les secrets aussi ; aucune sauvegarde de sécurité n’est conservée. Pour confirmer, vous saisissez exactement `delete all data`, en anglais dans toutes les langues. La suppression ne commence que lorsqu’aucune exécution ni aucun autre travail en arrière-plan n’est actif, et aucune exécution ne démarre pendant qu’elle a lieu. Ensuite, l’installation repart comme une nouvelle. Si quelque chose n’a pas pu être retiré (par exemple un fichier en cours d’utilisation), c’est indiqué ; supprimer de nouveau retire le reste.
+
 ## Diagnostic du système {#diagnose}
 <!-- keywords: diagnostic, vérifier, dépannage, connexion, docker, sandbox, version, problème -->
 

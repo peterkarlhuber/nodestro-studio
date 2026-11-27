@@ -306,6 +306,17 @@ Le **chiavi API** dei provider di IA non finiscono mai nel backup, e nemmeno gli
 
 **Ripristina da file** verifica prima completamente il file: formato, checksum di ogni file, database e ogni workflow ed esecuzione salvati. Solo allora Nodestro mostra cosa contiene il backup, confrontato con lo stato attuale. I dati vengono sostituiti solo dopo una conferma esplicita e solo se non c’è alcuna esecuzione attiva. Prima Nodestro salva automaticamente un backup dello stato attuale (`before-restore-….zip` nella cartella `backups` della cartella dei dati); compare tra i backup di questo computer e si può ripristinare allo stesso modo. Se qualcosa non riesce, i dati precedenti restano invariati.
 
+Chiavi, token e password non sono mai in un backup, nemmeno i token dei servizi MCP e i segreti delle connessioni ai servizi. Se questo computer non li ha, la verifica e la pagina dopo il ripristino mostrano l’elenco **segreti da reinserire**: un link al provider di IA, al servizio MCP o alla connessione dove reinserirlo. Viene mostrato solo ciò che manca, mai un valore.
+
+## Esporta ed elimina i dati {#daten}
+<!-- keywords: esportazione, esporta tutto, elimina dati, elimina tutto, portare con sé, privacy -->
+
+→ [Apri in Nodestro](/settings#settings-data)
+
+**Esporta tutto** scarica un file ZIP di file leggibili: workflow, esecuzioni, modelli di agenti, strumenti, conoscenza, memoria, conversazioni e impostazioni, senza chiavi, token o altri segreti. L’esportazione serve a conservare e portare con sé i dati; solo un backup si può ripristinare.
+
+**Elimina tutti i dati** rimuove definitivamente tutto da questo computer, anche i segreti; non viene conservato nessun backup di sicurezza. Per confermare scrivi esattamente `delete all data`, in inglese in ogni lingua. L’eliminazione inizia solo quando non è attiva nessuna esecuzione né altro lavoro in background, e mentre è in corso non parte nessuna esecuzione. Dopo, l’installazione riparte come una nuova. Se qualcosa non si è potuto rimuovere (per esempio un file in uso), viene indicato; eliminare di nuovo rimuove il resto.
+
 ## Diagnosi del sistema {#diagnose}
 <!-- keywords: diagnosi, verificare, trovare errori, connessione, docker, sandbox, versione, problema -->
 

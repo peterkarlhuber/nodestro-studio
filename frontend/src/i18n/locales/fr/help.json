@@ -99,7 +99,8 @@
   "memory": {
     "space": "Un espace mémoire est un système de fichiers propre sous /memories. Les agents à mémoire « Persistante » associés à cet espace y lisent et écrivent.",
     "clear": "Supprime définitivement tous les fichiers de l’espace. Les agents repartent ensuite sans souvenirs.",
-    "newFile": "Crée un fichier vide sous /memories, p. ex. clients/preferences.md. Les agents le trouveront à la prochaine exécution."
+    "newFile": "Crée un fichier vide sous /memories, p. ex. clients/preferences.md. Les agents le trouveront à la prochaine exécution.",
+    "consents": "Sur un serveur, un workflow partagé ne peut utiliser votre espace de mémoire qu’après que vous avez autorisé exactement son contenu actuel : le workflow et chaque workflow qu’il lance. Si l’un d’eux change, il a de nouveau besoin de votre consentement. Vous pouvez retirer un consentement à tout moment."
   },
   "runs": {
     "importTrace": "Ouvre un fichier de trace exporté (run_….json) pour le consulter. Rien n’est exécuté, aucun coût n’est engagé et les exécutions existantes restent inchangées.",
@@ -145,7 +146,8 @@
     "knowledgeSearch": "Le texte intégral trouve des mots, la recherche sémantique trouve le sens (y compris d’une langue à l’autre). Les recherches sémantique et combinée nécessitent l’index sémantique créé avec un modèle d’embeddings.",
     "localBuild": "Certains modèles (comme mdenseon:307m) sont construits à partir de leurs fichiers d’origine au lieu d’être téléchargés depuis la bibliothèque Ollama. Indiquez les deux fichiers : Nodestro vérifie leur SHA-256, construit le modèle et ne le garde que si ses vecteurs de référence correspondent. Fonctionne sans internet.",
     "localHardware": "Ce que Nodestro a détecté sur l’ordinateur du serveur de modèles et ce que le serveur indique. Les vitesses n’apparaissent qu’une fois mesurées ; Nodestro ne fait aucune estimation.",
-    "localReasoning": "Sans carte graphique, la phase de réflexion des modèles locaux peut prendre des minutes par étape. Le mode économie la saute pour l’effort Moyen ; l’effort Élevé reste inchangé."
+    "localReasoning": "Sans carte graphique, la phase de réflexion des modèles locaux peut prendre des minutes par étape. Le mode économie la saute pour l’effort Moyen ; l’effort Élevé reste inchangé.",
+    "data": "Tout exporter vous donne toutes les données sous forme de fichiers lisibles, sans secrets, à conserver ou à emporter ailleurs. Tout supprimer retire définitivement toutes les données de cet ordinateur dès que vous saisissez la confirmation ; aucune sauvegarde de sécurité n’est conservée."
   },
   "budget": {
     "decision": "L’exécution est en pause parce que son budget ne suffit pas pour la prochaine requête au modèle. Rien n’a été envoyé pour elle. Relevez le plafond de cette exécution précise et poursuivez, ou terminez l’exécution.",

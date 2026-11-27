@@ -19,6 +19,10 @@ import type {
   AgentDraft,
   AgentTestResult,
   BackupInfo,
+  DeleteResult,
+  MemoryConsent,
+  MemoryConsentPreview,
+  RestoreResult,
   ContextPreview,
   DiagnosticCheck,
   Diagnostics,
@@ -142,6 +146,7 @@ import type {
   AccessGrantIn,
   AccessState,
   FolderAccessEntry,
+  FolderBrowse,
   FolderGrantIn,
   FolderGrantView,
   FolderState,
@@ -500,6 +505,11 @@ export const api = {
   folders: () => request<FolderGrantView[]>("GET", "/folders"),
   /** Grants a folder for reading; the server checks the path (``folder.not_grantable`` with ``reason``). */
   grantFolder: (body: FolderGrantIn) => request<FolderGrantView>("POST", "/folders", body),
+  /**
+   * The sub-folders of a folder of this computer (N-11; ``null``: the home folder), for choosing the folder to grant.
+   * Only the window's own session (403 ``folder.session_required``); hidden places answer 422 ``folder.not_browsable``.
+   */
+  browseFolders: (path: string | null) => request<FolderBrowse>("POST", "/folders/browse", { path }),
   revokeFolder: (id: string) => request<FolderGrantView>("DELETE", `/folders/${encodeURIComponent(id)}`),
   /** The access log of a folder grant, newest first: agent, run, outcome and code, never a path. */
   folderAccesses: (id: string) => request<FolderAccessEntry[]>("GET", `/folders/${encodeURIComponent(id)}/accesses`),
@@ -732,6 +742,15 @@ export const api = {
   deleteMemoryFile: (space: string, path: string) =>
     request<void>("DELETE", `/memory/${encodeURIComponent(space)}/file${q({ path })}`),
   clearMemory: (space: string) => request<void>("DELETE", `/memory/${encodeURIComponent(space)}`),
+  /** The owner's consents for their memory spaces (RT-089d); 404 ``memory.consent_unavailable`` off a server. */
+  memoryConsents: () => request<MemoryConsent[]>("GET", "/memory-consents"),
+  /** What a consent for a workflow would cover now, with the digest the grant names. */
+  memoryConsentPreview: (workflowId: string) =>
+    request<MemoryConsentPreview>("GET", `/memory-consents/preview${q({ workflow_id: workflowId })}`),
+  /** 409 ``memory.consent_stale`` when anything changed since the preview: review it again. */
+  grantMemoryConsent: (space: string, workflowId: string, digest: string) =>
+    request<MemoryConsent[]>("POST", "/memory-consents", { space, workflow_id: workflowId, digest }),
+  revokeMemoryConsent: (id: string) => request<void>("DELETE", `/memory-consents/${encodeURIComponent(id)}`),
   proposeMemory: (role: string, wishes: string) =>
     request<{ seed: MemorySeed; cost_usd: number | null }>("POST", "/memory/propose", {
       role,
@@ -768,8 +787,11 @@ export const api = {
     return request<BackupInfo>("POST", "/backup/inspect", form);
   },
   inspectLocalBackup: (name: string) => request<BackupInfo>("POST", `/backup/local/${encodeURIComponent(name)}/inspect`),
-  restoreBackup: (id: string) =>
-    request<{ contents: BackupInfo["contents"]; safety_backup: string }>("POST", "/backup/restore", { id, confirm: true }),
+  restoreBackup: (id: string) => request<RestoreResult>("POST", "/backup/restore", { id, confirm: true }),
+  /** Everything as readable files, without secrets (N-15, ``install``): a ZIP download. */
+  dataExportUrl: "/api/data/export",
+  /** Deletes every piece of data (N-15, ``install``); ``confirm`` must be exactly DELETE_ALL_CONFIRMATION. */
+  deleteAllData: (confirm: string) => request<DeleteResult>("POST", "/data/delete-all", { confirm }),
   localBackups: () => request<LocalBackup[]>("GET", "/backup/local"),
   localBackupUrl: (name: string) => `/api/backup/local/${encodeURIComponent(name)}`,
 

@@ -105,9 +105,11 @@ The page **Permissions and blocks** (linked from **Approvals**) lists every perm
 
 Granted folders are **not enabled** unless the person who runs Nodestro switches them on. They never exist on a server. While they are off, the page **Granted folders** (linked from **Approvals**) only says so, and no agent can read a folder of this computer.
 
-When they are on, an administrator grants a folder **for reading**: a name, the folder's full path, optionally which files to include or leave out, for which agents, for which runs and until when. Secret files such as `.env`, keys and password databases are left out unless you turn that off. Nodestro checks the path when you grant it and says why a folder is refused: system folders, the home folder and folders with keys or passwords are never granted. Agents see the name, never the path, and can list, read and search the files, never change them.
+When they are on, an administrator grants a folder **for reading**: a name, the folder's full path, optionally which files to include or leave out, for which agents, for which runs and until when. Secret files such as `.env`, keys and password databases are left out unless you turn that off. Nodestro checks the path when you grant it and says why a folder is refused: system folders, the home folder and folders with keys or passwords are never granted. Agents see the name, never the path, and can list, read and search the files, never change them. You choose the path with **Browse …** in a folder browser that shows only folders, never files, and no protected places at all; it works only in the window the app opened. Otherwise you type the full path.
 
 The page lists every grant with who gave it and its state. The **access log** of a grant shows which agent read what, in which run, and whether it was allowed. **Revoke** ends a grant from the next access on.
+
+With **Keep a search index** (off unless you turn it on), Nodestro keeps a search index of the folder's text and PDF files that agents search by meaning. The list shows its state: **Indexing …**, **Index ready** with the number of files and the time of the last update, **Index incomplete** when files were left out at a limit, or **Index failed** with the reason. It never names a file. When the grant ends, its index is removed.
 
 ## Protected content {#geschuetzte-inhalte}
 <!-- keywords: protected content, granted source, provenance, cloud model, permission, egress -->

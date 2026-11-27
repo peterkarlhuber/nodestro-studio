@@ -2,6 +2,66 @@
 
 ## Unreleased
 
+### Welle 5 lock: exchange formats, extension isolation and the PDF fix (2026-11-27)
+
+- Lock: nodestro-runtime fb5ef1a (N-14 exchange formats #222, N-22 extension isolation #221 and #224), nodestro-api
+  8ad5b53 (N-14 import and export routes #181, the approval race test #180), nodestro-sdk 3b6f213 (#150), orkexa
+  3294190 (damaged PDF objects refused under pypdf 7.2 #118, faster tests #119) and nodestro-integrations f29a377
+  (installed as a wheel #95). `NODESTRO_EXTENSION_TOOLS` and every other security switch stay off by default.
+
+### Welle 5: the search index state of granted folders (N-12 follow-up, 2026-11-27)
+
+- Lock: nodestro-api ebd0fe5 (api #182: `FolderGrantView.index_state`) and nodestro-sdk bce7ac1 (sdk #151, the SDK
+  sync).
+- Granted folders: **Keep a search index** when granting (off by default; sends `index: true`), and each grant shows
+  its index state from `index_state`: indexing (the list reads it again every 5 seconds while one is being built),
+  ready with files, passages, skipped files and the last update, incomplete (`budget_exceeded`) with what that means,
+  failed with the reason's sentence (its `fs.*` or `folder.*` code), and "no index" once the grant ended. Never a file
+  name. Texts in six languages, the in-app docs (`verzweigungen#ordner`), unit tests (`FoldersPage.test.tsx`) and the
+  `launch` browser test (a grant with an index becomes ready).
+
+### Welle 5 studio UIs: memory consents, export and delete everything, secrets to re-enter, folder browser (2026-11-27)
+
+- **Consents for shared workflows** (RT-089d, api #179) on the Memory page, only for a member of a server (the
+  desktop does not ask; a `404 memory.consent_unavailable` hides it too): choose one of your memory spaces and a
+  workflow, **Review** what the consent would cover (the workflow and every workflow it starts, with versions), then
+  **Allow** with exactly the digest that was shown. A `409 memory.consent_stale` is explained in words with
+  **Review again**, which shows the current content to allow. Every consent is listed (workflow, version, or an agent
+  test) and can be withdrawn. Hints for `memory.consent_required` and `memory.consent_stale` point there.
+- **Export and delete data** (N-15, api #176), a new Settings section for the `install` permission next to backup:
+  **Export everything** downloads `GET /api/data/export`; **Delete all data** warns (no undo, no safety backup, a link
+  to download a backup first) and sends `POST /api/data/delete-all` only after the exact confirmation
+  `delete all data` is typed. The answer is shown (complete, or which entries are left, deleting again removes the
+  rest) and the studio restarts. New error texts: `data.busy`, `data.deleting` (a run started while deleting),
+  `data.not_confirmed`, `backup.product_mismatch`.
+- **Secrets to enter again** after a restore (N-15 `secrets_to_reenter`): the restore dialog lists them before the
+  restore, and the backup section lists them after the reload, with a link for each label (`provider:<name>` to the
+  provider settings, `mcp:<id>` to the MCP service, `connection:<id>` to the connection; the Tools tabs now open the
+  item named by `?server=` or `?connection=`). Only labels are shown, never a secret value.
+- **Folder browser** (N-11, api #175) on the Granted folders page: **Browse …** next to the path opens a dialog with
+  the places, one level up and the sub-folders (never files) from `POST /api/folders/browse`; **Choose this folder**
+  fills the path, which can still be typed (the browser needs the window's own session). Every `folder.not_browsable`
+  reason has its own sentence, as do `folder.session_required` and `request.cross_site`.
+- Texts in six languages, the in-app docs (`memory#zustimmungen`, `einstellungen#daten`, `einstellungen#backup`,
+  `verzweigungen#ordner`), unit tests (`MemoryConsents.test.tsx`, `SettingsData.test.tsx`, `FoldersPage.test.tsx`)
+  and browser tests: `settings-ui` (export, typed confirmation, consents with simulated server answers) and `launch`
+  (the folder browser through the launch session; that suite turns `NODESTRO_FOLDER_GRANTS` on for itself). No lock
+  change; every switch stays off by default.
+
+### N-17 in the studio: the shared help for error messages (2026-11-27)
+
+- **Changes `platform/internal-ui.txt`:** the nodestro-ui packages move to nodestro-ui@bef3a45 (its merge of N-17):
+  `@nodestro/ui-core` and `@nodestro/ui-ai` 0.2.0 (additive), and `@nodestro/ui-help` 0.1.0 is vendored as a new
+  tarball; tokens and themes stay 0.1.0 with the same hashes.
+- An error message with a code (`ProblemText`, `ErrorText`, not in the compact form) shows a **?** with the shared
+  explanation of its code's family in the interface language; **Learn more** opens the matching chapter of the
+  built-in documentation in the app (`src/lib/platformHelp.tsx` maps each help entry to a section; a unit test
+  checks every link).
+- The documentation overview has an offline search **Help on error messages**: a message or a pasted error code
+  finds its explanation. FAQ "Common errors" explains both, in all six languages.
+- Tests: `src/lib/platformHelp.test.tsx`; `scripts/ui-vendor.test.mjs` expects the help package among the pins; the
+  smoke browser suite searches an error code and opens its chapter.
+
 ### RT-089d: the owner's consent for private memory spaces (2026-11-26)
 
 - Pins the runtime (and, once it is pushed, the api and sdk) of RT-089d: a workflow or agent test uses a person's

@@ -46,6 +46,13 @@ La pagina **Memoria** mostra tutti gli spazi con numero e dimensione dei file. S
 
 Così puoi verificare, correggere o precompilare la memoria in qualsiasi momento. Nell'ispettore, **Vedi contenuto** porta direttamente allo spazio dell'agente.
 
+## Consensi per workflow condivisi {#zustimmungen}
+<!-- keywords: consenso, privato, server, workflow condiviso, spazio di memoria, ritirare -->
+
+Su un server, ogni spazio di memoria appartiene alla persona che lo ha creato. Un workflow condiviso può usarlo solo dopo che quella persona ha consentito **esattamente il suo contenuto attuale**: il workflow e ogni workflow che avvia, ciascuno in una versione. Senza consenso l’esecuzione viene rifiutata.
+
+In **Consensi per workflow condivisi** scegli uno dei tuoi spazi di memoria e un workflow, poi **Verifica**. Vedi quali workflow copre il consenso; solo **Consenti** lo dà. Se qualcosa è cambiato dalla verifica (un workflow, uno strumento o una connessione), il consenso non viene dato: scegli **Verifica di nuovo** e consenti ciò che viene mostrato ora. L’elenco mostra tutti i tuoi consensi; **Ritira il consenso** vale dal passo successivo che ne ha bisogno. Sul desktop c’è una sola persona, quindi la sezione lì non compare.
+
 ## Configurare la memoria con l'IA {#assistent}
 <!-- keywords: assistente memoria, configura con l'ia, proposta, struttura, file iniziali -->
 

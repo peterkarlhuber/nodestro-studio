@@ -306,6 +306,17 @@ As **chaves de API** dos provedores de IA nunca vão para o backup, nem URLs bas
 
 **Restaurar de um arquivo** primeiro verifica o arquivo por completo: formato, a soma de verificação de cada arquivo, o banco de dados e cada fluxo de trabalho e execução salvos. Só então o Nodestro mostra o que o backup contém, em comparação com o estado atual. Os dados só são substituídos após confirmação explícita e somente se nenhuma execução estiver ativa. Antes disso, o Nodestro salva automaticamente um backup do estado atual (`before-restore-….zip` na pasta `backups` do diretório de dados); ele aparece entre os backups deste computador e pode ser restaurado da mesma forma. Se algo falhar, os dados anteriores permanecem inalterados.
 
+Chaves, tokens e senhas nunca estão em um backup, nem os tokens de serviços MCP e os segredos de conexões de serviço. Se este computador não os tiver, a verificação e a página após a restauração mostram a lista **segredos para inserir de novo**: um link para o provedor de IA, serviço MCP ou conexão onde você o insere de novo. Só é mostrado o que falta, nunca um valor.
+
+## Exportar e excluir dados {#daten}
+<!-- keywords: exportação, exportar tudo, excluir dados, excluir tudo, levar, privacidade -->
+
+→ [Abrir no Nodestro](/settings#settings-data)
+
+**Exportar tudo** baixa um arquivo ZIP com arquivos legíveis: fluxos de trabalho, execuções, modelos de agentes, ferramentas, conhecimento, memória, conversas e configurações, sem chaves, tokens ou outros segredos. A exportação serve para guardar e levar os dados; só um backup pode ser restaurado.
+
+**Excluir todos os dados** remove tudo deste computador para sempre, os segredos também; nenhum backup de segurança é mantido. Para confirmar, você digita exatamente `delete all data`, em inglês em todos os idiomas. A exclusão só começa quando nenhuma execução e nenhum outro trabalho em segundo plano está ativo, e nenhuma execução começa enquanto ela ocorre. Depois, a instalação recomeça como uma nova. Se algo não pôde ser removido (por exemplo, um arquivo em uso), isso é indicado; excluir de novo remove o resto.
+
 ## Diagnóstico do sistema {#diagnose}
 <!-- keywords: diagnóstico, verificar, encontrar erros, conexão, docker, sandbox, versão, problema -->
 

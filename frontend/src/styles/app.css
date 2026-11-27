@@ -1912,6 +1912,22 @@ details[open] > summary > .section__chevron {
   margin-top: 4px;
 }
 
+/* The shared help of the error's family (@nodestro/ui-help): a "?" right after the sentence, opening below it. */
+.problem-help {
+  margin-inline-start: 6px;
+}
+
+.problem-help .ui-helptip__panel {
+  left: 0;
+  right: auto;
+  text-align: start;
+}
+
+/* The offline search for error messages and codes on the documentation overview. */
+.docs-error-help {
+  margin: 16px 0;
+}
+
 .run-problem {
   display: flex;
   flex-direction: column;
