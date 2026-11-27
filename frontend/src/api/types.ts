@@ -4291,3 +4291,32 @@ export interface PublicationOverviewItem extends PublicationListItem {
   /** The publication's exports, newest first. */
   exports: ExportRecord[];
 }
+
+/** A package of the data-only extension store (RT-098, nodestro-api API-081) and how it stands in the backend. */
+export interface StoredExtension {
+  sha256: string;
+  distribution: string;
+  version: string;
+  /** ``[entry point name, module:attribute]``. */
+  entries: string[][];
+  origin: string;
+  installed_at: string;
+  installed_by: string;
+  replaces?: string | null;
+  files: number;
+  bytes: number;
+  state?: "sandboxed" | "locked";
+  /** ``off``, ``not_secured``, ``invalid`` or ``pending`` (listed at the next start). */
+  reason?: string | null;
+  detail?: string | null;
+  tools?: string[];
+}
+
+export interface ExtensionStoreView {
+  enabled: boolean;
+  tools_switch: boolean;
+  max_bytes: number;
+  packages: StoredExtension[];
+  revoked: { sha256: string; revoked_at: string; revoked_by: string }[];
+  host_refused: { name: string; distribution: string; version: string; detail?: string | null }[];
+}

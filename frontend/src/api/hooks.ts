@@ -45,6 +45,7 @@ export const keys = {
   accessGrants: ["access", "grants"] as const,
   accessDenies: ["access", "denies"] as const,
   folderState: ["folders", "state"] as const,
+  extensions: ["extensions"] as const,
   folders: ["folders", "list"] as const,
   folderAccesses: (id: string) => ["folders", "accesses", id] as const,
   resultFiles: (runId: string) => ["result-files", runId] as const,

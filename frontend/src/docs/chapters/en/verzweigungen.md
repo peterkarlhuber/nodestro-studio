@@ -111,6 +111,13 @@ The page lists every grant with who gave it and its state. The **access log** of
 
 With **Keep a search index** (off unless you turn it on), Nodestro keeps a search index of the folder's text and PDF files that agents search by meaning. The list shows its state: **Indexing …**, **Index ready** with the number of files and the time of the last update, **Index incomplete** when files were left out at a limit, or **Index failed** with the reason. It never names a file. When the grant ends, its index is removed.
 
+## Extension packages {#erweiterungspakete}
+<!-- keywords: extension package, extension store, wheel, sha-256, revoke, sandbox -->
+
+Extension packages from other authors are kept apart from Nodestro's own program files, in the data folder of this installation; a server has none. An administrator opens **Extension packages** (linked on **Approvals**), chooses a pure-Python wheel (`.whl`), enters the SHA-256 checksum the publisher gives for it and where it comes from, and selects **Check and add**. Nodestro checks the file before it keeps anything: checksum, size, every file name and file, the description and that it needs no further libraries. A refused package is never kept, and the page says why. A package is never installed into Nodestro itself.
+
+The tools of a kept package stay **locked**. They run only when the development switch for extension tools is on, and then only in the isolated Docker sandbox, without network, host files or secrets; no kind of extension tool is released yet. A package added after the start is listed for its tools at the next start. **Remove** takes a package away; it can be added again and is checked again. **Revoke** takes it away for good: a file with that checksum is never accepted again. To update a package, add the new version and choose the installed one under **Update of**; the old version goes in the same step.
+
 ## Protected content {#geschuetzte-inhalte}
 <!-- keywords: protected content, granted source, provenance, cloud model, permission, egress -->
 

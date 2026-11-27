@@ -1391,5 +1391,24 @@
     "version_newer": "O arquivo vem de uma versão mais nova do Nodestro (versão {{version}}; esta lê até a versão {{supported}}). Atualize o Nodestro primeiro.",
     "zip_bomb": "{{name}} no arquivo se descompactaria muito além do seu tamanho, por isso o arquivo não é usado.",
     "zip_invalid": "O arquivo não é um ZIP legível."
+  },
+  "extension_store": {
+    "disabled": "Esta instalação não guarda pacotes de extensão.",
+    "not_found": "Este pacote de extensão não está guardado aqui.",
+    "refused": "O pacote de extensão foi recusado.",
+    "unreadable": "A lista de pacotes de extensão guardados não pode ser lida.",
+    "refused_hash_mismatch": "O checksum do pacote não é o SHA-256 esperado.",
+    "refused_origin": "Informe de onde o pacote vem.",
+    "refused_too_large": "O pacote é grande demais.",
+    "refused_archive": "O arquivo não é um wheel do Python legível.",
+    "refused_unsafe_path": "O pacote contém um nome de arquivo que sai da sua pasta ou aparece duas vezes.",
+    "refused_unsafe_member": "O pacote contém um link, um dispositivo, código nativo ou um arquivo que seria executado ao iniciar o Python.",
+    "refused_record": "A lista de arquivos e checksums do pacote não corresponde ao seu conteúdo.",
+    "refused_manifest": "A descrição, a versão ou os pontos de entrada do pacote não são válidos.",
+    "refused_not_pure": "Somente pacotes em Python puro são aceitos.",
+    "refused_dependency": "O pacote precisa de outras bibliotecas; esses pacotes ainda não são suportados.",
+    "refused_data_part": "Pacotes com scripts ou pastas de dados extras não são aceitos.",
+    "refused_exists": "Este pacote ou outra versão dele já está guardado; adicione-o como atualização.",
+    "refused_revoked": "Este pacote foi revogado e nunca mais é aceito."
   }
 }

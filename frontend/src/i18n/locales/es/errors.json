@@ -1391,5 +1391,24 @@
     "version_newer": "El archivo procede de una versión más reciente de Nodestro (versión {{version}}; esta lee hasta la versión {{supported}}). Actualiza Nodestro primero.",
     "zip_bomb": "{{name}} en el archivo se descomprimiría a mucho más que su tamaño, así que el archivo no se usa.",
     "zip_invalid": "El archivo no es un ZIP legible."
+  },
+  "extension_store": {
+    "disabled": "Esta instalación no guarda paquetes de extensión.",
+    "not_found": "Este paquete de extensión no se guarda aquí.",
+    "refused": "Se rechazó el paquete de extensión.",
+    "unreadable": "No se puede leer la lista de paquetes de extensión guardados.",
+    "refused_hash_mismatch": "La suma de comprobación del paquete no es el SHA-256 esperado.",
+    "refused_origin": "Indique de dónde procede el paquete.",
+    "refused_too_large": "El paquete es demasiado grande.",
+    "refused_archive": "El archivo no es un wheel de Python legible.",
+    "refused_unsafe_path": "El paquete contiene un nombre de archivo que sale de su carpeta o que aparece dos veces.",
+    "refused_unsafe_member": "El paquete contiene un enlace, un dispositivo, código nativo o un archivo que se ejecutaría al iniciar Python.",
+    "refused_record": "La lista de archivos y sumas de comprobación del paquete no coincide con su contenido.",
+    "refused_manifest": "La descripción, la versión o los puntos de entrada del paquete no son válidos.",
+    "refused_not_pure": "Solo se aceptan paquetes de Python puro.",
+    "refused_dependency": "El paquete necesita otras bibliotecas; esos paquetes aún no son compatibles.",
+    "refused_data_part": "No se aceptan paquetes con scripts o carpetas de datos adicionales.",
+    "refused_exists": "Este paquete u otra versión suya ya está guardado; añádalo como actualización.",
+    "refused_revoked": "Este paquete fue revocado y nunca se vuelve a aceptar."
   }
 }

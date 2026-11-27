@@ -1391,5 +1391,24 @@
     "version_newer": "Il file proviene da una versione più recente di Nodestro (versione {{version}}; questa legge fino alla versione {{supported}}). Aggiorna prima Nodestro.",
     "zip_bomb": "{{name}} nel file si decomprimerebbe ben oltre la sua dimensione, quindi il file non viene usato.",
     "zip_invalid": "Il file non è un file ZIP leggibile."
+  },
+  "extension_store": {
+    "disabled": "Questa installazione non conserva pacchetti di estensione.",
+    "not_found": "Questo pacchetto di estensione non è conservato qui.",
+    "refused": "Il pacchetto di estensione è stato rifiutato.",
+    "unreadable": "L'elenco dei pacchetti di estensione conservati non può essere letto.",
+    "refused_hash_mismatch": "Il checksum del pacchetto non è lo SHA-256 atteso.",
+    "refused_origin": "Indicare da dove proviene il pacchetto.",
+    "refused_too_large": "Il pacchetto è troppo grande.",
+    "refused_archive": "Il file non è una wheel Python leggibile.",
+    "refused_unsafe_path": "Il pacchetto contiene un nome di file che esce dalla sua cartella o compare due volte.",
+    "refused_unsafe_member": "Il pacchetto contiene un collegamento, un dispositivo, codice nativo o un file che verrebbe eseguito all'avvio di Python.",
+    "refused_record": "L'elenco dei file e dei checksum del pacchetto non corrisponde al suo contenuto.",
+    "refused_manifest": "La descrizione, la versione o i punti di ingresso del pacchetto non sono validi.",
+    "refused_not_pure": "Sono accettati solo pacchetti in Python puro.",
+    "refused_dependency": "Il pacchetto richiede altre librerie; questi pacchetti non sono ancora supportati.",
+    "refused_data_part": "I pacchetti con script o cartelle di dati aggiuntive non sono accettati.",
+    "refused_exists": "Questo pacchetto o un'altra sua versione è già conservato; aggiungerlo come aggiornamento.",
+    "refused_revoked": "Questo pacchetto è stato revocato e non viene mai più accettato."
   }
 }

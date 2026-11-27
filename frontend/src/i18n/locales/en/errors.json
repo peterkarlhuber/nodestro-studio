@@ -1391,5 +1391,24 @@
     "version_newer": "The file comes from a newer Nodestro version (version {{version}}; this one reads up to version {{supported}}). Update Nodestro first.",
     "zip_bomb": "{{name}} in the file would unpack to far more than its size, so the file is not used.",
     "zip_invalid": "The file is not a readable ZIP file."
+  },
+  "extension_store": {
+    "disabled": "This installation keeps no extension packages.",
+    "not_found": "This extension package is not kept here.",
+    "refused": "The extension package was refused.",
+    "unreadable": "The list of kept extension packages cannot be read.",
+    "refused_hash_mismatch": "The package's checksum is not the expected SHA-256.",
+    "refused_origin": "Say where the package comes from.",
+    "refused_too_large": "The package is too large.",
+    "refused_archive": "The file is not a readable Python wheel.",
+    "refused_unsafe_path": "The package contains a file name that leaves its folder or is used twice.",
+    "refused_unsafe_member": "The package contains a link, a device, native code or a file that would run when Python starts.",
+    "refused_record": "The package's list of files and checksums does not match its contents.",
+    "refused_manifest": "The package's description, version or entry points are not valid.",
+    "refused_not_pure": "Only pure Python packages are accepted.",
+    "refused_dependency": "The package needs other libraries; such packages are not supported yet.",
+    "refused_data_part": "Packages with scripts or extra data folders are not accepted.",
+    "refused_exists": "This package or another version of it is kept already; add it as an update.",
+    "refused_revoked": "This package was revoked and is never accepted again."
   }
 }

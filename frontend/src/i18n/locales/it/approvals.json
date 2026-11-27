@@ -312,5 +312,48 @@
       "failed": "Non è stato possibile leggere la cartella.",
       "offEnded": "La condivisione è terminata, quindi il suo indice è stato rimosso."
     }
+  },
+  "extensions": {
+    "title": "Pacchetti di estensione",
+    "description": "Pacchetti di estensione di altri autori, tenuti separati dai file di Nodestro. I loro strumenti vengono eseguiti solo nella sandbox Docker isolata.",
+    "link": "Pacchetti di estensione",
+    "lockedTitle": "I loro strumenti restano bloccati.",
+    "switchOff": "Gli strumenti di estensione non sono attivati per questa installazione, quindi nessuno strumento di un pacchetto viene eseguito. Un pacchetto aggiunto viene solo controllato e conservato.",
+    "switchOn": "L'interruttore di sviluppo degli strumenti di estensione è attivo. Gli strumenti vengono eseguiti solo nella sandbox Docker, senza rete, file dell'host o segreti, e solo dopo che la sandbox ha superato i suoi controlli.",
+    "upload": "Aggiungi un pacchetto",
+    "uploadText": "Nodestro controlla il pacchetto prima di conservarlo: checksum, file, descrizione e dipendenze. Non viene mai installato in Nodestro stesso.",
+    "file": "File del pacchetto",
+    "fileHint": "Una wheel Python (.whl) di al massimo {{mb}} MB, solo Python puro.",
+    "tooLarge": "Questo file è più grande di quanto accettato.",
+    "sha256": "SHA-256 atteso",
+    "sha256Hint": "Il checksum di 64 cifre indicato dall'editore per questo file. Un file con un altro checksum viene rifiutato.",
+    "origin": "Provenienza",
+    "originHint": "Ad esempio l'indirizzo della pagina di rilascio dell'editore. Viene conservato con il pacchetto.",
+    "replaces": "Aggiornamento di",
+    "replacesHint": "Facoltativo. La versione installata che questo pacchetto sostituisce; quella vecchia viene rimossa quando la nuova è conservata.",
+    "replacesNone": "Nessun aggiornamento: un nuovo pacchetto",
+    "uploadButton": "Controlla e aggiungi",
+    "uploaded": "{{name}} {{version}} è stato controllato e aggiunto.",
+    "packages": "Pacchetti conservati",
+    "empty": "Qui non è conservato alcun pacchetto di estensione.",
+    "sandboxed": "Nella sandbox",
+    "locked": "Bloccato",
+    "remove": "Rimuovi {{name}}",
+    "removeConfirm": "Rimuovere?",
+    "revoke": "Revoca {{name}}",
+    "revokeConfirm": "Revocare definitivamente?",
+    "tools": "Strumenti: {{tools}}",
+    "hash": "Somma di controllo (SHA-256)",
+    "originLabel": "Provenienza",
+    "installedBy": "Aggiunto da",
+    "revoked": "Pacchetti revocati",
+    "revokedBy": "revocato da {{by}} il {{at}}; non viene mai più accettato",
+    "hostRefused": "Trovati nell'ambiente di programma di Nodestro e mai usati: {{names}}. Rimuoverli da lì.",
+    "reasons": {
+      "off": "Bloccato: gli strumenti di estensione sono disattivati.",
+      "not_secured": "Bloccato: la sandbox Docker non ha superato i suoi controlli.",
+      "invalid": "Bloccato: il pacchetto non ha superato un controllo.",
+      "pending": "Aggiunto dopo l'avvio: i suoi strumenti vengono elencati al prossimo avvio."
+    }
   }
 }

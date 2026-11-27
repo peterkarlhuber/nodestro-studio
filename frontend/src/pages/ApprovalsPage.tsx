@@ -9,6 +9,7 @@ import { BudgetRequestCard } from "../runs/BudgetDecisionCard";
 import { ToolApprovalForm } from "../runs/ToolApprovalCard";
 import { ToolApprovalRules } from "../runs/ToolApprovalRules";
 import { AccessRulesLink } from "./AccessRulesPage";
+import { ExtensionsLink } from "./ExtensionsPage";
 import { FoldersLink } from "./FoldersPage";
 
 /** Every approval waiting for a person, oldest first; they survive restarts of Nodestro. Tool calls that wait for a
@@ -59,6 +60,7 @@ export function ApprovalsPage() {
         <ToolApprovalRules />
         <AccessRulesLink />
         <FoldersLink />
+        <ExtensionsLink />
       </div>
     </div>
   );

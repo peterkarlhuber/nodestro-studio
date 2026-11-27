@@ -312,5 +312,48 @@
       "failed": "No se pudo leer la carpeta.",
       "offEnded": "El uso compartido terminó, así que su índice se eliminó."
     }
+  },
+  "extensions": {
+    "title": "Paquetes de extensión",
+    "description": "Paquetes de extensión de otros autores, separados de los archivos propios de Nodestro. Sus herramientas solo se ejecutan en el entorno aislado de Docker.",
+    "link": "Paquetes de extensión",
+    "lockedTitle": "Sus herramientas siguen bloqueadas.",
+    "switchOff": "Las herramientas de extensión no están activadas en esta instalación, así que no se ejecuta ninguna herramienta de un paquete. Un paquete añadido solo se comprueba y se guarda.",
+    "switchOn": "El interruptor de desarrollo de las herramientas de extensión está activado. Las herramientas solo se ejecutan en el entorno aislado de Docker, sin red, archivos del equipo ni secretos, y solo después de que el entorno haya superado sus comprobaciones.",
+    "upload": "Añadir un paquete",
+    "uploadText": "Nodestro comprueba el paquete antes de guardarlo: su suma de comprobación, sus archivos, su descripción y lo que necesita. Nunca se instala en el propio Nodestro.",
+    "file": "Archivo del paquete",
+    "fileHint": "Un wheel de Python (.whl) de {{mb}} MB como máximo, solo Python puro.",
+    "tooLarge": "Este archivo supera el tamaño que se acepta.",
+    "sha256": "SHA-256 esperado",
+    "sha256Hint": "La suma de comprobación de 64 dígitos que indica el editor para este archivo. Un archivo con otra suma se rechaza.",
+    "origin": "Procedencia",
+    "originHint": "Por ejemplo, la dirección de la página de publicación del editor. Se guarda con el paquete.",
+    "replaces": "Actualización de",
+    "replacesHint": "Opcional. La versión instalada que este paquete sustituye; la anterior se elimina cuando se guarda la nueva.",
+    "replacesNone": "Sin actualización: un paquete nuevo",
+    "uploadButton": "Comprobar y añadir",
+    "uploaded": "{{name}} {{version}} se ha comprobado y añadido.",
+    "packages": "Paquetes guardados",
+    "empty": "Aquí no se guarda ningún paquete de extensión.",
+    "sandboxed": "En el entorno aislado",
+    "locked": "Bloqueado",
+    "remove": "Eliminar {{name}}",
+    "removeConfirm": "¿Eliminar?",
+    "revoke": "Revocar {{name}}",
+    "revokeConfirm": "¿Revocar para siempre?",
+    "tools": "Herramientas: {{tools}}",
+    "hash": "Suma de verificación (SHA-256)",
+    "originLabel": "Procedencia",
+    "installedBy": "Añadido por",
+    "revoked": "Paquetes revocados",
+    "revokedBy": "revocado por {{by}} el {{at}}; nunca se vuelve a aceptar",
+    "hostRefused": "Encontrados en el entorno de programa de Nodestro y nunca usados: {{names}}. Elimínelos de allí.",
+    "reasons": {
+      "off": "Bloqueado: las herramientas de extensión están desactivadas.",
+      "not_secured": "Bloqueado: el entorno aislado de Docker no superó sus comprobaciones.",
+      "invalid": "Bloqueado: el paquete no superó una comprobación.",
+      "pending": "Añadido después del inicio: sus herramientas se mostrarán en el próximo inicio."
+    }
   }
 }

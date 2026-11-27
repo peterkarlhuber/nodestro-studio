@@ -111,6 +111,13 @@ Die Seite zeigt jede Freigabe mit wer sie gegeben hat und ihrem Zustand. Das **Z
 
 Mit **Suchindex anlegen** (aus, solange du es nicht einschaltest) hält Nodestro einen Suchindex der Text- und PDF-Dateien des Ordners, den Agenten nach Bedeutung durchsuchen. Die Liste zeigt seinen Zustand: **Wird indexiert …**, **Index bereit** mit der Zahl der Dateien und dem Zeitpunkt der letzten Aktualisierung, **Index unvollständig**, wenn Dateien an einer Grenze ausgelassen wurden, oder **Index fehlgeschlagen** mit dem Grund. Sie nennt nie eine Datei. Endet die Freigabe, wird ihr Index entfernt.
 
+## Erweiterungspakete {#erweiterungspakete}
+<!-- keywords: erweiterungspaket, erweiterungsspeicher, wheel, sha-256, widerrufen, sandbox -->
+
+Erweiterungspakete anderer Autoren liegen getrennt von Nodestros eigenen Programmdateien im Datenordner dieser Installation; ein Server hat keine. Eine Administratorin oder ein Administrator öffnet **Erweiterungspakete** (verlinkt auf **Freigaben**), wählt ein reines Python-Wheel (`.whl`), gibt die SHA-256-Prüfsumme an, die der Herausgeber dafür nennt, und woher es stammt, und wählt **Prüfen und hinzufügen**. Nodestro prüft die Datei, bevor etwas aufbewahrt wird: Prüfsumme, Größe, jeden Dateinamen und jede Datei, die Beschreibung und dass sie keine weiteren Bibliotheken braucht. Ein abgelehntes Paket wird nie aufbewahrt, und die Seite sagt, warum. Ein Paket wird nie in Nodestro selbst installiert.
+
+Die Werkzeuge eines aufbewahrten Pakets bleiben **gesperrt**. Sie laufen nur, wenn der Entwicklungsschalter für Erweiterungswerkzeuge an ist, und dann nur in der isolierten Docker-Sandbox, ohne Netzwerk, Host-Dateien oder Geheimnisse; noch ist keine Art von Erweiterungswerkzeug freigegeben. Ein nach dem Start hinzugefügtes Paket wird beim nächsten Start mit seinen Werkzeugen aufgelistet. **Entfernen** nimmt ein Paket weg; es kann wieder hinzugefügt werden und wird erneut geprüft. **Widerrufen** nimmt es endgültig weg: Eine Datei mit dieser Prüfsumme wird nie wieder angenommen. Zum Aktualisieren fügst du die neue Version hinzu und wählst unter **Aktualisierung von** die installierte; die alte wird im selben Schritt entfernt.
+
 ## Geschützter Inhalt {#geschuetzte-inhalte}
 <!-- keywords: geschützter inhalt, freigegebene quelle, herkunft, cloud-modell, erlaubnis, abfluss -->
 

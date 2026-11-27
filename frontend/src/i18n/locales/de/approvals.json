@@ -312,5 +312,48 @@
       "failed": "Der Ordner ließ sich nicht lesen.",
       "offEnded": "Die Freigabe ist beendet, deshalb wurde ihr Index entfernt."
     }
+  },
+  "extensions": {
+    "title": "Erweiterungspakete",
+    "description": "Erweiterungspakete anderer Autoren, getrennt von Nodestros eigenen Programmdateien. Ihre Werkzeuge laufen nur in der isolierten Docker-Sandbox.",
+    "link": "Erweiterungspakete",
+    "lockedTitle": "Ihre Werkzeuge bleiben gesperrt.",
+    "switchOff": "Erweiterungswerkzeuge sind für diese Installation nicht eingeschaltet, daher läuft kein Werkzeug eines Pakets. Ein hinzugefügtes Paket wird nur geprüft und aufbewahrt.",
+    "switchOn": "Der Entwicklungsschalter für Erweiterungswerkzeuge ist an. Werkzeuge laufen nur in der Docker-Sandbox, ohne Netzwerk, Host-Dateien oder Geheimnisse, und erst nachdem die Sandbox ihre Prüfungen bestanden hat.",
+    "upload": "Paket hinzufügen",
+    "uploadText": "Nodestro prüft das Paket, bevor es aufbewahrt wird: Prüfsumme, Dateien, Beschreibung und Abhängigkeiten. Es wird nie in Nodestro selbst installiert.",
+    "file": "Paketdatei",
+    "fileHint": "Ein Python-Wheel (.whl) mit höchstens {{mb}} MB, nur reines Python.",
+    "tooLarge": "Diese Datei ist größer, als der Speicher annimmt.",
+    "sha256": "Erwartete SHA-256",
+    "sha256Hint": "Die 64-stellige Prüfsumme, die der Herausgeber für diese Datei angibt. Eine Datei mit anderer Prüfsumme wird abgelehnt.",
+    "origin": "Herkunft",
+    "originHint": "Zum Beispiel die Adresse der Release-Seite des Herausgebers. Sie wird mit dem Paket gespeichert.",
+    "replaces": "Aktualisierung von",
+    "replacesHint": "Optional. Die installierte Version, die dieses Paket ersetzt; die alte wird entfernt, sobald die neue aufbewahrt ist.",
+    "replacesNone": "Keine Aktualisierung: ein neues Paket",
+    "uploadButton": "Prüfen und hinzufügen",
+    "uploaded": "{{name}} {{version}} wurde geprüft und hinzugefügt.",
+    "packages": "Aufbewahrte Pakete",
+    "empty": "Hier wird kein Erweiterungspaket aufbewahrt.",
+    "sandboxed": "In der Sandbox",
+    "locked": "Gesperrt",
+    "remove": "{{name}} entfernen",
+    "removeConfirm": "Entfernen?",
+    "revoke": "{{name}} widerrufen",
+    "revokeConfirm": "Endgültig widerrufen?",
+    "tools": "Werkzeuge: {{tools}}",
+    "hash": "Prüfsumme (SHA-256)",
+    "originLabel": "Herkunft",
+    "installedBy": "Hinzugefügt von",
+    "revoked": "Widerrufene Pakete",
+    "revokedBy": "widerrufen von {{by}} am {{at}}; wird nie wieder angenommen",
+    "hostRefused": "In Nodestros eigener Programmumgebung gefunden und nie verwendet: {{names}}. Entferne sie dort.",
+    "reasons": {
+      "off": "Gesperrt: Erweiterungswerkzeuge sind ausgeschaltet.",
+      "not_secured": "Gesperrt: Die Docker-Sandbox hat ihre Prüfungen nicht bestanden.",
+      "invalid": "Gesperrt: Das Paket hat eine Prüfung nicht bestanden.",
+      "pending": "Nach dem Start hinzugefügt: Seine Werkzeuge werden beim nächsten Start aufgelistet."
+    }
   }
 }

@@ -1391,5 +1391,24 @@
     "version_newer": "Die Datei stammt aus einer neueren Nodestro-Version (Version {{version}}; diese liest bis Version {{supported}}). Aktualisiere zuerst Nodestro.",
     "zip_bomb": "{{name}} in der Datei würde sich auf ein Vielfaches seiner Größe entpacken, daher wird die Datei nicht verwendet.",
     "zip_invalid": "Die Datei ist keine lesbare ZIP-Datei."
+  },
+  "extension_store": {
+    "disabled": "Diese Installation bewahrt keine Erweiterungspakete auf.",
+    "not_found": "Dieses Erweiterungspaket wird hier nicht aufbewahrt.",
+    "refused": "Das Erweiterungspaket wurde abgelehnt.",
+    "unreadable": "Die Liste der aufbewahrten Erweiterungspakete kann nicht gelesen werden.",
+    "refused_hash_mismatch": "Die Prüfsumme des Pakets ist nicht die erwartete SHA-256.",
+    "refused_origin": "Gib an, woher das Paket stammt.",
+    "refused_too_large": "Das Paket ist zu groß.",
+    "refused_archive": "Die Datei ist kein lesbares Python-Wheel.",
+    "refused_unsafe_path": "Das Paket enthält einen Dateinamen, der seinen Ordner verlässt oder doppelt vorkommt.",
+    "refused_unsafe_member": "Das Paket enthält einen Link, ein Gerät, nativen Code oder eine Datei, die beim Start von Python ausgeführt würde.",
+    "refused_record": "Die Datei- und Prüfsummenliste des Pakets passt nicht zu seinem Inhalt.",
+    "refused_manifest": "Beschreibung, Version oder Einstiegspunkte des Pakets sind ungültig.",
+    "refused_not_pure": "Nur reine Python-Pakete werden angenommen.",
+    "refused_dependency": "Das Paket benötigt weitere Bibliotheken; solche Pakete werden noch nicht unterstützt.",
+    "refused_data_part": "Pakete mit Skripten oder zusätzlichen Datenordnern werden nicht angenommen.",
+    "refused_exists": "Dieses Paket oder eine andere Version davon wird bereits aufbewahrt; füge es als Aktualisierung hinzu.",
+    "refused_revoked": "Dieses Paket wurde widerrufen und wird nie wieder angenommen."
   }
 }

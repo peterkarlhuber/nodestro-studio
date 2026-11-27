@@ -10,6 +10,7 @@ import { BatchDetailPage, BatchesPage } from "./pages/BatchesPage";
 import { ConversationsPage } from "./conversations/ConversationsPage";
 import { ExamplesPage } from "./pages/ExamplesPage";
 import { ExecutionsPage } from "./pages/ExecutionsPage";
+import { ExtensionsPage } from "./pages/ExtensionsPage";
 import { FoldersPage } from "./pages/FoldersPage";
 import { KnowledgePage } from "./pages/KnowledgePage";
 import { MemoryPage } from "./pages/MemoryPage";
@@ -80,6 +81,8 @@ export const routes: RouteObject[] = [
       { path: "approvals/access", element: <AccessRulesPage /> },
       // Granted folders (N-10): the page says so while they are off (the default) and never switches them on.
       { path: "approvals/folders", element: <FoldersPage /> },
+      // The data-only extension store (RT-098): its tools stay locked; the page never switches anything on.
+      { path: "approvals/extensions", element: <ExtensionsPage /> },
       { path: "batches", element: <BatchesPage /> },
       { path: "batches/:id", element: <BatchDetailPage /> },
       { path: "publications", element: <PublicationsPage /> },

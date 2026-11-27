@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Data-only extension store (2026-11-27)
+
+- Approvals: a new **Extension packages** page (admin only, linked on **Approvals**, never on a server) for the
+  data-only extension store (runtime RT-098, api API-081). An administrator adds a pure-Python wheel with its
+  expected SHA-256 and origin, optionally as an update of an installed version, and removes or revokes a package.
+  The page shows each package's state (`locked` with its reason, or `sandboxed` with its tools), the revoked hashes
+  and packages refused in the host environment. It never switches anything on: tools stay locked unless the
+  backend's development switch is on, and no tool class is released. Texts in six languages, a help section
+  (`verzweigungen#erweiterungspakete`), refusal reasons as their own sentences (`extension_store.refused_<reason>`),
+  the help family `extension_store.*` and `apiErrorCodes.json` with the four new codes.
+- Lock (paired, not for merge as is): `nodestro-runtime` and `nodestro-api` at the heads of `claude/w7-ext-store`.
+  Re-pin to their merge commits once they merge.
+
 ### N-22 R1 paired CI (2026-11-27)
 
 - CI (N-22 R1): the component jobs (`platform`, `components-at-master`) close the hosted runner's interpreter
