@@ -14,6 +14,9 @@
   trusted OCR import. The integrations suite in the components jobs (`platform`, `components-at-master`) runs with
   the studio installed as a wheel, as the products ship it; the editable install comes back for the studio's own
   suite. Two reinstalls without dependencies, a few seconds per job; no new job.
+- CI (N-22 third review NEW-3): the two studio reinstalls in `components-at-master` pass the shared cutoff too
+  (`uv pip install --exclude-newer`, from `platform/uploaded-prior-to`), as `platform.yml` does with pip;
+  `tests/test_pip_cutoff.py` checks all four reinstalls. Lock: `nodestro-runtime` with the third review's fixes.
 
 ### Welle 6: import dialogs for the exchange formats, the workflow file format, help coverage (N-14, ST-068)
 

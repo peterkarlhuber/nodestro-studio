@@ -109,3 +109,19 @@ def test_pip_only_checks_the_pip_and_prints_nothing(
     assert pip_cutoff.main(["--pip-only", "--file", str(tmp_path / "missing")]) == 0
     captured = capsys.readouterr()
     assert captured.out == "" and "meets Nodestro's floor 26.1" in captured.err
+
+
+def test_every_studio_reinstall_in_the_component_jobs_uses_the_cutoff() -> None:
+    """N-22 (review NEW-3): the integrations suite reinstalls the studio as a wheel and editable again; each reinstall
+    resolves the build backend, so each one passes the shared cutoff (pip ``--uploaded-prior-to``, uv
+    ``--exclude-newer``)."""
+    import re
+
+    workflows = ROOT / ".github" / "workflows"
+    found = 0
+    for name in ("platform.yml", "components-at-master.yml"):
+        for line in (workflows / name).read_text(encoding="utf-8").splitlines():
+            if re.search(r"(pip|uv pip) install .*--no-deps.* (-e )?\.$", line.strip()):
+                found += 1
+                assert '--uploaded-prior-to "$cutoff"' in line or '--exclude-newer "$cutoff"' in line, (name, line)
+    assert found == 4

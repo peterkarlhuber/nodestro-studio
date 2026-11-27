@@ -146,9 +146,11 @@ jobs:
       - name: nodestro-integrations
         if: ${{ !cancelled() && steps.installed.outcome == 'success' }}
         run: |
-          uv pip install --system --no-deps --reinstall .
+          # The build backend (hatchling) as uploaded before the shared cutoff, as platform.yml installs it (NEW-3).
+          cutoff=$(cat platform/uploaded-prior-to)
+          uv pip install --system --no-deps --reinstall --exclude-newer "$cutoff" .
           (cd "$RUNNER_TEMP/components/nodestro-integrations" && python -m pytest -p no:cacheprovider)
-          uv pip install --system --no-deps -e .
+          uv pip install --system --no-deps --exclude-newer "$cutoff" -e .
       - name: nodestro-api
         if: ${{ !cancelled() && steps.installed.outcome == 'success' }}
         run: cd "$RUNNER_TEMP/components/nodestro-api" && python -m pytest -p no:cacheprovider
