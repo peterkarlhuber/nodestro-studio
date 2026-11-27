@@ -73,6 +73,15 @@ jobs:
           # CI-FAST AP6: the three longest component suites run on every CPU of the runner (pytest-xdist).
           pip install --uploaded-prior-to "$cutoff" pytest-xdist==3.8.0
           pip freeze > "$RUNNER_TEMP/pip-freeze-components-${{ matrix.python }}.txt"
+      # N-22 (owner decision on R1): the runtime imports Nodestro's OCR integration only on a closed import path. The
+      # hosted runner's interpreter directories are writable by every user, which the runtime rightly refuses; close
+      # them as the products' installations are (root- or user-owned, not world-writable).
+      - name: Close the interpreter directories
+        run: |
+          prefix=$(python -I -c 'import sys; print(sys.base_prefix)')
+          sudo chmod -R go-w "$prefix"
+          parent=$(dirname "$prefix")
+          while [ "$parent" != / ]; do sudo chmod go-w "$parent"; parent=$(dirname "$parent"); done
       - name: The installed packages (pip freeze)
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -97,8 +106,16 @@ jobs:
           python -m pytest -p no:cacheprovider --collect-only -q > "$RUNNER_TEMP/ids-examples.txt"
           python -m pytest -p no:cacheprovider -n auto --junitxml="$RUNNER_TEMP/junit-examples.xml"
           python "$GITHUB_WORKSPACE/scripts/check_test_ids.py" "$RUNNER_TEMP/ids-examples.txt" "$RUNNER_TEMP/junit-examples.xml"
+      # N-22 (review N1): the runtime imports the OCR integration only when every .pth file of the site directories is
+      # an allowlisted one; the editable studio's (_editable_impl_nodestro.pth) is not. The integrations suite runs
+      # against the studio installed as a wheel, as the products ship it, and the editable install comes back for the
+      # studio's own suite (two reinstalls without dependencies, a few seconds).
       - name: nodestro-integrations
-        run: cd "$RUNNER_TEMP/components/nodestro-integrations" && python -m pytest -p no:cacheprovider
+        run: |
+          cutoff=$(python -I scripts/pip_cutoff.py)
+          pip install --uploaded-prior-to "$cutoff" --no-deps --force-reinstall .
+          (cd "$RUNNER_TEMP/components/nodestro-integrations" && python -m pytest -p no:cacheprovider)
+          pip install --uploaded-prior-to "$cutoff" --no-deps -e .
       - name: nodestro-api
         run: |
           cd "$RUNNER_TEMP/components/nodestro-api"

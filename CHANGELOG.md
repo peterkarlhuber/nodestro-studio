@@ -2,6 +2,34 @@
 
 ## Unreleased
 
+### N-22 R1 paired CI (2026-11-27)
+
+- CI (N-22 R1): the component jobs (`platform`, `components-at-master`) close the hosted runner's interpreter
+  directories (`chmod go-w`; they are writable by every user there), because the runtime now imports the OCR
+  integration only on a closed import path. About one second per job; no new job.
+- Lock (paired, not for merge as is): `nodestro-runtime` at the head of `claude/w6-n22-trust` with the independent
+  review fixes (H1, M1, L1, L3); `nodestro-integrations` at the head of its `claude/w6-n22-trust` (M2). Re-pin to the
+  merge commits once runtime #226 and integrations #97 are merged.
+- CI (N-22 re-review N1): the runtime accepts only allowlisted `.pth` files, so the editable studio's refuses the
+  trusted OCR import. The integrations suite in the components jobs (`platform`, `components-at-master`) runs with
+  the studio installed as a wheel, as the products ship it; the editable install comes back for the studio's own
+  suite. Two reinstalls without dependencies, a few seconds per job; no new job.
+- CI (N-22 third review NEW-3): the two studio reinstalls in `components-at-master` pass the shared cutoff too
+  (`uv pip install --exclude-newer`, from `platform/uploaded-prior-to`), as `platform.yml` does with pip;
+  `tests/test_pip_cutoff.py` checks all four reinstalls. Lock: `nodestro-runtime` with the third review's fixes.
+- Lock (N-22 fourth review): `nodestro-runtime` with the plainly stated host-import boundary (NEW-4, docs only) on
+  top of runtime master; `nodestro-integrations` with NEW-5 (no OCR program from the venv's `bin` or another folder
+  of a Python package). No CI change.
+- Lock (owner decision 2026-11-27): `nodestro-runtime` refuses every foreign extension package in the host
+  environment ("installed in the host environment"); `nodestro-integrations` takes the OCR programs only from
+  root-owned folders. The data-only extension store (runtime RT-098) is a binding G-6 prerequisite. No CI change.
+- Lock (final): `nodestro-runtime` at its master merge of N-22 (#227); `nodestro-integrations` with the final review's
+  F1 and F2 (every link hop to an OCR program checked, the real path runs, no `TESSDATA_PREFIX`); `orkexa` at the head
+  of #120 with orkexa master merged in; `nodestro-integrations` at the #97 head whose macOS real-OCR job gives
+  the Homebrew link chain to root; `nodestro-api` at #188 (the export check counts the runtime's two new N-22
+  modules, `extension_classes` and `extension_seccomp`). Re-pin integrations, orkexa and api to their merge commits
+  once merged.
+
 ### Welle 6: a tooltip opened by keyboard focus no longer closes again at once
 
 - A help icon's or control's tooltip that keyboard focus opened within 140 ms after the mouse left it was closed
