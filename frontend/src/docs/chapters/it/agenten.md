@@ -61,6 +61,17 @@ Sotto attivi gli **strumenti server di Anthropic**: *Ricerca web*, *Recupero web
 
 L'agente decide da solo se e quando chiamare uno strumento, in base al nome e alla descrizione. Quante volte può farlo lo regolano [Turni di strumenti max. e Strumenti in parallelo](/docs/agenten#limits); se è obbligato, lo regola il [Tool choice](/docs/agenten#tool-choice).
 
+## Workflow come strumenti {#workflow-tools}
+<!-- keywords: strumento workflow, workflow come strumento, versione fissa, workflow annidato, approvazione, argomenti, file di risultato -->
+
+Un agente può avviare un workflow salvato come strumento. È **disattivato per impostazione predefinita**: la parte **Workflow come strumenti** negli **Strumenti** dell’agente lo offre solo quando la tua amministrazione ha attivato gli strumenti workflow. Finché sono disattivati, un agente che ha già strumenti workflow li mostra con un avviso e non si avvia finché non vengono rimossi.
+
+- **Aggiungere**: **Aggiungi workflow come strumento** apre una finestra di dialogo. Scegli il workflow e una delle sue versioni salvate. Prima dell’aggiunta, la finestra mostra il nome dello strumento che vede il modello, gli argomenti che il modello compila (i campi del modulo di avvio; i campi file non vengono mai offerti, quindi un workflow che richiede file all’avvio non può essere aggiunto) e cosa può fare il workflow.
+- **Versione fissa**: l’agente chiama sempre la versione scelta. Quando viene salvata una versione più recente, l’editor e la conversazione la segnalano soltanto; nulla cambia finché non modifichi l’agente.
+- **Cosa può fare**: l’accesso più alto (solo lettura, modifica dati, cancella) e la portata più alta (resta in Nodestro, agisce verso l’esterno) di tutto ciò che contiene, a ogni profondità: i suoi agenti e i loro modelli, strumenti, file di risultato, sotto-workflow, team e strumenti workflow annidati. Ciò che è sconosciuto conta come modificante ed esterno. Ogni chiamata lo ricalcola e conta il valore più alto.
+- **Approvazione**: un workflow che può modificare qualcosa attende la tua approvazione prima di ogni avvio. La scheda nomina il workflow e la sua versione fissa e mostra gli argomenti e cosa può fare; la decisione vale solo per questo avvio. Anche i passi di approvazione e le chiamate di strumenti dentro il workflow appaiono come schede nella risposta.
+- **Risultato**: l’output del workflow torna all’agente; i suoi file di risultato sono allegati della risposta e si scaricano dall’esecuzione del workflow.
+
 ## Assegnare conoscenza {#wissen}
 <!-- keywords: assegnare conoscenza, file, pdf, contesto, su richiesta, ricerca, citazioni -->
 

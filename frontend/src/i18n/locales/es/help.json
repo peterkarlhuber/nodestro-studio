@@ -67,7 +67,8 @@
     "test": "Ejecuta solo este agente con una entrada de prueba y muestra la respuesta, las herramientas, los tokens y el coste. Consume saldo de la API, pero no es una ejecución del flujo de trabajo.",
     "preview": "Muestra lo que recibe el agente en la próxima ejecución: prompt del sistema, tarea con las entradas insertadas y el resto del contexto. Sin llamada a la API.",
     "paletteDesign": "Describe con tus palabras lo que debe hacer un agente. El Arquitecto de agentes propone una configuración completa; esto cuesta una solicitud al modelo del asistente.",
-    "outputFieldSource": "Cifra clave: el valor solo se acepta si una herramienta lo calculó en este paso o en uno anterior (por ejemplo la calculadora o table_totals). Si no, el agente recibe una corrección; después el paso se detiene, para que ninguna decisión se base en una cifra estimada."
+    "outputFieldSource": "Cifra clave: el valor solo se acepta si una herramienta lo calculó en este paso o en uno anterior (por ejemplo la calculadora o table_totals). Si no, el agente recibe una corrección; después el paso se detiene, para que ninguna decisión se base en una cifra estimada.",
+    "workflowTools": "Un agente puede iniciar un flujo de trabajo guardado en una versión fija como herramienta. Lo que puede hacer el flujo de trabajo en conjunto decide si cada inicio espera una aprobación. Desactivado por defecto: una administración activa las herramientas de flujo."
   },
   "tools": {
     "kind": "Integrada: viene con Nodestro. Herramienta propia: escrita por ti. Creada por IA: escrita por el agente de programación y aprobada por ti.",
@@ -86,7 +87,8 @@
     "callApproval": "Una persona decide sobre cada llamada a esta herramienta, con los argumentos exactos. Sin decisión dentro del plazo, la llamada cuenta como rechazada.",
     "servicesLocal": "Un servidor MCP local se ejecuta en un contenedor aislado. Sus paquetes se revisan y aprueban como las bibliotecas de una herramienta.",
     "servicesOAuth": "Algunos servicios exigen iniciar sesión. Nodestro abre su página de inicio de sesión y guarda el acceso cifrado.",
-    "testSend": "Envía un mensaje de prueba fijo: a la dirección de prueba de una conexión de servidor de correo o a la dirección de un webhook. Lo envías tú mismo; como máximo 5 por conexión y hora, y cada uno queda registrado."
+    "testSend": "Envía un mensaje de prueba fijo: a la dirección de prueba de una conexión de servidor de correo o a la dirección de un webhook. Lo envías tú mismo; como máximo 5 por conexión y hora, y cada uno queda registrado.",
+    "workflowCall": "El agente quiere iniciar un flujo de trabajo guardado en su versión fija. La tarjeta muestra los argumentos y lo que puede hacer el flujo de trabajo, con subflujos y herramientas de flujo anidadas. Sin decisión dentro del plazo, el inicio cuenta como rechazado."
   },
   "knowledge": {
     "upload": "PDF, imágenes (PNG, JPEG, GIF, WebP) y formatos de texto. Imágenes de hasta 5 MB, documentos de hasta 20 MB. Los textos y los PDF se indexan para la búsqueda.",

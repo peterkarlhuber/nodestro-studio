@@ -48,6 +48,54 @@ export interface ToolCallView {
   finished_at?: string | null;
   duration_ms?: number | null;
   approval?: ToolCallApproval | null;
+  /** N-20: a workflow tool's call (missing for other tools and on servers without workflow tools). */
+  workflow?: WorkflowCallView | null;
+}
+
+/** An approval step inside a workflow tool's run that waits (decided with ``POST /runs/{run_id}/approvals/{node_id}``). */
+export interface WorkflowApprovalCard {
+  run_id: string;
+  node_id: string;
+  label: string;
+  instructions: string;
+}
+
+/** A tool call inside a workflow tool's run that waits for a person's approval (the tool approval routes). */
+export interface WorkflowToolApprovalCard {
+  run_id: string;
+  request_id: string;
+  tool: string;
+}
+
+/** A result file of a workflow tool's run: an attachment of the answer (``GET /runs/{run_id}/files/{file_id}``). */
+export interface AnswerFile {
+  run_id: string;
+  file_id: string;
+  name: string;
+  format: string;
+  media_type: string;
+  size: number;
+}
+
+/** A workflow tool's call (N-20): the workflow in its fixed version, its run, what it waits for and its files. */
+export interface WorkflowCallView {
+  workflow_id: string;
+  version: number;
+  run_id: string;
+  status: string;
+  error?: Problem | null;
+  approvals: WorkflowApprovalCard[];
+  tool_approvals: WorkflowToolApprovalCard[];
+  files: AnswerFile[];
+  cost_usd?: number | null;
+}
+
+/** A workflow tool of the agent whose workflow has a newer saved version (only reported). */
+export interface WorkflowToolUpdate {
+  name: string;
+  workflow_id: string;
+  version: number;
+  latest_version: number;
 }
 
 export type MessageStatus = "complete" | "queued" | "running" | "paused" | "succeeded" | "failed" | "cancelled";
@@ -61,6 +109,8 @@ export interface ConversationMessage {
   attachments: MessageFile[];
   tool_calls: ToolCallView[];
   sources: SourceEntry[];
+  /** N-20: the result files of its workflow tools' runs, as attachments (missing on older servers). */
+  result_files?: AnswerFile[];
   status: MessageStatus;
   error?: Problem | null;
   agent?: TemplateRef | null;
@@ -104,6 +154,8 @@ export interface AgentConversation {
   answering?: string | null;
   /** N-08: ``granted_content`` once the conversation holds content of a granted source; never cleared. */
   provenance?: "unchecked" | "granted_content";
+  /** N-20: workflow tools of the agent with a newer saved version (missing on older servers). */
+  workflow_tool_updates?: WorkflowToolUpdate[];
 }
 
 export interface AgentConversationIn {
@@ -168,6 +220,14 @@ export const conversationKeys = {
 export function featuresOf(meta: Pick<Meta, "features"> | undefined): string[] {
   const found: unknown = meta?.features;
   return Array.isArray(found) ? found.filter((item): item is string => typeof item === "string") : [];
+}
+
+/**
+ * Whether agents may call workflow tools here (N-20, ``NODESTRO_WORKFLOW_TOOLS``, off by default): only an explicit
+ * ``workflow_tools`` in ``features`` offers adding one. Bindings that exist are shown either way.
+ */
+export function useWorkflowToolsEnabled(): boolean {
+  return featuresOf(useMeta().data).includes("workflow_tools");
 }
 
 /** Whether the server serves conversations with own agents: only an explicit ``conversations`` shows them. */

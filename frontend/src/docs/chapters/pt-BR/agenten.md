@@ -61,6 +61,17 @@ Abaixo você ativa as **ferramentas de servidor da Anthropic**: *Pesquisa na web
 
 O agente decide sozinho se e quando chama uma ferramenta, com base no nome e na descrição dela. Quantas vezes ele pode fazer isso é controlado por [Máx. de rodadas de ferramentas e Ferramentas em paralelo](/docs/agenten#limits); se ele é obrigado, por [Tool choice](/docs/agenten#tool-choice).
 
+## Fluxos de trabalho como ferramentas {#workflow-tools}
+<!-- keywords: ferramenta de fluxo, fluxo de trabalho como ferramenta, versão fixa, fluxo aninhado, aprovação, argumentos, arquivos de resultado -->
+
+Um agente pode iniciar um fluxo de trabalho salvo como ferramenta. Isso fica **desligado por padrão**: a seção **Fluxos de trabalho como ferramentas** nas **Ferramentas** do agente só oferece isso quando sua administração ligou as ferramentas de fluxo. Enquanto estiverem desligadas, um agente que já tem ferramentas de fluxo as mostra com um aviso e não inicia até que sejam removidas.
+
+- **Adicionar**: **Adicionar fluxo de trabalho como ferramenta** abre uma caixa de diálogo. Escolha o fluxo de trabalho e uma de suas versões salvas. Antes de adicionar, a caixa mostra o nome da ferramenta que o modelo vê, os argumentos que o modelo preenche (os campos do formulário de início; campos de arquivo nunca são oferecidos, então um fluxo de trabalho que precisa de arquivos no início não pode ser adicionado) e o que o fluxo de trabalho pode fazer.
+- **Versão fixa**: o agente sempre chama a versão escolhida. Quando uma versão mais recente é salva, o editor e a conversa só a informam; nada muda até você alterar o agente.
+- **O que pode fazer**: o acesso mais alto (só lê, altera dados, exclui) e o alcance mais alto (fica no Nodestro, age para fora) de tudo o que ele contém, em qualquer profundidade: seus agentes e os modelos deles, ferramentas, arquivos de resultado, subfluxos, equipes e ferramentas de fluxo aninhadas. O desconhecido conta como alterador e externo. Cada chamada o calcula de novo, e o valor mais alto conta.
+- **Aprovação**: um fluxo de trabalho que pode alterar algo espera sua aprovação antes de cada início. O cartão nomeia o fluxo de trabalho e sua versão fixa e mostra os argumentos e o que ele pode fazer; a decisão vale só para este início. Etapas de aprovação e chamadas de ferramentas dentro do fluxo de trabalho também aparecem como cartões na resposta.
+- **Resultado**: a saída do fluxo de trabalho volta ao agente; seus arquivos de resultado são anexos da resposta e são baixados da execução do fluxo de trabalho.
+
 ## Atribuir conhecimento {#wissen}
 <!-- keywords: atribuir conhecimento, arquivos, pdf, contexto, sob demanda, pesquisa, citações -->
 

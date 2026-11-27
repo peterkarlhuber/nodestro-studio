@@ -14,10 +14,11 @@ import { useAccess } from "../api/access";
 import { ApiError, api } from "../api/client";
 import { keys, useAccessGrantsEnabled, useToolApprovals } from "../api/hooks";
 import type { AccessDeny, AccessGrant, Run, ToolApprovalRequest, ToolCallApproval } from "../api/types";
-import { Badge, Button, Callout, Field, HelpTip, TextArea } from "../components/ui";
+import { Badge, Button, Callout, Field, HelpTip, Spinner, TextArea } from "../components/ui";
 import { toast } from "../components/toast";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
+import { WorkflowToolApprovalForm, mayBeWorkflowTool, workflowToolOf } from "../workflowTools/WorkflowToolApproval";
 
 /** Seconds until ``deadline`` (negative once it passed), updated every second. */
 export function useSecondsLeft(deadline: string): number {
@@ -151,7 +152,28 @@ function RememberDecision({
   );
 }
 
+/**
+ * The card of one request: a workflow tool's start (N-20) gets the workflow's card (version, arguments, what it may
+ * do), every other call the tool card. Which one comes from the agent in the run; a request whose capability was
+ * computed from content waits for the run before choosing, so its card does not change under the person's hands.
+ */
 export function ToolApprovalForm({ request, showContext = false }: { request: ToolApprovalRequest; showContext?: boolean }) {
+  const { t } = useTranslation();
+  const candidate = mayBeWorkflowTool(request);
+  const run = useQuery({
+    queryKey: keys.run(request.run_id),
+    queryFn: () => api.run(request.run_id),
+    staleTime: 60_000,
+    retry: false,
+    enabled: candidate,
+  });
+  if (candidate && run.isPending) return <Spinner label={t("approvals.tool.cardLabel", { name: request.tool })} />;
+  const binding = candidate ? workflowToolOf(run.data, request) : null;
+  if (binding) return <WorkflowToolApprovalForm request={request} binding={binding} showContext={showContext} />;
+  return <StandardToolApprovalForm request={request} showContext={showContext} />;
+}
+
+function StandardToolApprovalForm({ request, showContext = false }: { request: ToolApprovalRequest; showContext?: boolean }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [comment, setComment] = useState("");

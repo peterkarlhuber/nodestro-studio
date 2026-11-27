@@ -1,0 +1,79 @@
+{
+  "fixedVersion": "Versione {{version}} (fissa)",
+  "newerVersion": "Più recente: versione {{version}}",
+  "noArguments": "Nessun argomento.",
+  "effect": {
+    "label": "Cosa può fare il workflow",
+    "title": "Cosa può fare il workflow, a ogni profondità",
+    "unknownEffect": "Non ancora calcolato. Ogni chiamata lo ricalcola prima dell’avvio.",
+    "memory": "Usa una memoria persistente",
+    "approvals_one": "{{count}} passo di approvazione",
+    "approvals_other": "{{count}} passi di approvazione",
+    "scope": "Conta tutto ciò che contiene: i suoi agenti e modelli, strumenti, file di risultato, sotto-workflow, team e strumenti workflow annidati. Ogni chiamata lo ricalcola e conta il valore più alto.",
+    "raised": "Ora può fare più di quando è stato aggiunto. La chiamata viene chiesta con il valore attuale.",
+    "contains_one": "Contiene {{count}} altro workflow",
+    "contains_other": "Contiene altri {{count}} workflow",
+    "nestedItem": "{{name}} (versione {{version}})",
+    "unknown": "Sconosciuto, trattato come modificante ed esterno: {{items}}"
+  },
+  "approval": {
+    "title": "Avvia il workflow «{{name}}»",
+    "asTool": "come strumento {{tool}}",
+    "help": "Informazioni sui workflow come strumenti",
+    "argumentsList": "Argomenti per campo",
+    "everyStart": "Un workflow che può modificare qualcosa viene chiesto prima di ogni avvio. Questa decisione vale solo per questo avvio e non viene ricordata.",
+    "rejectHint": "Se rifiutato, il workflow non si avvia e l’agente sa che è stato rifiutato. Senza decisione, l’avvio conta come rifiutato.",
+    "startedToast": "Avvio consentito"
+  },
+  "call": {
+    "label": "Workflow {{name}}, versione {{version}}",
+    "openRun": "Apri l’esecuzione del workflow",
+    "waiting": "Il workflow attende una decisione",
+    "stepWaiting": "Un passo di approvazione del workflow ti aspetta.",
+    "stepRejectHint": "Cosa fa un rifiuto lo stabilisce il passo di approvazione del workflow.",
+    "toolWaiting": "Una chiamata di strumento del workflow («{{tool}}») attende l’approvazione.",
+    "openApprovals": "Apri approvazioni",
+    "files": "File di risultato del workflow",
+    "filesAttached_one": "{{count}} file di risultato, allegato alla risposta: {{names}}",
+    "filesAttached_other": "{{count}} file di risultato, allegati alla risposta: {{names}}",
+    "attachments": "Allegati della risposta"
+  },
+  "updates": {
+    "intro": "Esiste una versione più recente per strumenti workflow di questo agente. L’agente mantiene la sua versione fissa finché qualcuno non lo modifica:",
+    "item": "{{name}} usa la versione {{version}}, la più recente è {{latest}}"
+  },
+  "section": {
+    "title": "Workflow come strumenti",
+    "help": "Informazioni sui workflow come strumenti",
+    "off": "Gli strumenti workflow sono disattivati qui. Questo agente non si avvia finché ha strumenti workflow: rimuovili o chiedi alla tua amministrazione di attivarli.",
+    "add": "Aggiungi workflow come strumento",
+    "remove": "Rimuovi lo strumento workflow {{name}}",
+    "full": "Al massimo {{max}} strumenti workflow per agente.",
+    "hint": "L’agente può avviare un workflow salvato in una versione fissa e riceve il suo risultato e i suoi file."
+  },
+  "dialog": {
+    "title": "Aggiungi un workflow come strumento",
+    "description": "L’agente chiama il workflow nella versione che scegli qui. Una versione più recente viene solo segnalata e mai usata da sola.",
+    "workflow": "Workflow",
+    "chooseWorkflow": "Scegli un workflow",
+    "noVersions": "Questo workflow non ha ancora una versione salvata. Salvalo prima.",
+    "version": "Versione",
+    "versionHint": "Fissa: l’agente chiama sempre questa versione.",
+    "versionOption": "Versione {{version}} · {{date}}",
+    "preview": "Anteprima dello strumento",
+    "arguments": "Argomenti che il modello compila",
+    "argName": "Nome",
+    "argType": "Tipo",
+    "argDescription": "Descrizione",
+    "required": "obbligatorio",
+    "blocked": "Questo workflow richiede file all’avvio ({{fields}}). Un modello non può compilare campi file, quindi non può essere eseguito come strumento.",
+    "asked": "Questo workflow può modificare qualcosa: ogni avvio attende l’approvazione nella conversazione o nell’esecuzione.",
+    "name": "Nome dello strumento",
+    "nameHint": "Il nome che vede il modello.",
+    "name_invalid": "Usa solo lettere, cifre, _ e -, al massimo 64 caratteri.",
+    "name_taken": "L’agente ha già uno strumento con questo nome.",
+    "toolDescription": "Descrizione per il modello (facoltativa)",
+    "toolDescriptionHint": "Aggiunta alla descrizione propria del workflow.",
+    "add": "Aggiungi"
+  }
+}

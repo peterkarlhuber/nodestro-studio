@@ -5,6 +5,10 @@
 // agent and an explicitly chosen model, sending by keyboard, an answer that streams in over the answer's event
 // stream (Stop shows while it is written), attaching a file that goes with the next message and downloads again,
 // rename, delete, a phone width without horizontal scrolling and no console errors.
+// Workflows as tools (N-20, the server switches them on for itself): an agent's call of a workflow in its fixed
+// version waits on the workflow's approval card (version, arguments, what it may do), the workflow's approval step
+// waits as a card in the answer, the result file is an attachment that downloads; in the agent library the dialog adds
+// a workflow as a tool (keyboard: Escape closes it and focus returns), and the binding is stored with its effect.
 
 import { createRequire } from "node:module";
 import { mkdirSync } from "node:fs";
@@ -30,8 +34,8 @@ page.on("request", (request) => {
   if (/\/api\/conversations\/[^/]+\/messages\/[^/]+\/events$/.test(new URL(request.url()).pathname)) streams.push(request.url());
 });
 
-async function shot(name) {
-  if (shots) await page.screenshot({ path: join(shots, `${name}.png`), fullPage: true });
+async function shot(name, locator) {
+  if (shots) await (locator ?? page).screenshot({ path: join(shots, `${name}.png`), ...(locator ? {} : { fullPage: true }) });
 }
 
 function check(condition, message) {
@@ -137,6 +141,84 @@ try {
   check(true, "Deleting removes the conversation");
   const gone = await page.request.fetch(`${base}/api/conversations/${conversationId}`, { headers: FRESH_CONNECTION });
   check(gone.status() === 404, "The deleted conversation answers 404");
+
+  // ---- workflows as tools (N-20) --------------------------------------------------------------------------------
+  // Until the pinned api lists ``workflow_tools`` in /api/meta's features (nodestro-api claude/w7-n20-ui), the test
+  // adds it to the answer; the server has the switch on either way, so every other route is the real one.
+  if (!meta.features.includes("workflow_tools")) {
+    await page.route("**/api/meta", async (route) => {
+      const response = await route.fetch();
+      const body = await response.json();
+      await route.fulfill({ response, json: { ...body, features: [...body.features, "workflow_tools"] } });
+    });
+  }
+  const templates = await api("/agents/templates");
+  const accountant = templates.find((item) => item.agent.name === "Accountant");
+  check(accountant.agent.workflow_tools?.[0]?.version === 1, "The Accountant calls the Quote workflow in version 1");
+  const quoteChat = await api("/conversations", "POST", { agent: { template_id: accountant.id }, model: accountant.agent.model });
+  await page.goto(`${base}/conversations/${quoteChat.id}`);
+  await page.getByTestId("conversation-input").fill("A quote for ACME, 1200.");
+  await page.getByTestId("conversation-input").press("Enter");
+  const startCard = page.getByTestId("workflow-tool-approval");
+  await startCard.waitFor({ timeout: 30000 });
+  await startCard.getByText("Start workflow “Quote”").waitFor();
+  const startText = await startCard.innerText();
+  check(startText.includes("Version 1 (fixed)"), "The start card names the fixed version");
+  check(startText.includes("as tool workflow_quote"), "The start card names the tool");
+  check((await startCard.getByTestId("workflow-tool-args").innerText()).includes("ACME"), "The start card lists the arguments");
+  check(startText.includes("Changes data") && startText.includes("Reaches outside"), "The start card shows access and reach");
+  check(startText.includes("1 approval step"), "The start card counts the workflow's approval steps");
+  check((await page.getByRole("article", { name: /Start workflow “Quote”/ }).count()) === 1, "The start card is an article named after the workflow");
+  await shot("workflow-tool-approval", startCard);
+  await startCard.getByRole("button", { name: "Approve" }).click();
+  const callPanel = page.getByTestId("workflow-call");
+  await callPanel.waitFor({ timeout: 30000 });
+  const step = callPanel.getByRole("button", { name: /^Approve/ });
+  await step.first().waitFor({ timeout: 30000 });
+  check((await callPanel.innerText()).includes("Quote"), "The answer shows the workflow's call with its name");
+  check((await callPanel.getAttribute("aria-label")) === "Workflow Quote, version 1", "The call is a region named with workflow and version");
+  await shot("workflow-call-waiting", callPanel);
+  await step.first().click();
+  const quoteAnswer = page.getByTestId("conversation-message-answer").last();
+  await quoteAnswer.getByText("Your quote is ready.").waitFor({ timeout: 30000 });
+  await until(async () => (await quoteAnswer.getAttribute("data-status")) === "succeeded", "the workflow answer is succeeded");
+  const attachments = quoteAnswer.getByTestId("answer-result-files");
+  await attachments.waitFor();
+  const [quoteFile] = await Promise.all([page.waitForEvent("download"), attachments.getByRole("link", { name: "quote.md" }).click()]);
+  check(quoteFile.suggestedFilename() === "quote.md", "The workflow's result file is an attachment that downloads");
+  check((await quoteAnswer.getByTestId("workflow-tool-approval").count()) === 0, "No card is left once the answer is final");
+  await shot("workflow-call-done", quoteAnswer);
+
+  // The agent library: add the workflow to "Clerk" with the dialog.
+  await page.goto(`${base}/agents`);
+  await page.locator(".card__main", { hasText: "Clerk" }).click();
+  const toolsSection = page.locator('details[data-section="tools"]');
+  if (!(await toolsSection.evaluate((element) => element.open))) await toolsSection.locator("summary").click();
+  const add = page.getByTestId("workflow-tools-add");
+  await add.click();
+  const dialog = page.getByRole("dialog", { name: "Add a workflow as a tool" });
+  await dialog.waitFor();
+  await page.keyboard.press("Escape");
+  await dialog.waitFor({ state: "hidden" });
+  check(await add.evaluate((element) => element === document.activeElement), "Escape closes the dialog and focus returns to its button");
+  await add.click();
+  await dialog.getByTestId("workflow-tool-dialog-workflow").selectOption({ label: "Quote" });
+  const preview = dialog.getByTestId("workflow-tool-dialog-preview");
+  await preview.waitFor({ timeout: 30000 });
+  const previewText = await preview.innerText();
+  check(previewText.includes("Version 1 (fixed)") && previewText.includes("Changes data"), "The dialog shows the version and what it may do");
+  check((await dialog.getByTestId("workflow-tool-dialog-args").innerText()).includes("customer"), "The dialog lists the arguments");
+  await shot("workflow-tool-dialog", dialog);
+  await dialog.getByTestId("workflow-tool-dialog-add").click();
+  await dialog.waitFor({ state: "hidden" });
+  await page.getByTestId("workflow-tool-binding").waitFor();
+  await page.locator(".inspector__footer").getByRole("button", { name: "Save" }).click();
+  await until(async () => {
+    const clerk = (await api("/agents/templates")).find((item) => item.agent.name === "Clerk");
+    return clerk?.agent.workflow_tools?.[0]?.version === 1 && clerk.agent.workflow_tools[0].effect?.access === "write";
+  }, "the Clerk's workflow tool is stored");
+  check(true, "The dialog stores the binding in its fixed version with its effect");
+  await shot("workflow-tool-bound", toolsSection);
 
   check(errors.length === 0, `No console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
   console.log("conversations: all checks passed");

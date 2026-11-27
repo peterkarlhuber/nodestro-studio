@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 1 |
 | P2 Medium | 5 |
-| P3 Low | 12 |
+| P3 Low | 13 |
 | P4 Optional | 5 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
@@ -99,6 +99,21 @@ from #121). Both have status `Needs external review`.
   of the baseline runs and the panels do not shift the canvas.
 
 ## Features and enhancements
+
+### ST-070 · Workflows as tools (N-20): the studio's part and what stays open
+
+- **Priority:** P3 Low · **Status:** In review (off by default) · **Refs:** `frontend/src/workflowTools/`,
+  nodestro-runtime RT-096 and `docs/workflow-tools.md`, nodestro-api API-079
+- **Done (Welle 7):** the agent editor's list and "Add workflow as tool" dialog, the approval card of a workflow tool's
+  start, the workflow part of a conversation's tool call (run, cards, files), result files as attachments, newer
+  versions reported, six languages, help and documentation; component and browser tests.
+- **Open:** (a) the dialog shows only while `/api/meta` lists `workflow_tools` (nodestro-api branch
+  `claude/w7-n20-ui`); until the pinned api has it, the browser test adds the feature to the meta answer; (b) an
+  approval step inside the workflow is decided with the conversation's card (label, instructions, comment) because
+  `GET /api/approvals` lists only paused top-level runs while the agent's run keeps running; results to review and a
+  note to the agent show only when the list has the step; (c) a tool call waiting inside the workflow shows its card
+  once `GET /api/tool-approvals` lists it, otherwise a link to the approvals page; (d) switching it on waits for the
+  tool approval review (RT-001).
 
 ### ST-069 · Memory entries (N-24): what the page does not show yet
 

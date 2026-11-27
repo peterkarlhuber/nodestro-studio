@@ -32,6 +32,7 @@ import type {
   OrganizeState,
   SearchResult,
   VersionSummary,
+  WorkflowToolInfo,
   WorkflowVersion,
   AgentTemplate,
   AgentImportResult,
@@ -439,6 +440,9 @@ export const api = {
     request<ContextPreview>("POST", "/workflows/preview", body),
   versions: (id: string) => request<VersionSummary[]>("GET", `/workflows/${id}/versions`),
   version: (id: string, number: number) => request<WorkflowVersion>("GET", `/workflows/${id}/versions/${number}`),
+  /** A saved version as a tool of an agent (N-20): the binding with its effect, the arguments, the newest version. */
+  workflowVersionTool: (id: string, number: number) =>
+    request<WorkflowToolInfo>("GET", `/workflows/${encodeURIComponent(id)}/versions/${number}/tool`),
   describeVersion: (id: string, number: number, description: string) =>
     request<WorkflowVersion>("PATCH", `/workflows/${id}/versions/${number}`, { description }),
   restoreVersion: (id: string, number: number) => request<Workflow>("POST", `/workflows/${id}/versions/${number}/restore`),

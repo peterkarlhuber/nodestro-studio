@@ -175,6 +175,16 @@ function ConversationHeader({
         {marked ? <GrantedContentBadge kind="conversation" /> : null}
       </div>
       {marked ? <GrantedContentNotice kind="conversation" /> : null}
+      {conversation.workflow_tool_updates?.length ? (
+        <Callout tone="info">
+          <span data-testid="conversation-workflow-updates">
+            {t("workflowTools.updates.intro")}{" "}
+            {conversation.workflow_tool_updates
+              .map((item) => t("workflowTools.updates.item", { name: item.name, version: item.version, latest: item.latest_version }))
+              .join("; ")}
+          </span>
+        </Callout>
+      ) : null}
       <div className="row-gap conversation__actions">
         <Toggle
           checked={conversation.offline}

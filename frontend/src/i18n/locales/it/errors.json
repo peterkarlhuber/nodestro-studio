@@ -1391,5 +1391,12 @@
     "version_newer": "Il file proviene da una versione più recente di Nodestro (versione {{version}}; questa legge fino alla versione {{supported}}). Aggiorna prima Nodestro.",
     "zip_bomb": "{{name}} nel file si decomprimerebbe ben oltre la sua dimensione, quindi il file non viene usato.",
     "zip_invalid": "Il file non è un file ZIP leggibile."
+  },
+  "workflow_tool": {
+    "approval_required": "Questo workflow può modificare qualcosa e il suo avvio non può essere confermato qui perché le approvazioni degli strumenti sono disattivate.",
+    "disabled": "Gli strumenti workflow sono disattivati qui, quindi {{node}} non può avviarsi. Rimuovi i suoi strumenti workflow o chiedi alla tua amministrazione.",
+    "missing": "Il workflow dello strumento {{name}} (o la sua versione fissa) non esiste più.",
+    "name_taken": "Lo strumento workflow {{name}} ha il nome di un altro strumento dell’agente. Scegli un altro nome.",
+    "not_waiting": "L’agente che ha avviato questo workflow non lo attende più (stato: {{status}}), quindi la decisione non è stata presa."
   }
 }

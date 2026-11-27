@@ -1,0 +1,79 @@
+{
+  "fixedVersion": "Versión {{version}} (fija)",
+  "newerVersion": "Más reciente: versión {{version}}",
+  "noArguments": "Sin argumentos.",
+  "effect": {
+    "label": "Lo que puede hacer el flujo de trabajo",
+    "title": "Lo que puede hacer el flujo de trabajo, a cualquier profundidad",
+    "unknownEffect": "Aún no calculado. Cada llamada lo calcula de nuevo antes de empezar.",
+    "memory": "Usa memoria persistente",
+    "approvals_one": "{{count}} paso de aprobación",
+    "approvals_other": "{{count}} pasos de aprobación",
+    "scope": "Cuenta todo lo que contiene: sus agentes y modelos, herramientas, archivos de resultado, subflujos, equipos y herramientas de flujo anidadas. Cada llamada lo calcula de nuevo y cuenta el valor más alto.",
+    "raised": "Ahora puede hacer más que cuando se añadió. La llamada se pregunta con el valor actual.",
+    "contains_one": "Contiene {{count}} flujo de trabajo más",
+    "contains_other": "Contiene {{count}} flujos de trabajo más",
+    "nestedItem": "{{name}} (versión {{version}})",
+    "unknown": "Desconocido, cuenta como modificador y externo: {{items}}"
+  },
+  "approval": {
+    "title": "Iniciar el flujo de trabajo «{{name}}»",
+    "asTool": "como herramienta {{tool}}",
+    "help": "Sobre flujos de trabajo como herramientas",
+    "argumentsList": "Argumentos por campo",
+    "everyStart": "Un flujo de trabajo que puede modificar algo se pregunta antes de cada inicio. Esta decisión vale solo para este inicio y no se recuerda.",
+    "rejectHint": "Si se rechaza, el flujo de trabajo no se inicia y el agente sabe que fue rechazado. Sin decisión, el inicio cuenta como rechazado.",
+    "startedToast": "Inicio permitido"
+  },
+  "call": {
+    "label": "Flujo de trabajo {{name}}, versión {{version}}",
+    "openRun": "Abrir la ejecución del flujo de trabajo",
+    "waiting": "El flujo de trabajo espera una decisión",
+    "stepWaiting": "Un paso de aprobación del flujo de trabajo te espera.",
+    "stepRejectHint": "Lo que hace un rechazo lo define el paso de aprobación del flujo de trabajo.",
+    "toolWaiting": "Una llamada a herramienta del flujo de trabajo («{{tool}}») espera aprobación.",
+    "openApprovals": "Abrir aprobaciones",
+    "files": "Archivos de resultado del flujo de trabajo",
+    "filesAttached_one": "{{count}} archivo de resultado, adjunto a la respuesta: {{names}}",
+    "filesAttached_other": "{{count}} archivos de resultado, adjuntos a la respuesta: {{names}}",
+    "attachments": "Adjuntos de la respuesta"
+  },
+  "updates": {
+    "intro": "Hay una versión más reciente para herramientas de flujo de este agente. El agente mantiene su versión fija hasta que alguien lo cambie:",
+    "item": "{{name}} usa la versión {{version}}, la más reciente es {{latest}}"
+  },
+  "section": {
+    "title": "Flujos de trabajo como herramientas",
+    "help": "Sobre flujos de trabajo como herramientas",
+    "off": "Las herramientas de flujo están desactivadas aquí. Este agente no se inicia mientras tenga herramientas de flujo: quítalas o pide a tu administración que las active.",
+    "add": "Añadir flujo de trabajo como herramienta",
+    "remove": "Quitar la herramienta de flujo {{name}}",
+    "full": "Como máximo {{max}} herramientas de flujo por agente.",
+    "hint": "El agente puede iniciar un flujo de trabajo guardado en una versión fija y recibe su resultado y sus archivos."
+  },
+  "dialog": {
+    "title": "Añadir un flujo de trabajo como herramienta",
+    "description": "El agente llama al flujo de trabajo en la versión que elijas aquí. Una versión más reciente solo se indica y nunca se usa por sí sola.",
+    "workflow": "Flujo de trabajo",
+    "chooseWorkflow": "Elige un flujo de trabajo",
+    "noVersions": "Este flujo de trabajo aún no tiene ninguna versión guardada. Guárdalo primero.",
+    "version": "Versión",
+    "versionHint": "Fija: el agente llama siempre a esta versión.",
+    "versionOption": "Versión {{version}} · {{date}}",
+    "preview": "Vista previa de la herramienta",
+    "arguments": "Argumentos que rellena el modelo",
+    "argName": "Nombre",
+    "argType": "Tipo",
+    "argDescription": "Descripción",
+    "required": "obligatorio",
+    "blocked": "Este flujo de trabajo necesita archivos al iniciar ({{fields}}). Un modelo no puede rellenar campos de archivo, así que no puede ejecutarse como herramienta.",
+    "asked": "Este flujo de trabajo puede modificar algo: cada inicio espera aprobación en la conversación o en la ejecución.",
+    "name": "Nombre de la herramienta",
+    "nameHint": "El nombre que ve el modelo.",
+    "name_invalid": "Usa solo letras, dígitos, _ y -, como máximo 64 caracteres.",
+    "name_taken": "El agente ya tiene una herramienta con este nombre.",
+    "toolDescription": "Descripción para el modelo (opcional)",
+    "toolDescriptionHint": "Se añade a la descripción propia del flujo de trabajo.",
+    "add": "Añadir"
+  }
+}

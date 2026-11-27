@@ -1,6 +1,8 @@
 // One message of a conversation. A person's message shows its text and the files sent with it (each a download, with
 // how the model received it). An answer shows its text (live while it is written), its tool calls with arguments,
 // result and duration, the approval card of a call that waits for a person, the web sources, the model and the cost.
+// A workflow tool's call (N-20) also shows its workflow, fixed version, run and the cards its run waits for; the
+// result files of workflow tools are the answer's attachments.
 
 import { Bot, ExternalLink, FileText, Wrench } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -21,6 +23,7 @@ import { ProblemText } from "../lib/errors";
 import { formatBytes, formatCost, formatTokens } from "../lib/format";
 import { NodeToolApprovals, ToolCallApprovalNote } from "../runs/ToolApprovalCard";
 import { WebSources } from "../runs/WebSources";
+import { AnswerFiles, WorkflowCallPanel } from "../workflowTools/WorkflowCall";
 import { AGENT_NODE, type LiveAnswer, type LiveCall } from "./answerStream";
 
 /** The label key of how the model received a file (fixed keys, so every one is a known text). */
@@ -99,6 +102,7 @@ export function MessageItem({
   const usage = final ? message.usage : (live?.usage ?? message.usage);
   const cost = final ? message.cost_usd : (usage?.estimated_cost_usd ?? message.cost_usd);
   const finalNote = statusKey(message.status);
+  const resultFiles = message.result_files ?? [];
   return (
     <article className="chat-message" aria-label={t("conversations.answer")} data-testid="conversation-message-answer" data-status={message.status}>
       <span className="chat-avatar" aria-hidden>
@@ -112,10 +116,14 @@ export function MessageItem({
             {calls.map((call) => (
               <li key={call.id}>
                 <ToolCall call={call} />
+                {"started_at" in call && call.workflow ? (
+                  <WorkflowCallPanel call={call.workflow} final={final} attached={resultFiles.length > 0} />
+                ) : null}
               </li>
             ))}
           </ul>
         ) : null}
+        <AnswerFiles files={resultFiles} label={t("workflowTools.call.attachments")} testId="answer-result-files" />
         {!final && message.run_id ? <NodeToolApprovals runId={message.run_id} nodeId={AGENT_NODE} /> : null}
         {message.sources.length ? <WebSources run={{ sources: message.sources }} /> : null}
         {message.error ? (
