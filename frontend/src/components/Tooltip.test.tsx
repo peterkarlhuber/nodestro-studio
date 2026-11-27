@@ -88,6 +88,20 @@ describe("HelpTip", () => {
     expect(screen.getAllByRole("tooltip")).toHaveLength(1);
     expect(screen.getByRole("tooltip")).toHaveTextContent(i18n.t("help.agent.model"));
   });
+
+  it("stays open on keyboard focus that follows the mouse leaving it within the close delay", async () => {
+    // The mouse leaves the icon (a click elsewhere) and Tab reaches it before the leave's close timer ran: that
+    // timer must not close the explanation the focus just opened (settings-ui e2e, PR #249 head cf514c4).
+    renderInRouter(<HelpTip id="agent.effort" label="Aufwand" />);
+    const button = screen.getByRole("button", { name: "Hilfe: Aufwand" });
+    fireEvent.pointerEnter(button, { pointerType: "mouse" });
+    fireEvent.pointerLeave(button, { pointerType: "mouse" });
+    await userEvent.tab();
+    expect(button).toHaveFocus();
+    expect(screen.getByRole("tooltip")).toHaveTextContent(i18n.t("help.agent.effort"));
+    await act(() => new Promise((resolve) => window.setTimeout(resolve, 400)));
+    expect(screen.getByRole("tooltip")).toHaveTextContent(i18n.t("help.agent.effort"));
+  });
 });
 
 describe("tooltip placement", () => {

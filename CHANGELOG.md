@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Welle 6: a tooltip opened by keyboard focus no longer closes again at once
+
+- A help icon's or control's tooltip that keyboard focus opened within 140 ms after the mouse left it was closed
+  again by the leave's pending close timer (`useTip.show` now cancels it). This was the intermittent `settings-ui`
+  e2e failure "waiting for locator('[role=tooltip]')" after Tab reached the help icon (PR #249 head cf514c4).
+
 ### Welle 6: memory entries with their origin and time (N-24)
 
 - The **Memory** page shows for every file who wrote it last (an agent with its memory tool, you, the memory
