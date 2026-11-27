@@ -153,7 +153,10 @@ from #121). Both have status `Needs external review`.
   package's HelpTip with the studio's help registry (the `helpCoverage` test of the API's error codes and the studio
   entry `studio.exchange` are done, Welle 6; the about 110 existing tooltips stay on the studio's component until the
   package's HelpTip opens on hover and focus, shows above modal dialogs (top layer) and carries `data-help` for the
-  settings search, and the studio's help ids have titles); (6) buttons, fields, dialogs and sections from `components/ui.tsx`; (7) an
+  settings search, and the studio's help ids have titles; Welle 7 counted 113 `HelpTip` uses, the two new ones of
+ST-070 included: moving them needs a nodestro-ui release of HelpTip with those three behaviours, its re-vendoring,
+titles for the studio's help ids in six languages and the settings search on the new attribute, so it was not done as
+a small follow-up in Welle 7 and stays the next step of its own); (6) buttons, fields, dialogs and sections from `components/ui.tsx`; (7) an
   alias layer `--nd-*: var(--ui-*)` and a codemod, then drop `midnight-citron.css`. Each step keeps the existing
   tests and browser suites unchanged.
 - **Also:** nodestro-server (`image/Dockerfile`) and nodestro-desktop (`scripts/build_backend.sh`) run `npm ci` on a
