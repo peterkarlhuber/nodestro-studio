@@ -99,7 +99,8 @@
   "memory": {
     "space": "Ein Memory-Raum ist ein eigenes Dateisystem unter /memories. Agenten mit Memory „Dauerhaft“ und diesem Raum lesen und schreiben hier.",
     "clear": "Löscht alle Dateien des Raums endgültig. Agenten beginnen danach ohne Erinnerungen.",
-    "newFile": "Legt eine leere Datei unter /memories an, z. B. kunden/vorlieben.md. Agenten finden sie beim nächsten Lauf."
+    "newFile": "Legt eine leere Datei unter /memories an, z. B. kunden/vorlieben.md. Agenten finden sie beim nächsten Lauf.",
+    "consents": "Auf einem Server darf ein geteilter Workflow deinen Memory-Raum erst nutzen, wenn du genau seinem aktuellen Inhalt zugestimmt hast: dem Workflow und jedem Workflow, den er startet. Ändert sich einer davon, braucht er deine Zustimmung erneut. Du kannst eine Zustimmung jederzeit zurückziehen."
   },
   "runs": {
     "importTrace": "Öffnet eine exportierte Trace-Datei (run_….json) zum Ansehen. Nichts wird ausgeführt, es entstehen keine Kosten, vorhandene Ausführungen bleiben unverändert.",
@@ -145,7 +146,8 @@
     "knowledgeSearch": "Volltext findet Wörter, die semantische Suche findet Bedeutungen (auch über Sprachen hinweg). Semantische und kombinierte Suche brauchen den semantischen Index, der mit einem Embedding-Modell aufgebaut wird.",
     "localBuild": "Manche Modelle (etwa mdenseon:307m) werden aus ihren Originaldateien gebaut statt aus der Ollama-Bibliothek geladen. Gib beide Dateien an: Nodestro prüft ihre SHA-256, baut das Modell und behält es nur, wenn seine Referenzvektoren stimmen. Funktioniert ohne Internet.",
     "localHardware": "Was Nodestro auf dem Computer mit dem Modellserver erkannt hat und was der Server meldet. Geschwindigkeiten erscheinen erst nach einer Messung; Nodestro schätzt nichts.",
-    "localReasoning": "Ohne Grafikkarte kann die Denkphase lokaler Modelle pro Schritt Minuten dauern. Der Sparmodus lässt sie beim Denkaufwand Mittel weg; Hoch bleibt unverändert."
+    "localReasoning": "Ohne Grafikkarte kann die Denkphase lokaler Modelle pro Schritt Minuten dauern. Der Sparmodus lässt sie beim Denkaufwand Mittel weg; Hoch bleibt unverändert.",
+    "data": "Alles exportieren gibt dir alle Daten als lesbare Dateien ohne Geheimnisse, zum Aufbewahren oder Mitnehmen. Alles löschen entfernt alle Daten endgültig von diesem Rechner, sobald du die Bestätigung eingibst; eine Sicherung wird nicht angelegt."
   },
   "budget": {
     "decision": "Der Lauf pausiert, weil sein Budget für die nächste Modellanfrage nicht reicht. Dafür wurde nichts gesendet. Erhöhe das Limit genau dieses Laufs und setze fort, oder beende den Lauf.",

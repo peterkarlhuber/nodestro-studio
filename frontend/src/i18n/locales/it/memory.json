@@ -17,5 +17,32 @@
   "deleteAll": "Elimina tutti i file",
   "clearText": "Tutti i file di «{{name}}» verranno eliminati. In seguito gli agenti ripartono senza ricordi.",
   "deleteFile": "Elimina file",
-  "contentOf": "Contenuto di {{path}}"
+  "contentOf": "Contenuto di {{path}}",
+  "consents": {
+    "title": "Consensi per workflow condivisi",
+    "intro": "I workflow che usano uno dei tuoi spazi di memoria hanno bisogno del tuo consenso per esattamente il loro contenuto attuale. Un workflow modificato ha bisogno di un nuovo consenso.",
+    "space": "Spazio di memoria",
+    "chooseSpace": "Scegli uno spazio di memoria",
+    "workflow": "Workflow",
+    "workflowHint": "Il consenso copre anche ogni workflow che avvia, nelle loro versioni attuali.",
+    "chooseWorkflow": "Scegli un workflow",
+    "review": "Verifica",
+    "covers_one": "Un consenso per «{{space}}» copre questo workflow:",
+    "covers_other": "Un consenso per «{{space}}» copre questi {{count}} workflow:",
+    "latest": "(versione più recente)",
+    "version": "(versione {{version}})",
+    "exactly": "Vale esattamente per questo contenuto. Se in seguito cambia uno di questi workflow, o uno strumento o una connessione che usano, ti verrà chiesto di nuovo.",
+    "stale": "Qualcosa è cambiato da quando l’hai verificato: un workflow, o uno strumento o una connessione che usa. Verificalo di nuovo e poi consentilo.",
+    "reviewAgain": "Verifica di nuovo",
+    "allow": "Consenti",
+    "granted": "Consenso per «{{space}}» dato",
+    "revoked": "Consenso ritirato",
+    "none": "Non hai ancora dato nessun consenso.",
+    "for": "Per",
+    "at": "Dato il",
+    "actions": "Azioni",
+    "agentTest": "Un test dell’agente",
+    "revoke": "Ritira il consenso",
+    "revokeConfirm": "Ritirare?"
+  }
 }

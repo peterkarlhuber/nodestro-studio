@@ -34,5 +34,38 @@
   "safetyNote": "Prima viene creato automaticamente un backup dello stato attuale; lo trovi poi nell’elenco dei backup.",
   "confirm": "Ho capito che i miei dati attuali verranno sostituiti.",
   "restoreNow": "Ripristina ora",
-  "restored": "Backup ripristinato. Lo stato precedente è in “{{name}}”. La pagina si ricarica."
+  "restored": "Backup ripristinato. Lo stato precedente è in “{{name}}”. La pagina si ricarica.",
+  "reenter": {
+    "title_one": "{{count}} segreto da reinserire",
+    "title_other": "{{count}} segreti da reinserire",
+    "text": "Un backup non contiene mai chiavi, token o password. Reinseriscili dove vengono usati; fino ad allora, ciò che ne ha bisogno non funziona.",
+    "kinds": {
+      "provider": "Provider di IA",
+      "mcp": "Servizio MCP",
+      "connection": "Connessione a un servizio"
+    },
+    "open": "Reinserisci",
+    "done": "Fatto, nascondi l’elenco"
+  },
+  "data": {
+    "title": "Esporta ed elimina i dati",
+    "intro": "Porta con te tutti i tuoi dati come file leggibili, oppure elimina tutto su questo computer.",
+    "export": "Esporta tutto",
+    "exportNote": "L’esportazione è un file ZIP di file leggibili (workflow, esecuzioni, modelli di agenti, strumenti, conoscenza, memoria, conversazioni e impostazioni), senza chiavi, token o altri segreti. Non si può ripristinare; per questo c’è il backup.",
+    "delete": "Elimina tutti i dati …",
+    "deleteTitle": "Elimina tutti i dati",
+    "deleteWarning": "Questo elimina tutti i workflow, le esecuzioni, i modelli di agenti, gli strumenti, i file di conoscenza, la memoria, le conversazioni, le impostazioni e i segreti su questo computer.",
+    "deleteNoUndo": "Non si può annullare.",
+    "deleteNoBackup": "Non viene conservato nessun backup di sicurezza. Scarica prima un backup o un’esportazione se vuoi tenere qualcosa.",
+    "deleteRuns": "Inizia solo quando non è in corso nulla, e mentre elimina non può partire nessuna esecuzione.",
+    "backupFirst": "Scarica prima un backup",
+    "typeLabel": "Conferma",
+    "typeHint": "Scrivi esattamente «{{phrase}}» (in inglese) per confermare.",
+    "deleteNow": "Elimina tutto",
+    "deletedTitle": "Dati eliminati",
+    "deleted": "È stato eliminato tutto. Questa installazione ora riparte come una nuova.",
+    "deletedPartly_one": "È stato eliminato quasi tutto, ma {{count}} voce non si è potuta rimuovere (per esempio un file in uso). Elimina di nuovo per rimuovere il resto.",
+    "deletedPartly_other": "È stato eliminato quasi tutto, ma {{count}} voci non si sono potute rimuovere (per esempio file in uso). Elimina di nuovo per rimuovere il resto.",
+    "restart": "Ricomincia"
+  }
 }

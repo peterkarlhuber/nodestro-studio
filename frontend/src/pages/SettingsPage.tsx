@@ -17,6 +17,7 @@ import { LANGUAGES, LANGUAGE_NAMES, type Language, currentLanguage, setLanguage,
 import { ErrorText } from "../lib/errors";
 import { formatCost } from "../lib/format";
 import { PythonMaintenance } from "../python/PythonMaintenance";
+import { DataPanel } from "./SettingsData";
 import { BackupPanel, DiagnosticsPanel, InputStoragePanel } from "./SettingsMaintenance";
 import { MembersPanel } from "./SettingsMembers";
 import { PricingPanel, ReconciliationPanel } from "./SettingsPricing";
@@ -393,6 +394,8 @@ export function SettingsPage() {
         <PythonMaintenance />
 
         {install ? <BackupPanel /> : null}
+
+        {install ? <DataPanel /> : null}
 
         {install ? <DiagnosticsPanel /> : null}
 

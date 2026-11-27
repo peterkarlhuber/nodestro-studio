@@ -99,7 +99,8 @@
   "memory": {
     "space": "A memory space is a file system of its own under /memories. Agents with “Persistent” memory and this space read and write here.",
     "clear": "Permanently deletes all files of the space. Agents start without memories afterwards.",
-    "newFile": "Creates an empty file under /memories, e.g. customers/preferences.md. Agents find it on the next run."
+    "newFile": "Creates an empty file under /memories, e.g. customers/preferences.md. Agents find it on the next run.",
+    "consents": "On a server, a shared workflow may use your memory space only after you allowed exactly its current content: the workflow and every workflow it starts. When one of them changes, it needs your consent again. You can withdraw a consent at any time."
   },
   "runs": {
     "importTrace": "Opens an exported trace file (run_….json) for viewing. Nothing is run, there are no costs, and existing runs stay unchanged.",
@@ -145,7 +146,8 @@
     "knowledgeSearch": "Full text finds words, semantic search finds meaning (also across languages). Semantic and combined search need the semantic index built with an embedding model.",
     "localBuild": "Some models (such as mdenseon:307m) are built from their original files instead of being downloaded from the Ollama library. Enter both files: Nodestro checks their SHA-256, builds the model and keeps it only if its reference vectors match. Works without internet.",
     "localHardware": "What Nodestro detected on the computer that runs the model server, and what the server reports. Speeds appear only once measured; Nodestro makes no estimates.",
-    "localReasoning": "Without a graphics card, the thinking phase of local models can take minutes per step. The saving mode skips it for effort Medium; effort High stays unchanged."
+    "localReasoning": "Without a graphics card, the thinking phase of local models can take minutes per step. The saving mode skips it for effort Medium; effort High stays unchanged.",
+    "data": "Export everything gives you all data as readable files without secrets, to keep or to take elsewhere. Delete everything removes all data from this computer for good once you type the confirmation; no safety backup is kept."
   },
   "budget": {
     "decision": "The run paused because its budget is not enough for the next model request. Nothing was sent for it. Raise the limit of exactly this run and continue, or end the run.",

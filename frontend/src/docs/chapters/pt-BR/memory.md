@@ -46,6 +46,13 @@ A página **Memória** mostra todos os espaços com o número e o tamanho dos ar
 
 Assim você pode verificar, corrigir ou preencher a memória a qualquer momento. No inspetor, **Ver conteúdo** leva direto ao espaço do agente.
 
+## Consentimentos para fluxos de trabalho compartilhados {#zustimmungen}
+<!-- keywords: consentimento, privado, servidor, fluxo de trabalho compartilhado, espaço de memória, retirar -->
+
+Em um servidor, cada espaço de memória pertence à pessoa que o criou. Um fluxo de trabalho compartilhado só pode usá-lo depois que essa pessoa permitiu **exatamente o conteúdo atual dele**: o fluxo de trabalho e cada fluxo de trabalho que ele inicia, cada um em uma versão. Sem consentimento, a execução é recusada.
+
+Em **Consentimentos para fluxos de trabalho compartilhados**, escolha um dos seus espaços de memória e um fluxo de trabalho e depois **Revisar**. Você vê quais fluxos de trabalho o consentimento cobre; só **Permitir** o concede. Se algo mudou desde a revisão (um fluxo de trabalho, uma ferramenta ou uma conexão), o consentimento não é dado: escolha **Revisar de novo** e permita o que é mostrado agora. A lista mostra todos os seus consentimentos; **Retirar o consentimento** vale a partir do próximo passo que precisar dele. No desktop há só uma pessoa, por isso a seção não aparece lá.
+
 ## Configurar a memória com IA {#assistent}
 <!-- keywords: assistente de memória, configurar com ia, sugestão, estrutura, arquivos iniciais -->
 

@@ -272,6 +272,26 @@
     },
     "openRun": "Ouvrir l’exécution",
     "openConversation": "Ouvrir la conversation",
-    "link": "Dossiers partagés"
+    "link": "Dossiers partagés",
+    "browse": {
+      "open": "Parcourir …",
+      "title": "Choisir un dossier",
+      "choose": "Choisir ce dossier",
+      "text": "Seuls les dossiers sont affichés, jamais les fichiers. Les dossiers système, ceux d’autres personnes et ceux qui contiennent des clés ou des mots de passe ne sont pas affichés.",
+      "places": "Emplacements",
+      "place": {
+        "home": "Dossier personnel",
+        "root": "Cet ordinateur",
+        "drive": "Lecteur",
+        "media": "Support amovible"
+      },
+      "home": "Revenir au dossier personnel",
+      "current": "Dossier :",
+      "folders": "Dossiers dans {{path}}",
+      "up": "Remonter d’un niveau",
+      "link": "(lien)",
+      "empty": "Ce dossier n’a pas de sous-dossiers.",
+      "truncated": "Tous les dossiers ne sont pas affichés. Ouvrez un sous-dossier ou saisissez le chemin."
+    }
   }
 }

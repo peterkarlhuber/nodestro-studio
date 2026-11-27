@@ -306,6 +306,17 @@ Die **API-Schlüssel** der KI-Anbieter werden nie ins Backup geschrieben, ebenso
 
 **Aus Datei wiederherstellen** prüft die Datei zuerst vollständig: Format, Prüfsummen jeder Datei, die Datenbank und jeden gespeicherten Workflow und Lauf. Erst dann zeigt Nodestro, was das Backup enthält, im Vergleich zum aktuellen Stand. Ersetzt wird nur nach ausdrücklicher Bestätigung und nur, wenn kein Lauf aktiv ist. Vorher legt Nodestro automatisch eine Sicherung des aktuellen Stands an (`before-restore-….zip` im Ordner `backups` des Datenverzeichnisses); sie erscheint unter den Sicherungen auf diesem Rechner und lässt sich genauso wiederherstellen. Schlägt etwas fehl, bleiben die bisherigen Daten unverändert.
 
+Schlüssel, Tokens und Passwörter stehen nie in einem Backup, auch nicht die Tokens von MCP-Diensten und die Geheimnisse von Dienstverbindungen. Fehlen sie auf diesem Rechner, zeigen die Prüfung und die Seite nach dem Wiederherstellen die Liste **Geheimnisse neu eingeben**: je ein Link zum KI-Anbieter, MCP-Dienst oder zur Verbindung, wo du es neu eingibst. Gezeigt wird nur, was fehlt, nie ein Wert.
+
+## Daten exportieren und löschen {#daten}
+<!-- keywords: export, alles exportieren, daten löschen, alles löschen, mitnehmen, dsgvo -->
+
+→ [In Nodestro öffnen](/settings#settings-data)
+
+**Alles exportieren** lädt eine ZIP-Datei mit lesbaren Dateien herunter: Workflows, Läufe, Agentenvorlagen, Tools, Wissen, Memory, Unterhaltungen und Einstellungen, ohne Schlüssel, Tokens oder andere Geheimnisse. Der Export ist zum Aufbewahren und Mitnehmen da; wiederherstellen lässt sich nur ein Backup.
+
+**Alle Daten löschen** entfernt alles auf diesem Rechner endgültig, auch die Geheimnisse; eine Sicherung wird nicht angelegt. Zur Bestätigung gibst du genau `delete all data` ein, in jeder Sprache auf Englisch. Das Löschen beginnt nur, wenn kein Lauf und keine andere Arbeit im Hintergrund aktiv ist, und solange es läuft, startet kein Lauf. Danach beginnt die Installation wie neu. Ließ sich etwas nicht entfernen (etwa eine Datei in Benutzung), wird es genannt; erneutes Löschen entfernt den Rest.
+
 ## Systemdiagnose {#diagnose}
 <!-- keywords: diagnose, systemdiagnose, prüfen, fehler finden, verbindung, docker, sandbox, version, problem -->
 

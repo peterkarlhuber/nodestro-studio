@@ -14,6 +14,7 @@ import { UsedByList, UsedByWarning, useUsedBy } from "../components/UsedBy";
 import { Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, Hint, IconButton, Modal, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes } from "../lib/format";
+import { MemoryConsents } from "./MemoryConsents";
 
 /** Persistent memory spaces: what agents remember across runs, readable and editable. */
 export function MemoryPage() {
@@ -82,6 +83,7 @@ export function MemoryPage() {
             {space ? <SpaceDetail key={space} space={space} onCleared={() => setParams({})} /> : null}
           </div>
         ) : null}
+        {spaces.data?.length ? <MemoryConsents key={space ?? ""} space={space} /> : null}
       </div>
       <Modal
         title={t("memory.new")}

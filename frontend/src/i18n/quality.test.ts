@@ -376,6 +376,11 @@ describe("backend codes", () => {
     "notify.limit", "notify.empty_title", "notify.private", "notifications.invalid_cursor",
     // The owner's consent before a workflow or agent uses a private memory space (RT-089d).
     "memory.consent_required", "memory.consent_stale", "memory.consent_too_large", "memory.consent_unavailable",
+    // Export and delete everything (N-15), a backup of another product, and the folder browser (N-11).
+    "data.busy", "data.deleting", "data.not_confirmed", "backup.product_mismatch", "folder.not_browsable",
+    "folder.not_browsable_hidden", "folder.not_browsable_not_found", "folder.not_browsable_not_a_folder",
+    "folder.not_browsable_no_access", "folder.not_browsable_changed", "folder.not_browsable_invalid_path",
+    "folder.not_browsable_network_path", "folder.session_required", "request.cross_site",
     // E-mail and webhook drafts, the real connection check and the test send (NAL-A4).
     "mail.address_invalid", "mail.empty", "mail.html_too_large", "mail.no_recipient", "mail.subject_invalid",
     "mail.subject_too_long", "mail.text_too_long", "mail.too_large", "mail.too_many_attachments", "mail.too_many_recipients",

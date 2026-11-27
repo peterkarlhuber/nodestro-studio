@@ -272,6 +272,26 @@
     },
     "openRun": "Abrir ejecución",
     "openConversation": "Abrir conversación",
-    "link": "Carpetas compartidas"
+    "link": "Carpetas compartidas",
+    "browse": {
+      "open": "Examinar …",
+      "title": "Elegir una carpeta",
+      "choose": "Elegir esta carpeta",
+      "text": "Solo se muestran carpetas, nunca archivos. No se muestran las carpetas del sistema, las de otras personas ni las que tienen claves o contraseñas.",
+      "places": "Lugares",
+      "place": {
+        "home": "Carpeta personal",
+        "root": "Este equipo",
+        "drive": "Unidad",
+        "media": "Unidad extraíble"
+      },
+      "home": "Volver a la carpeta personal",
+      "current": "Carpeta:",
+      "folders": "Carpetas en {{path}}",
+      "up": "Subir un nivel",
+      "link": "(enlace)",
+      "empty": "Esta carpeta no tiene subcarpetas.",
+      "truncated": "No se muestran todas las carpetas. Abre una subcarpeta o escribe la ruta."
+    }
   }
 }

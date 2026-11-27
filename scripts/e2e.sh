@@ -98,8 +98,9 @@ run() {  # run SUITE
       E2E_READY=/api/health start recovery "$(port 8089)" python tests/e2e_recovery_server.py --data-dir "$work/recovery" --port "$(port 8089)" --launch-secret "$secret"
       (cd frontend && NODESTRO_E2E_SECRET="$secret" NODESTRO_E2E_DATA="$work/recovery" npm run e2e:recovery -- "$(url 8089)" ${E2E_SCREENSHOTS:-}) ;;
     launch) secret="e2e-launch-$(python -c "import secrets; print(secrets.token_hex(24))")"
-      # The NS-002 switches of nodestro-api (all off by default) on, against the desktop's launch secret.
-      NODESTRO_LAUNCH_SECRET="$secret" NODESTRO_LAUNCH_FRAGMENT=1 NODESTRO_LAUNCH_CSRF=1 NODESTRO_DESKTOP_LOGOUT=1 \
+      # The NS-002 switches of nodestro-api (all off by default) on, against the desktop's launch secret; granted
+      # folders (off by default) on for the folder browser, which needs exactly this session.
+      NODESTRO_LAUNCH_SECRET="$secret" NODESTRO_LAUNCH_FRAGMENT=1 NODESTRO_LAUNCH_CSRF=1 NODESTRO_DESKTOP_LOGOUT=1 NODESTRO_FOLDER_GRANTS=1 \
         NODESTRO_LAUNCH_TTL=600 E2E_READY=/api/health start launch "$(port 8093)" \
         nodestro --data-dir "$work/launch" --no-browser --port "$(port 8093)"
       (cd frontend && NODESTRO_E2E_SECRET="$secret" npm run e2e:launch -- "$(url 8093)" ${E2E_SCREENSHOTS:-}) ;;

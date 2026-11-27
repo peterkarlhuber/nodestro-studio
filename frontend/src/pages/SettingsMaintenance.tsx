@@ -15,6 +15,7 @@ import { codeSuffix } from "../lib/codes";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatDate, formatNumber } from "../lib/format";
 import { DatabasePermissionsAction } from "../recovery/DatabasePermissionsAction";
+import { SecretsToReenter, rememberSecretsToReenter, rememberedSecretsToReenter } from "./SettingsData";
 
 const STATUS_ICON = { ok: CheckCircle2, warning: AlertTriangle, error: XCircle };
 const STATUS_TONE = { ok: "success", warning: "warning", error: "danger" } as const;
@@ -181,6 +182,8 @@ export function BackupPanel() {
   const fileInput = useRef<HTMLInputElement>(null);
   const [info, setInfo] = useState<BackupInfo | null>(null);
   const [confirmed, setConfirmed] = useState(false);
+  // The secrets the last restore could not bring along, kept over the reload that follows it.
+  const [reenter, setReenter] = useState(rememberedSecretsToReenter);
   const local = useQuery({ queryKey: ["backups"], queryFn: api.localBackups });
   const inspect = useMutation({
     mutationFn: (source: File | string) => (typeof source === "string" ? api.inspectLocalBackup(source) : api.inspectBackup(source)),
@@ -194,6 +197,7 @@ export function BackupPanel() {
     mutationFn: (id: string) => api.restoreBackup(id),
     onSuccess: (result) => {
       setInfo(null);
+      rememberSecretsToReenter(result.secrets_to_reenter ?? []);
       toast.success(t("backup.restored", { name: result.safety_backup }));
       queryClient.clear();
       // Every page shows restored data after a fresh start of the interface.
@@ -212,6 +216,13 @@ export function BackupPanel() {
       </h2>
       <p className="muted small">{t("backup.intro")}</p>
       <Callout tone="info">{t("backup.noKey")}</Callout>
+      <SecretsToReenter
+        labels={reenter}
+        onDone={() => {
+          rememberSecretsToReenter([]);
+          setReenter([]);
+        }}
+      />
       <div className="row-gap">
         <a className="nd-button nd-button--primary nd-button--md" href={api.backupUrl} download data-testid="backup-download">
           <Download size={15} aria-hidden /> {t("backup.download")}
@@ -277,6 +288,7 @@ export function BackupPanel() {
               </Callout>
             ))}
             <ContentsTable info={info} />
+            {info.secrets_to_reenter?.length ? <SecretsToReenter labels={info.secrets_to_reenter} /> : null}
             <Callout tone="warning">{t("backup.replaceWarning")}</Callout>
             <p className="small">{t("backup.safetyNote")}</p>
             <label className="checkbox">

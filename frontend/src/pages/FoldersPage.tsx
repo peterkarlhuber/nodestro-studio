@@ -4,7 +4,7 @@
 // the feature on: while it is off it only says so.
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Ban, FolderLock, History, Plus } from "lucide-react";
+import { ArrowUp, Ban, Check, Folder, FolderLock, FolderOpen, History, Home, Plus } from "lucide-react";
 import { type FormEvent, type ReactNode, useId, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -14,7 +14,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { AccessMode, FolderAccessEntry, FolderGrantIn, FolderGrantView } from "../api/types";
 import { PermissionNote } from "../components/Access";
-import { Badge, Button, Callout, ConfirmIconButton, Field, PageHeader, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, Field, Modal, PageHeader, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
 import { toast } from "../components/toast";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
@@ -112,8 +112,9 @@ export function FoldersPage() {
 }
 
 /**
- * The path of the folder to grant. Typed by hand: the server checks it and names why a folder cannot be granted.
- * TODO(N-11): pass the folder browser as `browse` once its API is merged; the typed path stays as the fallback.
+ * The path of the folder to grant: chosen in the folder browser (``browse``, N-11) or typed by hand, which stays the
+ * fallback (the browser needs the window's own session). The server checks the path and names why a folder cannot
+ * be granted.
  */
 export function FolderPathField({ value, onChange, browse }: { value: string; onChange: (path: string) => void; browse?: ReactNode }) {
   const { t } = useTranslation();
@@ -172,7 +173,11 @@ function GrantForm() {
           <Field label={t("approvals.folders.name")} hint={t("approvals.folders.nameHint")}>
             <TextInput value={draft.name} required maxLength={80} onChange={(event) => set("name", event.target.value)} data-testid="folder-name" />
           </Field>
-          <FolderPathField value={draft.path} onChange={(path) => set("path", path)} />
+          <FolderPathField
+            value={draft.path}
+            onChange={(path) => set("path", path)}
+            browse={<FolderPicker start={draft.path.trim() || null} onChoose={(path) => set("path", path)} />}
+          />
           <Field label={t("approvals.folders.include")} hint={t("approvals.folders.includeHint")}>
             <TextArea rows={3} value={draft.include} spellCheck={false} onChange={(event) => set("include", event.target.value)} />
           </Field>
@@ -238,6 +243,121 @@ function GrantForm() {
         </div>
       </form>
     </section>
+  );
+}
+
+/** The folder browser (N-11): sub-folders only, never files; the server hides system and credential folders. */
+export function FolderPicker({ start, onChoose }: { start: string | null; onChoose: (path: string) => void }) {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [path, setPath] = useState<string | null>(null);
+  const listing = useQuery({
+    queryKey: ["folders", "browse", path ?? ""],
+    queryFn: () => api.browseFolders(path),
+    enabled: open,
+    retry: false,
+    staleTime: 0,
+  });
+  const data = listing.data;
+  const show = (target: string | null) => setPath(target);
+  return (
+    <>
+      <Button
+        size="sm"
+        icon={FolderOpen}
+        onClick={() => {
+          setPath(start);
+          setOpen(true);
+        }}
+        data-testid="folder-browse"
+      >
+        {t("approvals.folders.browse.open")}
+      </Button>
+      <Modal
+        title={t("approvals.folders.browse.title")}
+        open={open}
+        onClose={() => setOpen(false)}
+        wide
+        footer={
+          <>
+            <Button variant="ghost" onClick={() => setOpen(false)}>
+              {t("common.cancel")}
+            </Button>
+            <Button
+              variant="primary"
+              icon={Check}
+              disabled={!data}
+              onClick={() => {
+                if (!data) return;
+                onChoose(data.path);
+                setOpen(false);
+              }}
+              data-testid="folder-browse-choose"
+            >
+              {t("approvals.folders.browse.choose")}
+            </Button>
+          </>
+        }
+      >
+        <div className="stack-sm" data-testid="folder-browser">
+          <p className="muted small">{t("approvals.folders.browse.text")}</p>
+          {data?.places.length ? (
+            <div className="row-gap" role="group" aria-label={t("approvals.folders.browse.places")}>
+              {data.places.map((place) => (
+                <Button key={`${place.kind}-${place.path}`} size="sm" variant="ghost" onClick={() => show(place.path)}>
+                  {t(`approvals.folders.browse.place.${place.kind}`)} <code>{place.path}</code>
+                </Button>
+              ))}
+            </div>
+          ) : null}
+          {listing.error ? (
+            <Callout tone="danger">
+              <span data-testid="folder-browse-error">
+                <ErrorText error={listing.error} />
+              </span>
+            </Callout>
+          ) : null}
+          {listing.error && path !== null ? (
+            <div>
+              <Button size="sm" variant="ghost" icon={Home} onClick={() => show(null)}>
+                {t("approvals.folders.browse.home")}
+              </Button>
+            </div>
+          ) : null}
+          {listing.isFetching && !data ? <Spinner /> : null}
+          {data ? (
+            <>
+              <p className="small">
+                {t("approvals.folders.browse.current")} <code data-testid="folder-browse-path">{data.path}</code>
+              </p>
+              <ul className="list" aria-label={t("approvals.folders.browse.folders", { path: data.path })}>
+                {data.parent ? (
+                  <li>
+                    <button type="button" className="list__item" onClick={() => show(data.parent)} data-testid="folder-browse-up">
+                      <span className="row-gap">
+                        <ArrowUp size={14} aria-hidden /> {t("approvals.folders.browse.up")}
+                      </span>
+                    </button>
+                  </li>
+                ) : null}
+                {data.folders.map((folder) => (
+                  <li key={folder.path}>
+                    <button type="button" className="list__item" onClick={() => show(folder.path)} data-testid="folder-browse-item">
+                      <span className="row-gap">
+                        <Folder size={14} aria-hidden /> {folder.name}
+                        {folder.link ? <span className="muted"> {t("approvals.folders.browse.link")}</span> : null}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              {!data.folders.length ? <p className="small muted">{t("approvals.folders.browse.empty")}</p> : null}
+              {data.truncated ? <p className="small muted">{t("approvals.folders.browse.truncated")}</p> : null}
+            </>
+          ) : null}
+        </div>
+      </Modal>
+    </>
   );
 }
 

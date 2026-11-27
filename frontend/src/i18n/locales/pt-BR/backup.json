@@ -34,5 +34,38 @@
   "safetyNote": "Antes, um backup do estado atual é criado automaticamente; depois você o encontra na lista de backups.",
   "confirm": "Entendo que meus dados atuais serão substituídos.",
   "restoreNow": "Restaurar agora",
-  "restored": "Backup restaurado. O estado anterior está em “{{name}}”. A página será recarregada."
+  "restored": "Backup restaurado. O estado anterior está em “{{name}}”. A página será recarregada.",
+  "reenter": {
+    "title_one": "{{count}} segredo para inserir de novo",
+    "title_other": "{{count}} segredos para inserir de novo",
+    "text": "Um backup nunca contém chaves, tokens ou senhas. Insira-os de novo onde são usados; até lá, o que precisa deles não funciona.",
+    "kinds": {
+      "provider": "Provedor de IA",
+      "mcp": "Serviço MCP",
+      "connection": "Conexão de serviço"
+    },
+    "open": "Inserir de novo",
+    "done": "Pronto, ocultar a lista"
+  },
+  "data": {
+    "title": "Exportar e excluir dados",
+    "intro": "Leve todos os seus dados como arquivos legíveis, ou exclua tudo neste computador.",
+    "export": "Exportar tudo",
+    "exportNote": "A exportação é um arquivo ZIP com arquivos legíveis (fluxos de trabalho, execuções, modelos de agentes, ferramentas, conhecimento, memória, conversas e configurações), sem chaves, tokens ou outros segredos. Ela não pode ser restaurada; para isso existe o backup.",
+    "delete": "Excluir todos os dados …",
+    "deleteTitle": "Excluir todos os dados",
+    "deleteWarning": "Isso exclui todos os fluxos de trabalho, execuções, modelos de agentes, ferramentas, arquivos de conhecimento, memória, conversas, configurações e segredos deste computador.",
+    "deleteNoUndo": "Não é possível desfazer.",
+    "deleteNoBackup": "Nenhum backup de segurança é mantido. Baixe antes um backup ou uma exportação se quiser guardar algo.",
+    "deleteRuns": "Só começa quando nada está em execução, e nenhuma execução pode começar enquanto exclui.",
+    "backupFirst": "Baixar um backup antes",
+    "typeLabel": "Confirmação",
+    "typeHint": "Digite exatamente “{{phrase}}” (em inglês) para confirmar.",
+    "deleteNow": "Excluir tudo",
+    "deletedTitle": "Dados excluídos",
+    "deleted": "Tudo foi excluído. Esta instalação recomeça agora como uma nova.",
+    "deletedPartly_one": "Quase tudo foi excluído, mas {{count}} item não pôde ser removido (por exemplo, um arquivo em uso). Exclua de novo para remover o resto.",
+    "deletedPartly_other": "Quase tudo foi excluído, mas {{count}} itens não puderam ser removidos (por exemplo, arquivos em uso). Exclua de novo para remover o resto.",
+    "restart": "Recomeçar"
+  }
 }
