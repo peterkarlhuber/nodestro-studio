@@ -100,7 +100,7 @@
     "space": "A memory space is a file system of its own under /memories. Agents with “Persistent” memory and this space read and write here.",
     "clear": "Permanently deletes all files of the space. Agents start without memories afterwards.",
     "newFile": "Creates an empty file under /memories, e.g. customers/preferences.md. Agents find it on the next run.",
-    "origin": "Each entry shows its size, who wrote it last and when: an agent (its memory tool), you (saved here) or an import. Older entries have no origin. Correct or delete any entry here.",
+    "origin": "Each entry shows its size, who wrote it last and when: an agent (its memory tool), you (saved here), the memory assistant (its proposal, saved by you) or an import. Older entries have no origin. Correct or delete any entry here.",
     "consents": "On a server, a shared workflow may use your memory space only after you allowed exactly its current content: the workflow and every workflow it starts. When one of them changes, it needs your consent again. You can withdraw a consent at any time."
   },
   "runs": {

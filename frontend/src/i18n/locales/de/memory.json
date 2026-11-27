@@ -24,6 +24,7 @@
     "tool": "von einem Agenten geschrieben",
     "user": "von dir geschrieben",
     "import": "importiert",
+    "assistant": "vom Memory-Assistenten vorgeschlagen",
     "unknown": "Herkunft unbekannt"
   },
   "consents": {

@@ -104,7 +104,7 @@ from #121). Both have status `Needs external review`.
 
 - **Priority:** P4 Optional · **Status:** Open · **Refs:** `frontend/src/pages/MemoryPage.tsx`, nodestro-runtime
   RT-097, nodestro-api API-080
-- **Done:** origin (agent, you, import, unknown) and time per file on the Memory page; edit and delete as before.
+- **Done:** origin (agent, you, memory assistant, import, unknown) and time per file on the Memory page; edit and delete as before.
 - **Open:** no filter or sort by origin; the scope (`user`) is not shown while it is the only one.
 - **Next step:** none until a second scope (project, agent) exists.
 

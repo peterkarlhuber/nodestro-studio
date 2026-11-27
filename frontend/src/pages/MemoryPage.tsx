@@ -278,6 +278,8 @@ function originLabel(t: (key: string) => string, file: MemoryFile): string {
       return t("memory.origin.user");
     case "import":
       return t("memory.origin.import");
+    case "assistant":
+      return t("memory.origin.assistant");
     default:
       return t("memory.origin.unknown");
   }

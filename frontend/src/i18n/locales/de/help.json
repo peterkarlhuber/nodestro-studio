@@ -100,7 +100,7 @@
     "space": "Ein Memory-Raum ist ein eigenes Dateisystem unter /memories. Agenten mit Memory „Dauerhaft“ und diesem Raum lesen und schreiben hier.",
     "clear": "Löscht alle Dateien des Raums endgültig. Agenten beginnen danach ohne Erinnerungen.",
     "newFile": "Legt eine leere Datei unter /memories an, z. B. kunden/vorlieben.md. Agenten finden sie beim nächsten Lauf.",
-    "origin": "Jeder Eintrag zeigt seine Größe, wer ihn zuletzt geschrieben hat und wann: ein Agent (sein Memory-Werkzeug), du (hier gespeichert) oder ein Import. Ältere Einträge haben keine Herkunft. Hier kannst du jeden Eintrag korrigieren oder löschen.",
+    "origin": "Jeder Eintrag zeigt seine Größe, wer ihn zuletzt geschrieben hat und wann: ein Agent (sein Memory-Werkzeug), du (hier gespeichert), der Memory-Assistent (sein Vorschlag, von dir gespeichert) oder ein Import. Ältere Einträge haben keine Herkunft. Hier kannst du jeden Eintrag korrigieren oder löschen.",
     "consents": "Auf einem Server darf ein geteilter Workflow deinen Memory-Raum erst nutzen, wenn du genau seinem aktuellen Inhalt zugestimmt hast: dem Workflow und jedem Workflow, den er startet. Ändert sich einer davon, braucht er deine Zustimmung erneut. Du kannst eine Zustimmung jederzeit zurückziehen."
   },
   "runs": {

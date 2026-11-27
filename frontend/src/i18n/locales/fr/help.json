@@ -100,7 +100,7 @@
     "space": "Un espace mémoire est un système de fichiers propre sous /memories. Les agents à mémoire « Persistante » associés à cet espace y lisent et écrivent.",
     "clear": "Supprime définitivement tous les fichiers de l’espace. Les agents repartent ensuite sans souvenirs.",
     "newFile": "Crée un fichier vide sous /memories, p. ex. clients/preferences.md. Les agents le trouveront à la prochaine exécution.",
-    "origin": "Chaque entrée indique sa taille, qui l’a écrite en dernier et quand : un agent (son outil de mémoire), vous (enregistré ici) ou une importation. Les entrées plus anciennes n’ont pas d’origine. Corrigez ou supprimez ici n’importe quelle entrée.",
+    "origin": "Chaque entrée indique sa taille, qui l’a écrite en dernier et quand : un agent (son outil de mémoire), vous (enregistré ici), l’assistant de mémoire (sa proposition, enregistrée par vous) ou une importation. Les entrées plus anciennes n’ont pas d’origine. Corrigez ou supprimez ici n’importe quelle entrée.",
     "consents": "Sur un serveur, un workflow partagé ne peut utiliser votre espace de mémoire qu’après que vous avez autorisé exactement son contenu actuel : le workflow et chaque workflow qu’il lance. Si l’un d’eux change, il a de nouveau besoin de votre consentement. Vous pouvez retirer un consentement à tout moment."
   },
   "runs": {

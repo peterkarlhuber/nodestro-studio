@@ -41,7 +41,7 @@ La página **Memoria** muestra todos los espacios con el número y el tamaño de
 
 - **Ver y editar un archivo:** elige el archivo, cambia el texto y pulsa **Guardar**.
 - **Crear un archivo:** escribe una ruta (por ejemplo `clientes/preferencias.md`); se crea dentro de `/memories`.
-- **Origen y hora:** cada archivo muestra quién lo escribió por última vez y cuándo: un agente (con su herramienta de memoria), tú (guardado en esta página) o una importación. Los archivos anteriores muestran “origen desconocido”. Si guardas un archivo aquí, tú eres su origen; los agentes nunca escriben con tu nombre.
+- **Origen y hora:** cada archivo muestra quién lo escribió por última vez y cuándo: un agente (con su herramienta de memoria), tú (guardado en esta página), el asistente de memoria (su propuesta, guardada por ti) o una importación. Los archivos anteriores muestran “origen desconocido”. Si guardas un archivo aquí, tú eres su origen; lo que escribe un agente o el asistente de memoria nunca aparece con tu nombre.
 - **Eliminar un archivo:** símbolo de la papelera junto a la ruta.
 - **Vaciar un espacio:** elimina definitivamente todos los archivos del espacio tras confirmarlo. Encima de los archivos, **Se usa en** muestra qué agentes y API publicadas usan el espacio; la confirmación también los nombra.
 

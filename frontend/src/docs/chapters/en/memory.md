@@ -41,7 +41,7 @@ The **Memory** page shows all spaces with the number and size of their files. Ch
 
 - **View and edit a file:** choose the file, change the text, **Save**.
 - **Create a file:** enter a path (for example `customers/preferences.md`); it is created under `/memories`.
-- **Origin and time:** each file shows who wrote it last and when: an agent (with its memory tool), you (saved on this page) or an import. Files from before this was recorded show “origin unknown”. Saving a file here makes you its origin; agents never write with your name.
+- **Origin and time:** each file shows who wrote it last and when: an agent (with its memory tool), you (saved on this page), the memory assistant (its proposal, saved by you) or an import. Files from before this was recorded show “origin unknown”. Saving a file here makes you its origin; text from an agent or the memory assistant is never shown with your name.
 - **Delete a file:** bin symbol next to the path.
 - **Clear a space:** permanently deletes all files of the space after confirmation. Above the files, **Used in** shows which agents and published APIs use the space; the confirmation names them too.
 
