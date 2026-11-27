@@ -7,6 +7,9 @@
 - CI (N-22 R1): the component jobs (`platform`, `components-at-master`) close the hosted runner's interpreter
   directories (`chmod go-w`; they are writable by every user there), because the runtime now imports the OCR
   integration only on a closed import path. About one second per job; no new job.
+- Lock (paired, not for merge as is): `nodestro-runtime` at the head of `claude/w6-n22-trust` with the independent
+  review fixes (H1, M1, L1, L3); `nodestro-integrations` at the head of its `claude/w6-n22-trust` (M2). Re-pin to the
+  merge commits once runtime #226 and integrations #97 are merged.
 
 ### Welle 6: import dialogs for the exchange formats, the workflow file format, help coverage (N-14, ST-068)
 
