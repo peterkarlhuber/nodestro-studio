@@ -1349,7 +1349,7 @@
     "not_browsable_no_access": "Questo computer non ti permette di aprire questa cartella.",
     "not_browsable_changed": "La cartella è cambiata mentre veniva aperta. Riprova.",
     "not_browsable_invalid_path": "Scrivi un percorso completo, come /Users/alex/Documenti o C:\\Users\\alex\\Documenti.",
-    "not_browsable_network_path": "Le cartelle di rete non si possono né sfogliare né concedere.",
+    "not_browsable_network_path": "Le cartelle di rete non si possono né sfogliare né condividere.",
     "session_required": "Sfogliare le cartelle funziona solo nella finestra aperta dall’app. Scrivi invece il percorso completo della cartella."
   },
   "fs": {

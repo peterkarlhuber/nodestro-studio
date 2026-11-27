@@ -1349,7 +1349,7 @@
     "not_browsable_no_access": "Cet ordinateur ne vous permet pas d’ouvrir ce dossier.",
     "not_browsable_changed": "Le dossier a changé pendant son ouverture. Réessayez.",
     "not_browsable_invalid_path": "Saisissez un chemin complet, comme /Users/alex/Documents ou C:\\Users\\alex\\Documents.",
-    "not_browsable_network_path": "Les dossiers réseau ne peuvent être ni parcourus ni autorisés.",
+    "not_browsable_network_path": "Les dossiers réseau ne peuvent être ni parcourus ni partagés.",
     "session_required": "La navigation dans les dossiers ne fonctionne que dans la fenêtre ouverte par l’application. Saisissez plutôt le chemin complet du dossier."
   },
   "fs": {
