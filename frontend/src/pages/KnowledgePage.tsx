@@ -4,10 +4,12 @@ import { type DragEvent, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 
+import { useAccess } from "../api/access";
 import { api } from "../api/client";
 import { useCollections, useKnowledge, useSettings } from "../api/hooks";
 import type { KnowledgeFile, ReferenceUser, SearchHit } from "../api/types";
 import { DiscussIcon } from "../assistant/DiscussButton";
+import { ExportButton, ImportButton } from "../components/ExchangeDialog";
 import { toast } from "../components/toast";
 import { DeleteUsed, UsedByList, useUsedBy } from "../components/UsedBy";
 import { Badge, Button, Callout, EmptyState, Field, HelpTip, Hint, PageHeader, Spinner, TextInput, Tooltip } from "../components/ui";
@@ -27,6 +29,7 @@ export function KnowledgePage() {
   const files = useKnowledge(filter.trim() || undefined);
   const collections = useCollections();
   const usedBy = useUsedBy("knowledge");
+  const canEdit = useAccess().can("edit");
   // "" all files, NONE files without a collection, otherwise the collection's name.
   const [collection, setCollection] = useState("");
   const [target, setTarget] = useState("");
@@ -85,11 +88,16 @@ export function KnowledgePage() {
         doc="wissen"
         description={t("knowledge.description")}
         actions={
-          <Hint id="knowledge.upload">
-            <Button variant="primary" icon={Upload} busy={upload.isPending} onClick={() => input.current?.click()}>
-              {t("knowledge.upload")}
-            </Button>
-          </Hint>
+          <div className="row-gap">
+            {/* N-14: the selected collection as an exchange file, and a collection from such a file. */}
+            <ExportButton kind="collection" collection={collection && collection !== NONE ? collection : undefined} />
+            {canEdit ? <ImportButton kind="collection" onImported={() => void refresh()} /> : null}
+            <Hint id="knowledge.upload">
+              <Button variant="primary" icon={Upload} busy={upload.isPending} onClick={() => input.current?.click()}>
+                {t("knowledge.upload")}
+              </Button>
+            </Hint>
+          </div>
         }
       />
       <div className="page__body stack">

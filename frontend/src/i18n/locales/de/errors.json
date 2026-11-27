@@ -1368,5 +1368,28 @@
     "busy": "Es sind noch Läufe oder andere Arbeiten im Hintergrund aktiv. Warte, bis sie fertig sind, und lösche dann erneut.",
     "deleting": "Gerade werden alle Daten gelöscht, deshalb kann nichts starten. Starte es danach erneut.",
     "not_confirmed": "Das Löschen aller Daten muss mit dem genauen Text bestätigt werden."
+  },
+  "exchange": {
+    "checksum": "{{name}} in der Datei ist beschädigt (die Prüfsumme stimmt nicht). Exportiere die Sammlung erneut.",
+    "collection_exists": "Die Sammlung {{name}} enthält bereits Dateien. Wähle für den Import einen anderen Namen.",
+    "collection_name_invalid": "Dieser Sammlungsname kann nicht verwendet werden. Wähle einen anderen Namen.",
+    "collection_not_found": "Es gibt keine Sammlung {{name}} mit Dateien zum Exportieren.",
+    "content_invalid": "Der Inhalt der Datei ist ungültig: {{problems}}.",
+    "content_invalid_plain": "Der Inhalt der Datei ist ungültig.",
+    "format_invalid": "Das ist keine Nodestro-Austauschdatei der erwarteten Art ({{expected}}).",
+    "format_mismatch": "Diese Datei enthält {{found}}, nicht {{expected}}. Importiere sie an der passenden Stelle.",
+    "incomplete": "Die Datei ist unvollständig: Ein darin aufgeführtes Dokument fehlt.",
+    "invalid_json": "Die Datei ist kein gültiges JSON.",
+    "items_refused": "Einträge der Datei können nicht importiert werden (abgelehnt: {{refused}}), daher wurde nichts gespeichert. Die Vorschau nennt sie und den Grund.",
+    "items_refused_plain": "Einträge der Datei können nicht importiert werden, daher wurde nichts gespeichert. Die Vorschau nennt sie.",
+    "secret_detected": "Der Export würde ein Geheimnis enthalten ({{places}}) und wurde deshalb nicht geschrieben. Entferne das Geheimnis aus diesen Einstellungen und exportiere erneut.",
+    "too_large": "Die Datei ist zu groß (höchstens {{limit}}).",
+    "too_large_plain": "Die Datei ist zu groß.",
+    "too_many_entries": "Die Datei hat zu viele Einträge (höchstens {{limit}}).",
+    "unexpected_file": "Die Datei enthält einen unerwarteten Eintrag ({{name}}) und wird nicht verwendet.",
+    "unsafe_path": "Die Datei enthält einen unsicheren Pfad ({{name}}) und wird nicht verwendet.",
+    "version_newer": "Die Datei stammt aus einer neueren Nodestro-Version (Version {{version}}; diese liest bis Version {{supported}}). Aktualisiere zuerst Nodestro.",
+    "zip_bomb": "{{name}} in der Datei würde sich auf ein Vielfaches seiner Größe entpacken, daher wird die Datei nicht verwendet.",
+    "zip_invalid": "Die Datei ist keine lesbare ZIP-Datei."
   }
 }

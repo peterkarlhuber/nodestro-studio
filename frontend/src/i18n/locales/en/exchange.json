@@ -1,0 +1,59 @@
+{
+  "import": "Import…",
+  "export": "Export",
+  "exportCollection": "Export collection",
+  "choose": "Choose file",
+  "apply": "Import",
+  "recheck": "Check again",
+  "done": "Done",
+  "entries": "Entries of the file",
+  "needsSecret": "Secret to enter",
+  "title": {
+    "mcp": "Import MCP services",
+    "connections": "Import service connections",
+    "collection": "Import a knowledge collection"
+  },
+  "intro": {
+    "mcp": "Choose a {{format}} file. Nodestro first shows what it contains; nothing is stored before you confirm. Imported services are switched off, have no token and no approved tools.",
+    "connections": "Choose a {{format}} file. Nodestro first shows what it contains; nothing is stored before you confirm. Imported connections have no secret and are not checked yet.",
+    "collection": "Choose a {{format}} file (ZIP). Nodestro first checks it and shows its documents; nothing is stored before you confirm. The documents are indexed again here; the settings of this workspace stay as they are."
+  },
+  "status": {
+    "ready": "Ready",
+    "refused": "Refused",
+    "created": "Imported",
+    "exists": "Already here"
+  },
+  "preview": {
+    "summary_one": "The file contains {{count}} entry, {{refused}} of them refused.",
+    "summary_other": "The file contains {{count}} entries, {{refused}} of them refused.",
+    "empty": "The file contains no entries.",
+    "refused_one": "{{count}} entry cannot be imported. An import stores all entries or none: correct the file and choose it again.",
+    "refused_other": "{{count}} entries cannot be imported. An import stores all entries or none: correct the file and choose it again.",
+    "secrets": "Secrets are never part of the file. After the import, enter them again where they are needed."
+  },
+  "result": {
+    "summary_one": "{{count}} entry imported.",
+    "summary_other": "{{count}} entries imported."
+  },
+  "collection": {
+    "name": "Collection",
+    "nameHint": "The collection the documents go to; empty: the name in the file.",
+    "exists": "The collection {{name}} already has files. Choose another name, then check again.",
+    "embeddingSame": "The file was indexed with the same embedding model; the documents are indexed again here anyway.",
+    "embeddingOther": "The documents are indexed again with the embedding model of this workspace."
+  },
+  "leftOut": {
+    "title": "Never taken over:",
+    "enabled": "switched on",
+    "tool_approvals": "tool approvals",
+    "secrets": "secrets",
+    "vectors": "search index",
+    "provenance": "origin details"
+  },
+  "reenter": "Imported entries never bring their secrets along. Enter them again where they are needed; until then the entries do not work.",
+  "help": {
+    "title": "Exchange files",
+    "summary": "Exchange files move MCP services, service connections, knowledge collections and workflows between workspaces. They never contain secrets, and an import is previewed before anything is stored."
+  }
+}

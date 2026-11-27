@@ -10,7 +10,7 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { docExists } from "../docs";
 import { ProblemText } from "./errors";
-import { PLATFORM_HELP_DOCS, PlatformHelp } from "./platformHelp";
+import { PLATFORM_HELP_DOCS, PlatformHelp, STUDIO_HELP_DOCS } from "./platformHelp";
 
 function Where() {
   const location = useLocation();
@@ -34,7 +34,7 @@ describe("PlatformHelp", () => {
     const ids = Object.keys(platformHelp("de").entries);
     expect(Object.keys(PLATFORM_HELP_DOCS).sort()).toEqual(ids.sort());
     for (const id of new Set(Object.values(HELP_ERRORS))) expect(ids).toContain(id);
-    for (const [id, doc] of Object.entries(PLATFORM_HELP_DOCS)) expect(await docExists(doc), `${id} → ${doc}`).toBe(true);
+    for (const [id, doc] of Object.entries({ ...PLATFORM_HELP_DOCS, ...STUDIO_HELP_DOCS })) expect(await docExists(doc), `${id} → ${doc}`).toBe(true);
   });
 
   it("explains an error by its code's family and opens the documentation in the app", async () => {

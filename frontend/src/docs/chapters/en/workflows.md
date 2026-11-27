@@ -299,6 +299,8 @@ Versions are independent of undo/redo, which only applies within one session in 
 - **Export as a file** (in the editor under **More actions**) saves the workflow as `<Name>.nodestro.json`: all nodes, connections, positions and agent settings as well as the budget.
 - **Import** (on the *Workflows* page) loads such a file as a **new copy** with a new ID. Existing workflows are never overwritten. If the file has no name, the workflow is named after the file.
 
+The file names its format first (`"format": "nodestro-workflow/1"`); a file of a newer Nodestro version is refused. Files of earlier releases without this field are still imported.
+
 Nodestro checks the file before anything is created. If it is not a workflow export (for example another JSON file, a file without steps or with broken connections), nothing is imported and the message gives the reason, for example *This file is not a Nodestro workflow: it has no steps ("nodes").*
 
 **Not included** are knowledge files, memory spaces and your own tools; the file only refers to their IDs and names. On another computer they must exist there, otherwise the check reports, for example, "Unknown tools".

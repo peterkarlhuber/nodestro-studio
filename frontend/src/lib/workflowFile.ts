@@ -27,6 +27,18 @@ export function workflowFileProblem(data: unknown): WorkflowFileProblem | null {
   return null;
 }
 
+/**
+ * The exchange format of a workflow file (N-14). It is written first in every export; the API checks it on import
+ * (a newer version is refused with ``exchange.version_newer``). Files of earlier releases have none and are imported
+ * as they are.
+ */
+export const WORKFLOW_FORMAT = "nodestro-workflow/1";
+
+/** The content of an exported workflow file: the format first, then the workflow. */
+export function workflowExport<T extends object>(workflow: T): { format: typeof WORKFLOW_FORMAT } & T {
+  return { format: WORKFLOW_FORMAT, ...workflow };
+}
+
 /** A name for a file without one: the file name without ".nodestro.json" / ".json". */
 export function nameFromFile(fileName: string): string {
   return fileName.replace(/\.nodestro\.json$/i, "").replace(/\.json$/i, "").replace(/_/g, " ").trim();

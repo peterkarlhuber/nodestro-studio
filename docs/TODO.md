@@ -111,7 +111,7 @@ from #121). Both have status `Needs external review`.
 
 ### ST-068 · Shared UI library: move the studio's components to @nodestro/ui-* step by step (N-16)
 
-- **Priority:** P3 Low · **Status:** Open (first step done) · **Refs:** N-16, N-17, nodestro-ui `docs/TODO.md`,
+- **Priority:** P3 Low · **Status:** Open (first step and part of step 5 done) · **Refs:** N-16, N-17, nodestro-ui `docs/TODO.md`,
   `platform/internal-ui.txt`
 - **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`, `ui-help`; core and ai 0.2.0) are vendored as
   tarballs in `frontend/vendor/`, pinned with their SHA-256 in `platform/internal-ui.txt`, checked by
@@ -127,7 +127,10 @@ from #121). Both have status `Needs external review`.
   (`runs/ToolApprovalCard.tsx`) onto `ApprovalCard`, keeping the data hooks here; (3) the budget decision card
   (`runs/BudgetDecisionCard.tsx`); (4) tool call rows, chat messages (`assistant/MessageView.tsx`) and web sources
   (`runs/WebSources.tsx` onto `SourceList`); (5) the studio's own `HelpTip` (`components/Tooltip.tsx`, `help.json`) onto the
-  package's HelpTip with the studio's help registry, and a `helpCoverage` test of the studio's API error codes (N-17); (6) buttons, fields, dialogs and sections from `components/ui.tsx`; (7) an
+  package's HelpTip with the studio's help registry (the `helpCoverage` test of the API's error codes and the studio
+  entry `studio.exchange` are done, Welle 6; the about 110 existing tooltips stay on the studio's component until the
+  package's HelpTip opens on hover and focus, shows above modal dialogs (top layer) and carries `data-help` for the
+  settings search, and the studio's help ids have titles); (6) buttons, fields, dialogs and sections from `components/ui.tsx`; (7) an
   alias layer `--nd-*: var(--ui-*)` and a codemod, then drop `midnight-citron.css`. Each step keeps the existing
   tests and browser suites unchanged.
 - **Also:** nodestro-server (`image/Dockerfile`) and nodestro-desktop (`scripts/build_backend.sh`) run `npm ci` on a

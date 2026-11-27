@@ -1,0 +1,59 @@
+{
+  "import": "Importer…",
+  "export": "Exporter",
+  "exportCollection": "Exporter la collection",
+  "choose": "Choisir un fichier",
+  "apply": "Importer",
+  "recheck": "Vérifier à nouveau",
+  "done": "Terminé",
+  "entries": "Entrées du fichier",
+  "needsSecret": "Secret à saisir",
+  "title": {
+    "mcp": "Importer des services MCP",
+    "connections": "Importer des connexions de service",
+    "collection": "Importer une collection de connaissances"
+  },
+  "intro": {
+    "mcp": "Choisissez un fichier {{format}}. Nodestro montre d’abord son contenu ; rien n’est enregistré avant votre confirmation. Les services importés sont désactivés, sans jeton et sans outils approuvés.",
+    "connections": "Choisissez un fichier {{format}}. Nodestro montre d’abord son contenu ; rien n’est enregistré avant votre confirmation. Les connexions importées n’ont pas de secret et ne sont pas encore vérifiées.",
+    "collection": "Choisissez un fichier {{format}} (ZIP). Nodestro le vérifie d’abord et montre ses documents ; rien n’est enregistré avant votre confirmation. Les documents sont à nouveau indexés ici ; les paramètres de cet espace de travail restent inchangés."
+  },
+  "status": {
+    "ready": "Prêt",
+    "refused": "Refusé",
+    "created": "Importé",
+    "exists": "Déjà présent"
+  },
+  "preview": {
+    "summary_one": "Le fichier contient {{count}} entrée, dont {{refused}} refusée(s).",
+    "summary_other": "Le fichier contient {{count}} entrées, dont {{refused}} refusée(s).",
+    "empty": "Le fichier ne contient aucune entrée.",
+    "refused_one": "{{count}} entrée ne peut pas être importée. Un import enregistre toutes les entrées ou aucune : corrigez le fichier et choisissez-le à nouveau.",
+    "refused_other": "{{count}} entrées ne peuvent pas être importées. Un import enregistre toutes les entrées ou aucune : corrigez le fichier et choisissez-le à nouveau.",
+    "secrets": "Les secrets ne font jamais partie du fichier. Après l’import, saisissez-les à nouveau là où ils sont nécessaires."
+  },
+  "result": {
+    "summary_one": "{{count}} entrée importée.",
+    "summary_other": "{{count}} entrées importées."
+  },
+  "collection": {
+    "name": "Collection",
+    "nameHint": "La collection qui reçoit les documents ; vide : le nom figurant dans le fichier.",
+    "exists": "La collection {{name}} contient déjà des fichiers. Choisissez un autre nom, puis vérifiez à nouveau.",
+    "embeddingSame": "Le fichier a été indexé avec le même modèle d’embeddings ; les documents sont tout de même indexés à nouveau ici.",
+    "embeddingOther": "Les documents sont indexés à nouveau avec le modèle d’embeddings de cet espace de travail."
+  },
+  "leftOut": {
+    "title": "Jamais repris :",
+    "enabled": "activé",
+    "tool_approvals": "approbations d’outils",
+    "secrets": "données secrètes",
+    "vectors": "index de recherche",
+    "provenance": "informations d’origine"
+  },
+  "reenter": "Les entrées importées n’apportent jamais leurs secrets. Saisissez-les à nouveau là où ils sont nécessaires ; d’ici là, les entrées ne fonctionnent pas.",
+  "help": {
+    "title": "Fichiers d’échange",
+    "summary": "Les fichiers d’échange transportent des services MCP, des connexions de service, des collections de connaissances et des workflows d’un espace de travail à un autre. Ils ne contiennent jamais de secrets, et un import affiche un aperçu avant tout enregistrement."
+  }
+}

@@ -247,6 +247,28 @@ function failedResponse(status: number, statusText: string, body: unknown): ApiE
   return new ApiError(message, status, code, params);
 }
 
+/** A GET answered with a file (an export): its bytes and the file name of its Content-Disposition, or ``fallback``. */
+export async function requestFile(path: string, fallback: string): Promise<{ blob: Blob; name: string }> {
+  let response: Response;
+  try {
+    response = await fetch(`/api${path}`, { headers: { "Accept-Language": currentLanguage() } });
+  } catch (error) {
+    throw new ApiError(error instanceof Error ? error.message : String(error), 0, "network");
+  }
+  if (!response.ok) {
+    let data: unknown = null;
+    try {
+      data = await response.json();
+    } catch {
+      // not JSON
+    }
+    throw failedResponse(response.status, response.statusText, data);
+  }
+  const disposition = response.headers.get("Content-Disposition") ?? "";
+  const name = /filename="?([^";]+)"?/i.exec(disposition)?.[1]?.trim() || fallback;
+  return { blob: await response.blob(), name };
+}
+
 /**
  * POSTs a form and reports how much of it the browser has sent (0…1). fetch() cannot report upload progress, so this
  * uses XMLHttpRequest; without a progress callback (or without XMLHttpRequest) it is the plain request().
@@ -371,7 +393,7 @@ export const api = {
   workflows: () => request<WorkflowSummary[]>("GET", "/workflows"),
   workflow: (id: string) => request<Workflow>("GET", `/workflows/${id}`),
   createWorkflow: (body: Partial<WorkflowIn>) => request<Workflow>("POST", "/workflows", body),
-  importWorkflow: (body: WorkflowIn & { python?: ExportedDependencies | null }) =>
+  importWorkflow: (body: WorkflowIn & { python?: ExportedDependencies | null; format?: string }) =>
     request<Workflow>("POST", "/workflows/import", body),
   /** Saves the workflow; a changed workflow becomes a new version, ``note`` describes it. */
   /** ``revision``: the ``updated_at`` the edit started from; a newer server copy answers 409 workflow.conflict. */

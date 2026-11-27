@@ -1368,5 +1368,28 @@
     "busy": "Ci sono ancora esecuzioni o altri lavori attivi in background. Aspetta che finiscano, poi elimina di nuovo.",
     "deleting": "Tutti i dati sono in corso di eliminazione, quindi non può partire nulla. Avvialo di nuovo dopo.",
     "not_confirmed": "L’eliminazione di tutti i dati deve essere confermata con il testo esatto."
+  },
+  "exchange": {
+    "checksum": "{{name}} nel file è danneggiato (il checksum non corrisponde). Esporta di nuovo la raccolta.",
+    "collection_exists": "La raccolta {{name}} contiene già dei file. Scegli un altro nome per l'importazione.",
+    "collection_name_invalid": "Questo nome di raccolta non può essere usato. Scegli un altro nome.",
+    "collection_not_found": "Non esiste nessuna raccolta {{name}} con file da esportare.",
+    "content_invalid": "Il contenuto del file non è valido: {{problems}}.",
+    "content_invalid_plain": "Il contenuto del file non è valido.",
+    "format_invalid": "Non è un file di scambio Nodestro del tipo previsto ({{expected}}).",
+    "format_mismatch": "Questo file contiene {{found}}, non {{expected}}. Importalo nel punto corrispondente.",
+    "incomplete": "Il file è incompleto: manca un documento elencato al suo interno.",
+    "invalid_json": "Il file non è un JSON valido.",
+    "items_refused": "Alcune voci del file non possono essere importate (rifiutate: {{refused}}), quindi non è stato salvato nulla. L'anteprima le indica con il motivo.",
+    "items_refused_plain": "Alcune voci del file non possono essere importate, quindi non è stato salvato nulla. L'anteprima le indica.",
+    "secret_detected": "L'esportazione conterrebbe un segreto ({{places}}), quindi non è stata scritta. Rimuovi il segreto da queste impostazioni ed esporta di nuovo.",
+    "too_large": "Il file è troppo grande (al massimo {{limit}}).",
+    "too_large_plain": "Il file è troppo grande.",
+    "too_many_entries": "Il file ha troppe voci (al massimo {{limit}}).",
+    "unexpected_file": "Il file contiene una voce inattesa ({{name}}) e non viene usato.",
+    "unsafe_path": "Il file contiene un percorso non sicuro ({{name}}) e non viene usato.",
+    "version_newer": "Il file proviene da una versione più recente di Nodestro (versione {{version}}; questa legge fino alla versione {{supported}}). Aggiorna prima Nodestro.",
+    "zip_bomb": "{{name}} nel file si decomprimerebbe ben oltre la sua dimensione, quindi il file non viene usato.",
+    "zip_invalid": "Il file non è un file ZIP leggibile."
   }
 }

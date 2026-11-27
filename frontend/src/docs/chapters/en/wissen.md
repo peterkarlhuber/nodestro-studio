@@ -103,6 +103,11 @@ Collections group knowledge files, e.g. “Contracts” or “Product data”. W
 
 Content from runs (uploaded files, result files, results and agent proposals) only reaches knowledge after your confirmation, see [Take over into knowledge](/docs/datei-eingaben#knowledge-uebernahme). Such files show under *Origin* which workflow, step and run they come from and whether the content was extracted, generated or is an assumption.
 
+## Collections as files {#sammlung-austausch}
+<!-- keywords: collection, export, import, zip, nodestro-collection, move, another workspace -->
+
+Select a collection with its chip and click **Export collection**: Nodestro saves its documents with their retrieval settings as a ZIP file (`nodestro-collection/1`). **Import…** brings such a file into another workspace as a new collection; you can give it another name. The preview lists the documents, refuses a damaged or unsafe file and warns when the collection already has files. The documents are indexed again with this workspace's embedding model; the search index and origin details of the file are never taken over, and the settings of this workspace stay as they are.
+
 ## Managing files {#verwalten}
 <!-- keywords: edit description, delete, manage, remove -->
 

@@ -299,6 +299,8 @@ As versões são independentes de desfazer/refazer, que vale apenas dentro de um
 - **Exportar como arquivo** (no editor, em **Mais ações**) salva o fluxo como `<Nome>.nodestro.json`: todos os nós, conexões, posições e configurações dos agentes, além do orçamento.
 - **Importar** (na página *Fluxos de trabalho*) carrega esse arquivo como **nova cópia** com um novo ID. Fluxos existentes nunca são sobrescritos. Se o arquivo não tiver nome, o fluxo recebe o nome do arquivo.
 
+O arquivo indica primeiro o seu formato (`"format": "nodestro-workflow/1"`); um arquivo de uma versão mais nova do Nodestro é recusado. Arquivos de versões anteriores sem esse campo continuam sendo importados.
+
 O Nodestro verifica o arquivo antes de criar qualquer coisa. Se não for a exportação de um fluxo de trabalho (por exemplo outro arquivo JSON, um arquivo sem etapas ou com conexões quebradas), nada é importado e a mensagem explica o motivo, por exemplo *Este arquivo não é um fluxo de trabalho do Nodestro: ele não tem etapas ("nodes").*
 
 **Não estão incluídos** arquivos de conhecimento, espaços de memória e ferramentas próprias; o arquivo só faz referência aos IDs e nomes deles. Em outro computador eles precisam existir lá; caso contrário, a verificação informa, por exemplo, "Ferramentas desconhecidas".
