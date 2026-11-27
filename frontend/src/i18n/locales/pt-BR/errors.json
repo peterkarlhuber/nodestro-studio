@@ -1349,7 +1349,7 @@
     "not_browsable_no_access": "Este computador não deixa você abrir esta pasta.",
     "not_browsable_changed": "A pasta mudou enquanto era aberta. Tente de novo.",
     "not_browsable_invalid_path": "Digite um caminho completo, como /Users/alex/Documentos ou C:\\Users\\alex\\Documentos.",
-    "not_browsable_network_path": "Pastas de rede não podem ser procuradas nem concedidas.",
+    "not_browsable_network_path": "Pastas de rede não podem ser procuradas nem compartilhadas.",
     "session_required": "Procurar pastas só funciona na janela que o aplicativo abriu. Digite o caminho completo da pasta."
   },
   "fs": {

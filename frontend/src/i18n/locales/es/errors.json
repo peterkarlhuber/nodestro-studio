@@ -1349,7 +1349,7 @@
     "not_browsable_no_access": "Este equipo no te deja abrir esta carpeta.",
     "not_browsable_changed": "La carpeta cambió mientras se abría. Inténtalo de nuevo.",
     "not_browsable_invalid_path": "Escribe una ruta completa, como /Users/alex/Documentos o C:\\Users\\alex\\Documentos.",
-    "not_browsable_network_path": "Las carpetas de red no se pueden examinar ni conceder.",
+    "not_browsable_network_path": "Las carpetas de red no se pueden examinar ni compartir.",
     "session_required": "Examinar carpetas solo funciona en la ventana que abrió la aplicación. Escribe en su lugar la ruta completa de la carpeta."
   },
   "fs": {
