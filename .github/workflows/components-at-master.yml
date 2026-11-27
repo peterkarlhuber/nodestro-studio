@@ -106,6 +106,15 @@ jobs:
           # psycopg: nodestro-api's dev extra, for its database error-text tests (tests/test_db_error_texts.py).
           uv pip install --system --override "$RUNNER_TEMP/overrides.txt" \
             -e ".[dev]" pytest-asyncio httpx "pglast>=7,<9" "psycopg[binary,pool]>=3.2"
+      # N-22 (owner decision on R1): the runtime imports Nodestro's OCR integration only on a closed import path. The
+      # hosted runner's interpreter directories are writable by every user, which the runtime rightly refuses; close
+      # them as the products' installations are (root- or user-owned, not world-writable).
+      - name: Close the interpreter directories
+        run: |
+          prefix=$(python -I -c 'import sys; print(sys.base_prefix)')
+          chmod -R go-w "$prefix"
+          parent=$(dirname "$prefix")
+          while [ "$parent" != / ]; do if [ -O "$parent" ]; then chmod go-w "$parent"; fi; parent=$(dirname "$parent"); done
       - name: Only the master commits (and the other locked packages at their lock commit) were installed
         id: installed
         run: |
