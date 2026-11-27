@@ -103,6 +103,11 @@ Les collections regroupent les fichiers de connaissances, p. ex. « Contrats » 
 
 Le contenu des exécutions (fichiers envoyés, fichiers de résultat, résultats et propositions d’agents) n’arrive dans les connaissances qu’après votre confirmation, voir [Reprendre dans les connaissances](/docs/datei-eingaben#knowledge-uebernahme). Ces fichiers indiquent sous *Provenance* de quel workflow, étape et exécution ils viennent et si le contenu est extrait, généré ou une hypothèse.
 
+## Collections sous forme de fichier {#sammlung-austausch}
+<!-- keywords: collection, exporter, importer, zip, nodestro-collection, déplacer, autre espace de travail -->
+
+Sélectionnez une collection avec sa puce et cliquez sur **Exporter la collection** : Nodestro enregistre ses documents avec leurs paramètres de recherche dans un fichier ZIP (`nodestro-collection/1`). **Importer…** apporte un tel fichier dans un autre espace de travail sous forme de nouvelle collection ; vous pouvez lui donner un autre nom. L’aperçu liste les documents, refuse un fichier endommagé ou non sûr et avertit lorsque la collection contient déjà des fichiers. Les documents sont à nouveau indexés avec le modèle d’embeddings de cet espace de travail ; l’index de recherche et les informations d’origine du fichier ne sont jamais repris, et les paramètres de cet espace de travail restent inchangés.
+
 ## Gérer les fichiers {#verwalten}
 <!-- keywords: modifier la description, supprimer, gérer, retirer -->
 

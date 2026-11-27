@@ -26,6 +26,7 @@ import {
   useConnections,
 } from "../api/connections";
 import { PermissionNote } from "../components/Access";
+import { ExportButton, ImportButton } from "../components/ExchangeDialog";
 import { toast } from "../components/toast";
 import {
   Badge,
@@ -72,6 +73,7 @@ export function ConnectionsTab() {
   const [selected, setSelected] = useState<string | null>(params.get("connection"));
   const [adding, setAdding] = useState(false);
   const [settingUpSearch, setSettingUpSearch] = useState(false);
+  const refresh = useRefresh();
   if (connections.isLoading || status.isLoading || types.isLoading) return <Spinner />;
   const failed = connections.error ?? status.error ?? types.error;
   if (failed)
@@ -98,6 +100,8 @@ export function ConnectionsTab() {
                 {t("tools.connections.search.open")}
               </Button>
             ) : null}
+            <ExportButton kind="connections" disabled={!list.length} />
+            <ImportButton kind="connections" onImported={refresh} />
             <Button icon={Plus} onClick={() => setAdding(true)} disabled={!types.data?.length}>
               {t("tools.connections.add")}
             </Button>

@@ -36,3 +36,13 @@ Os segredos são salvos criptografados, como os tokens de acesso dos serviços c
 <!-- keywords: agente, inspetor, configurações da ferramenta, escolha da conexão -->
 
 Quando você atribui uma ferramenta integrada que precisa de uma conexão, o inspetor do agente mostra abaixo das ferramentas uma escolha com as conexões do tipo certo (veja [Atribuir ferramentas](/docs/agenten#tools)). Sem uma conexão escolhida, a verificação do agente mostra um erro. O modelo nunca vê a conexão, suas configurações nem seu segredo; ele vê apenas a ferramenta.
+
+## Arquivos de troca {#austausch}
+<!-- keywords: troca, importar, exportar, arquivo, nodestro-mcp, nodestro-connection, mover, outro espaço de trabalho, prévia -->
+
+**Exportar** em *Ferramentas → Serviços conectados* e *Ferramentas → Conexões* salva todos os serviços MCP ou todas as conexões em um arquivo (`nodestro-mcp/1`, `nodestro-connection/1`); **Importar…** leva esse arquivo para outro espaço de trabalho. Ambos exigem direitos de administração.
+
+- Uma importação mostra primeiro uma **prévia**: cada entrada do arquivo, se pode ser importada e, se não, por quê. Nada é salvo antes de você clicar em **Importar**. Uma importação salva todas as entradas ou nenhuma.
+- **Segredos nunca fazem parte do arquivo**: nada de tokens, logins, senhas ou chaves. Uma exportação que conteria um é recusada e indica o campo de configuração. Depois de uma importação, a janela lista as entradas cujo segredo você precisa informar novamente, cada uma com um link.
+- Os serviços importados ficam desligados e sem ferramentas aprovadas; revise as ferramentas deles como em um serviço novo. As conexões importadas ainda não foram verificadas.
+- Um arquivo de uma versão mais nova do Nodestro é recusado; atualize o Nodestro primeiro.

@@ -140,6 +140,15 @@ function codeParams(t: TFunction, code: string | null, params: Record<string, un
     const label = (type: unknown) => (typeof type === "string" ? t(`tools.connections.types.${type}`, { defaultValue: type }) : type);
     return { ...params, type: label(params.type), expected: label(params.expected) };
   }
+  // Exchange files (N-14): the size limit in words, where the content is invalid (fields and reasons, never values).
+  if (code === "exchange.too_large" && Number(params.limit) > 0) return { ...params, limit: formatLargeBytes(Number(params.limit)) };
+  if (code === "exchange.content_invalid" && Array.isArray(params.problems))
+    return {
+      ...params,
+      problems: params.problems
+        .map((item) => (item && typeof item === "object" ? `${String((item as { field?: unknown }).field ?? "")} (${String((item as { reason?: unknown }).reason ?? "")})` : String(item)))
+        .join("; "),
+    };
   if (code === "local.invalid_package_reason") return { ...params, reason: t(`errors.local.${String(params.reason)}`, { defaultValue: String(params.reason) }) };
   return null;
 }
@@ -221,6 +230,12 @@ export function refineProblem(
     if (FOLDER_FS_REASONS.has(params.reason)) return { code: `fs.${params.reason}`, params };
     if (params.reason === "invalid_path") return { code: "access.folder_path", params };
   }
+  // Exchange files (N-14): without its parameters a sentence stays general.
+  if (code === "exchange.too_large" && !(Number(params.limit) > 0)) return { code: "exchange.too_large_plain", params };
+  if (code === "exchange.content_invalid" && !(Array.isArray(params.problems) && params.problems.length))
+    return { code: "exchange.content_invalid_plain", params };
+  if (code === "exchange.items_refused" && !(Number(params.refused) > 0))
+    return { code: "exchange.items_refused_plain", params };
   // A size limit, when the server names it.
   if (code === "request.too_large" && params.limit_mb != null) return { code: "request.too_large_limit", params };
   // The downloads a portable build needs: codes (python, libraries, ollama) named in words. Older APIs send them only

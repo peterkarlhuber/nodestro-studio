@@ -299,6 +299,8 @@ Les versions sont indépendantes d’annuler/rétablir, qui ne vaut que pendant 
 - **Exporter dans un fichier** (dans l’éditeur, sous **Plus d’actions**) enregistre le workflow sous `<Nom>.nodestro.json` : tous les nœuds, connexions, positions et réglages des agents ainsi que le budget.
 - **Importer** (sur la page *Workflows*) charge un tel fichier comme **nouvelle copie** avec un nouvel ID. Les workflows existants ne sont jamais écrasés. Si le fichier n’a pas de nom, le workflow prend le nom du fichier.
 
+Le fichier indique d’abord son format (`"format": "nodestro-workflow/1"`) ; un fichier d’une version plus récente de Nodestro est refusé. Les fichiers des versions antérieures sans ce champ sont toujours importés.
+
 Nodestro vérifie le fichier avant de créer quoi que ce soit. S’il ne s’agit pas d’un export de workflow (par exemple un autre fichier JSON, un fichier sans étapes ou avec des connexions cassées), rien n’est importé et le message en donne la raison, par exemple *Ce fichier n’est pas un workflow Nodestro : il n’a aucune étape ("nodes").*
 
 **Ne sont pas inclus** les fichiers de connaissances, les espaces mémoire et vos propres outils ; le fichier ne fait que référencer leurs ID et leurs noms. Sur un autre ordinateur, ils doivent y exister, sinon la vérification signale par exemple « Outils inconnus ».

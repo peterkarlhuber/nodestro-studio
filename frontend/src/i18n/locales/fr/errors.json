@@ -1368,5 +1368,28 @@
     "busy": "Des exécutions ou d’autres travaux en arrière-plan sont encore actifs. Attendez qu’ils soient terminés, puis supprimez de nouveau.",
     "deleting": "Toutes les données sont en cours de suppression, rien ne peut donc démarrer. Relancez-le ensuite.",
     "not_confirmed": "La suppression de toutes les données doit être confirmée avec le texte exact."
+  },
+  "exchange": {
+    "checksum": "{{name}} dans le fichier est endommagé (la somme de contrôle ne correspond pas). Exportez à nouveau la collection.",
+    "collection_exists": "La collection {{name}} contient déjà des fichiers. Choisissez un autre nom pour l’import.",
+    "collection_name_invalid": "Ce nom de collection ne peut pas être utilisé. Choisissez un autre nom.",
+    "collection_not_found": "Il n’existe aucune collection {{name}} avec des fichiers à exporter.",
+    "content_invalid": "Le contenu du fichier n’est pas valide : {{problems}}.",
+    "content_invalid_plain": "Le contenu du fichier n’est pas valide.",
+    "format_invalid": "Ce n’est pas un fichier d’échange Nodestro du type attendu ({{expected}}).",
+    "format_mismatch": "Ce fichier contient {{found}}, pas {{expected}}. Importez-le à l’endroit correspondant.",
+    "incomplete": "Le fichier est incomplet : un document qu’il mentionne est absent.",
+    "invalid_json": "Le fichier n’est pas un JSON valide.",
+    "items_refused": "Des entrées du fichier ne peuvent pas être importées (refusées : {{refused}}), rien n’a donc été enregistré. L’aperçu les indique avec la raison.",
+    "items_refused_plain": "Des entrées du fichier ne peuvent pas être importées, rien n’a donc été enregistré. L’aperçu les indique.",
+    "secret_detected": "L’export contiendrait un secret ({{places}}), il n’a donc pas été écrit. Retirez le secret de ces paramètres et exportez à nouveau.",
+    "too_large": "Le fichier est trop volumineux (au maximum {{limit}}).",
+    "too_large_plain": "Le fichier est trop volumineux.",
+    "too_many_entries": "Le fichier contient trop d’entrées (au maximum {{limit}}).",
+    "unexpected_file": "Le fichier contient une entrée inattendue ({{name}}) et n’est pas utilisé.",
+    "unsafe_path": "Le fichier contient un chemin non sûr ({{name}}) et n’est pas utilisé.",
+    "version_newer": "Le fichier provient d’une version plus récente de Nodestro (version {{version}} ; celle-ci lit jusqu’à la version {{supported}}). Mettez d’abord Nodestro à jour.",
+    "zip_bomb": "{{name}} dans le fichier se décompresserait bien au-delà de sa taille, le fichier n’est donc pas utilisé.",
+    "zip_invalid": "Le fichier n’est pas un ZIP lisible."
   }
 }

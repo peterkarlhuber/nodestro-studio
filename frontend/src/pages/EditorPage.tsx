@@ -37,6 +37,7 @@ import { VersionsDialog } from "../editor/VersionsDialog";
 import { problemText } from "../lib/errors";
 import { useDocumentTitle } from "../lib/documentTitle";
 import { crumbLink, parseTrail } from "../lib/trail";
+import { workflowExport } from "../lib/workflowFile";
 import { ApiDialog } from "../publish/ApiDialog";
 import { API_DIALOG_PARAM } from "../publish/publicationsList";
 import { countsByNode, findings, startBlock } from "../editor/CheckList";
@@ -383,7 +384,7 @@ export function EditorPage() {
   const exportWorkflow = async () => {
     // The Python libraries travel with the workflow (exact versions, never the approvals).
     const python = id ? await api.workflowDependencyExport(id).catch(() => null) : null;
-    const data = { ...useEditor.getState().toWorkflow(), ...(python ? { python } : {}) };
+    const data = workflowExport({ ...useEditor.getState().toWorkflow(), ...(python ? { python } : {}) });
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);

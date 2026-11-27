@@ -6,10 +6,12 @@
 // approving it as read only, the writing tool staying blocked, the tool in the library and its test call,
 // an agent calling the tool in a run with provenance and unknown external cost, local servers being offered only
 // with the container sandbox, an OAuth sign-in through the browser and signing out, the operation view, a
-// published API offered as an MCP tool and called over MCP, dark mode and a phone width.
+// published API offered as an MCP tool and called over MCP, exporting the services as a file and importing it
+// again with its preview (N-14), dark mode and a phone width.
 
 import { createRequire } from "node:module";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 const require = createRequire(import.meta.url);
@@ -242,17 +244,44 @@ try {
   check(outside.status() === 401, "Without a key Nodestro's MCP server answers 401");
   await page.keyboard.press("Escape");
 
+  // ---- exchange file (N-14) --------------------------------------------------------------------------
+  await page.goto(`${base}/tools?tab=services`);
+  await services.waitFor();
+  const [download] = await Promise.all([page.waitForEvent("download"), page.getByTestId("exchange-export-mcp").click()]);
+  const folder = mkdtempSync(join(tmpdir(), "nodestro-e2e-exchange-"));
+  const exported = join(folder, download.suggestedFilename());
+  await download.saveAs(exported);
+  const document = JSON.parse(readFileSync(exported, "utf8"));
+  check(document.format === "nodestro-mcp/1" && document.servers.some((item) => item.name === "Docs"), "The export is a nodestro-mcp/1 file with the services");
+  check(!/e2e-placeholder|access_token|Bearer /i.test(readFileSync(exported, "utf8")), "The export holds no secret");
+  // The same services under other names, as a second workspace would receive them.
+  for (const item of document.servers) item.name = `${item.name} Kopie`;
+  const copy = join(folder, "copy.nodestro-mcp.json");
+  writeFileSync(copy, JSON.stringify(document));
+  const before = (await api("/mcp/servers")).length;
+  await page.getByTestId("exchange-import-mcp").click();
+  await page.getByTestId("exchange-file").setInputFiles(copy);
+  const preview = page.getByTestId("exchange-report");
+  await preview.getByText("Docs Kopie").waitFor();
+  check((await api("/mcp/servers")).length === before, "The preview stores nothing");
+  await page.getByTestId("exchange-apply").click();
+  await page.getByTestId("exchange-done").waitFor();
+  const imported = (await api("/mcp/servers")).find((item) => item.name === "Docs Kopie");
+  check(imported && !imported.enabled && imported.tools_approved === 0, "The imported service is switched off and has no approved tool");
+  await shot("mcp-03-import");
+  await page.getByTestId("exchange-done").click();
+
   // ---- dark mode and a phone ------------------------------------------------------------------------
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto(`${base}/tools?tab=services`);
   await page.getByTestId("mcp-services").waitFor();
-  await shot("mcp-03-dark");
+  await shot("mcp-04-dark");
   await page.setViewportSize({ width: 390, height: 844 });
   await page.reload();
   await page.getByTestId("mcp-services").waitFor();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check(overflow <= 1, `No horizontal scrolling at phone width (${overflow}px)`);
-  await shot("mcp-04-phone");
+  await shot("mcp-05-phone");
 
   check(errors.length === 0, `No console errors (${errors.join(" | ")})`);
 } finally {
