@@ -33,7 +33,8 @@ export function MemoryAssistantDialog({
   });
   const save = useMutation({
     mutationFn: async () => {
-      for (const file of seed?.files ?? []) await api.writeMemory(space.trim(), file.path, file.content);
+      for (const file of seed?.files ?? [])
+        await api.writeMemory(space.trim(), file.path, file.content, { proposed: true });
     },
     onSuccess: () => {
       onSpace(space.trim());

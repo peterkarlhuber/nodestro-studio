@@ -18,6 +18,15 @@
   "clearText": "Todos os arquivos de “{{name}}” serão excluídos. Depois os agentes começam sem lembranças.",
   "deleteFile": "Excluir arquivo",
   "contentOf": "Conteúdo de {{path}}",
+  "entries": "Entradas",
+  "origin": {
+    "label": "Origem",
+    "tool": "escrito por um agente",
+    "user": "escrito por você",
+    "import": "importado",
+    "assistant": "proposto pelo assistente de memória",
+    "unknown": "origem desconhecida"
+  },
   "consents": {
     "title": "Consentimentos para fluxos de trabalho compartilhados",
     "intro": "Fluxos de trabalho que usam um dos seus espaços de memória precisam do seu consentimento para exatamente o conteúdo atual deles. Um fluxo de trabalho alterado precisa de um novo consentimento.",

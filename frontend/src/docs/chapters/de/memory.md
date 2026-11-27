@@ -41,6 +41,7 @@ Die Seite **Memory** zeigt alle Räume mit Anzahl und Größe der Dateien. Wähl
 
 - **Datei ansehen und bearbeiten:** Datei wählen, Text ändern, **Speichern**.
 - **Datei anlegen:** Pfad eingeben (z. B. `kunden/vorlieben.md`); er wird unter `/memories` angelegt.
+- **Herkunft und Zeit:** jede Datei zeigt, wer sie zuletzt geschrieben hat und wann: ein Agent (mit seinem Memory-Werkzeug), du (auf dieser Seite gespeichert), der Memory-Assistent (sein Vorschlag, von dir gespeichert) oder ein Import. Dateien aus der Zeit davor zeigen „Herkunft unbekannt“. Speicherst du eine Datei hier, bist du ihre Herkunft; was ein Agent oder der Memory-Assistent geschrieben hat, steht nie unter deinem Namen.
 - **Datei löschen:** Papierkorb-Symbol neben dem Pfad.
 - **Raum leeren:** löscht alle Dateien des Raums nach Rückfrage endgültig. Über den Dateien zeigt **Verwendet in**, welche Agenten und veröffentlichten APIs den Raum nutzen; die Rückfrage nennt sie ebenfalls.
 

@@ -13,7 +13,7 @@
 | P1 High | 1 |
 | P2 Medium | 5 |
 | P3 Low | 12 |
-| P4 Optional | 4 |
+| P4 Optional | 5 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
 preview is gated by nodestro-desktop DSK-001 (new candidate and Go/No-Go), not by an item here.
@@ -99,6 +99,14 @@ from #121). Both have status `Needs external review`.
   of the baseline runs and the panels do not shift the canvas.
 
 ## Features and enhancements
+
+### ST-069 · Memory entries (N-24): what the page does not show yet
+
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** `frontend/src/pages/MemoryPage.tsx`, nodestro-runtime
+  RT-097, nodestro-api API-080
+- **Done:** origin (agent, you, memory assistant, import, unknown) and time per file on the Memory page; edit and delete as before.
+- **Open:** no filter or sort by origin; the scope (`user`) is not shown while it is the only one.
+- **Next step:** none until a second scope (project, agent) exists.
 
 ### ST-035 · Similarity hint for pasted code in the tool editor (R-4)
 

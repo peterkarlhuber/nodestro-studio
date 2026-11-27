@@ -41,6 +41,7 @@ A página **Memória** mostra todos os espaços com o número e o tamanho dos ar
 
 - **Ver e editar um arquivo:** escolha o arquivo, altere o texto e clique em **Salvar**.
 - **Criar um arquivo:** digite um caminho (por exemplo `clientes/preferencias.md`); ele é criado em `/memories`.
+- **Origem e hora:** cada arquivo mostra quem o escreveu por último e quando: um agente (com a ferramenta de memória dele), você (salvo nesta página), o assistente de memória (a proposta dele, salva por você) ou uma importação. Arquivos anteriores mostram “origem desconhecida”. Se você salvar um arquivo aqui, a origem é você; o que um agente ou o assistente de memória escreve nunca aparece em seu nome.
 - **Excluir um arquivo:** símbolo da lixeira ao lado do caminho.
 - **Esvaziar um espaço:** exclui definitivamente todos os arquivos do espaço após confirmação. Acima dos arquivos, **Usado em** mostra quais agentes e APIs publicadas usam o espaço; a confirmação também os nomeia.
 

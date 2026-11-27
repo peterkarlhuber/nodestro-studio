@@ -1680,9 +1680,17 @@ export interface MemoryConsentPreview {
   targets: ConsentTarget[];
 }
 
+/** Whose a memory space is (N-24): today always one person's ("user"); "project" and "agent" are reserved. */
+export type MemoryScope = "user" | "project" | "agent";
+
 export interface MemoryFile {
   path: string;
   size: number;
+  /** When the entry was last written (N-24). */
+  updated_at?: string | null;
+  /** Who wrote it last: "tool" (an agent), "user" (a person, explicitly), "import"; null when unknown. */
+  origin?: string | null;
+  scope?: MemoryScope;
 }
 
 export interface MemorySeed {

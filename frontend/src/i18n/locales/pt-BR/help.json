@@ -100,6 +100,7 @@
     "space": "Um espaço de memória é um sistema de arquivos próprio em /memories. Agentes com memória “Permanente” e este espaço leem e escrevem aqui.",
     "clear": "Exclui definitivamente todos os arquivos do espaço. Depois os agentes começam sem lembranças.",
     "newFile": "Cria um arquivo vazio em /memories, p. ex. clientes/preferencias.md. Os agentes o encontram na próxima execução.",
+    "origin": "Cada entrada mostra o tamanho, quem a escreveu por último e quando: um agente (a ferramenta de memória dele), você (salvo aqui), o assistente de memória (a proposta dele, salva por você) ou uma importação. Entradas mais antigas não têm origem. Aqui você corrige ou exclui qualquer entrada.",
     "consents": "Em um servidor, um fluxo de trabalho compartilhado só pode usar seu espaço de memória depois que você permitiu exatamente o conteúdo atual dele: o fluxo de trabalho e cada fluxo de trabalho que ele inicia. Se um deles mudar, ele precisa do seu consentimento de novo. Você pode retirar um consentimento a qualquer momento."
   },
   "runs": {

@@ -18,6 +18,15 @@
   "clearText": "Alle Dateien in „{{name}}“ werden gelöscht. Agenten beginnen danach ohne Erinnerungen.",
   "deleteFile": "Datei löschen",
   "contentOf": "Inhalt von {{path}}",
+  "entries": "Einträge",
+  "origin": {
+    "label": "Herkunft",
+    "tool": "von einem Agenten geschrieben",
+    "user": "von dir geschrieben",
+    "import": "importiert",
+    "assistant": "vom Memory-Assistenten vorgeschlagen",
+    "unknown": "Herkunft unbekannt"
+  },
   "consents": {
     "title": "Zustimmungen für geteilte Workflows",
     "intro": "Workflows, die einen deiner Memory-Räume nutzen, brauchen deine Zustimmung für genau ihren aktuellen Inhalt. Ein geänderter Workflow braucht eine neue Zustimmung.",

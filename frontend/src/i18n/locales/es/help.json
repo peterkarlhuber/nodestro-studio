@@ -100,6 +100,7 @@
     "space": "Un espacio de memoria es un sistema de archivos propio en /memories. Los agentes con memoria «Permanente» y este espacio leen y escriben aquí.",
     "clear": "Elimina definitivamente todos los archivos del espacio. Después los agentes empiezan sin recuerdos.",
     "newFile": "Crea un archivo vacío en /memories, p. ej. clientes/preferencias.md. Los agentes lo encontrarán en la siguiente ejecución.",
+    "origin": "Cada entrada muestra su tamaño, quién la escribió por última vez y cuándo: un agente (su herramienta de memoria), tú (guardado aquí), el asistente de memoria (su propuesta, guardada por ti) o una importación. Las entradas antiguas no tienen origen. Aquí puedes corregir o eliminar cualquier entrada.",
     "consents": "En un servidor, un flujo de trabajo compartido solo puede usar tu espacio de memoria después de que hayas permitido exactamente su contenido actual: el flujo de trabajo y cada flujo de trabajo que inicia. Si uno de ellos cambia, necesita de nuevo tu consentimiento. Puedes retirar un consentimiento en cualquier momento."
   },
   "runs": {
