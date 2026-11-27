@@ -277,7 +277,13 @@ try {
   const docChunks = [...chunks].filter((name) => name.startsWith("docs-"));
   check(docChunks.join() === "docs-de", `The documentation loads the chapters of the interface language only (${docChunks.join(", ")})`);
   await page.goto(base + "/docs");
-  await page.getByRole("searchbox").fill("trace importieren");
+  // The shared help (@nodestro/ui-help) finds the explanation of a pasted error code, offline, and opens its chapter.
+  await page.getByRole("searchbox", { name: "Hilfe zu einer Fehlermeldung suchen" }).fill("approval.expired");
+  await page.getByTestId("docs-error-help").getByRole("link", { name: "Freigaben" }).click();
+  await page.waitForURL(/\/docs\/verzweigungen#freigaben-seite/);
+  check(true, "The help search finds the help for an error code and opens its chapter");
+  await page.goto(base + "/docs");
+  await page.getByRole("searchbox", { name: "Dokumentation durchsuchen" }).fill("trace importieren");
   await page.locator(".docs-result").first().waitFor();
   check((await page.locator(".docs-result").count()) >= 1, "Documentation search finds the trace import");
   await page.locator(".docs-result").first().click();

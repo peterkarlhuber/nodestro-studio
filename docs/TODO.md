@@ -113,19 +113,21 @@ from #121). Both have status `Needs external review`.
 
 - **Priority:** P3 Low · **Status:** Open (first step done) · **Refs:** N-16, N-17, nodestro-ui `docs/TODO.md`,
   `platform/internal-ui.txt`
-- **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`; core and ai 0.1.1) are vendored as
+- **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`, `ui-help`; core and ai 0.2.0) are vendored as
   tarballs in `frontend/vendor/`, pinned with their SHA-256 in `platform/internal-ui.txt`, checked by
   `frontend/scripts/check-vendor.mjs` before every `npm ci` and against `node_modules` after it, compared in CI with
   nodestro-ui's `artifacts/manifest.json` at the pinned commit (`frontend/scripts/verify-ui-pin.mjs`), moved with `scripts/bump_pins.py` (pin kind `npm-tarball`) plus `frontend/scripts/vendor-ui.mjs`. The studio loads
   the tokens, the `nodestro` brand theme and the component styles (`src/main.tsx`); the first component in use is the
   package's `RememberOptions` in the tool approval card, with the studio's own texts. Contract tests:
   `src/runs/uiPackages.contract.test.tsx`, `scripts/ui-vendor.test.mjs`.
+  The shared help of `ui-help` (N-17) explains error codes next to `ProblemText` (the package's `HelpTip` under
+  `HelpProvider`, `src/lib/platformHelp.tsx`) and in the help search of the documentation overview.
 - **Next steps, in order:** (1) re-pin to the nodestro-ui merge commit of its pull request #2 (same tarballs, only the
   commit moves); (2) the step approval card (`runs/ApprovalCard.tsx`) and the tool approval card
   (`runs/ToolApprovalCard.tsx`) onto `ApprovalCard`, keeping the data hooks here; (3) the budget decision card
   (`runs/BudgetDecisionCard.tsx`); (4) tool call rows, chat messages (`assistant/MessageView.tsx`) and web sources
-  (`runs/WebSources.tsx` onto `SourceList`); (5) `HelpTip` onto the package's HelpTip with the studio's help registry
-  and the error-code coverage test (N-17); (6) buttons, fields, dialogs and sections from `components/ui.tsx`; (7) an
+  (`runs/WebSources.tsx` onto `SourceList`); (5) the studio's own `HelpTip` (`components/Tooltip.tsx`, `help.json`) onto the
+  package's HelpTip with the studio's help registry, and a `helpCoverage` test of the studio's API error codes (N-17); (6) buttons, fields, dialogs and sections from `components/ui.tsx`; (7) an
   alias layer `--nd-*: var(--ui-*)` and a codemod, then drop `midnight-citron.css`. Each step keeps the existing
   tests and browser suites unchanged.
 - **Also:** nodestro-server (`image/Dockerfile`) and nodestro-desktop (`scripts/build_backend.sh`) run `npm ci` on a

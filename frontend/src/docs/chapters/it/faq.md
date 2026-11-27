@@ -5,6 +5,8 @@ Qui trovi le soluzioni ai messaggi più comuni e le risposte alle domande tipich
 ## Errori frequenti {#haeufige-fehler}
 <!-- keywords: errori, problema, soluzione, messaggio, troubleshooting, non funziona -->
 
+Accanto a molti messaggi di errore c’è un **?**: spiega in una o due frasi cosa significa quel tipo di errore e cosa fare, e **Scopri di più** porta al capitolo corrispondente. Nella panoramica della documentazione, la ricerca **Aiuto sui messaggi di errore** trova queste spiegazioni anche da un codice di errore incollato (per esempio `approval.expired`); cerca offline, nel browser.
+
 | Messaggio o sintomo | Causa | Soluzione |
 |---|---|---|
 | «Nessuna chiave API per …» | Il provider del modello non è configurato. | Inserisci la chiave in *Impostazioni → Provider di IA* o imposta la variabile d’ambiente del provider, per esempio `ANTHROPIC_API_KEY`. |
