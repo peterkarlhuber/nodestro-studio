@@ -46,6 +46,13 @@ La page **Mémoire** affiche tous les espaces avec le nombre et la taille de leu
 
 Vous pouvez ainsi vérifier, corriger ou préremplir la mémoire à tout moment. Dans l’inspecteur, **Voir le contenu** mène directement à l’espace de l’agent.
 
+## Consentements pour les workflows partagés {#zustimmungen}
+<!-- keywords: consentement, privé, serveur, workflow partagé, espace de mémoire, retirer -->
+
+Sur un serveur, chaque espace de mémoire appartient à la personne qui l’a créé. Un workflow partagé ne peut l’utiliser qu’après que cette personne a autorisé **exactement son contenu actuel** : le workflow et chaque workflow qu’il lance, chacun dans une version. Sans consentement, l’exécution est refusée.
+
+Sous **Consentements pour les workflows partagés**, choisissez l’un de vos espaces de mémoire et un workflow, puis **Examiner**. Vous voyez quels workflows le consentement couvre ; seul **Autoriser** le donne. Si quelque chose a changé depuis l’examen (un workflow, un outil ou une connexion), le consentement n’est pas donné : choisissez **Examiner de nouveau** et autorisez ce qui est affiché maintenant. La liste montre tous vos consentements ; **Retirer le consentement** prend effet à la prochaine étape qui en a besoin. Le poste de travail n’a qu’une seule personne, la section n’y apparaît donc pas.
+
 ## Configurer la mémoire avec l’IA {#assistent}
 <!-- keywords: assistant mémoire, configurer avec l’ia, proposition, structure, fichiers de départ -->
 

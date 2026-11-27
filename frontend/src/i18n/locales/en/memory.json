@@ -17,5 +17,32 @@
   "deleteAll": "Delete all files",
   "clearText": "All files in “{{name}}” will be deleted. Agents then start without memories.",
   "deleteFile": "Delete file",
-  "contentOf": "Content of {{path}}"
+  "contentOf": "Content of {{path}}",
+  "consents": {
+    "title": "Consents for shared workflows",
+    "intro": "Workflows that use one of your memory spaces need your consent for exactly their current content. A changed workflow needs a new consent.",
+    "space": "Memory space",
+    "chooseSpace": "Choose a memory space",
+    "workflow": "Workflow",
+    "workflowHint": "The consent also covers every workflow it starts, in their current versions.",
+    "chooseWorkflow": "Choose a workflow",
+    "review": "Review",
+    "covers_one": "A consent for “{{space}}” covers this workflow:",
+    "covers_other": "A consent for “{{space}}” covers these {{count}} workflows:",
+    "latest": "(latest version)",
+    "version": "(version {{version}})",
+    "exactly": "It applies to exactly this content. If any of these workflows, or a tool or connection they use, changes later, you will be asked again.",
+    "stale": "Something changed since you reviewed it: a workflow, or a tool or connection it uses. Review it again and then allow it.",
+    "reviewAgain": "Review again",
+    "allow": "Allow",
+    "granted": "Consent for “{{space}}” given",
+    "revoked": "Consent withdrawn",
+    "none": "You have not given any consent yet.",
+    "for": "For",
+    "at": "Given",
+    "actions": "Actions",
+    "agentTest": "An agent test",
+    "revoke": "Withdraw consent",
+    "revokeConfirm": "Withdraw?"
+  }
 }

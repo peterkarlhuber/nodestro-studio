@@ -99,7 +99,8 @@
   "memory": {
     "space": "Un espacio de memoria es un sistema de archivos propio en /memories. Los agentes con memoria «Permanente» y este espacio leen y escriben aquí.",
     "clear": "Elimina definitivamente todos los archivos del espacio. Después los agentes empiezan sin recuerdos.",
-    "newFile": "Crea un archivo vacío en /memories, p. ej. clientes/preferencias.md. Los agentes lo encontrarán en la siguiente ejecución."
+    "newFile": "Crea un archivo vacío en /memories, p. ej. clientes/preferencias.md. Los agentes lo encontrarán en la siguiente ejecución.",
+    "consents": "En un servidor, un flujo de trabajo compartido solo puede usar tu espacio de memoria después de que hayas permitido exactamente su contenido actual: el flujo de trabajo y cada flujo de trabajo que inicia. Si uno de ellos cambia, necesita de nuevo tu consentimiento. Puedes retirar un consentimiento en cualquier momento."
   },
   "runs": {
     "importTrace": "Abre un archivo de traza exportado (run_….json) para verlo. No se ejecuta nada, no hay costes y las ejecuciones existentes no cambian.",
@@ -145,7 +146,8 @@
     "knowledgeSearch": "El texto completo encuentra palabras; la búsqueda semántica encuentra significados (también entre idiomas). La búsqueda semántica y la combinada necesitan el índice semántico creado con un modelo de embeddings.",
     "localBuild": "Algunos modelos (como mdenseon:307m) se crean a partir de sus archivos originales en lugar de descargarse de la biblioteca de Ollama. Indica ambos archivos: Nodestro comprueba su SHA-256, crea el modelo y solo lo conserva si sus vectores de referencia coinciden. Funciona sin internet.",
     "localHardware": "Lo que Nodestro detectó en el ordenador del servidor de modelos y lo que indica el servidor. Las velocidades solo aparecen tras medirlas; Nodestro no hace estimaciones.",
-    "localReasoning": "Sin tarjeta gráfica, la fase de razonamiento de los modelos locales puede tardar minutos por paso. El modo de ahorro la omite con esfuerzo Medio; el esfuerzo Alto no cambia."
+    "localReasoning": "Sin tarjeta gráfica, la fase de razonamiento de los modelos locales puede tardar minutos por paso. El modo de ahorro la omite con esfuerzo Medio; el esfuerzo Alto no cambia.",
+    "data": "Exportar todo te da todos los datos como archivos legibles sin secretos, para guardarlos o llevarlos a otro lugar. Eliminar todo quita todos los datos de este equipo para siempre en cuanto escribes la confirmación; no se guarda ninguna copia de seguridad."
   },
   "budget": {
     "decision": "La ejecución está en pausa porque su presupuesto no alcanza para la próxima solicitud al modelo. No se envió nada para ella. Eleva el límite de exactamente esta ejecución y continúa, o termina la ejecución.",

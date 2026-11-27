@@ -395,7 +395,8 @@
     "runs_active": "Ainda há fluxos de trabalho em execução. Aguarde até terminarem e depois restaure o backup.",
     "not_confirmed": "A restauração substitui todos os dados e precisa ser confirmada.",
     "restore_running": "Um backup já está sendo restaurado. Aguarde até que termine.",
-    "too_large": "Descompactar o backup precisa de {{needed_mb}} MB, mas só há {{free_mb}} MB livres."
+    "too_large": "Descompactar o backup precisa de {{needed_mb}} MB, mas só há {{free_mb}} MB livres.",
+    "product_mismatch": "Este backup pertence a outro aplicativo ({{found}}) e não pode ser restaurado aqui."
   },
   "preview": {
     "not_agent": "Só agentes têm prévia da entrada."
@@ -679,7 +680,8 @@
     "too_large_limit": "A requisição é grande demais: são aceitos no máximo {{limit_mb}} MB.",
     "malformed": "Não é possível ler a requisição. Recarregue a página e tente de novo.",
     "origin_required": "Esta alteração não informa qual página a enviou e foi recusada. Use o próprio Nodestro.",
-    "json_only": "Esta alteração deve ser enviada como JSON (ou como formulário com arquivos) e foi recusada."
+    "json_only": "Esta alteração deve ser enviada como JSON (ou como formulário com arquivos) e foi recusada.",
+    "cross_site": "Esta solicitação veio de outro site e foi recusada."
   },
   "publication": {
     "disabled": "Esta API está desligada.",
@@ -1034,6 +1036,10 @@
     },
     "check": {
       "local_model_missing": "Instale-o com “Resolver” ou em Configurações, Modelos locais, e inicie a execução de novo. Execuções automáticas nunca baixam modelos sozinhas."
+    },
+    "memory": {
+      "consent_required": "A pessoa dona do espaço de memória pode permitir na página “Memória”, em “Consentimentos para fluxos de trabalho compartilhados”.",
+      "consent_stale": "Escolha “Revisar de novo”: o conteúdo atual é mostrado e você pode permitir."
     }
   },
   "setupProvider": "Configurar provedor de IA",
@@ -1335,7 +1341,16 @@
     "not_found": "Este acesso à pasta não existe mais.",
     "not_grantable": "Esta pasta não pode ser compartilhada. Pastas do sistema, a pasta pessoal, a própria pasta temporária compartilhada, pastas com chaves ou senhas e os dados próprios do Nodestro nunca ficam abertos aos agentes.",
     "unavailable": "Nenhuma pasta está compartilhada aqui.",
-    "unknown": "Nenhuma pasta compartilhada tem este nome."
+    "unknown": "Nenhuma pasta compartilhada tem este nome.",
+    "not_browsable": "Esta pasta não pode ser aberta.",
+    "not_browsable_hidden": "Este local é protegido e não é mostrado: pastas do sistema, pastas de outras pessoas, pastas com chaves ou senhas e os dados do próprio aplicativo.",
+    "not_browsable_not_found": "Esta pasta não existe (mais).",
+    "not_browsable_not_a_folder": "Isto é um arquivo, não uma pasta.",
+    "not_browsable_no_access": "Este computador não deixa você abrir esta pasta.",
+    "not_browsable_changed": "A pasta mudou enquanto era aberta. Tente de novo.",
+    "not_browsable_invalid_path": "Digite um caminho completo, como /Users/alex/Documentos ou C:\\Users\\alex\\Documentos.",
+    "not_browsable_network_path": "Pastas de rede não podem ser procuradas nem concedidas.",
+    "session_required": "Procurar pastas só funciona na janela que o aplicativo abriu. Digite o caminho completo da pasta."
   },
   "fs": {
     "hard_link": "Arquivos com vários links físicos não são lidos, pois podem pertencer a outra pasta.",
@@ -1348,5 +1363,10 @@
     "too_complex": "O arquivo é complexo demais para ser lido dentro dos limites.",
     "too_large": "O arquivo é maior que o limite desta pasta. Escolha um arquivo menor ou aumente o limite.",
     "unsupported_type": "Este tipo de arquivo não pode ser lido como texto ({{path}})."
+  },
+  "data": {
+    "busy": "Ainda há execuções ou outros trabalhos ativos em segundo plano. Espere até que terminem e exclua de novo.",
+    "deleting": "Todos os dados estão sendo excluídos agora, então nada pode começar. Inicie de novo depois.",
+    "not_confirmed": "Excluir todos os dados precisa ser confirmado com o texto exato."
   }
 }

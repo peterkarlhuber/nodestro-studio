@@ -17,5 +17,32 @@
   "deleteAll": "Supprimer tous les fichiers",
   "clearText": "Tous les fichiers de « {{name}} » seront supprimés. Les agents repartent ensuite sans souvenirs.",
   "deleteFile": "Supprimer le fichier",
-  "contentOf": "Contenu de {{path}}"
+  "contentOf": "Contenu de {{path}}",
+  "consents": {
+    "title": "Consentements pour les workflows partagés",
+    "intro": "Les workflows qui utilisent l’un de vos espaces de mémoire ont besoin de votre consentement pour exactement leur contenu actuel. Un workflow modifié a besoin d’un nouveau consentement.",
+    "space": "Espace de mémoire",
+    "chooseSpace": "Choisissez un espace de mémoire",
+    "workflow": "Workflow",
+    "workflowHint": "Le consentement couvre aussi chaque workflow qu’il lance, dans leur version actuelle.",
+    "chooseWorkflow": "Choisissez un workflow",
+    "review": "Examiner",
+    "covers_one": "Un consentement pour « {{space}} » couvre ce workflow :",
+    "covers_other": "Un consentement pour « {{space}} » couvre ces {{count}} workflows :",
+    "latest": "(dernière version)",
+    "version": "(version {{version}})",
+    "exactly": "Il s’applique exactement à ce contenu. Si l’un de ces workflows, ou un outil ou une connexion qu’ils utilisent, change plus tard, la question vous sera posée de nouveau.",
+    "stale": "Quelque chose a changé depuis votre examen : un workflow, ou un outil ou une connexion qu’il utilise. Examinez-le de nouveau, puis autorisez-le.",
+    "reviewAgain": "Examiner de nouveau",
+    "allow": "Autoriser",
+    "granted": "Consentement pour « {{space}} » donné",
+    "revoked": "Consentement retiré",
+    "none": "Vous n’avez encore donné aucun consentement.",
+    "for": "Pour",
+    "at": "Donné le",
+    "actions": "Actions",
+    "agentTest": "Un test d’agent",
+    "revoke": "Retirer le consentement",
+    "revokeConfirm": "Retirer ?"
+  }
 }

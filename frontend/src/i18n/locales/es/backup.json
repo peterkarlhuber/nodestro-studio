@@ -34,5 +34,38 @@
   "safetyNote": "Antes se guarda automáticamente una copia del estado actual; después la encontrarás en la lista de copias.",
   "confirm": "Entiendo que mis datos actuales serán sustituidos.",
   "restoreNow": "Restaurar ahora",
-  "restored": "Copia restaurada. El estado anterior está en «{{name}}». La página se recarga."
+  "restored": "Copia restaurada. El estado anterior está en «{{name}}». La página se recarga.",
+  "reenter": {
+    "title_one": "{{count}} secreto que volver a introducir",
+    "title_other": "{{count}} secretos que volver a introducir",
+    "text": "Una copia de seguridad nunca contiene claves, tokens ni contraseñas. Vuelve a introducirlos donde se usan; hasta entonces, lo que los necesita no funciona.",
+    "kinds": {
+      "provider": "Proveedor de IA",
+      "mcp": "Servicio MCP",
+      "connection": "Conexión de servicio"
+    },
+    "open": "Volver a introducir",
+    "done": "Hecho, ocultar la lista"
+  },
+  "data": {
+    "title": "Exportar y eliminar datos",
+    "intro": "Llévate todos tus datos como archivos legibles, o elimina todo en este equipo.",
+    "export": "Exportar todo",
+    "exportNote": "La exportación es un archivo ZIP con archivos legibles (flujos de trabajo, ejecuciones, plantillas de agentes, herramientas, conocimiento, memoria, conversaciones y ajustes), sin claves, tokens ni otros secretos. No se puede restaurar; para eso está la copia de seguridad.",
+    "delete": "Eliminar todos los datos …",
+    "deleteTitle": "Eliminar todos los datos",
+    "deleteWarning": "Esto elimina todos los flujos de trabajo, ejecuciones, plantillas de agentes, herramientas, archivos de conocimiento, memoria, conversaciones, ajustes y secretos de este equipo.",
+    "deleteNoUndo": "No se puede deshacer.",
+    "deleteNoBackup": "No se guarda ninguna copia de seguridad. Descarga antes una copia o una exportación si quieres conservar algo.",
+    "deleteRuns": "Solo empieza cuando no hay nada en curso, y mientras se elimina no puede empezar ninguna ejecución.",
+    "backupFirst": "Descargar antes una copia de seguridad",
+    "typeLabel": "Confirmación",
+    "typeHint": "Escribe exactamente «{{phrase}}» (en inglés) para confirmar.",
+    "deleteNow": "Eliminar todo",
+    "deletedTitle": "Datos eliminados",
+    "deleted": "Se eliminó todo. Esta instalación empieza ahora de nuevo como una nueva.",
+    "deletedPartly_one": "Se eliminó casi todo, pero {{count}} entrada no se pudo quitar (por ejemplo, un archivo en uso). Vuelve a eliminar para quitar el resto.",
+    "deletedPartly_other": "Se eliminó casi todo, pero {{count}} entradas no se pudieron quitar (por ejemplo, archivos en uso). Vuelve a eliminar para quitar el resto.",
+    "restart": "Empezar de nuevo"
+  }
 }

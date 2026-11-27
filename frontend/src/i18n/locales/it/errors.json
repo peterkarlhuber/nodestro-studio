@@ -395,7 +395,8 @@
     "runs_active": "Ci sono ancora workflow in esecuzione. Attendi che finiscano, poi ripristina il backup.",
     "not_confirmed": "Il ripristino sostituisce tutti i dati e deve essere confermato.",
     "restore_running": "È già in corso il ripristino di un backup. Attendi che sia terminato.",
-    "too_large": "Decomprimere il backup richiede {{needed_mb}} MB, ma sono liberi solo {{free_mb}} MB."
+    "too_large": "Decomprimere il backup richiede {{needed_mb}} MB, ma sono liberi solo {{free_mb}} MB.",
+    "product_mismatch": "Questo backup appartiene a un’altra applicazione ({{found}}) e non si può ripristinare qui."
   },
   "preview": {
     "not_agent": "Solo gli agenti hanno un’anteprima dell’input."
@@ -679,7 +680,8 @@
     "too_large_limit": "La richiesta è troppo grande: sono accettati al massimo {{limit_mb}} MB.",
     "malformed": "Non è possibile leggere la richiesta. Ricarica la pagina e riprova.",
     "origin_required": "Questa modifica non indica la pagina da cui proviene ed è stata rifiutata. Usa Nodestro direttamente.",
-    "json_only": "Questa modifica deve essere inviata come JSON (o come modulo con file) ed è stata rifiutata."
+    "json_only": "Questa modifica deve essere inviata come JSON (o come modulo con file) ed è stata rifiutata.",
+    "cross_site": "Questa richiesta proveniva da un altro sito web ed è stata rifiutata."
   },
   "publication": {
     "disabled": "Questa API è disattivata.",
@@ -1034,6 +1036,10 @@
     },
     "check": {
       "local_model_missing": "Installalo con «Risolvi» o in Impostazioni, Modelli locali, poi avvia di nuovo l’esecuzione. Le esecuzioni automatiche non scaricano mai modelli da sole."
+    },
+    "memory": {
+      "consent_required": "La persona proprietaria dello spazio di memoria può consentirlo nella pagina «Memoria», in «Consensi per workflow condivisi».",
+      "consent_stale": "Scegli «Verifica di nuovo»: viene mostrato il contenuto attuale e puoi consentirlo."
     }
   },
   "setupProvider": "Configura provider di IA",
@@ -1335,7 +1341,16 @@
     "not_found": "Questo accesso alla cartella non esiste più.",
     "not_grantable": "Questa cartella non può essere condivisa. Le cartelle di sistema, la cartella personale, la cartella temporanea condivisa stessa, le cartelle con chiavi o password e i dati propri di Nodestro non sono mai aperti agli agenti.",
     "unavailable": "Qui non sono condivise cartelle.",
-    "unknown": "Nessuna cartella condivisa ha questo nome."
+    "unknown": "Nessuna cartella condivisa ha questo nome.",
+    "not_browsable": "Questa cartella non si può aprire.",
+    "not_browsable_hidden": "Questa posizione è protetta e non viene mostrata: cartelle di sistema, cartelle di altre persone, cartelle con chiavi o password e i dati propri dell’applicazione.",
+    "not_browsable_not_found": "Questa cartella non esiste (più).",
+    "not_browsable_not_a_folder": "Questo è un file, non una cartella.",
+    "not_browsable_no_access": "Questo computer non ti permette di aprire questa cartella.",
+    "not_browsable_changed": "La cartella è cambiata mentre veniva aperta. Riprova.",
+    "not_browsable_invalid_path": "Scrivi un percorso completo, come /Users/alex/Documenti o C:\\Users\\alex\\Documenti.",
+    "not_browsable_network_path": "Le cartelle di rete non si possono né sfogliare né concedere.",
+    "session_required": "Sfogliare le cartelle funziona solo nella finestra aperta dall’app. Scrivi invece il percorso completo della cartella."
   },
   "fs": {
     "hard_link": "I file con più collegamenti fisici non vengono letti, perché possono appartenere a un'altra cartella.",
@@ -1348,5 +1363,10 @@
     "too_complex": "Il file è troppo complesso per essere letto entro i limiti.",
     "too_large": "Il file supera il limite di questa cartella. Scegli un file più piccolo o aumenta il limite.",
     "unsupported_type": "Questo tipo di file non può essere letto come testo ({{path}})."
+  },
+  "data": {
+    "busy": "Ci sono ancora esecuzioni o altri lavori attivi in background. Aspetta che finiscano, poi elimina di nuovo.",
+    "deleting": "Tutti i dati sono in corso di eliminazione, quindi non può partire nulla. Avvialo di nuovo dopo.",
+    "not_confirmed": "L’eliminazione di tutti i dati deve essere confermata con il testo esatto."
   }
 }

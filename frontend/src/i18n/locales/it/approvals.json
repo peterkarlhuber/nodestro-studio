@@ -272,6 +272,26 @@
     },
     "openRun": "Apri l’esecuzione",
     "openConversation": "Apri la conversazione",
-    "link": "Cartelle condivise"
+    "link": "Cartelle condivise",
+    "browse": {
+      "open": "Sfoglia …",
+      "title": "Scegli una cartella",
+      "choose": "Scegli questa cartella",
+      "text": "Vengono mostrate solo cartelle, mai file. Le cartelle di sistema, quelle di altre persone e quelle con chiavi o password non vengono mostrate.",
+      "places": "Posizioni",
+      "place": {
+        "home": "Cartella personale",
+        "root": "Questo computer",
+        "drive": "Unità",
+        "media": "Unità rimovibile"
+      },
+      "home": "Torna alla cartella personale",
+      "current": "Cartella:",
+      "folders": "Cartelle in {{path}}",
+      "up": "Su di un livello",
+      "link": "(collegamento)",
+      "empty": "Questa cartella non ha sottocartelle.",
+      "truncated": "Non vengono mostrate tutte le cartelle. Apri una sottocartella o scrivi il percorso."
+    }
   }
 }

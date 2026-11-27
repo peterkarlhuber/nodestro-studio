@@ -272,6 +272,26 @@
     },
     "openRun": "Abrir execução",
     "openConversation": "Abrir conversa",
-    "link": "Pastas compartilhadas"
+    "link": "Pastas compartilhadas",
+    "browse": {
+      "open": "Procurar …",
+      "title": "Escolher uma pasta",
+      "choose": "Escolher esta pasta",
+      "text": "Só pastas são mostradas, nunca arquivos. Pastas do sistema, pastas de outras pessoas e pastas com chaves ou senhas não são mostradas.",
+      "places": "Locais",
+      "place": {
+        "home": "Pasta pessoal",
+        "root": "Este computador",
+        "drive": "Unidade",
+        "media": "Unidade removível"
+      },
+      "home": "Voltar para a pasta pessoal",
+      "current": "Pasta:",
+      "folders": "Pastas em {{path}}",
+      "up": "Subir um nível",
+      "link": "(atalho)",
+      "empty": "Esta pasta não tem subpastas.",
+      "truncated": "Nem todas as pastas são mostradas. Abra uma subpasta ou digite o caminho."
+    }
   }
 }

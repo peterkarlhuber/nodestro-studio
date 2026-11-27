@@ -99,7 +99,8 @@
   "memory": {
     "space": "Um espaço de memória é um sistema de arquivos próprio em /memories. Agentes com memória “Permanente” e este espaço leem e escrevem aqui.",
     "clear": "Exclui definitivamente todos os arquivos do espaço. Depois os agentes começam sem lembranças.",
-    "newFile": "Cria um arquivo vazio em /memories, p. ex. clientes/preferencias.md. Os agentes o encontram na próxima execução."
+    "newFile": "Cria um arquivo vazio em /memories, p. ex. clientes/preferencias.md. Os agentes o encontram na próxima execução.",
+    "consents": "Em um servidor, um fluxo de trabalho compartilhado só pode usar seu espaço de memória depois que você permitiu exatamente o conteúdo atual dele: o fluxo de trabalho e cada fluxo de trabalho que ele inicia. Se um deles mudar, ele precisa do seu consentimento de novo. Você pode retirar um consentimento a qualquer momento."
   },
   "runs": {
     "importTrace": "Abre um arquivo de trace exportado (run_….json) para visualização. Nada é executado, não há custos e as execuções existentes não mudam.",
@@ -145,7 +146,8 @@
     "knowledgeSearch": "O texto completo encontra palavras, a busca semântica encontra significados (também entre idiomas). As buscas semântica e combinada precisam do índice semântico criado com um modelo de embeddings.",
     "localBuild": "Alguns modelos (como mdenseon:307m) são criados a partir dos arquivos originais em vez de baixados da biblioteca do Ollama. Informe os dois arquivos: o Nodestro verifica o SHA-256, cria o modelo e só o mantém se os vetores de referência coincidirem. Funciona sem internet.",
     "localHardware": "O que o Nodestro detectou no computador do servidor de modelos e o que o servidor informa. As velocidades só aparecem depois de medidas; o Nodestro não faz estimativas.",
-    "localReasoning": "Sem placa de vídeo, a fase de raciocínio dos modelos locais pode levar minutos por etapa. O modo de economia a pula com esforço Médio; o esforço Alto não muda."
+    "localReasoning": "Sem placa de vídeo, a fase de raciocínio dos modelos locais pode levar minutos por etapa. O modo de economia a pula com esforço Médio; o esforço Alto não muda.",
+    "data": "Exportar tudo entrega todos os dados como arquivos legíveis sem segredos, para guardar ou levar para outro lugar. Excluir tudo remove todos os dados deste computador para sempre assim que você digita a confirmação; nenhum backup de segurança é mantido."
   },
   "budget": {
     "decision": "A execução está pausada porque o orçamento não basta para a próxima solicitação ao modelo. Nada foi enviado para ela. Aumente o limite exatamente desta execução e continue, ou encerre a execução.",

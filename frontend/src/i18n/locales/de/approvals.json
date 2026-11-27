@@ -272,6 +272,26 @@
     },
     "openRun": "Ausführung öffnen",
     "openConversation": "Gespräch öffnen",
-    "link": "Freigegebene Ordner"
+    "link": "Freigegebene Ordner",
+    "browse": {
+      "open": "Durchsuchen …",
+      "title": "Ordner wählen",
+      "choose": "Diesen Ordner wählen",
+      "text": "Es werden nur Ordner gezeigt, nie Dateien. Systemordner, Ordner anderer Personen und Ordner mit Schlüsseln oder Passwörtern werden nicht gezeigt.",
+      "places": "Orte",
+      "place": {
+        "home": "Benutzerordner",
+        "root": "Dieser Computer",
+        "drive": "Laufwerk",
+        "media": "Wechseldatenträger"
+      },
+      "home": "Zurück zum Benutzerordner",
+      "current": "Ordner:",
+      "folders": "Ordner in {{path}}",
+      "up": "Eine Ebene höher",
+      "link": "(Verknüpfung)",
+      "empty": "Dieser Ordner hat keine Unterordner.",
+      "truncated": "Nicht alle Ordner werden gezeigt. Öffne einen Unterordner oder gib den Pfad ein."
+    }
   }
 }

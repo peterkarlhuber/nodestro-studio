@@ -395,7 +395,8 @@
     "runs_active": "Es laufen noch Workflows. Warte, bis sie fertig sind, und stelle das Backup dann wieder her.",
     "not_confirmed": "Die Wiederherstellung ersetzt alle Daten und muss bestätigt werden.",
     "restore_running": "Es wird bereits ein Backup wiederhergestellt. Warte, bis es fertig ist.",
-    "too_large": "Das Entpacken des Backups braucht {{needed_mb}} MB, frei sind aber nur {{free_mb}} MB."
+    "too_large": "Das Entpacken des Backups braucht {{needed_mb}} MB, frei sind aber nur {{free_mb}} MB.",
+    "product_mismatch": "Dieses Backup gehört zu einer anderen Anwendung ({{found}}) und lässt sich hier nicht wiederherstellen."
   },
   "preview": {
     "not_agent": "Nur Agenten haben eine Eingabe-Vorschau."
@@ -679,7 +680,8 @@
     "too_large_limit": "Die Anfrage ist zu groß: Angenommen werden höchstens {{limit_mb}} MB.",
     "malformed": "Die Anfrage kann nicht gelesen werden. Lade die Seite neu und versuche es noch einmal.",
     "origin_required": "Diese Änderung nennt nicht die Seite, von der sie kommt, und wurde abgelehnt. Verwende Nodestro selbst.",
-    "json_only": "Diese Änderung muss als JSON (oder als Formular mit Dateien) gesendet werden und wurde abgelehnt."
+    "json_only": "Diese Änderung muss als JSON (oder als Formular mit Dateien) gesendet werden und wurde abgelehnt.",
+    "cross_site": "Diese Anfrage kam von einer anderen Website und wurde abgelehnt."
   },
   "publication": {
     "disabled": "Diese API ist ausgeschaltet.",
@@ -1034,6 +1036,10 @@
     },
     "check": {
       "local_model_missing": "Installiere es mit „Beheben“ oder unter Einstellungen, Lokale Modelle, und starte den Lauf dann erneut. Automatische Läufe laden nie selbst Modelle herunter."
+    },
+    "memory": {
+      "consent_required": "Die Person, der der Memory-Raum gehört, kann zustimmen: auf der Seite „Memory“ unter „Zustimmungen für geteilte Workflows“.",
+      "consent_stale": "Wähle „Erneut prüfen“: Der aktuelle Inhalt wird gezeigt, und du kannst ihm zustimmen."
     }
   },
   "setupProvider": "KI-Anbieter einrichten",
@@ -1335,7 +1341,16 @@
     "not_found": "Diese Ordnerfreigabe gibt es nicht mehr.",
     "not_grantable": "Dieser Ordner kann nicht freigegeben werden. Systemordner, der Benutzerordner, der gemeinsame temporäre Ordner selbst, Ordner mit Schlüsseln oder Passwörtern und die eigenen Daten von Nodestro sind für Agenten nie offen.",
     "unavailable": "Hier sind keine Ordner freigegeben.",
-    "unknown": "Kein freigegebener Ordner hat diesen Namen."
+    "unknown": "Kein freigegebener Ordner hat diesen Namen.",
+    "not_browsable": "Dieser Ordner lässt sich nicht öffnen.",
+    "not_browsable_hidden": "Dieser Ort ist geschützt und wird nicht gezeigt: Systemordner, Ordner anderer Personen, Ordner mit Schlüsseln oder Passwörtern und die eigenen Daten der Anwendung.",
+    "not_browsable_not_found": "Diesen Ordner gibt es nicht (mehr).",
+    "not_browsable_not_a_folder": "Das ist eine Datei, kein Ordner.",
+    "not_browsable_no_access": "Dieser Rechner lässt dich diesen Ordner nicht öffnen.",
+    "not_browsable_changed": "Der Ordner hat sich beim Öffnen geändert. Versuche es erneut.",
+    "not_browsable_invalid_path": "Gib einen vollständigen Pfad ein, etwa /Users/alex/Dokumente oder C:\\Users\\alex\\Dokumente.",
+    "not_browsable_network_path": "Netzwerkordner lassen sich weder durchsuchen noch freigeben.",
+    "session_required": "Ordner durchsuchen geht nur im Fenster, das die App geöffnet hat. Gib stattdessen den vollständigen Pfad des Ordners ein."
   },
   "fs": {
     "hard_link": "Dateien mit mehreren harten Links werden nicht gelesen, weil sie zu einem anderen Ordner gehören können.",
@@ -1348,5 +1363,10 @@
     "too_complex": "Die Datei ist zu komplex, um sie innerhalb der Grenzen zu lesen.",
     "too_large": "Die Datei ist größer als die Grenze dieses Ordners. Wähle eine kleinere Datei oder erhöhe die Grenze.",
     "unsupported_type": "Diese Art von Datei kann nicht als Text gelesen werden ({{path}})."
+  },
+  "data": {
+    "busy": "Es sind noch Läufe oder andere Arbeiten im Hintergrund aktiv. Warte, bis sie fertig sind, und lösche dann erneut.",
+    "deleting": "Gerade werden alle Daten gelöscht, deshalb kann nichts starten. Starte es danach erneut.",
+    "not_confirmed": "Das Löschen aller Daten muss mit dem genauen Text bestätigt werden."
   }
 }

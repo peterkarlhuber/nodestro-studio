@@ -29,6 +29,7 @@ export const keys = {
   knowledge: (query?: string) => ["knowledge", query ?? ""] as const,
   memorySpaces: ["memory"] as const,
   memoryFiles: (space: string) => ["memory", space] as const,
+  memoryConsents: ["memory-consents"] as const,
   versions: (id: string) => ["versions", id] as const,
   organize: ["organize"] as const,
   examples: (language: string) => ["examples", language] as const,

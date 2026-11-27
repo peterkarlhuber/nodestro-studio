@@ -101,7 +101,9 @@ export function ServicesTab() {
   const { t } = useTranslation();
   const status = useMcpStatus();
   const servers = useMcpServers();
-  const [selected, setSelected] = useState<string | null>(null);
+  // ?server=<id> opens that service, e.g. to enter its token again after a restore (N-15).
+  const [params] = useSearchParams();
+  const [selected, setSelected] = useState<string | null>(params.get("server"));
   const [adding, setAdding] = useState(false);
   const admin = useAccess().can("admin");
   useOAuthReturn(setSelected);

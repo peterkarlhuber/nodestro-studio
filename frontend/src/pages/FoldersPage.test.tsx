@@ -128,6 +128,62 @@ describe("FoldersPage", () => {
     await waitFor(() => expect(screen.queryByTestId("folder-grant-form")).not.toBeInTheDocument());
   });
 
+  it("chooses the path in the folder browser: sub-folders only, up a level, and the chosen folder fills the path", async () => {
+    const listing = (path: string, parent: string | null, folders: string[]) =>
+      json({
+        path,
+        parent,
+        folders: folders.map((name) => ({ name, path: `${path}/${name}`, link: false })),
+        truncated: false,
+        places: [{ kind: "home", path: "/Users/alex" }],
+        separator: "/",
+      });
+    const fetch = serve(true, (url, init) => {
+      if (url !== "/api/folders/browse") return undefined;
+      const { path } = JSON.parse(String(init?.body)) as { path: string | null };
+      if (path === null || path === "/Users/alex") return listing("/Users/alex", "/Users", ["Contracts", "Photos"]);
+      if (path === "/Users/alex/Contracts") return listing("/Users/alex/Contracts", "/Users/alex", ["2026"]);
+      return json({ detail: "hidden", code: "folder.not_browsable", params: { reason: "hidden" } }, 422);
+    });
+    show(<FoldersPage />);
+    await userEvent.click(await screen.findByTestId("folder-grant-open"));
+    // The browser opens at the typed path; a hidden place says so and offers the way home.
+    await userEvent.type(screen.getByTestId("folder-path"), "/etc");
+    await userEvent.click(screen.getByTestId("folder-browse"));
+    const browser = await screen.findByTestId("folder-browser");
+    expect(await within(browser).findByTestId("folder-browse-error")).toHaveTextContent("Dieser Ort ist geschützt");
+    await userEvent.click(within(browser).getByRole("button", { name: "Zurück zum Benutzerordner" }));
+    expect(await within(browser).findByTestId("folder-browse-path")).toHaveTextContent("/Users/alex");
+    await userEvent.click(within(browser).getByRole("button", { name: /Contracts/ }));
+    expect(await within(browser).findByText("2026")).toBeInTheDocument();
+    expect(within(browser).getByTestId("folder-browse-path")).toHaveTextContent("/Users/alex/Contracts");
+    // One level up is the parent the server named.
+    await userEvent.click(within(browser).getByTestId("folder-browse-up"));
+    expect(await within(browser).findByText("Photos")).toBeInTheDocument();
+    await userEvent.click(within(browser).getByRole("button", { name: /Contracts/ }));
+    await within(browser).findByText("2026");
+    await userEvent.click(screen.getByTestId("folder-browse-choose"));
+    expect(screen.getByTestId("folder-path")).toHaveValue("/Users/alex/Contracts");
+    expect(screen.queryByTestId("folder-browser")).not.toBeInTheDocument();
+    // Browsing never grants anything: only POSTs to the browser so far.
+    expect(fetch.mock.calls.filter(([url, init]) => init?.method === "POST" && url !== "/api/folders/browse")).toEqual([]);
+  });
+
+  it("keeps the typed path when the browser needs the window's own session", async () => {
+    serve(true, (url) =>
+      url === "/api/folders/browse" ? json({ detail: "session", code: "folder.session_required", params: {} }, 403) : undefined,
+    );
+    show(<FoldersPage />);
+    await userEvent.click(await screen.findByTestId("folder-grant-open"));
+    await userEvent.type(screen.getByTestId("folder-path"), "/Users/alex/Contracts");
+    await userEvent.click(screen.getByTestId("folder-browse"));
+    expect(await screen.findByTestId("folder-browse-error")).toHaveTextContent("Gib stattdessen den vollständigen Pfad");
+    expect(screen.getByTestId("folder-browse-choose")).toBeDisabled();
+    const dialog = screen.getByTestId("folder-browser").closest("dialog")!;
+    await userEvent.click(within(dialog as HTMLElement).getByRole("button", { name: "Abbrechen" }));
+    expect(screen.getByTestId("folder-path")).toHaveValue("/Users/alex/Contracts");
+  });
+
   it("revokes an active grant after a confirmation", async () => {
     const fetch = serve(true);
     show(<FoldersPage />);

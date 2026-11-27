@@ -8,12 +8,15 @@
 //   2. the studio sends the session's CSRF value with every change (copying an example works), reads need none;
 //   3. a request with the window's cookie but without the CSRF value changes nothing (another local program on
 //      another port gets the cookie from the browser, never the value);
-//   4. the sign-out ends the window's session: the signed-out page replaces the studio and the API refuses the cookie;
+//   4. granted folders (N-10, N-11; NODESTRO_FOLDER_GRANTS=1 for this suite only): the folder browser lists the
+//      sub-folders of the home folder through the window's session, a chosen folder fills the path and is granted;
+//   5. the sign-out ends the window's session: the signed-out page replaces the studio and the API refuses the cookie;
 //      the launch link stays used.
 // Every other browser suite runs with the switches off: the studio works there as before.
 
 import { createRequire } from "node:module";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { homedir } from "node:os";
 import { join } from "node:path";
 
 const require = createRequire(import.meta.url);
@@ -36,6 +39,10 @@ function check(condition, message) {
 async function shot(page, name) {
   if (shots) await page.screenshot({ path: join(shots, `launch-${name}.png`) });
 }
+
+// A folder of the home folder to browse to and grant (removed at the end).
+const sharedName = `nodestro-e2e-${process.pid}`;
+const shared = join(homedir(), sharedName);
 
 const browser = await browserType.launch();
 const errors = [];
@@ -94,7 +101,29 @@ try {
   const read = await page.request.get(`${base}/api/workflows`);
   check(read.ok(), "reading needs no CSRF value");
 
-  // 4. Sign out.
+  // 4. Granted folders: the folder browser needs this window's session (and its CSRF value, like every change).
+  mkdirSync(join(shared, "Vertraege"), { recursive: true });
+  writeFileSync(join(shared, "Vertraege", "plan.txt"), "Das Budget sind 42 Einheiten\n");
+  await page.goto(`${base}/approvals/folders`);
+  await page.getByTestId("folder-grant-open").click();
+  await page.getByTestId("folder-browse").click();
+  const browser = page.getByTestId("folder-browser");
+  await browser.getByRole("button", { name: sharedName }).click();
+  await browser.getByRole("button", { name: "Vertraege" }).click();
+  await page.getByTestId("folder-browse-path").filter({ hasText: "Vertraege" }).waitFor();
+  check((await browser.getByTestId("folder-browse-item").count()) === 0, "the folder browser shows folders only, no files");
+  await shot(page, "1b-folder-browser");
+  await page.getByTestId("folder-browse-choose").click();
+  const chosen = await page.getByTestId("folder-path").inputValue();
+  check(chosen.endsWith(join(sharedName, "Vertraege")), `the chosen folder fills the path (${chosen})`);
+  await page.getByTestId("folder-name").fill("Verträge");
+  await page.getByTestId("folder-grant-submit").click();
+  await page.getByTestId("folders-list").getByText("Verträge", { exact: true }).waitFor();
+  check(true, "the chosen folder is granted and listed");
+  check(changes.some((item) => item.path === "/api/folders/browse"), "browsing went through the window's session");
+  check(changes.every((item) => item.csrf === stored.csrf), "browsing and granting carried the CSRF value");
+
+  // 5. Sign out.
   await page.goto(base);
   await page.getByTestId("desktop-sign-out").click();
   await page.getByTestId("signed-out").waitFor();
@@ -113,6 +142,7 @@ try {
 
 check(errors.length === 0, `no page errors ${errors.join(" | ")}`);
 await browser.close();
+rmSync(shared, { recursive: true, force: true });
 if (failures) {
   console.log(`${failures} check(s) failed`);
   process.exit(1);

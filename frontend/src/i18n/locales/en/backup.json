@@ -34,5 +34,38 @@
   "safetyNote": "The current state is backed up automatically first; afterwards you find it in the list of safety backups.",
   "confirm": "I understand that my current data will be replaced.",
   "restoreNow": "Restore now",
-  "restored": "Backup restored. The previous state is in “{{name}}”. The page reloads."
+  "restored": "Backup restored. The previous state is in “{{name}}”. The page reloads.",
+  "reenter": {
+    "title_one": "{{count}} secret to enter again",
+    "title_other": "{{count}} secrets to enter again",
+    "text": "A backup never holds keys, tokens or passwords. Enter these again where they are used; until then, whatever needs them does not work.",
+    "kinds": {
+      "provider": "AI provider",
+      "mcp": "MCP service",
+      "connection": "Service connection"
+    },
+    "open": "Enter again",
+    "done": "Done, hide the list"
+  },
+  "data": {
+    "title": "Export and delete data",
+    "intro": "Take all your data with you as readable files, or delete everything on this computer.",
+    "export": "Export everything",
+    "exportNote": "The export is a ZIP file of readable files (workflows, runs, agent templates, tools, knowledge, memory, conversations and settings), without keys, tokens or other secrets. It cannot be restored; use a backup for that.",
+    "delete": "Delete all data …",
+    "deleteTitle": "Delete all data",
+    "deleteWarning": "This deletes every workflow, run, agent template, tool, knowledge file, memory, conversation, setting and secret on this computer.",
+    "deleteNoUndo": "It cannot be undone.",
+    "deleteNoBackup": "No safety backup is kept. Download a backup or an export first if you want to keep anything.",
+    "deleteRuns": "It only starts while nothing is running, and no run can start while it deletes.",
+    "backupFirst": "Download a backup first",
+    "typeLabel": "Type to confirm",
+    "typeHint": "Type “{{phrase}}” exactly (in English) to confirm.",
+    "deleteNow": "Delete everything",
+    "deletedTitle": "Data deleted",
+    "deleted": "Everything was deleted. This installation now starts over like a new one.",
+    "deletedPartly_one": "Almost everything was deleted, but {{count}} entry could not be removed (for example a file in use). Delete again to remove the rest.",
+    "deletedPartly_other": "Almost everything was deleted, but {{count}} entries could not be removed (for example files in use). Delete again to remove the rest.",
+    "restart": "Start over"
+  }
 }
