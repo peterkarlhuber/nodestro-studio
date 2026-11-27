@@ -17,6 +17,9 @@
 - CI (N-22 third review NEW-3): the two studio reinstalls in `components-at-master` pass the shared cutoff too
   (`uv pip install --exclude-newer`, from `platform/uploaded-prior-to`), as `platform.yml` does with pip;
   `tests/test_pip_cutoff.py` checks all four reinstalls. Lock: `nodestro-runtime` with the third review's fixes.
+- Lock (N-22 fourth review): `nodestro-runtime` with the plainly stated host-import boundary (NEW-4, docs only) on
+  top of runtime master; `nodestro-integrations` with NEW-5 (no OCR program from the venv's `bin` or another folder
+  of a Python package). No CI change.
 
 ### Welle 6: memory entries with their origin and time (N-24)
 
