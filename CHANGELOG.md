@@ -25,7 +25,10 @@
   root-owned folders. The data-only extension store (runtime RT-098) is a binding G-6 prerequisite. No CI change.
 - Lock (final): `nodestro-runtime` at its master merge of N-22 (#227); `nodestro-integrations` with the final review's
   F1 and F2 (every link hop to an OCR program checked, the real path runs, no `TESSDATA_PREFIX`); `orkexa` at the head
-  of #120 with orkexa master merged in. Re-pin integrations and orkexa to their merge commits once merged.
+  of #120 with orkexa master merged in; `nodestro-integrations` at the #97 head whose macOS real-OCR job gives
+  the Homebrew link chain to root; `nodestro-api` at #188 (the export check counts the runtime's two new N-22
+  modules, `extension_classes` and `extension_seccomp`). Re-pin integrations, orkexa and api to their merge commits
+  once merged.
 
 ### Welle 6: a tooltip opened by keyboard focus no longer closes again at once
 

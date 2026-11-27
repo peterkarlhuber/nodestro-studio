@@ -40,13 +40,13 @@
       "studio_dependency": true
     },
     "nodestro-integrations": {
-      "commit": "aa03c7ac93976c996af41252350b4edfe5a47b26",
+      "commit": "5479295f42182c3102d7730c0e212f0580d0bfeb",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
     },
     "nodestro-api": {
-      "commit": "2865690d97c61674cb204aca3481d728f260ceb2",
+      "commit": "210c0ff99a70ebf5c7513c69022d12387c8cd38f",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
