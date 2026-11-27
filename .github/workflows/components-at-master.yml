@@ -140,9 +140,15 @@ jobs:
       - name: nodestro-examples
         if: ${{ !cancelled() && steps.installed.outcome == 'success' }}
         run: cd "$RUNNER_TEMP/components/nodestro-examples" && python -m pytest -p no:cacheprovider
+      # N-22 (review N1): the editable studio's .pth file refuses the trusted OCR import (only allowlisted .pth files
+      # are accepted); the integrations suite runs against the studio installed as a wheel, then the editable install
+      # comes back (two reinstalls without dependencies, a few seconds).
       - name: nodestro-integrations
         if: ${{ !cancelled() && steps.installed.outcome == 'success' }}
-        run: cd "$RUNNER_TEMP/components/nodestro-integrations" && python -m pytest -p no:cacheprovider
+        run: |
+          uv pip install --system --no-deps --reinstall .
+          (cd "$RUNNER_TEMP/components/nodestro-integrations" && python -m pytest -p no:cacheprovider)
+          uv pip install --system --no-deps -e .
       - name: nodestro-api
         if: ${{ !cancelled() && steps.installed.outcome == 'success' }}
         run: cd "$RUNNER_TEMP/components/nodestro-api" && python -m pytest -p no:cacheprovider

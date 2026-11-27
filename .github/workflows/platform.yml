@@ -106,8 +106,16 @@ jobs:
           python -m pytest -p no:cacheprovider --collect-only -q > "$RUNNER_TEMP/ids-examples.txt"
           python -m pytest -p no:cacheprovider -n auto --junitxml="$RUNNER_TEMP/junit-examples.xml"
           python "$GITHUB_WORKSPACE/scripts/check_test_ids.py" "$RUNNER_TEMP/ids-examples.txt" "$RUNNER_TEMP/junit-examples.xml"
+      # N-22 (review N1): the runtime imports the OCR integration only when every .pth file of the site directories is
+      # an allowlisted one; the editable studio's (_editable_impl_nodestro.pth) is not. The integrations suite runs
+      # against the studio installed as a wheel, as the products ship it, and the editable install comes back for the
+      # studio's own suite (two reinstalls without dependencies, a few seconds).
       - name: nodestro-integrations
-        run: cd "$RUNNER_TEMP/components/nodestro-integrations" && python -m pytest -p no:cacheprovider
+        run: |
+          cutoff=$(python -I scripts/pip_cutoff.py)
+          pip install --uploaded-prior-to "$cutoff" --no-deps --force-reinstall .
+          (cd "$RUNNER_TEMP/components/nodestro-integrations" && python -m pytest -p no:cacheprovider)
+          pip install --uploaded-prior-to "$cutoff" --no-deps -e .
       - name: nodestro-api
         run: |
           cd "$RUNNER_TEMP/components/nodestro-api"

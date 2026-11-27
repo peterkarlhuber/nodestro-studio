@@ -10,6 +10,10 @@
 - Lock (paired, not for merge as is): `nodestro-runtime` at the head of `claude/w6-n22-trust` with the independent
   review fixes (H1, M1, L1, L3); `nodestro-integrations` at the head of its `claude/w6-n22-trust` (M2). Re-pin to the
   merge commits once runtime #226 and integrations #97 are merged.
+- CI (N-22 re-review N1): the runtime accepts only allowlisted `.pth` files, so the editable studio's refuses the
+  trusted OCR import. The integrations suite in the components jobs (`platform`, `components-at-master`) runs with
+  the studio installed as a wheel, as the products ship it; the editable install comes back for the studio's own
+  suite. Two reinstalls without dependencies, a few seconds per job; no new job.
 
 ### Welle 6: import dialogs for the exchange formats, the workflow file format, help coverage (N-14, ST-068)
 
