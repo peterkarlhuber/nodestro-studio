@@ -4,8 +4,8 @@
 
 ### Welle 5: the search index state of granted folders (N-12 follow-up, 2026-11-27)
 
-- Paired lock: nodestro-api `claude/w5-index-state` (c108071, api #182: `FolderGrantView.index_state`) and the SDK sync
-  (067d874, sdk #151); re-pin to the merge commits once they are merged.
+- Lock: nodestro-api ebd0fe5 (api #182: `FolderGrantView.index_state`) and nodestro-sdk bce7ac1 (sdk #151, the SDK
+  sync).
 - Granted folders: **Keep a search index** when granting (off by default; sends `index: true`), and each grant shows
   its index state from `index_state`: indexing (the list reads it again every 5 seconds while one is being built),
   ready with files, passages, skipped files and the last update, incomplete (`budget_exceeded`) with what that means,
@@ -40,6 +40,20 @@
   and browser tests: `settings-ui` (export, typed confirmation, consents with simulated server answers) and `launch`
   (the folder browser through the launch session; that suite turns `NODESTRO_FOLDER_GRANTS` on for itself). No lock
   change; every switch stays off by default.
+
+### N-17 in the studio: the shared help for error messages (2026-11-27)
+
+- **Changes `platform/internal-ui.txt`:** the nodestro-ui packages move to nodestro-ui@bef3a45 (its merge of N-17):
+  `@nodestro/ui-core` and `@nodestro/ui-ai` 0.2.0 (additive), and `@nodestro/ui-help` 0.1.0 is vendored as a new
+  tarball; tokens and themes stay 0.1.0 with the same hashes.
+- An error message with a code (`ProblemText`, `ErrorText`, not in the compact form) shows a **?** with the shared
+  explanation of its code's family in the interface language; **Learn more** opens the matching chapter of the
+  built-in documentation in the app (`src/lib/platformHelp.tsx` maps each help entry to a section; a unit test
+  checks every link).
+- The documentation overview has an offline search **Help on error messages**: a message or a pasted error code
+  finds its explanation. FAQ "Common errors" explains both, in all six languages.
+- Tests: `src/lib/platformHelp.test.tsx`; `scripts/ui-vendor.test.mjs` expects the help package among the pins; the
+  smoke browser suite searches an error code and opens its chapter.
 
 ### RT-089d: the owner's consent for private memory spaces (2026-11-26)
 

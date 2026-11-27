@@ -5,6 +5,8 @@ Vous trouverez ici des solutions aux messages courants et des réponses aux ques
 ## Erreurs fréquentes {#haeufige-fehler}
 <!-- keywords: erreurs, problème, solution, message, dépannage, ne fonctionne pas -->
 
+À côté de nombreux messages d’erreur figure un **?** : il explique en une ou deux phrases ce que signifie ce type d’erreur et que faire, et **En savoir plus** mène au chapitre correspondant. Sur la vue d’ensemble de la documentation, la recherche **Aide sur les messages d’erreur** trouve aussi ces explications à partir d’un code d’erreur collé (par exemple `approval.expired`) ; elle cherche hors ligne, dans le navigateur.
+
 | Message ou symptôme | Cause | Solution |
 |---|---|---|
 | « Aucune clé API pour … » | Le fournisseur du modèle n’est pas configuré. | Saisissez la clé sous *Réglages → Fournisseurs d’IA* ou définissez la variable d’environnement du fournisseur, par exemple `ANTHROPIC_API_KEY`. |
