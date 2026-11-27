@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Welle 5 lock: exchange formats, extension isolation and the PDF fix (2026-11-27)
+
+- Lock: nodestro-runtime fb5ef1a (N-14 exchange formats #222, N-22 extension isolation #221 and #224), nodestro-api
+  8ad5b53 (N-14 import and export routes #181, the approval race test #180), nodestro-sdk 3b6f213 (#150), orkexa
+  3294190 (damaged PDF objects refused under pypdf 7.2 #118, faster tests #119) and nodestro-integrations f29a377
+  (installed as a wheel #95). `NODESTRO_EXTENSION_TOOLS` and every other security switch stay off by default.
+
 ### Welle 5: the search index state of granted folders (N-12 follow-up, 2026-11-27)
 
 - Lock: nodestro-api ebd0fe5 (api #182: `FolderGrantView.index_state`) and nodestro-sdk bce7ac1 (sdk #151, the SDK
