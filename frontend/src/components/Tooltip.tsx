@@ -1,6 +1,7 @@
 // Contextual tooltips: one short explanation at the control, optionally with a link into the documentation.
 //
-// - Hover (mouse) or keyboard focus shows a tooltip after a short delay; leaving or Escape hides it.
+// - Hover (mouse) shows a tooltip after a short delay, keyboard focus at once; leaving or Escape hides it. Showing
+//   cancels a pending timer, so a close queued by an earlier leave never hides a tooltip focus just opened.
 // - The help icon (<HelpTip>) also opens on click and tap, so it works on touch devices.
 // - Only one tooltip is open at a time.
 // - Placement: the bubble is rendered into the nearest open <dialog> of its anchor (else <body>), and shown in the
@@ -85,6 +86,9 @@ function useTip({ ownEscape = false }: { ownEscape?: boolean } = {}) {
   }, []);
   const show = useCallback(
     (anchor: HTMLElement, pinned = false) => {
+      // A close still pending from an earlier pointer leave or blur must not hide what is shown now (e.g. the mouse
+      // left the icon and Tab reached it within CLOSE_DELAY).
+      window.clearTimeout(timer.current);
       if (closeActive && closeActive !== close) closeActive();
       closeActive = close;
       setState({ anchor, pinned });

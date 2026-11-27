@@ -20,6 +20,15 @@
 - Lock (N-22 fourth review): `nodestro-runtime` with the plainly stated host-import boundary (NEW-4, docs only) on
   top of runtime master; `nodestro-integrations` with NEW-5 (no OCR program from the venv's `bin` or another folder
   of a Python package). No CI change.
+- Lock (owner decision 2026-11-27): `nodestro-runtime` refuses every foreign extension package in the host
+  environment ("installed in the host environment"); `nodestro-integrations` takes the OCR programs only from
+  root-owned folders. The data-only extension store (runtime RT-098) is a binding G-6 prerequisite. No CI change.
+
+### Welle 6: a tooltip opened by keyboard focus no longer closes again at once
+
+- A help icon's or control's tooltip that keyboard focus opened within 140 ms after the mouse left it was closed
+  again by the leave's pending close timer (`useTip.show` now cancels it). This was the intermittent `settings-ui`
+  e2e failure "waiting for locator('[role=tooltip]')" after Tab reached the help icon (PR #249 head cf514c4).
 
 ### Welle 6: memory entries with their origin and time (N-24)
 
