@@ -1290,6 +1290,11 @@
     "workflow.self_loop",
     "workflow.start_has_inputs",
     "workflow.subworkflow_missing",
+    "workflow_tool.approval_required",
+    "workflow_tool.disabled",
+    "workflow_tool.missing",
+    "workflow_tool.name_taken",
+    "workflow_tool.not_waiting",
     "workspace.db",
     "workspace.in_use"
   ],
