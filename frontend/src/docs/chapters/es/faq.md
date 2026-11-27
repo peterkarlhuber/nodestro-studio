@@ -5,6 +5,8 @@ Aquí encontrarás soluciones para los mensajes más habituales y respuestas a p
 ## Errores frecuentes {#haeufige-fehler}
 <!-- keywords: errores, problema, solución, mensaje, troubleshooting, no funciona -->
 
+Junto a muchos mensajes de error hay un **?**: explica en una o dos frases qué significa ese tipo de error y qué hacer, y **Más información** lleva al capítulo correspondiente. En la vista general de la documentación, la búsqueda **Ayuda sobre mensajes de error** encuentra estas explicaciones también por un código de error pegado (por ejemplo `approval.expired`); busca sin conexión, en el navegador.
+
 | Mensaje o síntoma | Causa | Solución |
 |---|---|---|
 | «No hay clave de API para …» | El proveedor del modelo no está configurado. | Introduce la clave en *Ajustes → Proveedores de IA* o define la variable de entorno del proveedor, por ejemplo `ANTHROPIC_API_KEY`. |

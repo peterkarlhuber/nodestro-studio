@@ -5,6 +5,8 @@ Here you find solutions for common messages and answers to typical questions.
 ## Common errors {#haeufige-fehler}
 <!-- keywords: errors, problem, solution, message, troubleshooting, does not work, broken -->
 
+Many error messages have a **?** next to them: it explains in a sentence or two what that kind of error means and what to do, and **Learn more** leads to the matching chapter. On the documentation overview, the **Help on error messages** search also finds these explanations by a pasted error code (for example `approval.expired`); it searches offline, in the browser.
+
 | Message or symptom | Cause | Solution |
 |---|---|---|
 | "No API key for …" | The model's provider is not set up. | Enter the key under *Settings → AI providers* or set the provider's environment variable, for example `ANTHROPIC_API_KEY`. |

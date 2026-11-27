@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### N-17 in the studio: the shared help for error messages (2026-11-27)
+
+- **Changes `platform/internal-ui.txt`:** the nodestro-ui packages move to nodestro-ui@bef3a45 (its merge of N-17):
+  `@nodestro/ui-core` and `@nodestro/ui-ai` 0.2.0 (additive), and `@nodestro/ui-help` 0.1.0 is vendored as a new
+  tarball; tokens and themes stay 0.1.0 with the same hashes.
+- An error message with a code (`ProblemText`, `ErrorText`, not in the compact form) shows a **?** with the shared
+  explanation of its code's family in the interface language; **Learn more** opens the matching chapter of the
+  built-in documentation in the app (`src/lib/platformHelp.tsx` maps each help entry to a section; a unit test
+  checks every link).
+- The documentation overview has an offline search **Help on error messages**: a message or a pasted error code
+  finds its explanation. FAQ "Common errors" explains both, in all six languages.
+- Tests: `src/lib/platformHelp.test.tsx`; `scripts/ui-vendor.test.mjs` expects the help package among the pins; the
+  smoke browser suite searches an error code and opens its chapter.
+
 ### RT-089d: the owner's consent for private memory spaces (2026-11-26)
 
 - Pins the runtime (and, once it is pushed, the api and sdk) of RT-089d: a workflow or agent test uses a person's

@@ -1,3 +1,4 @@
+import { HelpSearch } from "@nodestro/ui-core";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, BookMarked, Hash, Search, X } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
@@ -256,6 +257,10 @@ function Overview() {
           components={{ a: <Link to="/docs/start#erste-schritte" />, strong: <strong /> }}
         />
       </Callout>
+      {/* Offline search of the short help for error messages: a pasted error code finds its explanation. */}
+      <section className="docs-error-help panel" aria-label={t("docs.errorHelp.title")} data-testid="docs-error-help">
+        <HelpSearch label={t("docs.errorHelp.label")} limit={5} />
+      </section>
       <div className="card-grid docs-cards">
         {chapters.map((chapter) => {
           const Icon = chapter.icon;
