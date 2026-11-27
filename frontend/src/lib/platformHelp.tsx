@@ -49,6 +49,8 @@ export const STUDIO_HELP_ERRORS: Record<string, string> = {
   "connect.*": "help.workflows",
   "validate.*": "help.workflows",
   "data.*": "help.backup",
+  // Workflows as tools of an agent (N-20, off by default): refused or stopped workflow tools.
+  "workflow_tool.*": "help.workflows",
 };
 
 /** The help registry of the studio in one language: the shared help plus the studio's entries and error families. */
