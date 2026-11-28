@@ -20,13 +20,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 
-import type {
-  AssistantStep,
-  AttachmentKind,
-  ChatMessage,
-  ContextRef,
-  Handover,
-} from "../api/types";
+import type { AssistantStep, AttachmentKind, ChatMessage, ContextRef, Handover } from "../api/types";
 import { ReasoningView } from "../components/ReasoningView";
 import { Button, Callout } from "../components/ui";
 import { ProblemText } from "../lib/errors";
@@ -54,19 +48,12 @@ export function StepLine({ step }: { step: AssistantStep | undefined }) {
   const kind = step?.kind ?? "generate";
   return (
     <p className="chat-status" role="status" data-testid="assistant-status">
-      <Loader2 size={13} className="spin" aria-hidden />{" "}
-      {t(`assistant.steps.${kind}`, { detail: step?.detail ?? "" })}
+      <Loader2 size={13} className="spin" aria-hidden /> {t(`assistant.steps.${kind}`, { detail: step?.detail ?? "" })}
     </p>
   );
 }
 
-function ContextChips({
-  context,
-  conversationId,
-}: {
-  context: ContextRef[];
-  conversationId: string;
-}) {
+function ContextChips({ context, conversationId }: { context: ContextRef[]; conversationId: string }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState<ContextRef | null>(null);
   if (!context.length) return null;
@@ -84,28 +71,14 @@ function ContextChips({
             title={t("assistant.message.showSent")}
           >
             <Icon size={11} aria-hidden /> {ref.label}
-            {ref.version && ref.variant === "saved" ? (
-              <span className="muted"> {ref.version}</span>
-            ) : null}
-            {ref.variant === "draft" ? (
-              <span className="chat-tag">
-                {t("assistant.attachments.draftTag")}
-              </span>
-            ) : null}
-            {ref.partial ? (
-              <span className="chat-tag chat-tag--warning">
-                {t("assistant.attachments.partialTag")}
-              </span>
-            ) : null}
+            {ref.version && ref.variant === "saved" ? <span className="muted"> {ref.version}</span> : null}
+            {ref.variant === "draft" ? <span className="chat-tag">{t("assistant.attachments.draftTag")}</span> : null}
+            {ref.partial ? <span className="chat-tag chat-tag--warning">{t("assistant.attachments.partialTag")}</span> : null}
           </button>
         );
       })}
       {open ? (
-        <SnapshotDialog
-          conversationId={conversationId}
-          snapshotId={open.snapshot_id}
-          onClose={() => setOpen(null)}
-        />
+        <SnapshotDialog conversationId={conversationId} snapshotId={open.snapshot_id} onClose={() => setOpen(null)} />
       ) : null}
     </div>
   );
@@ -181,9 +154,7 @@ function Steps({ steps }: { steps: AssistantStep[] }) {
       <summary>{t("assistant.message.steps", { count: shown.length })}</summary>
       <ul>
         {shown.map((step, index) => (
-          <li key={index}>
-            {t(`assistant.done.${step.kind}`, { detail: step.detail })}
-          </li>
+          <li key={index}>{t(`assistant.done.${step.kind}`, { detail: step.detail })}</li>
         ))}
       </ul>
     </details>
@@ -206,20 +177,10 @@ export function MessageView({
   if (message.role === "user") {
     return (
       // The shared message (@nodestro/ui-ai, ST-068) in the studio's look: a bubble on the right, no author line.
-      <ChatMessageView
-        role="user"
-        hideHead
-        className="chat-message chat-message--user"
-        data-testid="chat-user"
-      >
-        {message.content ? (
-          <div className="chat-bubble">{message.content}</div>
-        ) : null}
+      <ChatMessageView role="user" hideHead className="chat-message chat-message--user" data-testid="chat-user">
+        {message.content ? <div className="chat-bubble">{message.content}</div> : null}
         <SentFileChips files={message.files ?? []} />
-        <ContextChips
-          context={message.context}
-          conversationId={conversationId}
-        />
+        <ContextChips context={message.context} conversationId={conversationId} />
       </ChatMessageView>
     );
   }
@@ -240,28 +201,16 @@ export function MessageView({
         </span>
       }
     >
-      <ReasoningView
-        trace={message.reasoning}
-        display={display}
-        testId="chat-reasoning"
-      />
+      <ReasoningView trace={message.reasoning} display={display} testId="chat-reasoning" />
       {message.content ? <AssistantMarkdown text={message.content} /> : null}
-      {streaming ? (
-        <StepLine step={message.steps[message.steps.length - 1]} />
-      ) : null}
+      {streaming ? <StepLine step={message.steps[message.steps.length - 1]} /> : null}
       {message.sources.length ? (
         <div className="chat-sources">
           <span className="muted small">
-            <FileSearch size={12} aria-hidden />{" "}
-            {t("assistant.message.sources")}
+            <FileSearch size={12} aria-hidden /> {t("assistant.message.sources")}
           </span>
           {message.sources.map((source) => (
-            <Link
-              key={source.ref}
-              to={source.link}
-              className="chat-source"
-              data-testid="chat-source"
-            >
+            <Link key={source.ref} to={source.link} className="chat-source" data-testid="chat-source">
               {source.chapter_title} · {source.title}
             </Link>
           ))}
@@ -273,9 +222,7 @@ export function MessageView({
       {message.status === "failed" && message.error ? (
         <Callout tone="danger">
           <ProblemText item={message.error} />
-          {message.error.code === "api_key_missing" ||
-          message.error.code === "provider.not_configured" ||
-          message.error.code === "assistant.auth_failed" ? (
+          {message.error.code === "api_key_missing" || message.error.code === "provider.not_configured" || message.error.code === "assistant.auth_failed" ? (
             <>
               {" "}
               <Link to="/settings">{t("assistant.openSettings")}</Link>
@@ -283,21 +230,12 @@ export function MessageView({
           ) : null}
         </Callout>
       ) : null}
-      {message.status === "cancelled" ? (
-        <p className="muted small">{t("assistant.message.cancelled")}</p>
-      ) : null}
+      {message.status === "cancelled" ? <p className="muted small">{t("assistant.message.cancelled")}</p> : null}
       {!streaming ? (
         <div className="chat-meta">
           <UsageLine message={message} />
-          {canRetry &&
-          (message.status === "failed" || message.status === "cancelled") ? (
-            <Button
-              size="sm"
-              variant="ghost"
-              icon={RotateCcw}
-              onClick={onRetry}
-              data-testid="chat-retry"
-            >
+          {canRetry && (message.status === "failed" || message.status === "cancelled") ? (
+            <Button size="sm" variant="ghost" icon={RotateCcw} onClick={onRetry} data-testid="chat-retry">
               {t("assistant.message.retry")}
             </Button>
           ) : null}
