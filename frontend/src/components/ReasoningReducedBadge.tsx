@@ -3,10 +3,10 @@
 // thinking filled the whole answer limit ("output_limit": the runtime asked once more without thinking), and an
 // answer written at the tool-round limit (limits_handled "tool_rounds"). Nothing is reduced silently.
 
+import { Tooltip } from "@nodestro/ui-core";
 import { Gauge, Wrench } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-import { Tooltip } from "./Tooltip";
 import { Badge } from "./ui";
 
 export function ReasoningReducedBadge({ reason }: { reason: string | null | undefined }) {
@@ -16,7 +16,8 @@ export function ReasoningReducedBadge({ reason }: { reason: string | null | unde
   return (
     <Tooltip
       content={t(outputLimit ? "localModels.reasoning.badgeOutputLimitTip" : "localModels.reasoning.badgeTip")}
-      doc={outputLimit ? "agenten#limits" : "einstellungen#lokale-hardware"}
+      // The link of the help entry with the same documentation section (agenten#limits, einstellungen#lokale-hardware).
+      help={outputLimit ? "agent.maxTokens" : "settings.localReasoning"}
     >
       <span className="has-tip" tabIndex={0} data-testid="reasoning-reduced" data-reason={reason}>
         <Badge tone="idle" icon={Gauge}>
@@ -32,7 +33,7 @@ export function ToolRoundsBadge({ limits }: { limits: string[] | null | undefine
   const { t } = useTranslation();
   if (!limits?.includes("tool_rounds")) return null;
   return (
-    <Tooltip content={t("localModels.reasoning.badgeToolRoundsTip")} doc="agenten#limits">
+    <Tooltip content={t("localModels.reasoning.badgeToolRoundsTip")} help="agent.maxToolRounds">
       <span className="has-tip" tabIndex={0} data-testid="tool-rounds-limit">
         <Badge tone="idle" icon={Wrench}>
           {t("localModels.reasoning.badgeToolRounds")}

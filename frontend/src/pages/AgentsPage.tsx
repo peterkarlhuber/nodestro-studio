@@ -1,3 +1,4 @@
+import { Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Bot, Download, Plus, Save, Sparkles, Trash2, Undo2, Upload } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -22,7 +23,7 @@ import {
 } from "../components/Organize";
 import { toast } from "../components/toast";
 import { UnsavedChangesModal } from "../components/UnsavedChanges";
-import { Button, Callout, ConfirmIconButton, EmptyState, Hint, IconButton, PageHeader, Spinner } from "../components/ui";
+import { Button, Callout, ConfirmIconButton, EmptyState, IconButton, PageHeader, Spinner } from "../components/ui";
 import { AgentForm } from "../editor/AgentInspector";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { defaultAgent } from "../lib/defaults";
@@ -208,11 +209,11 @@ export function AgentsPage() {
               <Button icon={Plus} onClick={startNew}>
                 {t("agents.emptyTemplate")}
               </Button>
-              <Hint id="agent.design">
+              <Tooltip help="agent.design">
                 <Button variant="primary" icon={Sparkles} onClick={() => setDesignOpen(true)}>
                   {t("agents.describe")}
                 </Button>
-              </Hint>
+              </Tooltip>
             </>
           }
         />

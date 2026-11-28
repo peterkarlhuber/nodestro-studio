@@ -45,7 +45,7 @@
     "@codemirror/view": "6.43.15",
     "@lezer/highlight": "1.2.5",
     "@nodestro/ui-ai": "file:vendor/nodestro-ui-ai-0.2.0.tgz",
-    "@nodestro/ui-core": "file:vendor/nodestro-ui-core-0.2.1.tgz",
+    "@nodestro/ui-core": "file:vendor/nodestro-ui-core-0.2.2.tgz",
     "@nodestro/ui-help": "file:vendor/nodestro-ui-help-0.1.0.tgz",
     "@nodestro/ui-themes": "file:vendor/nodestro-ui-themes-0.1.0.tgz",
     "@nodestro/ui-tokens": "file:vendor/nodestro-ui-tokens-0.1.0.tgz",

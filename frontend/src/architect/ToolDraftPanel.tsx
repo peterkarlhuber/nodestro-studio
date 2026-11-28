@@ -1,3 +1,4 @@
+import { Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, FlaskConical, ShieldCheck, Trash2, XCircle } from "lucide-react";
 import { useState } from "react";
@@ -8,7 +9,7 @@ import { keys } from "../api/hooks";
 import type { ToolDraft } from "../api/types";
 import { CodeEditor } from "../components/CodeEditor";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Hint } from "../components/ui";
+import { Badge, Button, Callout } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { ToolDependencies } from "../python/DependencyPanel";
 
@@ -130,16 +131,16 @@ export function ToolDraftPanel({ draft, onChange }: { draft: ToolDraft; onChange
           <Button variant="ghost" icon={Trash2} busy={reject.isPending} onClick={() => reject.mutate()}>
             {t("architect.tool.reject")}
           </Button>
-          <Hint id="architect.toolTest">
+          <Tooltip help="architect.toolTest">
             <Button icon={FlaskConical} busy={test.isPending} onClick={() => test.mutate()}>
               {t("architect.tool.test")}
             </Button>
-          </Hint>
-          <Hint id="architect.toolApprove">
+          </Tooltip>
+          <Tooltip help="architect.toolApprove">
             <Button variant="primary" icon={ShieldCheck} busy={approve.isPending} onClick={() => approve.mutate()}>
               {t("architect.tool.approve")}
             </Button>
-          </Hint>
+          </Tooltip>
         </footer>
       ) : null}
     </article>

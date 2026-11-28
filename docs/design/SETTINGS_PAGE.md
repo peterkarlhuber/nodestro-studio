@@ -70,8 +70,10 @@ modal dialogs (which `showModal()` puts into the top layer, where no z-index rea
 or `transform`. It stays inside the window (flips below, shifts sideways, scrolls when taller than the window),
 Escape closes only the panel, and once pinned Tab leads from the icon into its documentation link and on to the next
 control. `npm run lint` refuses a help button of the studio's own (`eslint.config.js`, `src/lint/helpGuard.test.ts`).
-`components/Tooltip.tsx` keeps the tooltips of buttons and values (`Tooltip`, `Hint` for help ids) with the same
-placement. Help texts should say what a setting does, what it needs and what follows from it, not repeat the label
+The tooltips of buttons, badges and values are the shared `Tooltip` of `@nodestro/ui-core` 0.2.2 with the same
+placement in the top layer; `<Tooltip help="<id>">` shows a help id's text and documentation link (formerly `Hint`),
+and Escape hides a tooltip and still reaches the dialog (a tooltip only names a control). `npm run lint` refuses a
+tooltip of the studio's own as well. Help texts should say what a setting does, what it needs and what follows from it, not repeat the label
 or the hint beside it.
 
 ## Tests

@@ -1,3 +1,4 @@
+import { Tooltip } from "@nodestro/ui-core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -24,7 +25,7 @@ import { keys, useSettings } from "../api/hooks";
 import type { AttachRequest, Attachment, Conversation } from "../api/types";
 import { providerList } from "../components/ModelPicker";
 import { toast } from "../components/toast";
-import { Button, Callout, DocLink, Hint, IconButton, Spinner, TextArea, TextInput } from "../components/ui";
+import { Button, Callout, DocLink, IconButton, Spinner, TextArea, TextInput } from "../components/ui";
 import { ScopedThinkingDisplay } from "../components/ReasoningView";
 import { withLocalModel } from "../missingModel/store";
 import { ErrorText } from "../lib/errors";
@@ -375,9 +376,9 @@ function ChatView() {
           />
           <div className="chat-input__actions">
             <span className="chat-input__tools">
-              <Hint id="assistant.attach">
+              <Tooltip help="assistant.attach">
                 <IconButton icon={Paperclip} label={t("assistant.composer.attach")} onClick={() => setPicker(true)} data-testid="assistant-attach" />
-              </Hint>
+              </Tooltip>
               <AttachFilesButton files={files} />
             </span>
             {streaming ? (
@@ -446,24 +447,24 @@ export function AssistantPanel() {
           <div>
             <h2 title={title}>{view === "list" ? t("assistant.list.title") : title}</h2>
             {view === "chat" && conversation.data?.usage.requests ? (
-              <Hint id="assistant.cost">
+              <Tooltip help="assistant.cost">
                 <span className="muted small" tabIndex={0} data-testid="assistant-chat-cost">
                   {t("assistant.chatCost", { cost: formatCost(cost) })}
                 </span>
-              </Hint>
+              </Tooltip>
             ) : null}
           </div>
         </div>
         <div className="assistant-panel__actions">
           <DocLink to="assistent" label={t("assistant.docs")} />
-          <Hint id="assistant.history">
+          <Tooltip help="assistant.history">
             <IconButton
               icon={History}
               label={t("assistant.list.title")}
               onClick={() => useAssistant.getState().setView(view === "list" ? "chat" : "list")}
               data-testid="assistant-history"
             />
-          </Hint>
+          </Tooltip>
           <IconButton icon={Plus} label={t("assistant.newChat")} onClick={() => useAssistant.getState().setConversation(null)} data-testid="assistant-new" />
           <IconButton
             icon={wide ? Minimize2 : Maximize2}

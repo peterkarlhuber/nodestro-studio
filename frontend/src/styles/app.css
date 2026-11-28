@@ -3119,31 +3119,38 @@ body.is-resizing--y * {
 
 /* ---- tooltips and help ---------------------------------------------------------- */
 
-.tooltip {
-  position: fixed;
+/* The shared tooltip (Tooltip of @nodestro/ui-core) in the studio's look: a raised card with a border, the link in
+   the brand color. The package places it (top layer, inside the window) and resets what it would inherit. */
+.ui-tooltip {
   z-index: 1000;
   max-width: min(300px, calc(100vw - 16px));
+  color: var(--nd-text);
+  font-size: var(--nd-font-size-sm);
+  font-weight: 450;
+  line-height: 1.5;
+}
+
+.ui-tooltip__bubble {
+  display: block;
   padding: 9px 11px;
   border: 1px solid var(--nd-border-strong);
   border-radius: var(--nd-radius-sm);
   background: var(--nd-surface-raised);
   color: var(--nd-text);
   box-shadow: var(--nd-shadow-popover);
-  font-size: var(--nd-font-size-sm);
-  font-weight: 450;
-  line-height: 1.5;
-  letter-spacing: normal;
-  text-transform: none;
-  text-align: left;
-  white-space: normal;
   animation: tooltip-in var(--nd-duration-fast) ease-out;
 }
 
-.tooltip__link {
+.ui-tooltip__text {
+  display: block;
+}
+
+.ui-tooltip__link {
   display: inline-block;
   margin-top: 6px;
   color: var(--nd-brand);
   font-weight: 620;
+  text-decoration: none;
 }
 
 @keyframes tooltip-in {
@@ -7258,7 +7265,7 @@ ul.gate-report__list > li.gate-report__item {
 
 /* Links inside running text are underlined, so they never depend on color alone (WCAG 1.4.1). Navigation,
    tabs, cards and buttons keep their own look. */
-:where(p, li, dd, blockquote, .callout, .field__hint, .markdown, .muted) a:where(:not([class]), .tooltip__link) {
+:where(p, li, dd, blockquote, .callout, .field__hint, .markdown, .muted) a:where(:not([class]), .ui-tooltip__link) {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;

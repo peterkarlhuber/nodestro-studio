@@ -1,7 +1,8 @@
+import { Tooltip } from "@nodestro/ui-core";
 import { MessageSquare } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-import { Button, Hint, IconButton } from "../components/ui";
+import { Button, IconButton } from "../components/ui";
 import { type ContextOffer, useAssistant } from "./store";
 
 /**
@@ -19,11 +20,11 @@ export function DiscussButton({ offer, size }: { offer: ContextOffer | null; siz
   const { t } = useTranslation();
   if (!offer) return null;
   return (
-    <Hint id="assistant.discuss">
+    <Tooltip help="assistant.discuss">
       <Button icon={MessageSquare} variant="ghost" size={size} onClick={() => discussOffer(offer)} data-testid="discuss-assistant">
         <span className="title-actions__label">{t("assistant.discuss")}</span>
       </Button>
-    </Hint>
+    </Tooltip>
   );
 }
 

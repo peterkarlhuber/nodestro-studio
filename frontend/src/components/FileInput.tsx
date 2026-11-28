@@ -6,6 +6,7 @@
 // A copy of an example offers the example's sample files for the field with one click (`samples`, ST-007): the
 // sample is fetched and then uploaded like a chosen file, with the same checks.
 
+import { Tooltip } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import {
   Archive,
@@ -44,7 +45,7 @@ import {
   type TreeNode,
 } from "../lib/files";
 import { formatBytes } from "../lib/format";
-import { Badge, Button, IconButton, Select, Tooltip } from "./ui";
+import { Badge, Button, IconButton, Select } from "./ui";
 
 const GROUP_ICON: Record<FormatGroup, LucideIcon> = {
   text: FileText,

@@ -4,13 +4,13 @@
 // this computer needs a permission; the runtime asks or refuses (`access.missing_grant`). The studio only shows the
 // mark: in words and with a symbol, never by colour alone. The mark is never set while the feature is off.
 
+import { Tooltip } from "@nodestro/ui-core";
 import { ShieldAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { useAccess } from "../api/access";
 import { Badge, Callout } from "./ui";
-import { Tooltip } from "./Tooltip";
 
 export type MarkedKind = "run" | "conversation";
 

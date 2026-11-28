@@ -1,6 +1,7 @@
 // Try the API inside Nodestro: validate a request body exactly like the API does, or start a
 // real run of the published version (it costs like any run and shows up in the history).
 
+import { Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CheckCheck, Play } from "lucide-react";
 import { useState } from "react";
@@ -9,7 +10,7 @@ import { Link } from "react-router-dom";
 
 import { api, ApiError } from "../api/client";
 import type { ApiOverview, ApiRunStatus, ApiValidation, Publication } from "../api/types";
-import { Button, Callout, Field, Hint, Select, Spinner, TextArea } from "../components/ui";
+import { Button, Callout, Field, Select, Spinner, TextArea } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { CodeBlock } from "./common";
 import { RequestProblems, fieldErrorsOf } from "./RequestProblems";
@@ -77,7 +78,7 @@ export function ApiTry({
         <TextArea rows={10} className="code-input" value={text} onChange={(event) => setBody(event.target.value)} data-testid="api-try-body" />
       </Field>
       <div className="row-gap">
-        <Hint id="publish.validate">
+        <Tooltip help="publish.validate">
           <Button
             icon={CheckCheck}
             disabled={waiting}
@@ -87,8 +88,8 @@ export function ApiTry({
           >
             {t("publish.try.validate")}
           </Button>
-        </Hint>
-        <Hint id="publish.testRun">
+        </Tooltip>
+        <Tooltip help="publish.testRun">
           <Button
             variant="primary"
             icon={Play}
@@ -99,7 +100,7 @@ export function ApiTry({
           >
             {t("publish.try.run")}
           </Button>
-        </Hint>
+        </Tooltip>
       </div>
       {parseError ? <Callout tone="danger">{t("publish.try.notJson")}</Callout> : null}
       {send.error && !parseError ? (

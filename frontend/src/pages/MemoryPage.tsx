@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { HelpTip, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Brain, FilePlus, Save, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { toast } from "../components/toast";
 import { UsedByList, UsedByWarning, useUsedBy } from "../components/UsedBy";
-import { Button, Callout, ConfirmIconButton, EmptyState, Field, Hint, IconButton, Modal, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
+import { Button, Callout, ConfirmIconButton, EmptyState, Field, IconButton, Modal, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatDate } from "../lib/format";
 import type { MemoryFile } from "../api/types";
@@ -155,11 +155,11 @@ function SpaceDetail({ space, onCleared }: { space: string; onCleared: () => voi
         </h2>
         <span className="row-gap">
           <DiscussIcon offer={offer} paths={current ? [current] : []} label={current ? t("assistant.discussFile", { name: current }) : undefined} />
-        <Hint id="memory.clear">
+        <Tooltip help="memory.clear">
           <Button size="sm" variant="danger" icon={Trash2} onClick={() => setConfirmClear(true)}>
             {t("memory.clear")}
           </Button>
-        </Hint>
+        </Tooltip>
         </span>
       </div>
       <UsedByList users={users} loaded={usedBy.loaded} />

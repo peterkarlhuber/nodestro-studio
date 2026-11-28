@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { HelpTip, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Cable,
@@ -45,7 +45,7 @@ import {
 import { NoSendBadge } from "../components/NoSendBadge";
 import { toast } from "../components/toast";
 import { DeleteUsed, UsedByList, useUsedBy } from "../components/UsedBy";
-import { Badge, Button, Callout, EmptyState, Field, Hint, PageHeader, Section, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
+import { Badge, Button, Callout, EmptyState, Field, PageHeader, Section, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
 import { isDraftTool, toolDescription, toolDisplayName } from "../lib/catalog";
 import { ToolDependencies } from "../python/DependencyPanel";
 import { PlanTable } from "../python/PlanTable";
@@ -670,7 +670,7 @@ function WriteTool({ onSaved }: { onSaved: () => void }) {
           <PastedCodeWarning pasted={pasted} />
         </div>
         <div className="row-gap">
-          <Hint id="tools.check">
+          <Tooltip help="tools.check">
             <Button
               icon={FlaskConical}
               busy={runCheck.isPending}
@@ -678,8 +678,8 @@ function WriteTool({ onSaved }: { onSaved: () => void }) {
             >
               {t("tools.write.check")}
             </Button>
-          </Hint>
-          <Hint id="tools.save">
+          </Tooltip>
+          <Tooltip help="tools.save">
             <Button
               variant="primary"
               icon={Save}
@@ -688,7 +688,7 @@ function WriteTool({ onSaved }: { onSaved: () => void }) {
             >
               {t("common.save")}
             </Button>
-          </Hint>
+          </Tooltip>
         </div>
       </section>
       <section className="panel stack" aria-label={t("tools.write.result")}>

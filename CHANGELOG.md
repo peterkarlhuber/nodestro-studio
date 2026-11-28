@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Shared tooltips (ST-068, 2026-11-28)
+
+- Every tooltip of a button, badge or value (31 `Tooltip` and 49 `Hint` uses) is now the shared `Tooltip` of
+  `@nodestro/ui-core` 0.2.2 (nodestro-ui #8: hover after a delay and keyboard focus at once, hoverable, one tooltip
+  or help panel at a time, top layer above modal dialogs and inside the open dialog, placed inside the window).
+  `Hint id` became `Tooltip help`: the help id's text and its documentation link ("Learn more", as in the help
+  panels). Texts, links and placement are unchanged; Escape still hides a tooltip and closes the dialog with the same
+  key. `components/Tooltip.tsx` and `Hint` are removed and `npm run lint` refuses them. Lock: `nodestro-ui` at the
+  merge of #8 (aab1fd4), core 0.2.2.
+
 ### Shared help buttons (ST-068, 2026-11-28)
 
 - Every help icon (116 uses, 126 more through the `tip` of fields, toggles, sections and values) is now the shared

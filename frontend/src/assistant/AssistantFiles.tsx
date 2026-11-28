@@ -2,6 +2,7 @@
 // the files of the conversation (use again, download, show what was read, save to knowledge, delete) and the files
 // a sent message carried, each with the path it takes to the model (natively, extracted text, overview ...).
 
+import { Tooltip } from "@nodestro/ui-core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Archive,
@@ -30,7 +31,6 @@ import { keys } from "../api/hooks";
 import type { AssistantFile, AssistantFileSupport, FileDeliveryMode, FormatGroup, SentFile } from "../api/types";
 import { AdoptDialog } from "../components/AdoptDialog";
 import { toast } from "../components/toast";
-import { Tooltip } from "../components/Tooltip";
 import { ProgressBar, formatPercent } from "../components/Progress";
 import { Callout, ConfirmIconButton, IconButton, Modal, Spinner } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
