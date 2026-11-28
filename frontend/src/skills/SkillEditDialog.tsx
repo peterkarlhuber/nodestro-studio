@@ -1,6 +1,7 @@
 // Editing a skill's SKILL.md as text. Saving stores a new version with the new SKILL.md and every other file kept
 // as it is; an unchanged text keeps the version.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Save } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -8,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 import { type SkillDetail, skillKeys, skillsApi } from "../api/skills";
 import { toast } from "../components/toast";
-import { Button, Callout, Field, Modal, Spinner, TextArea, TextInput } from "../components/ui";
+import { Callout, Field, Modal, Spinner, TextArea, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 
 const SKILL_FILE = "SKILL.md";
@@ -57,7 +58,7 @@ export function SkillEditDialog({ detail, onClose }: { detail: SkillDetail; onCl
           <Button variant="ghost" onClick={onClose}>
             {t("common.cancel")}
           </Button>
-          <Button variant="primary" icon={Save} disabled={text === null || source.data?.truncated} busy={save.isPending} onClick={() => save.mutate()}>
+          <Button variant="primary" icon={<Save size={15} />} disabled={text === null || source.data?.truncated} busy={save.isPending} onClick={() => save.mutate()}>
             {t("common.save")}
           </Button>
         </>

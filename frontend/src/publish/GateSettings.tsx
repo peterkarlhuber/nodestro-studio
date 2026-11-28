@@ -1,5 +1,6 @@
 // The opt-in release gate of a published API (Q-3): which test series a new version must pass, and how well.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation } from "@tanstack/react-query";
 import { Save } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +11,7 @@ import { api } from "../api/client";
 import { useSuites } from "../api/hooks";
 import type { Publication, ReleaseGate } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, Field, Spinner, TextInput, Toggle } from "../components/ui";
+import { Callout, Field, Spinner, TextInput, Toggle } from "../components/ui";
 
 const percent = (value: number) => String(Math.round(value * 100));
 const share = (raw: string) => Math.min(100, Math.max(0, Number(raw) || 0)) / 100;
@@ -75,7 +76,7 @@ export function GateSettings({ publication, onChanged }: { publication: Publicat
       <div>
         <Button
           variant="primary"
-          icon={Save}
+          icon={<Save size={15} />}
           busy={save.isPending}
           disabled={enabled && !suiteIds.length}
           onClick={() => save.mutate()}

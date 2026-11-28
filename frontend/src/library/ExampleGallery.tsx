@@ -56,7 +56,7 @@ export function ExampleGallery({ collapsible = false }: { collapsible?: boolean 
           )}
           <p className="muted">{t("library.galleryText")}</p>
         </div>
-        <Link to="/workflows/examples" className="nd-button">
+        <Link to="/workflows/examples" className="ui-button">
           {t("library.showAll", { count: all.length || 24 })} <ArrowRight size={14} aria-hidden />
         </Link>
       </header>

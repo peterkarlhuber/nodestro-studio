@@ -2,13 +2,14 @@
 // is offered, never used automatically. The runtime checks every rule (skill.* problems in the field "skills").
 // NAL-B4: a group adds all its skills at once; above 20 on-demand skills each step offers only the best-fitting ones.
 
+import { Button } from "@nodestro/ui-core";
 import { BookMarked, FolderPlus, RefreshCw } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { isImported, useSkillGroups, useSkills, type Skill, type SkillBinding, type SkillGroup, type SkillMode } from "../api/skills";
 import type { AgentConfig, ConfigIssue } from "../api/types";
-import { Badge, Button, Callout, Chip, Section, type SectionStatus, Segmented, Select } from "../components/ui";
+import { Badge, Callout, Chip, Section, type SectionStatus, Segmented, Select } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import type { AgentSectionId } from "./agentSummaries";
 
@@ -109,7 +110,7 @@ export function SkillsSection({
                 {newer ? (
                   <div className="row-gap">
                     <span className="muted small">{t("agent.skills.newer", { version: newer })}</span>
-                    <Button size="sm" icon={RefreshCw} onClick={() => set(changeBinding(bindings, binding.skill_id, { version: newer }))}>
+                    <Button size="sm" icon={<RefreshCw size={15} />} onClick={() => set(changeBinding(bindings, binding.skill_id, { version: newer }))}>
                       {t("agent.skills.useNewer", { version: newer })}
                     </Button>
                   </div>

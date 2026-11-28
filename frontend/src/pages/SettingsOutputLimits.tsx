@@ -6,6 +6,7 @@
 // documented or declared maximum (nodestro_runtime.output_limits). The table shows all three for the assistant model,
 // so a lowered value is never a surprise; the budget reserves exactly the value that is sent.
 
+import { Button, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Gauge, RotateCcw, Save } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -16,7 +17,7 @@ import { keys } from "../api/hooks";
 import { useModelProfile } from "../api/modelProfile";
 import type { ModelProfile, OutputLimitOperation, Settings, SettingsUpdate } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, Field, IconButton, TextInput, Toggle } from "../components/ui";
+import { Callout, Field, TextInput, Toggle } from "../components/ui";
 import { DefaultMark } from "./SettingsDefaults";
 
 /** The operations by area, in the order of the table. ``assistant``: the request goes to the assistant model. */
@@ -194,7 +195,7 @@ export function OutputLimitsPanel({ settings, admin }: { settings: Settings; adm
                         </span>
                         {text !== "" ? (
                           <IconButton
-                            icon={RotateCcw}
+                            icon={<RotateCcw size={16} />}
                             label={t("modelParams.settings.reset", { operation: label })}
                             disabled={!admin}
                             onClick={() => setDraft({ ...draft, [name]: "" })}
@@ -266,7 +267,7 @@ export function OutputLimitsPanel({ settings, admin }: { settings: Settings; adm
         <Callout tone="warning">{t("modelParams.settings.fixInvalid", { min: number(LIMIT_MIN), max: number(LIMIT_MAX) })}</Callout>
       ) : null}
       <div>
-        <Button variant="primary" icon={Save} disabled={!admin || anyInvalid} busy={save.isPending} onClick={submit}>
+        <Button variant="primary" icon={<Save size={15} />} disabled={!admin || anyInvalid} busy={save.isPending} onClick={submit}>
           {t("common.save")}
         </Button>
       </div>

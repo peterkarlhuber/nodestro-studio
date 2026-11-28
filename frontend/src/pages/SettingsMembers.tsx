@@ -2,6 +2,7 @@
 // workspace and with which role. Roles change at once (the member's next request uses the new one); removing a member
 // ends their sessions here. Only owners are offered the owner role; the API refuses the rest as well.
 
+import { ConfirmIconButton } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Trash2, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -10,7 +11,7 @@ import { useAccess } from "../api/access";
 import { type Member, type MemberRole, memberActions, memberKeys, memberName, membersApi } from "../api/members";
 import { roleName } from "../components/Access";
 import { toast } from "../components/toast";
-import { Badge, Callout, ConfirmIconButton, Select, Spinner } from "../components/ui";
+import { Badge, Callout, Select, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 
 function MemberRow({ member, ownRole }: { member: Member; ownRole: string | null | undefined }) {
@@ -59,7 +60,7 @@ function MemberRow({ member, ownRole }: { member: Member; ownRole: string | null
         />
         {manageable ? (
           <ConfirmIconButton
-            icon={Trash2}
+            icon={<Trash2 size={16} />}
             label={t("admin.members.remove", { name })}
             confirmLabel={t("admin.members.confirmRemove")}
             busy={remove.isPending}

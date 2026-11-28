@@ -1,5 +1,5 @@
 import { ChatMessage as ChatMessageView } from "@nodestro/ui-ai";
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, Tooltip } from "@nodestro/ui-core";
 import {
   ArrowUpRight,
   BookOpen,
@@ -28,7 +28,7 @@ import type {
   Handover,
 } from "../api/types";
 import { ReasoningView } from "../components/ReasoningView";
-import { Button, Callout } from "../components/ui";
+import { Callout } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { formatTokens } from "../lib/format";
 import { SentFileChips } from "./AssistantFiles";
@@ -143,7 +143,7 @@ function HandoverCard({ handover }: { handover: Handover }) {
         <Button
           size="sm"
           variant="primary"
-          icon={ArrowUpRight}
+          icon={<ArrowUpRight size={15} />}
           onClick={() => {
             useAssistant.getState().startHandover(handover);
             navigate(handoverPath(handover));
@@ -294,7 +294,7 @@ export function MessageView({
             <Button
               size="sm"
               variant="ghost"
-              icon={RotateCcw}
+              icon={<RotateCcw size={15} />}
               onClick={onRetry}
               data-testid="chat-retry"
             >

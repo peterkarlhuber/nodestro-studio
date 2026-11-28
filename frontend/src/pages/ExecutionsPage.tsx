@@ -1,4 +1,4 @@
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, ConfirmIconButton, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Columns2, FileDown, FileUp, Rows3, Trash2 } from "lucide-react";
 import type { TFunction } from "i18next";
@@ -11,7 +11,7 @@ import { RUNS_MAX, RUNS_PAGE, useRunList, useWorkflows } from "../api/hooks";
 import type { RunStatus, RunSummary, WorkflowSummary } from "../api/types";
 import { toast } from "../components/toast";
 import { ListProblemsChip } from "../runs/RunProblems";
-import { Badge, Button, Callout, ConfirmIconButton, EmptyState, PageHeader, Select, Spinner, StatusBadge } from "../components/ui";
+import { Badge, Callout, EmptyState, PageHeader, Select, Spinner, StatusBadge } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { RunReason } from "../runs/RunReason";
 import { changedText, formatCost, formatDate, formatDuration, formatNumber, formatTokens } from "../lib/format";
@@ -185,7 +185,7 @@ export function ExecutionsPage() {
             />
             <Tooltip help="runs.compare">
               <Button
-                icon={Columns2}
+                icon={<Columns2 size={15} />}
                 disabled={picked.length !== 2}
                 onClick={() => navigate(`/executions/compare?a=${picked[0]}&b=${picked[1]}`)}
               >
@@ -193,7 +193,7 @@ export function ExecutionsPage() {
               </Button>
             </Tooltip>
             <Tooltip help="runs.importTrace">
-              <Button icon={FileUp} busy={importing.isPending} onClick={() => fileInput.current?.click()}>
+              <Button icon={<FileUp size={15} />} busy={importing.isPending} onClick={() => fileInput.current?.click()}>
                 {t("executions.import")}
               </Button>
             </Tooltip>
@@ -221,7 +221,7 @@ export function ExecutionsPage() {
             icon={Rows3}
             title={t("executions.empty")}
             action={
-              <Button icon={FileDown} onClick={() => fileInput.current?.click()}>
+              <Button icon={<FileDown size={15} />} onClick={() => fileInput.current?.click()}>
                 {t("executions.import")}
               </Button>
             }
@@ -300,7 +300,7 @@ export function ExecutionsPage() {
                     </td>
                     <td>
                       {run.status !== "running" && run.status !== "queued" ? (
-                        <ConfirmIconButton icon={Trash2} label={t("executions.delete")} onConfirm={() => remove.mutate(run.id)} />
+                        <ConfirmIconButton icon={<Trash2 size={16} />} label={t("executions.delete")} onConfirm={() => remove.mutate(run.id)} />
                       ) : null}
                     </td>
                   </tr>

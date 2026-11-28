@@ -1,10 +1,10 @@
 // What happened in a run, in a few lines above the details (UX-6b). Built only from the stored run (runSummary.ts).
 
+import { Button } from "@nodestro/ui-core";
 import { AlertTriangle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import type { Run } from "../api/types";
-import { Button } from "../components/ui";
 import { STATE_KEY, orchestrationsOf, teamRunCounts } from "../editor/orchestrationModel";
 import { summarizeRun } from "./runSummary";
 

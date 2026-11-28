@@ -1,3 +1,4 @@
+import { Button, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Download, Layers, Pause, Play, Plus, Square, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +13,7 @@ import { ProgressBar } from "../automation/shared";
 import { BATCH_TONE, ITEM_TONE } from "../automation/status";
 import { Output } from "../components/Markdown";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, EmptyState, IconButton, PageHeader, Spinner, Stat } from "../components/ui";
+import { Badge, Callout, EmptyState, PageHeader, Spinner, Stat } from "../components/ui";
 import { progress } from "../lib/batch";
 import { ErrorText, ProblemText, problemText } from "../lib/errors";
 import { formatCost, formatDate, formatTokens } from "../lib/format";
@@ -36,7 +37,7 @@ export function BatchesPage() {
         doc="automatisierung#stapel"
         description={t("automation.batch.description")}
         actions={
-          <Button variant="primary" icon={Plus} onClick={() => setCreating(true)}>
+          <Button variant="primary" icon={<Plus size={15} />} onClick={() => setCreating(true)}>
             {t("automation.batch.new")}
           </Button>
         }
@@ -53,7 +54,7 @@ export function BatchesPage() {
             icon={Layers}
             title={t("automation.batch.empty")}
             action={
-              <Button icon={Plus} onClick={() => setCreating(true)}>
+              <Button icon={<Plus size={15} />} onClick={() => setCreating(true)}>
                 {t("automation.batch.new")}
               </Button>
             }
@@ -102,7 +103,7 @@ export function BatchesPage() {
                     <td className="num">{formatCost(batch.cost_usd)}</td>
                     <td>
                       {batch.status === "running" || batch.status === "paused" ? null : (
-                        <IconButton icon={Trash2} label={t("automation.batch.delete")} onClick={() => remove.mutate(batch.id)} />
+                        <IconButton icon={<Trash2 size={16} />} label={t("automation.batch.delete")} onClick={() => remove.mutate(batch.id)} />
                       )}
                     </td>
                   </tr>
@@ -152,24 +153,24 @@ export function BatchDetailPage() {
         actions={
           <>
             {data.status === "running" ? (
-              <Button icon={Pause} onClick={() => action.mutate("pause")}>
+              <Button icon={<Pause size={15} />} onClick={() => action.mutate("pause")}>
                 {t("automation.batch.pause")}
               </Button>
             ) : null}
             {data.status === "paused" || data.status === "interrupted" || data.status === "stopped" ? (
-              <Button icon={Play} onClick={() => action.mutate("resume")}>
+              <Button icon={<Play size={15} />} onClick={() => action.mutate("resume")}>
                 {t("automation.batch.resume")}
               </Button>
             ) : null}
             {active ? (
-              <Button icon={Square} onClick={() => action.mutate("cancel")}>
+              <Button icon={<Square size={15} />} onClick={() => action.mutate("cancel")}>
                 {t("common.cancel")}
               </Button>
             ) : null}
-            <a className="nd-button nd-button--default nd-button--md" href={api.batchExportUrl(id, "csv")} download>
+            <a className="ui-button ui-button--secondary" href={api.batchExportUrl(id, "csv")} download>
               <Download size={15} aria-hidden /> CSV
             </a>
-            <a className="nd-button nd-button--ghost nd-button--md" href={api.batchExportUrl(id, "json")} download>
+            <a className="ui-button ui-button--ghost" href={api.batchExportUrl(id, "json")} download>
               <Download size={15} aria-hidden /> JSON
             </a>
           </>

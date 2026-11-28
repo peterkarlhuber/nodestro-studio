@@ -1,3 +1,4 @@
+import { Button } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { Check, Search } from "lucide-react";
 import { useState } from "react";
@@ -6,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { api } from "../api/client";
 import { keys, useKnowledge, useMemorySpaces, useRuns, useTemplates, useTools, useWorkflows } from "../api/hooks";
 import type { AttachRequest, AttachmentKind } from "../api/types";
-import { Button, Modal, Segmented, Spinner, TextInput, Toggle } from "../components/ui";
+import { Modal, Segmented, Spinner, TextInput, Toggle } from "../components/ui";
 import { fold } from "../docs/search";
 import { formatDate } from "../lib/format";
 import { KIND_ICON } from "./MessageView";
@@ -128,7 +129,7 @@ export function AttachPicker({ open, onClose, onAttach }: { open: boolean; onClo
           <Button variant="ghost" onClick={onClose}>
             {t("common.cancel")}
           </Button>
-          <Button variant="primary" icon={Check} disabled={!chosen} busy={busy} onClick={() => void attach()} data-testid="picker-attach">
+          <Button variant="primary" icon={<Check size={15} />} disabled={!chosen} busy={busy} onClick={() => void attach()} data-testid="picker-attach">
             {t("assistant.picker.attach")}
           </Button>
         </>

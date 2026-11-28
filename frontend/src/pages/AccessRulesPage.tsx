@@ -2,6 +2,7 @@
 // gave it and until when, with revoke; and the fixed safety limits no permission lifts. Only while the access model is
 // switched on (off by default) and for administrators; the API checks both again.
 
+import { ConfirmIconButton } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Ban, KeyRound } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -12,7 +13,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { AccessDeny, AccessGrant } from "../api/types";
 import { PermissionNote } from "../components/Access";
-import { Badge, Callout, ConfirmIconButton, PageHeader, Spinner } from "../components/ui";
+import { Badge, Callout, PageHeader, Spinner } from "../components/ui";
 import { toast } from "../components/toast";
 import { ErrorText } from "../lib/errors";
 import { formatDate } from "../lib/format";
@@ -146,7 +147,7 @@ function Records({ kind }: { kind: "grants" | "denies" }) {
                     <td>
                       {state === "active" ? (
                         <ConfirmIconButton
-                          icon={Ban}
+                          icon={<Ban size={16} />}
                           label={t("approvals.access.revoke")}
                           confirmLabel={t("approvals.access.revokeConfirm")}
                           busy={revoke.isPending && revoke.variables === record.id}

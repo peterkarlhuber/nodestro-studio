@@ -2,7 +2,7 @@
 // OpenAI-compatible servers (Amazon Bedrock has its own card: SettingsBedrock.tsx). Keys are only ever sent, never shown: the backend reports where a
 // key comes from, not the key.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { KeyRound, Plug, Save, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -17,7 +17,7 @@ import { modelLabel } from "../lib/catalog";
 import { toast } from "../components/toast";
 import { useAccess } from "../api/access";
 import { PermissionNote } from "../components/Access";
-import { Badge, Button, Callout, Field, Section, Select, TextInput } from "../components/ui";
+import { Badge, Callout, Field, Section, Select, TextInput } from "../components/ui";
 import i18n from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { defaultModelSwitch, providerOf } from "../lib/providers";
@@ -196,11 +196,11 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
               onChange={(e) => setApiKey(e.target.value)}
               aria-label={t("settings.providers.apiKeyFor", { provider: name })}
             />
-            <Button type="submit" variant="primary" icon={Save} disabled={!admin || !apiKey.trim()} busy={save.isPending}>
+            <Button type="submit" variant="primary" icon={<Save size={15} />} disabled={!admin || !apiKey.trim()} busy={save.isPending}>
               {t("common.save")}
             </Button>
             {status.key_stored ? (
-              <Button variant="danger" icon={Trash2} disabled={!admin} onClick={() => save.mutate({ api_key: "" })}>
+              <Button variant="danger" icon={<Trash2 size={15} />} disabled={!admin} onClick={() => save.mutate({ api_key: "" })}>
                 {t("common.remove")}
               </Button>
             ) : null}
@@ -294,7 +294,7 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
           {info.base_url || info.declare_capabilities ? (
             <Button
               variant="primary"
-              icon={Save}
+              icon={<Save size={15} />}
               disabled={!admin || !changed || Boolean(problem)}
               busy={save.isPending}
               onClick={() =>
@@ -307,7 +307,7 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
               {t("settings.providers.saveEndpoint")}
             </Button>
           ) : null}
-          <Button icon={Plug} busy={connection.isPending} disabled={!status.configured || !access.can("install")} onClick={() => connection.mutate()}>
+          <Button icon={<Plug size={15} />} busy={connection.isPending} disabled={!status.configured || !access.can("install")} onClick={() => connection.mutate()}>
             {t("settings.providers.test")}
           </Button>
         </div>

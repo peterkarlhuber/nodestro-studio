@@ -2,20 +2,14 @@
 // task needs them. Reading stores nothing; "Use as skill" stores the skill in the workspace (origin builtin:...),
 // where it can be assigned to agents and changed like any other skill.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { BookMarked, Copy, FileText } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { skillsApi, useLibrarySkills, type LibrarySkill } from "../api/skills";
 import { toast } from "../components/toast";
-import {
-  Badge,
-  Button,
-  Callout,
-  EmptyState,
-  Modal,
-  Spinner,
-} from "../components/ui";
+import { Badge, Callout, EmptyState, Modal, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 
 /** Skills whose name or description contains the search text (case-insensitive). */
@@ -148,7 +142,7 @@ function SkillDialog({
           </Button>
           <Button
             variant="primary"
-            icon={Copy}
+            icon={<Copy size={15} />}
             busy={copy.isPending}
             disabled={!data}
             onClick={() => copy.mutate()}

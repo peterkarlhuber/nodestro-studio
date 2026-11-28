@@ -1,11 +1,11 @@
 // Inspector of a selected connection: where it leads, and the limits of a loop connection.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip, IconButton } from "@nodestro/ui-core";
 import { Repeat, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { MAX_LOOP_ITERATIONS, type EdgeLoop } from "../api/types";
-import { Button, Callout, DocLink, Field, IconButton, Select, TextInput } from "../components/ui";
+import { Callout, DocLink, Field, Select, TextInput } from "../components/ui";
 import { toast } from "../components/toast";
 import { branchLabel } from "./branches";
 import { DEFAULT_LOOP, useEditor, wouldCycle } from "./store";
@@ -52,7 +52,7 @@ export function ConnectionInspector({ edgeId }: { edgeId: string }) {
             {from && edge.source_handle ? ` (${branchLabel(from, edge.source_handle, t)})` : ""}
           </p>
         </div>
-        <IconButton icon={Trash2} label={t("editor.connection.delete")} onClick={() => removeEdges([edge.id])} />
+        <IconButton icon={<Trash2 size={16} />} label={t("editor.connection.delete")} onClick={() => removeEdges([edge.id])} />
       </div>
       {loop ? (
         <>
@@ -83,7 +83,7 @@ export function ConnectionInspector({ edgeId }: { edgeId: string }) {
           </Callout>
         </>
       ) : leadsBack && edge.source_handle ? (
-        <Button icon={Repeat} size="sm" onClick={() => update({ ...DEFAULT_LOOP })}>
+        <Button icon={<Repeat size={15} />} size="sm" onClick={() => update({ ...DEFAULT_LOOP })}>
           {t("editor.loop.make")}
         </Button>
       ) : null}

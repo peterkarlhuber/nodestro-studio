@@ -3,7 +3,7 @@
 // recommends models for this computer; this panel shows that and starts the jobs. Nothing is downloaded or started
 // without a click, and the strict offline mode refuses every download.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, ConfirmIconButton, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Activity, Database, Download, FolderInput, Hammer, HardDrive, Play, RefreshCw, Search, Square, Trash2, X } from "lucide-react";
 import { useState } from "react";
@@ -27,7 +27,7 @@ import type { Settings } from "../api/types";
 import { PermissionNote } from "../components/Access";
 import { toast } from "../components/toast";
 import { withLocalModel } from "../missingModel/store";
-import { Badge, Button, Callout, ConfirmIconButton, Field, Segmented, Select, Spinner, TextInput, Toggle } from "../components/ui";
+import { Badge, Callout, Field, Segmented, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatLargeBytes } from "../lib/format";
 import { reasonText } from "../lib/localRecommend";
@@ -118,7 +118,7 @@ function Recommendations({
                     ) : name && !item.installed ? (
                       <Button
                         size="sm"
-                        icon={Download}
+                        icon={<Download size={15} />}
                         disabled={!canDownload || overview.status.offline}
                         busy={pulling === name}
                         onClick={() => onPull(name)}
@@ -243,7 +243,7 @@ function Catalog({
       <td>
         {model.installed ? (
           <ConfirmIconButton
-            icon={Trash2}
+            icon={<Trash2 size={16} />}
             label={t("localModels.delete", { model: model.name })}
             disabled={!canInstall}
             busy={remove.isPending && remove.variables === model.name}
@@ -257,7 +257,7 @@ function Catalog({
             {model.source === "build" && overview.status.offline ? null : (
               <Button
                 size="sm"
-                icon={Download}
+                icon={<Download size={15} />}
                 disabled={!canDownload || overview.status.offline}
                 busy={pulling === model.name}
                 onClick={() => onPull(model.name)}
@@ -269,7 +269,7 @@ function Catalog({
             {model.source === "build" && overview.manageable && overview.status.mode !== "unavailable" ? (
               <Button
                 size="sm"
-                icon={Hammer}
+                icon={<Hammer size={15} />}
                 variant="ghost"
                 onClick={() => focusBuild()}
                 aria-label={`${t("localModels.build.fromFiles")}: ${model.name}`}
@@ -315,7 +315,7 @@ function Catalog({
                 </td>
                 <td>
                   <ConfirmIconButton
-                    icon={Trash2}
+                    icon={<Trash2 size={16} />}
                     label={t("localModels.delete", { model: model.name })}
                     disabled={!canInstall}
                     onConfirm={() => remove.mutate(model.name)}
@@ -388,7 +388,7 @@ function ImportForm({ canInstall, packages }: { canInstall: boolean; packages: b
       ) : null}
       <div>
         <Button
-          icon={FolderInput}
+          icon={<FolderInput size={15} />}
           disabled={!canInstall || !path.trim() || (kind === "gguf" && !name.trim())}
           busy={start.isPending}
           onClick={() => start.mutate()}
@@ -440,7 +440,7 @@ function StorageForm({ overview, canInstall }: { overview: LocalOverview; canIns
         />
       </Field>
       <div>
-        <Button icon={HardDrive} disabled={!canInstall || !path.trim()} busy={move.isPending} onClick={() => move.mutate()}>
+        <Button icon={<HardDrive size={15} />} disabled={!canInstall || !path.trim()} busy={move.isPending} onClick={() => move.mutate()}>
           {t("localModels.storage.apply")}
         </Button>
       </div>
@@ -480,7 +480,7 @@ function RuntimeSetup({
           <div className="row-gap">
             <Button
               variant="primary"
-              icon={Download}
+              icon={<Download size={15} />}
               disabled={!canInstall || overview.status.offline || busy}
               busy={install.isPending && install.variables?.download === true}
               onClick={() => install.mutate({ download: true })}
@@ -496,7 +496,7 @@ function RuntimeSetup({
         </Field>
         <div>
           <Button
-            icon={FolderInput}
+            icon={<FolderInput size={15} />}
             disabled={!canInstall || !archive.trim() || busy}
             busy={install.isPending && Boolean(install.variables?.archive)}
             onClick={() => install.mutate({ archive: archive.trim() })}
@@ -610,7 +610,7 @@ export function LocalModelsPanel({
           {managed && manageable && status.runtime_installed ? (
             <div className="row-gap">
               <Button
-                icon={status.running ? Square : Play}
+                icon={status.running ? <Square size={15} /> : <Play size={15} />}
                 disabled={!canInstall || settingUp}
                 busy={power.isPending}
                 onClick={() => power.mutate(!status.running)}
@@ -628,7 +628,7 @@ export function LocalModelsPanel({
           {manageable && (status.mode === "container" || status.mode === "external") ? (
             <div className="row-gap">
               <Button
-                icon={Activity}
+                icon={<Activity size={15} />}
                 disabled={!canInstall || settingUp}
                 busy={power.isPending}
                 onClick={() => power.mutate(true)}
@@ -869,7 +869,7 @@ export function KnowledgeSearchPanel({
           ) : null}
           <div className="row-gap">
             <Button
-              icon={RefreshCw}
+              icon={<RefreshCw size={15} />}
               disabled={!canEdit || running || !settings.embedding_model}
               busy={rebuild.isPending}
               onClick={() => rebuild.mutate()}
@@ -877,13 +877,13 @@ export function KnowledgeSearchPanel({
               {data.state === "off" ? t("localModels.index.build") : t("localModels.index.rebuild")}
             </Button>
             {running ? (
-              <Button icon={X} disabled={!canEdit} busy={cancel.isPending} onClick={() => cancel.mutate()}>
+              <Button icon={<X size={15} />} disabled={!canEdit} busy={cancel.isPending} onClick={() => cancel.mutate()}>
                 {t("common.cancel")}
               </Button>
             ) : null}
             {data.state !== "off" ? (
               <ConfirmIconButton
-                icon={Trash2}
+                icon={<Trash2 size={16} />}
                 label={t("localModels.index.remove")}
                 disabled={!canEdit || running}
                 busy={drop.isPending}

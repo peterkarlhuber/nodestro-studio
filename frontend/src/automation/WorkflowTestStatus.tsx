@@ -1,5 +1,6 @@
 // The latest test-series result for one saved version (Q-1): untested, passed n of m, or outdated with the reason.
 
+import { Button } from "@nodestro/ui-core";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { FlaskConical, RotateCcw } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -7,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
 import { keys, useSuites } from "../api/hooks";
-import { Badge, Button, Callout, Spinner } from "../components/ui";
+import { Badge, Callout, Spinner } from "../components/ui";
 import { relativeTime } from "../lib/format";
 import { type SuiteTestStatus, suiteTestStatus } from "./testStatus";
 
@@ -18,7 +19,7 @@ function FailedRow({ name, onRetry }: { name: string; onRetry: () => void }) {
     <li className="test-status__row" data-testid="test-status-row">
       <span>{name}</span>
       <Badge tone="danger">{t("testStatus.runsFailed")}</Badge>
-      <Button size="sm" variant="ghost" icon={RotateCcw} onClick={onRetry}>
+      <Button size="sm" variant="ghost" icon={<RotateCcw size={15} />} onClick={onRetry}>
         {t("testStatus.retry")}
       </Button>
     </li>
@@ -72,7 +73,7 @@ export function WorkflowTestStatus({ workflowId, version }: { workflowId: string
           <Button
             size="sm"
             variant="ghost"
-            icon={RotateCcw}
+            icon={<RotateCcw size={15} />}
             onClick={() => {
               if (!suites.data) void suites.refetch();
               if (!versions.data) void versions.refetch();

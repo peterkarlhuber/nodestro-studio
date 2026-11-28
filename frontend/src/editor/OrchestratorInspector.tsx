@@ -1,5 +1,6 @@
 // Inspector of an orchestrator node: the pool of teams, the task, the model and the limits.
 
+import { IconButton } from "@nodestro/ui-core";
 import { ListChecks, Network, SlidersHorizontal, Trash2, Users } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -18,7 +19,7 @@ import {
   type WorkflowNode,
 } from "../api/types";
 import { ModelPicker, useModelName } from "../components/ModelPicker";
-import { Callout, Chip, Field, IconButton, Section, type SectionStatus, Select, TextArea, TextInput } from "../components/ui";
+import { Callout, Chip, Field, Section, type SectionStatus, Select, TextArea, TextInput } from "../components/ui";
 import { addCapabilities } from "../lib/capabilities";
 import { childLink, parseTrail } from "../lib/trail";
 import { findings } from "./CheckList";
@@ -135,7 +136,7 @@ export function OrchestratorInspector({ node, check }: { node: WorkflowNode; che
                     ) : null}
                   </div>
                   <IconButton
-                    icon={Trash2}
+                    icon={<Trash2 size={16} />}
                     label={t("flow.orchestrator.removeTeam", {
                       name: team?.name ?? member.workflow_id,
                     })}

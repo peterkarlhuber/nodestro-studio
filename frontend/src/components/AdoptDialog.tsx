@@ -5,7 +5,7 @@
 // confirmation belongs to the checked content: editing the text or choosing another collection
 // needs a new check, and the backend refuses a confirmation for content it did not show.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, Check, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -17,7 +17,7 @@ import type { AdoptCheck, AdoptSource, ContentKind } from "../api/types";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatBytes } from "../lib/format";
 import { toast } from "./toast";
-import { Badge, Button, Callout, Field, Modal, Select, TextArea, TextInput } from "./ui";
+import { Badge, Callout, Field, Modal, Select, TextArea, TextInput } from "./ui";
 
 const NEW = "__new__";
 const KINDS: ContentKind[] = ["extracted", "generated", "assumption"];
@@ -123,11 +123,11 @@ export function AdoptDialog({
             {t("common.cancel")}
           </Button>
           {checked === null || dirty ? (
-            <Button variant="primary" icon={RefreshCw} busy={check.isPending} disabled={!collection} onClick={() => check.mutate()}>
+            <Button variant="primary" icon={<RefreshCw size={15} />} busy={check.isPending} disabled={!collection} onClick={() => check.mutate()}>
               {checked === null ? t("inputs.adopt.check") : t("inputs.adopt.recheck")}
             </Button>
           ) : (
-            <Button variant="primary" icon={Check} busy={adopt.isPending} disabled={!canAdopt} onClick={() => adopt.mutate()}>
+            <Button variant="primary" icon={<Check size={15} />} busy={adopt.isPending} disabled={!canAdopt} onClick={() => adopt.mutate()}>
               {t("inputs.adopt.confirm", { count: ready.length })}
             </Button>
           )}

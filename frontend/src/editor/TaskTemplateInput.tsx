@@ -1,11 +1,12 @@
 // The agent's task field. A new agent's task is only the input placeholder; instead of the raw `{{input}}` it shows
 // as a chip that says what the agent gets, with a switch to the text (ED-22). Any other task is plain text.
 
+import { Button } from "@nodestro/ui-core";
 import { ArrowDownToLine, Pencil } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Button, TextArea } from "../components/ui";
+import { TextArea } from "../components/ui";
 
 export const INPUT_ONLY = "{{input}}";
 
@@ -32,7 +33,7 @@ export function TaskTemplateInput({ id, value, onChange }: { id: string; value: 
           id={id}
           size="sm"
           variant="ghost"
-          icon={Pencil}
+          icon={<Pencil size={15} />}
           onClick={() => {
             focusText.current = true;
             setRaw(true);

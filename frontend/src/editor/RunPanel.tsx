@@ -1,10 +1,11 @@
+import { IconButton } from "@nodestro/ui-core";
 import { ExternalLink, PanelBottomClose, PanelBottomOpen } from "lucide-react";
 import { type Ref, memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { Output, outputFieldsOf, stepFieldsOf } from "../components/Markdown";
-import { IconButton, Stat, StatusBadge } from "../components/ui";
+import { Stat, StatusBadge } from "../components/ui";
 import { formatTokens, tokenBreakdown } from "../lib/format";
 import { RunApprovals } from "../runs/ApprovalCard";
 import { RunBudgetDecision } from "../runs/BudgetDecisionCard";
@@ -52,7 +53,7 @@ function RunPanelView({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
       <div className="panel-head run-panel__head">
         <div className="row-gap">
           <IconButton
-            icon={open ? PanelBottomClose : PanelBottomOpen}
+            icon={open ? <PanelBottomClose size={16} /> : <PanelBottomOpen size={16} />}
             label={open ? t("editor.panels.hideRunPanel") : t("editor.panels.showRunPanel")}
             className="run-panel__toggle"
             aria-expanded={open}

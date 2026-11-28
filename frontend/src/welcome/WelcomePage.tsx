@@ -225,7 +225,7 @@ export function WelcomePage() {
           <Link to="/docs">{t("welcome.docs")}</Link>
         </nav>
         <Controls motion={motionWanted} onMotion={setMotionWanted} reduced={reduced} />
-        <Link to="/" className="nd-button nd-button--primary wl-nav__cta" data-testid="welcome-nav-studio">
+        <Link to="/" className="ui-button ui-button--primary wl-nav__cta" data-testid="welcome-nav-studio">
           {t("welcome.openStudio")}
         </Link>
       </header>
@@ -239,10 +239,10 @@ export function WelcomePage() {
             <Slogan id="wl-title" className="wl-slogan" />
             <p className="wl-lede">{t("welcome.hero.lede")}</p>
             <div className="wl-actions">
-              <Link to="/" className="nd-button nd-button--primary wl-cta" data-testid="welcome-open-studio">
+              <Link to="/" className="ui-button ui-button--primary wl-cta" data-testid="welcome-open-studio">
                 {t("welcome.openStudio")} <ArrowRight size={17} aria-hidden />
               </Link>
-              <a href="#how" className="nd-button wl-cta wl-cta--quiet">
+              <a href="#how" className="ui-button wl-cta wl-cta--quiet">
                 {t("welcome.howItWorks")}
               </a>
             </div>
@@ -303,10 +303,10 @@ export function WelcomePage() {
             </p>
             <p className="wl-body">{t("welcome.closing.text")}</p>
             <div className="wl-actions">
-              <Link to="/" className="nd-button nd-button--primary wl-cta">
+              <Link to="/" className="ui-button ui-button--primary wl-cta">
                 {t("welcome.openStudio")} <ArrowRight size={17} aria-hidden />
               </Link>
-              <Link to="/workflows/examples" className="nd-button wl-cta wl-cta--quiet">
+              <Link to="/workflows/examples" className="ui-button wl-cta wl-cta--quiet">
                 {t("welcome.closing.examples")}
               </Link>
             </div>

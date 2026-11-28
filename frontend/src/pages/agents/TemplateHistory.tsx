@@ -1,13 +1,14 @@
 // Where an agent template comes from and its saved versions (NAL-B1). Every changed save is a version; a version can be
 // compared with the form's state and taken back into the form ("Restore"), which becomes a new version when saved.
 
+import { Button } from "@nodestro/ui-core";
 import { BookOpen, FileInput, History, RotateCcw, User } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useTemplateVersions } from "../../api/hooks";
 import type { AgentConfig, AgentTemplate, AgentTemplateVersion } from "../../api/types";
-import { Badge, Button, Callout, Modal, Section, Spinner } from "../../components/ui";
+import { Badge, Callout, Modal, Section, Spinner } from "../../components/ui";
 import { ErrorText } from "../../lib/errors";
 import { formatDate } from "../../lib/format";
 
@@ -108,7 +109,7 @@ export function TemplateHistory({
               </Button>
               <Button
                 variant="primary"
-                icon={RotateCcw}
+                icon={<RotateCcw size={15} />}
                 onClick={() => {
                   onRestore(structuredClone(compared.agent));
                   setCompared(null);

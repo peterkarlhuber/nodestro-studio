@@ -1,4 +1,4 @@
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, ConfirmIconButton, IconButton, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Bot, Download, Plus, Save, Sparkles, Trash2, Undo2, Upload } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -23,7 +23,7 @@ import {
 } from "../components/Organize";
 import { toast } from "../components/toast";
 import { UnsavedChangesModal } from "../components/UnsavedChanges";
-import { Button, Callout, ConfirmIconButton, EmptyState, IconButton, PageHeader, Spinner } from "../components/ui";
+import { Callout, EmptyState, PageHeader, Spinner } from "../components/ui";
 import { AgentForm } from "../editor/AgentInspector";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { defaultAgent } from "../lib/defaults";
@@ -203,14 +203,14 @@ export function AgentsPage() {
                   if (file) importTemplate.mutate(file);
                 }}
               />
-              <Button icon={Upload} busy={importTemplate.isPending} onClick={() => fileInput.current?.click()}>
+              <Button icon={<Upload size={15} />} busy={importTemplate.isPending} onClick={() => fileInput.current?.click()}>
                 {t("agentHistory.import")}
               </Button>
-              <Button icon={Plus} onClick={startNew}>
+              <Button icon={<Plus size={15} />} onClick={startNew}>
                 {t("agents.emptyTemplate")}
               </Button>
               <Tooltip help="agent.design">
-                <Button variant="primary" icon={Sparkles} onClick={() => setDesignOpen(true)}>
+                <Button variant="primary" icon={<Sparkles size={15} />} onClick={() => setDesignOpen(true)}>
                   {t("agents.describe")}
                 </Button>
               </Tooltip>
@@ -229,7 +229,7 @@ export function AgentsPage() {
               icon={Bot}
               title={t("agents.emptyTitle")}
               action={
-                <Button variant="primary" icon={Sparkles} onClick={() => setDesignOpen(true)}>
+                <Button variant="primary" icon={<Sparkles size={15} />} onClick={() => setDesignOpen(true)}>
                   {t("agents.describe")}
                 </Button>
               }
@@ -311,12 +311,12 @@ export function AgentsPage() {
                       <FavoriteButton kind="template" id={selected.id} name={selected.agent.name} />
                       <TagEditor kind="template" id={selected.id} name={selected.agent.name} />
                       <IconButton
-                        icon={Download}
+                        icon={<Download size={16} />}
                         label={t("agentHistory.export")}
                         disabled={exportTemplate.isPending}
                         onClick={() => exportTemplate.mutate(selected)}
                       />
-                      <ConfirmIconButton icon={Trash2} label={t("agents.delete")} busy={remove.isPending} onConfirm={() => remove.mutate(selected.id)} />
+                      <ConfirmIconButton icon={<Trash2 size={16} />} label={t("agents.delete")} busy={remove.isPending} onConfirm={() => remove.mutate(selected.id)} />
                     </>
                   ) : null}
                 </>
@@ -325,15 +325,15 @@ export function AgentsPage() {
             {selected && !isNew ? <TemplateHistory template={selected} draft={draft} onRestore={setDraft} /> : null}
             <div className="inspector__footer">
               {isNew ? (
-                <Button variant="ghost" icon={Undo2} onClick={() => setSelectedId(null)}>
+                <Button variant="ghost" icon={<Undo2 size={15} />} onClick={() => setSelectedId(null)}>
                   {t("common.cancel")}
                 </Button>
               ) : (
-                <Button variant="ghost" icon={Undo2} disabled={!dirty} onClick={() => setDraft(structuredClone(base!))}>
+                <Button variant="ghost" icon={<Undo2 size={15} />} disabled={!dirty} onClick={() => setDraft(structuredClone(base!))}>
                   {t("common.discard")}
                 </Button>
               )}
-              <Button variant="primary" icon={Save} disabled={!dirty && !isNew} busy={saving} onClick={() => saveDraft()}>
+              <Button variant="primary" icon={<Save size={15} />} disabled={!dirty && !isNew} busy={saving} onClick={() => saveDraft()}>
                 {t("common.save")}
               </Button>
             </div>

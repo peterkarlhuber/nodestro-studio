@@ -4,7 +4,7 @@
 // cover, allows it, sees every consent and withdraws one. The section shows only where the API offers consents (a
 // member of a server); elsewhere it is not asked, and a 404 memory.consent_unavailable hides it too.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, ConfirmIconButton, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Ban, Eye, ShieldCheck } from "lucide-react";
 import { useState } from "react";
@@ -16,7 +16,7 @@ import { ApiError, api } from "../api/client";
 import { keys, useMemorySpaces, useWorkflows } from "../api/hooks";
 import type { MemoryConsent, MemoryConsentPreview } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, ConfirmIconButton, Field, Select, Spinner } from "../components/ui";
+import { Callout, Field, Select, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 
@@ -111,7 +111,7 @@ function GrantConsent({ space: selected }: { space: string | null }) {
         </Field>
       </div>
       <div>
-        <Button icon={Eye} disabled={!space || !workflowId} busy={review.isPending} onClick={() => review.mutate()} data-testid="consent-review">
+        <Button icon={<Eye size={15} />} disabled={!space || !workflowId} busy={review.isPending} onClick={() => review.mutate()} data-testid="consent-review">
           {t("memory.consents.review")}
         </Button>
       </div>
@@ -145,11 +145,11 @@ function GrantConsent({ space: selected }: { space: string | null }) {
           ) : null}
           <div className="row-gap">
             {stale ? (
-              <Button variant="primary" icon={Eye} busy={review.isPending} onClick={() => review.mutate()} data-testid="consent-review-again">
+              <Button variant="primary" icon={<Eye size={15} />} busy={review.isPending} onClick={() => review.mutate()} data-testid="consent-review-again">
                 {t("memory.consents.reviewAgain")}
               </Button>
             ) : (
-              <Button variant="primary" icon={ShieldCheck} busy={grant.isPending} onClick={() => grant.mutate(preview)} data-testid="consent-allow">
+              <Button variant="primary" icon={<ShieldCheck size={15} />} busy={grant.isPending} onClick={() => grant.mutate(preview)} data-testid="consent-allow">
                 {t("memory.consents.allow")}
               </Button>
             )}
@@ -215,7 +215,7 @@ function ConsentList({ consents }: { consents: MemoryConsent[] }) {
                 <td>{consent.at ? formatDate(consent.at) : ""}</td>
                 <td>
                   <ConfirmIconButton
-                    icon={Ban}
+                    icon={<Ban size={16} />}
                     label={t("memory.consents.revoke")}
                     confirmLabel={t("memory.consents.revokeConfirm")}
                     busy={revoke.isPending && revoke.variables === consent.id}

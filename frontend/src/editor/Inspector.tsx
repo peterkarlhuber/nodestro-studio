@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip, IconButton } from "@nodestro/ui-core";
 import { CheckCircle2, Copy, Keyboard, PanelRightClose, PanelRightOpen, Trash2 } from "lucide-react";
 import { type Ref, memo, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -10,7 +10,7 @@ import {
   MAX_STEPS_LIMIT,
   type WorkflowCheck,
 } from "../api/types";
-import { Button, Chip, DocLink, Field, IconButton, TextArea, TextInput } from "../components/ui";
+import { Chip, DocLink, Field, TextArea, TextInput } from "../components/ui";
 import { removeWithUndo } from "./actions";
 import { WorkflowDependencies } from "../python/DependencyPanel";
 import { AgentInspector } from "./AgentInspector";
@@ -73,7 +73,7 @@ function InspectorView({ check, panelRef }: { check: WorkflowCheck | undefined; 
     >
       <div className="panel-head inspector__panel-head">
         <IconButton
-          icon={open ? PanelRightClose : PanelRightOpen}
+          icon={open ? <PanelRightClose size={16} /> : <PanelRightOpen size={16} />}
           label={open ? t("editor.panels.hideInspector") : t("editor.panels.showInspector")}
           className="inspector__toggle"
           aria-expanded={open}
@@ -124,10 +124,10 @@ function SelectionInspector() {
       <h2 className="inspector__heading">{t("editor.inspector.selectedCount", { count: ids.length })}</h2>
       <p className="muted small">{names.filter(Boolean).join(", ")}</p>
       <div className="row-gap">
-        <Button icon={Copy} onClick={() => duplicateNodes(ids)}>
+        <Button icon={<Copy size={15} />} onClick={() => duplicateNodes(ids)}>
           {t("editor.inspector.duplicateAll")}
         </Button>
-        <Button icon={Trash2} variant="danger" onClick={() => removeWithUndo(ids)}>
+        <Button icon={<Trash2 size={15} />} variant="danger" onClick={() => removeWithUndo(ids)}>
           {t("editor.inspector.deleteAll", { count: ids.length })}
         </Button>
         <Button variant="ghost" onClick={() => select(null)}>
@@ -154,7 +154,7 @@ function TerminalInspector({ nodeId }: { nodeId: string }) {
           </h2>
           <p className="muted small">{isStart ? t("editor.inspector.startText") : t("editor.inspector.outputText")}</p>
         </div>
-        <IconButton icon={Trash2} label={t("editor.inspector.deleteNode")} onClick={() => removeWithUndo([node.id])} />
+        <IconButton icon={<Trash2 size={16} />} label={t("editor.inspector.deleteNode")} onClick={() => removeWithUndo([node.id])} />
       </div>
       <Field label={t("editor.inspector.label")}>
         <TextInput value={node.label} onChange={(e) => updateNode(node.id, { label: e.target.value }, { record: false })} />

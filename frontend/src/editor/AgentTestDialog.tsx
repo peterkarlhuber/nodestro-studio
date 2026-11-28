@@ -1,6 +1,7 @@
 // "Test agent": run one agent with its current configuration on a test task. The result is shown
 // here only; it is not a workflow run and changes no run, result or memory space.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation } from "@tanstack/react-query";
 import { FlaskConical, Play } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -11,7 +12,7 @@ import { useMeta, useSettings } from "../api/hooks";
 import type { AgentConfig, AgentTestResult, NodeRun, WorkflowNode } from "../api/types";
 import { providerList } from "../components/ModelPicker";
 import { modelLabel } from "../lib/catalog";
-import { Badge, Button, Callout, Field, Modal, Stat, TextArea, Toggle } from "../components/ui";
+import { Badge, Callout, Field, Modal, Stat, TextArea, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatDuration, formatPrice, formatTokens } from "../lib/format";
 import { findModel, missingProviders } from "../lib/providers";
@@ -96,7 +97,7 @@ export function AgentTestDialog({
           <Button variant="ghost" onClick={onClose}>
             {t("common.close")}
           </Button>
-          <Button variant="primary" icon={Play} busy={test.isPending} onClick={() => test.mutate()}>
+          <Button variant="primary" icon={<Play size={15} />} busy={test.isPending} onClick={() => test.mutate()}>
             {result ? t("agentTest.again") : t("agentTest.start")}
           </Button>
         </>

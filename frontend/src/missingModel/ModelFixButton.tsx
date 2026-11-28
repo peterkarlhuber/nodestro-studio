@@ -2,6 +2,7 @@
 // or a batch's last error): opens the same dialog as the actions do, without continuing anything by itself. Unattended
 // runs never download; this is how an authorized person fixes what they reported.
 
+import { Button } from "@nodestro/ui-core";
 import { QueryClientContext } from "@tanstack/react-query";
 import { Wrench } from "lucide-react";
 import { useContext, useState } from "react";
@@ -9,7 +10,6 @@ import { useTranslation } from "react-i18next";
 
 import { problemModel } from "../api/modelReadiness";
 import { toast } from "../components/toast";
-import { Button } from "../components/ui";
 import { fixMissingModel } from "./store";
 
 export function ModelFixButton({ item }: { item: { code?: string | null; params?: Record<string, unknown> | null } }) {
@@ -22,7 +22,7 @@ export function ModelFixButton({ item }: { item: { code?: string | null; params?
   return (
     <Button
       size="sm"
-      icon={Wrench}
+      icon={<Wrench size={15} />}
       busy={busy}
       className="model-fix"
       data-testid="model-fix"

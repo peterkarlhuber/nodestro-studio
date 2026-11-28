@@ -2,6 +2,7 @@
 // operation and result folder, the summary of what the package contains and needs, and the background build with
 // its progress. The package itself is built by the backend (nodestro_api.portable_build) as a job.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   AlertTriangle,
@@ -25,16 +26,7 @@ import type {
 } from "../api/types";
 import { ProgressBar } from "../automation/shared";
 import { toast } from "../components/toast";
-import {
-  Badge,
-  Button,
-  Callout,
-  Field,
-  Section,
-  Select,
-  TextInput,
-  Toggle,
-} from "../components/ui";
+import { Badge, Callout, Field, Section, Select, TextInput, Toggle } from "../components/ui";
 import { providerLabel } from "../components/ModelPicker";
 import { downloadList, problemText } from "../lib/errors";
 import { formatDate, formatLargeBytes } from "../lib/format";
@@ -473,7 +465,7 @@ function JobRow({
           <span className="small">
             <Clock size={13} aria-hidden /> {t("publish.export.portable.queued")}
           </span>
-          <Button size="sm" variant="ghost" icon={X} busy={cancelling} onClick={onCancel}>
+          <Button size="sm" variant="ghost" icon={<X size={15} />} busy={cancelling} onClick={onCancel}>
             {t("common.cancel")}
           </Button>
         </div>
@@ -494,7 +486,7 @@ function JobRow({
         <Button
           size="sm"
           variant="ghost"
-          icon={X}
+          icon={<X size={15} />}
           busy={cancelling}
           onClick={onCancel}
         >

@@ -1,6 +1,7 @@
 // Approve third-party libraries: the overview first (nothing installed), then the installation
 // with its progress. Used for workflows (their environment) and single tools (their test environment).
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, Package, RefreshCw, ShieldCheck } from "lucide-react";
 import { useCallback, useState } from "react";
@@ -10,7 +11,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { DependencyPlan, DependencyScope, PythonEnvironment } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, DocLink, Modal, Spinner } from "../components/ui";
+import { Callout, DocLink, Modal, Spinner } from "../components/ui";
 import { codeSuffix } from "../lib/codes";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { PlanTable } from "./PlanTable";
@@ -128,11 +129,11 @@ export function DependencyDialog({
         installing ? (
           <>
             {finished && env?.install.status === "failed" ? (
-              <Button icon={RefreshCw} busy={retry.isPending} onClick={() => retry.mutate()}>
+              <Button icon={<RefreshCw size={15} />} busy={retry.isPending} onClick={() => retry.mutate()}>
                 {t("python.install.retry")}
               </Button>
             ) : null}
-            <Button variant={finished ? "primary" : "default"} disabled={!finished} onClick={close}>
+            <Button variant={finished ? "primary" : "secondary"} disabled={!finished} onClick={close}>
               {t("common.close")}
             </Button>
           </>
@@ -143,7 +144,7 @@ export function DependencyDialog({
             </Button>
             <Button
               variant="primary"
-              icon={ShieldCheck}
+              icon={<ShieldCheck size={15} />}
               disabled={!canApprove}
               busy={approve.isPending}
               onClick={() => data && approve.mutate(data.id)}

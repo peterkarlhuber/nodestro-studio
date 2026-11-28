@@ -1,5 +1,6 @@
 // Name in the URL, description and limits of a published API.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation } from "@tanstack/react-query";
 import { Save } from "lucide-react";
 import { useState } from "react";
@@ -8,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { api } from "../api/client";
 import type { ApiLimits, Publication } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, Field, TextArea, TextInput, Toggle } from "../components/ui";
+import { Callout, Field, TextArea, TextInput, Toggle } from "../components/ui";
 import { GateSettings } from "./GateSettings";
 
 type NumberLimit = Exclude<keyof ApiLimits, "sync_enabled">;
@@ -74,7 +75,7 @@ export function ApiSettings({ publication, onChanged }: { publication: Publicati
       />
       {limits.daily_budget_usd === null ? <Callout tone="warning">{t("publish.settings.noBudget")}</Callout> : null}
       <div>
-        <Button variant="primary" icon={Save} busy={save.isPending} onClick={() => save.mutate()}>
+        <Button variant="primary" icon={<Save size={15} />} busy={save.isPending} onClick={() => save.mutate()}>
           {t("common.save")}
         </Button>
       </div>

@@ -7,7 +7,7 @@
 // All of it is found by the offline help search of the documentation overview. Each entry links to the section of
 // the built-in documentation that covers it; unit tests check that every reference exists.
 
-import { HelpProvider, type HelpEntry, type HelpRegistry, UiTextProvider } from "@nodestro/ui-core";
+import { HelpProvider, type HelpEntry, type HelpRegistry, type Translate, UiTextProvider } from "@nodestro/ui-core";
 import { platformHelp } from "@nodestro/ui-help";
 import type { TFunction } from "i18next";
 import { type ReactNode, useCallback, useMemo } from "react";
@@ -78,6 +78,14 @@ export function studioHelp(t: TFunction, language: string): Required<HelpRegistr
   return { entries: { ...help.entries, ...own }, errors: { ...help.errors, ...STUDIO_HELP_ERRORS } };
 }
 
+/**
+ * Package text -> the studio's key, everywhere in the app: the shared components keep the studio's wording where it
+ * had its own (the second step of a two-step delete button says "Really delete?", as before).
+ */
+export const STUDIO_UI_TEXTS: Readonly<Record<string, string>> = {
+  "core.confirm.delete": "common.confirmDelete",
+};
+
 /** Provides the platform help (and the texts of the shared components) in the interface language. */
 export function PlatformHelp({ children }: { children: ReactNode }) {
   const { t, i18n } = useTranslation();
@@ -87,8 +95,12 @@ export function PlatformHelp({ children }: { children: ReactNode }) {
   const open = useCallback((_id: string, entry: HelpEntry) => {
     if (entry.href) navigate(entry.href);
   }, [navigate]);
+  const translate = useCallback<Translate>(
+    (key, values) => (key in STUDIO_UI_TEXTS ? t(STUDIO_UI_TEXTS[key], values) : undefined),
+    [t],
+  );
   return (
-    <UiTextProvider locale={i18n.language}>
+    <UiTextProvider locale={i18n.language} translate={translate}>
       <HelpProvider entries={help.entries} errors={help.errors} onOpen={open}>
         {children}
       </HelpProvider>

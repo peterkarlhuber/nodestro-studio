@@ -2,7 +2,7 @@
 // decision started (status, duration, cost, a link to each), how the team changed, who waits for a person, the
 // limits it used and what it cost. Only the structured record is shown (no model reasoning).
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { ExternalLink, Network, Save } from "lucide-react";
 import { useState } from "react";
@@ -26,7 +26,7 @@ import type {
 } from "../api/types";
 import { Output } from "../components/Markdown";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Stat, StatusBadge } from "../components/ui";
+import { Badge, Callout, Stat, StatusBadge } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatCost, formatDuration, type Tone } from "../lib/format";
 import { useModelName } from "../components/ModelPicker";
@@ -399,7 +399,7 @@ function SaveTemplate({ run, node, record, names }: { run: Run; node: WorkflowNo
         <HelpTip id="flow.orchestratorTemplate" topic={t("flow.orchestrator.run.saveTemplate")} />
       </p>
       <div>
-        <Button size="sm" icon={Save} busy={busy} onClick={() => void save()}>
+        <Button size="sm" icon={<Save size={15} />} busy={busy} onClick={() => void save()}>
           {t("flow.orchestrator.run.saveTemplate")}
         </Button>
       </div>

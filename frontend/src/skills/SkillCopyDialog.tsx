@@ -1,5 +1,6 @@
 // Copying a skill under a new name: the way to rename one (a skill's name cannot change by editing).
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Copy } from "lucide-react";
 import { useState } from "react";
@@ -7,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 import { type Skill, skillKeys, skillsApi } from "../api/skills";
 import { toast } from "../components/toast";
-import { Button, Field, Modal, TextInput } from "../components/ui";
+import { Field, Modal, TextInput } from "../components/ui";
 
 export function SkillCopyDialog({ skill, onClose, onCopied }: { skill: Skill; onClose: () => void; onCopied: (copy: Skill) => void }) {
   const { t } = useTranslation();
@@ -33,7 +34,7 @@ export function SkillCopyDialog({ skill, onClose, onCopied }: { skill: Skill; on
           <Button variant="ghost" onClick={onClose}>
             {t("common.cancel")}
           </Button>
-          <Button variant="primary" icon={Copy} disabled={!name.trim()} busy={copy.isPending} onClick={() => copy.mutate()}>
+          <Button variant="primary" icon={<Copy size={15} />} disabled={!name.trim()} busy={copy.isPending} onClick={() => copy.mutate()}>
             {t("skills.copy")}
           </Button>
         </>

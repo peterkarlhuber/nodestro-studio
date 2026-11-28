@@ -1,7 +1,7 @@
 // The documentation of the published API: endpoints with their permissions, examples and the
 // OpenAPI description. Everything here is generated from the published version, without AI.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { FileJson } from "lucide-react";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
 import type { ApiCurlExample, ApiResponseExample, Publication } from "../api/types";
-import { Button, Callout, Section, Segmented, Spinner } from "../components/ui";
+import { Callout, Section, Segmented, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { CodeBlock, downloadJson } from "./common";
 import { SDK_REPOSITORY, baseUrlFrom, pythonSdk, typescriptSdk } from "./sdkSnippets";
@@ -35,7 +35,7 @@ export function ApiDocsPanel({ publication }: { publication: Publication }) {
         {t("publish.docs.intro", { number })} <HelpTip id="publish.open" topic={t("publish.docs.openapi")} />
       </p>
       <div className="row-gap">
-        <Button icon={FileJson} onClick={() => downloadJson(openapi, `${publication.slug}-openapi.json`)} data-testid="api-openapi">
+        <Button icon={<FileJson size={15} />} onClick={() => downloadJson(openapi, `${publication.slug}-openapi.json`)} data-testid="api-openapi">
           {t("publish.docs.openapi")}
         </Button>
       </div>

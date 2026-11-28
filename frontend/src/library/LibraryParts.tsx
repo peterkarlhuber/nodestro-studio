@@ -2,6 +2,7 @@
 // teams or sub-workflows. Reading stores nothing; "Use as workflow" copies the block (and the blocks it runs) as
 // ordinary workflows, which the editor's palette then offers as teams.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Blocks, Copy, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -9,14 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useExamples } from "../api/hooks";
 import { skillsApi, useLibraryParts, type PartSummary } from "../api/skills";
 import { toast } from "../components/toast";
-import {
-  Badge,
-  Button,
-  Callout,
-  EmptyState,
-  Modal,
-  Spinner,
-} from "../components/ui";
+import { Badge, Callout, EmptyState, Modal, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 
 /** Parts whose name, description or capability tags contain the search text (case-insensitive). */
@@ -180,7 +174,7 @@ function PartDialog({
           </Button>
           <Button
             variant="primary"
-            icon={Copy}
+            icon={<Copy size={15} />}
             busy={copy.isPending}
             disabled={!data}
             onClick={() => copy.mutate()}

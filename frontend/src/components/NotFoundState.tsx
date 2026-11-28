@@ -33,7 +33,7 @@ export function NotFoundState({ kind, error }: { kind: MissingKind; error?: unkn
         icon={SearchX}
         title={missing ? t(`notFound.object.${kind}.title`) : t("notFound.object.failedTitle")}
         action={
-          <Link to={BACK[kind]} className="nd-button">
+          <Link to={BACK[kind]} className="ui-button">
             <ArrowLeft size={14} aria-hidden /> {t(`notFound.object.${kind}.back`)}
           </Link>
         }

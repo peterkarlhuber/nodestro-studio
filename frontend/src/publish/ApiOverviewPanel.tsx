@@ -1,6 +1,6 @@
 // Status of the workflow's API, publishing a saved version, published versions and rollback.
 
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CheckCircle2, Power, RotateCcw, Rocket, Save, ShieldAlert, ShieldCheck, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -11,7 +11,7 @@ import { api } from "../api/client";
 import type { ApiOverview } from "../api/types";
 import { WorkflowTestStatus } from "../automation/WorkflowTestStatus";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, Modal, Spinner, StatusBadge, TextArea, TextInput, Toggle } from "../components/ui";
+import { Badge, Callout, Field, Modal, Spinner, StatusBadge, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 import type { ApiTab } from "./ApiDialog";
@@ -156,16 +156,16 @@ export function ApiOverviewPanel({
           <div className="row-gap">
             {publication.enabled ? (
               <Tooltip help="publish.disable">
-                <Button icon={Power} variant="ghost" onClick={() => setOffOpen(true)}>
+                <Button icon={<Power size={15} />} variant="ghost" onClick={() => setOffOpen(true)}>
                   {t("publish.overview.switchOff")}
                 </Button>
               </Tooltip>
             ) : (
               <>
-                <Button icon={Power} onClick={() => enable.mutate(true)} busy={enable.isPending}>
+                <Button icon={<Power size={15} />} onClick={() => enable.mutate(true)} busy={enable.isPending}>
                   {t("publish.overview.switchOn")}
                 </Button>
-                <Button icon={Trash2} variant="danger" onClick={() => setDeleteOpen(true)}>
+                <Button icon={<Trash2 size={15} />} variant="danger" onClick={() => setDeleteOpen(true)}>
                   {t("publish.overview.delete")}
                 </Button>
               </>
@@ -181,7 +181,7 @@ export function ApiOverviewPanel({
         {dirty ? (
           <Callout tone="warning">
             {t("publish.overview.unsaved")}{" "}
-            <Button size="sm" icon={Save} onClick={() => void save()}>
+            <Button size="sm" icon={<Save size={15} />} onClick={() => void save()}>
               {t("publish.overview.saveFirst")}
             </Button>
           </Callout>
@@ -245,7 +245,7 @@ export function ApiOverviewPanel({
               <Tooltip help="publish.publish">
                 <Button
                   variant="primary"
-                  icon={Rocket}
+                  icon={<Rocket size={15} />}
                   disabled={dirty || !check.data?.ok || !gateAllows}
                   busy={publish.isPending}
                   onClick={() => publish.mutate()}
@@ -286,7 +286,7 @@ export function ApiOverviewPanel({
                 {release.note ? <span className="small">{release.note}</span> : null}
                 {!release.active ? (
                   <Tooltip help="publish.rollback">
-                    <Button size="sm" variant="ghost" icon={RotateCcw} onClick={() => activateRelease.mutate(release.number)}>
+                    <Button size="sm" variant="ghost" icon={<RotateCcw size={15} />} onClick={() => activateRelease.mutate(release.number)}>
                       {t("publish.versions.activate")}
                     </Button>
                   </Tooltip>
@@ -321,7 +321,7 @@ export function ApiOverviewPanel({
             <Button variant="ghost" data-autofocus onClick={() => setOffOpen(false)}>
               {t("common.cancel")}
             </Button>
-            <Button variant="danger" icon={Power} busy={enable.isPending} onClick={() => enable.mutate(false)}>
+            <Button variant="danger" icon={<Power size={15} />} busy={enable.isPending} onClick={() => enable.mutate(false)}>
               {t("publish.overview.switchOff")}
             </Button>
           </>
@@ -339,7 +339,7 @@ export function ApiOverviewPanel({
             <Button variant="ghost" data-autofocus onClick={() => setDeleteOpen(false)}>
               {t("common.cancel")}
             </Button>
-            <Button variant="danger" icon={Trash2} busy={remove.isPending} onClick={() => remove.mutate()}>
+            <Button variant="danger" icon={<Trash2 size={15} />} busy={remove.isPending} onClick={() => remove.mutate()}>
               {t("publish.overview.delete")}
             </Button>
           </>

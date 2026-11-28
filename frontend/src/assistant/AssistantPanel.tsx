@@ -1,4 +1,4 @@
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, IconButton, Tooltip } from "@nodestro/ui-core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -25,7 +25,7 @@ import { keys, useSettings } from "../api/hooks";
 import type { AttachRequest, Attachment, Conversation } from "../api/types";
 import { providerList } from "../components/ModelPicker";
 import { toast } from "../components/toast";
-import { Button, Callout, DocLink, IconButton, Spinner, TextArea, TextInput } from "../components/ui";
+import { Callout, DocLink, Spinner, TextArea, TextInput } from "../components/ui";
 import { ScopedThinkingDisplay } from "../components/ReasoningView";
 import { withLocalModel } from "../missingModel/store";
 import { ErrorText } from "../lib/errors";
@@ -93,8 +93,8 @@ function ConversationList({ onOpen }: { onOpen: (id: string) => void }) {
               }}
             >
               <TextInput value={title} onChange={(event) => setTitle(event.target.value)} aria-label={t("assistant.list.rename")} autoFocus maxLength={120} />
-              <IconButton icon={Check} label={t("common.save")} type="submit" />
-              <IconButton icon={X} label={t("common.cancel")} onClick={() => setEditing(null)} />
+              <IconButton icon={<Check size={16} />} label={t("common.save")} type="submit" />
+              <IconButton icon={<X size={16} />} label={t("common.cancel")} onClick={() => setEditing(null)} />
             </form>
           ) : (
             <>
@@ -109,19 +109,19 @@ function ConversationList({ onOpen }: { onOpen: (id: string) => void }) {
                   <Button size="sm" variant="danger" onClick={() => void remove(item.id)} data-testid="chat-delete-confirm">
                     {t("common.delete")}
                   </Button>
-                  <IconButton icon={X} label={t("common.cancel")} onClick={() => setConfirm(null)} />
+                  <IconButton icon={<X size={16} />} label={t("common.cancel")} onClick={() => setConfirm(null)} />
                 </span>
               ) : (
                 <span className="chat-list__actions">
                   <IconButton
-                    icon={Pencil}
+                    icon={<Pencil size={16} />}
                     label={t("assistant.list.rename")}
                     onClick={() => {
                       setEditing(item.id);
                       setTitle(item.title);
                     }}
                   />
-                  <IconButton icon={Trash2} label={t("assistant.list.delete")} onClick={() => setConfirm(item.id)} data-testid="chat-delete" />
+                  <IconButton icon={<Trash2 size={16} />} label={t("assistant.list.delete")} onClick={() => setConfirm(item.id)} data-testid="chat-delete" />
                 </span>
               )}
             </>
@@ -377,19 +377,19 @@ function ChatView() {
           <div className="chat-input__actions">
             <span className="chat-input__tools">
               <Tooltip help="assistant.attach">
-                <IconButton icon={Paperclip} label={t("assistant.composer.attach")} onClick={() => setPicker(true)} data-testid="assistant-attach" />
+                <IconButton icon={<Paperclip size={16} />} label={t("assistant.composer.attach")} onClick={() => setPicker(true)} data-testid="assistant-attach" />
               </Tooltip>
               <AttachFilesButton files={files} />
             </span>
             {streaming ? (
-              <Button size="sm" icon={Square} onClick={() => void cancel()} data-testid="assistant-stop">
+              <Button size="sm" icon={<Square size={15} />} onClick={() => void cancel()} data-testid="assistant-stop">
                 {t("assistant.composer.stop")}
               </Button>
             ) : (
               <Button
                 size="sm"
                 variant="primary"
-                icon={Send}
+                icon={<Send size={15} />}
                 busy={send.isPending}
                 disabled={(!text.trim() && !fileIds.length) || files.uploading}
                 title={files.uploading ? t("assistantFiles.waitUploads") : undefined}
@@ -459,20 +459,20 @@ export function AssistantPanel() {
           <DocLink to="assistent" label={t("assistant.docs")} />
           <Tooltip help="assistant.history">
             <IconButton
-              icon={History}
+              icon={<History size={16} />}
               label={t("assistant.list.title")}
               onClick={() => useAssistant.getState().setView(view === "list" ? "chat" : "list")}
               data-testid="assistant-history"
             />
           </Tooltip>
-          <IconButton icon={Plus} label={t("assistant.newChat")} onClick={() => useAssistant.getState().setConversation(null)} data-testid="assistant-new" />
+          <IconButton icon={<Plus size={16} />} label={t("assistant.newChat")} onClick={() => useAssistant.getState().setConversation(null)} data-testid="assistant-new" />
           <IconButton
-            icon={wide ? Minimize2 : Maximize2}
+            icon={wide ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
             label={wide ? t("assistant.narrow") : t("assistant.wide")}
             onClick={() => useAssistant.getState().setWide(!wide)}
             className="assistant-panel__wide"
           />
-          <IconButton icon={X} label={t("assistant.close")} onClick={close} data-testid="assistant-close" />
+          <IconButton icon={<X size={16} />} label={t("assistant.close")} onClick={close} data-testid="assistant-close" />
         </div>
       </header>
       {view === "list" ? (

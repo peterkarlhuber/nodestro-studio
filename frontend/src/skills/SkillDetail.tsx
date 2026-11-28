@@ -2,6 +2,7 @@
 // what can be done with it. Older versions can be looked at; only the current one is edited. The instructions are
 // shown as plain text and never rendered as HTML (an imported skill is content of unknown origin).
 
+import { Button, ConfirmIconButton, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Archive, Copy, Download, Eye, FileText, History, Pencil, Power, PowerOff, Trash2, Users, Wrench } from "lucide-react";
 import { useState } from "react";
@@ -23,7 +24,7 @@ import {
 } from "../api/skills";
 import { PermissionNote } from "../components/Access";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, IconButton, Modal, Section, Spinner } from "../components/ui";
+import { Badge, Callout, Modal, Section, Spinner } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatBytes, formatDate } from "../lib/format";
 import { SkillBadges } from "./SkillBadges";
@@ -105,36 +106,36 @@ export function SkillDetail({ skillId, onSelect, onDeleted }: { skillId: string;
       ) : null}
       <div className="row-gap" role="group" aria-label={t("skills.actions")}>
         {canEdit && !older ? (
-          <Button size="sm" icon={Pencil} onClick={() => setDialog("edit")}>
+          <Button size="sm" icon={<Pencil size={15} />} onClick={() => setDialog("edit")}>
             {t("skills.edit")}
           </Button>
         ) : null}
         {canEdit ? (
-          <Button size="sm" icon={Copy} onClick={() => setDialog("copy")}>
+          <Button size="sm" icon={<Copy size={15} />} onClick={() => setDialog("copy")}>
             {t("skills.copy")}
           </Button>
         ) : null}
         {canEdit ? (
           skill.status === "active" ? (
-            <Button size="sm" icon={PowerOff} busy={status.isPending} onClick={() => status.mutate("disabled")}>
+            <Button size="sm" icon={<PowerOff size={15} />} busy={status.isPending} onClick={() => status.mutate("disabled")}>
               {t("skills.disable")}
             </Button>
           ) : (
-            <Button size="sm" icon={Power} busy={status.isPending} onClick={() => status.mutate("active")}>
+            <Button size="sm" icon={<Power size={15} />} busy={status.isPending} onClick={() => status.mutate("active")}>
               {t("skills.activate")}
             </Button>
           )
         ) : null}
         {admin && skill.status !== "archived" ? (
-          <Button size="sm" icon={Archive} busy={archive.isPending} onClick={() => archive.mutate()}>
+          <Button size="sm" icon={<Archive size={15} />} busy={archive.isPending} onClick={() => archive.mutate()}>
             {t("skills.archive")}
           </Button>
         ) : null}
-        <a className="nd-button nd-button--default nd-button--sm" href={skillsApi.exportUrl(skill.id, shown.version)} download={`${skill.name}.zip`}>
+        <a className="ui-button ui-button--secondary ui-button--sm" href={skillsApi.exportUrl(skill.id, shown.version)} download={`${skill.name}.zip`}>
           <Download size={15} aria-hidden />
           {t("skills.export")}
         </a>
-        {admin ? <ConfirmIconButton icon={Trash2} label={t("skills.delete")} busy={remove.isPending} onConfirm={() => remove.mutate()} /> : null}
+        {admin ? <ConfirmIconButton icon={<Trash2 size={16} />} label={t("skills.delete")} busy={remove.isPending} onConfirm={() => remove.mutate()} /> : null}
       </div>
       <PermissionNote permission="edit" access={access} />
       {inUse ? (
@@ -142,7 +143,7 @@ export function SkillDetail({ skillId, onSelect, onDeleted }: { skillId: string;
           <span className="row-gap" data-testid="skill-in-use">
             {problemText(t, { code: "skill.in_use", params: inUse.params })}
             {admin && skill.status !== "archived" ? (
-              <Button size="sm" icon={Archive} busy={archive.isPending} onClick={() => archive.mutate()}>
+              <Button size="sm" icon={<Archive size={15} />} busy={archive.isPending} onClick={() => archive.mutate()}>
                 {t("skills.archive")}
               </Button>
             ) : null}
@@ -218,12 +219,12 @@ function SkillFiles({ skillId, version, files, canRun }: { skillId: string; vers
             <span className="muted small">{formatBytes(item.size)}</span>
             {item.script ? <Badge tone="warning">{t("skills.fileScript")}</Badge> : null}
             {item.text ? (
-              <IconButton icon={Eye} label={t("skills.showFile", { path: item.path })} onClick={() => setOpen(item.path)} />
+              <IconButton icon={<Eye size={16} />} label={t("skills.showFile", { path: item.path })} onClick={() => setOpen(item.path)} />
             ) : (
               <span className="muted small">{t("skills.fileNotText")}</span>
             )}
             {canRun && isScriptFile(item.path) ? (
-              <Button size="sm" variant="ghost" icon={Wrench} onClick={() => setAsTool(item.path)} aria-label={t("skills.scriptTool.openFor", { path: item.path })}>
+              <Button size="sm" variant="ghost" icon={<Wrench size={15} />} onClick={() => setAsTool(item.path)} aria-label={t("skills.scriptTool.openFor", { path: item.path })}>
                 {t("skills.scriptTool.open")}
               </Button>
             ) : null}

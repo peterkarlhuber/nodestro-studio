@@ -3,6 +3,7 @@
 // Python environment; their tools run only in the Docker sandbox and stay locked unless the backend's development
 // switch is on. The page never switches anything on; the backend checks every upload and every permission again.
 
+import { Button, ConfirmIconButton } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Ban, PackageCheck, Trash2, Upload } from "lucide-react";
 import { type FormEvent, useId, useRef, useState } from "react";
@@ -14,7 +15,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { StoredExtension } from "../api/types";
 import { PermissionNote } from "../components/Access";
-import { Badge, Button, Callout, ConfirmIconButton, Field, PageHeader, Select, Spinner, TextInput } from "../components/ui";
+import { Badge, Callout, Field, PageHeader, Select, Spinner, TextInput } from "../components/ui";
 import { toast } from "../components/toast";
 import { type Coded, ErrorText, problemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
@@ -192,7 +193,7 @@ function PackageList({ packages }: { packages: StoredExtension[] }) {
               </Badge>
               <span className="row__end">
                 <ConfirmIconButton
-                  icon={Trash2}
+                  icon={<Trash2 size={16} />}
                   label={t("approvals.extensions.remove", { name: item.distribution })}
                   confirmLabel={t("approvals.extensions.removeConfirm")}
                   busy={remove.isPending && remove.variables === item.sha256}
@@ -200,7 +201,7 @@ function PackageList({ packages }: { packages: StoredExtension[] }) {
                   data-testid="extension-remove"
                 />
                 <ConfirmIconButton
-                  icon={Ban}
+                  icon={<Ban size={16} />}
                   label={t("approvals.extensions.revoke", { name: item.distribution })}
                   confirmLabel={t("approvals.extensions.revokeConfirm")}
                   busy={revoke.isPending && revoke.variables === item.sha256}

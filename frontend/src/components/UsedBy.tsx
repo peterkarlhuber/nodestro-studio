@@ -1,6 +1,7 @@
 // "Used in" for knowledge files, tools and memory spaces (UX-7): which saved workflows, library agents and published
 // APIs use an object, from GET /api/used-by. Read only; deleting stays as it was, only the warning names the users.
 
+import { Button, ConfirmIconButton, IconButton } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import type { TFunction } from "i18next";
 import type { LucideIcon } from "lucide-react";
@@ -11,7 +12,7 @@ import { Link } from "react-router-dom";
 import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { ReferenceKind, ReferenceUser } from "../api/types";
-import { Button, ConfirmIconButton, IconButton, Modal } from "./ui";
+import { Modal } from "./ui";
 
 const NONE: ReferenceUser[] = [];
 
@@ -94,10 +95,11 @@ export function DeleteUsed({
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  if (!users.length) return <ConfirmIconButton icon={icon} label={label} busy={busy} onConfirm={onConfirm} />;
+  const Icon = icon;
+  if (!users.length) return <ConfirmIconButton icon={<Icon size={16} />} label={label} busy={busy} onConfirm={onConfirm} />;
   return (
     <>
-      <IconButton icon={icon} label={label} disabled={busy} onClick={() => setOpen(true)} />
+      <IconButton icon={<Icon size={16} />} label={label} disabled={busy} onClick={() => setOpen(true)} />
       <Modal
         title={title}
         open={open}

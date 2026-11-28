@@ -62,7 +62,7 @@ const overflow = (page) =>
     for (const element of document.querySelectorAll(".wl *")) {
       const box = element.getBoundingClientRect();
       if (box.width > 0 && (box.right > width + 1 || box.left < -1)) wide.push(`${element.className || element.tagName} ${Math.round(box.left)}–${Math.round(box.right)}`);
-      if (element.matches(".wl-chip__title, .wl-run__name, .wl-cta, .nd-button") && element.scrollWidth > element.clientWidth + 1)
+      if (element.matches(".wl-chip__title, .wl-run__name, .wl-cta, .ui-button") && element.scrollWidth > element.clientWidth + 1)
         wide.push(`cut: ${element.textContent}`);
     }
     return wide.slice(0, 6);

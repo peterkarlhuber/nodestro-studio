@@ -1,7 +1,7 @@
 // A new batch: one workflow over the rows of a CSV, XLSX or JSON file.
 // Nothing starts before the user saw the rows, the mapping and the estimated cost.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FileUp, Play } from "lucide-react";
 import { type ChangeEvent, useMemo, useRef, useState } from "react";
@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../api/client";
 import { keys, useWorkflows } from "../api/hooks";
 import type { BatchIn, ParsedRows } from "../api/types";
-import { Badge, Button, Callout, Field, Modal, Select, Spinner, TextInput } from "../components/ui";
+import { Badge, Callout, Field, Modal, Select, Spinner, TextInput } from "../components/ui";
 import { rowsFromRecords } from "../lib/batch";
 import { ErrorText, problemText } from "../lib/errors";
 import { EstimateView, type Limits, LimitFields } from "./shared";
@@ -91,7 +91,7 @@ export function BatchDialog({ open, onClose, workflowId: initial = "" }: { open:
           </Button>
           <Button
             variant="primary"
-            icon={Play}
+            icon={<Play size={15} />}
             busy={create.isPending}
             disabled={!plan.data?.valid || needsConfirm}
             onClick={() => create.mutate()}
@@ -121,7 +121,7 @@ export function BatchDialog({ open, onClose, workflowId: initial = "" }: { open:
         </Field>
       </div>
       <input ref={fileInput} type="file" hidden accept=".csv,.tsv,.txt,.xlsx,.json" data-testid="batch-file" onChange={onFile} />
-      <Button icon={FileUp} disabled={!workflowId} busy={parse.isPending} onClick={() => fileInput.current?.click()}>
+      <Button icon={<FileUp size={15} />} disabled={!workflowId} busy={parse.isPending} onClick={() => fileInput.current?.click()}>
         {parsed ? t("automation.batch.otherFile") : t("automation.batch.pickFile")}
       </Button>
       <p className="field__hint">{t("automation.batch.fileHint")}</p>

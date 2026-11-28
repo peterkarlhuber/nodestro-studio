@@ -161,8 +161,11 @@ from #121). Both have status `Needs external review`.
   `nodestro-ui/migration/nodestro-studio.json`; an alias layer was not needed, the values are equal), and
   `styles/midnight-citron.css` is gone; `src/lint/tokens.test.ts` keeps the values equal to the theme and refuses new
   `--nd-*` tokens but the two type steps without a shared step (`--nd-font-size-xs`, `--nd-font-size-xl`).
-- **Next steps, in order:** (6) buttons, fields, dialogs and sections from `components/ui.tsx`. Each step keeps the
-  existing tests and browser suites unchanged.
+  Step 6, buttons: every button is the shared `Button`, `IconButton` or `ConfirmIconButton` of `@nodestro/ui-core`
+  (core 0.2.4, icons as elements; codemod), the look stays through `app.css`, "Really delete?" through
+  `STUDIO_UI_TEXTS` in `src/lib/platformHelp.tsx`; the lint refuses buttons of the studio's own and their classes.
+- **Next steps, in order:** (6) fields, dialogs and sections from `components/ui.tsx`. Each step keeps the existing
+  tests and browser suites unchanged.
 - **Also:** nodestro-server (`image/Dockerfile`) and nodestro-desktop (`scripts/build_backend.sh`) run `npm ci` on a
   studio checkout without the SHA-256 check; add `node scripts/check-vendor.mjs` before it and
   `node scripts/check-vendor.mjs --installed` after it there, as the studio's workflows, Makefile and docs do.

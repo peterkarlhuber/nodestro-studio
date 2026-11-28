@@ -1,4 +1,4 @@
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, IconButton, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Copy, Diamond, FilePlus2, FileUp, Network, Plus, Sparkles, Trash2 } from "lucide-react";
 import { type ChangeEvent, useRef, useState } from "react";
@@ -22,7 +22,7 @@ import {
 } from "../components/Organize";
 import { toast, useToasts } from "../components/toast";
 import { ExampleGallery } from "../library/ExampleGallery";
-import { Badge, Button, Callout, EmptyState, Field, IconButton, Modal, PageHeader, Section, Segmented, Spinner, StatusBadge, TextArea, TextInput } from "../components/ui";
+import { Badge, Callout, EmptyState, Field, Modal, PageHeader, Section, Segmented, Spinner, StatusBadge, TextArea, TextInput } from "../components/ui";
 import { newNode } from "../lib/defaults";
 import { ErrorText, LocalError } from "../lib/errors";
 import { changedText } from "../lib/format";
@@ -191,8 +191,8 @@ export function WorkflowsPage() {
           <TagEditor kind="workflow" id={workflow.id} name={workflow.name} />
           {canEdit ? (
             <>
-              <IconButton icon={Copy} label={t("workflows.duplicate")} onClick={() => duplicate.mutate(workflow.id)} />
-              <IconButton icon={Trash2} label={t("common.delete")} onClick={() => setDeleting(workflow)} />
+              <IconButton icon={<Copy size={16} />} label={t("workflows.duplicate")} onClick={() => duplicate.mutate(workflow.id)} />
+              <IconButton icon={<Trash2 size={16} />} label={t("common.delete")} onClick={() => setDeleting(workflow)} />
             </>
           ) : null}
         </div>
@@ -212,11 +212,11 @@ export function WorkflowsPage() {
             {canEdit ? (
               <>
                 <Tooltip help="workflow.import">
-                  <Button icon={FileUp} onClick={() => fileInput.current?.click()}>
+                  <Button icon={<FileUp size={15} />} onClick={() => fileInput.current?.click()}>
                     {t("common.import")}
                   </Button>
                 </Tooltip>
-                <Button variant="primary" icon={Plus} onClick={() => setCreateOpen(true)}>
+                <Button variant="primary" icon={<Plus size={15} />} onClick={() => setCreateOpen(true)}>
                   {t("workflows.new")}
                 </Button>
               </>
@@ -286,7 +286,7 @@ export function WorkflowsPage() {
               {t("common.cancel")}
             </Button>
             {createMode === "ai" ? (
-              <Button variant="primary" icon={Sparkles} disabled={!description.trim()} onClick={createWithAi}>
+              <Button variant="primary" icon={<Sparkles size={15} />} disabled={!description.trim()} onClick={createWithAi}>
                 {t("workflows.createWithAi")}
               </Button>
             ) : (

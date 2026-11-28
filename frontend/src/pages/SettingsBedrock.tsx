@@ -3,6 +3,7 @@
 // server the operator assigns an AWS role to the workspace, which the workspace never sees. Nothing secret is ever
 // entered or shown here. The status follows the explicit "Check connection" (no model is invoked, no costs).
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Cloud, Save, ShieldCheck } from "lucide-react";
 import { useEffect, useId, useState } from "react";
@@ -21,7 +22,7 @@ import {
 } from "../api/types";
 import { providerLabel } from "../components/ModelPicker";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, Section, Segmented, TextInput, Toggle } from "../components/ui";
+import { Badge, Callout, Field, Section, Segmented, TextInput, Toggle } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatDate, type Tone } from "../lib/format";
 import { providerOf } from "../lib/providers";
@@ -253,12 +254,12 @@ export function BedrockCard({ info, status, settings }: { info: ProviderInfo; st
 
         <div className="row-gap">
           {available ? (
-            <Button variant="primary" icon={Save} disabled={!canSave} busy={save.isPending} onClick={() => save.mutate()}>
+            <Button variant="primary" icon={<Save size={15} />} disabled={!canSave} busy={save.isPending} onClick={() => save.mutate()}>
               {t("bedrock.save")}
             </Button>
           ) : null}
           <Button
-            icon={ShieldCheck}
+            icon={<ShieldCheck size={15} />}
             busy={verify.isPending}
             disabled={!status.configured || !access.can("install")}
             onClick={() => verify.mutate()}

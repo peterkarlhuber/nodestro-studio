@@ -4,7 +4,7 @@
 // creates the model and keeps it only if it reproduces the reference vectors (orkexa.local.build_model). Nothing is
 // downloaded here: the separate download in the catalog is the online way.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, Hammer, RotateCcw, Search, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -13,7 +13,7 @@ import type { TFunction } from "i18next";
 
 import { keys } from "../api/hooks";
 import { type BuildInput, type CatalogModel, type LocalJob, localApi, localKeys, useLocalJobs } from "../api/localModels";
-import { Badge, Button, Callout, Field, Select, TextInput } from "../components/ui";
+import { Badge, Callout, Field, Select, TextInput } from "../components/ui";
 import { ErrorText, problemHint, problemText } from "../lib/errors";
 import { formatLargeBytes } from "../lib/format";
 import { revealSettingsSection } from "./SettingsNav";
@@ -166,7 +166,7 @@ function ReindexHint({ model, embeddingModel }: { model: string; embeddingModel:
           {embeddingModel === model ? t("localModels.build.reindexActive", { model }) : t("localModels.build.reindex", { model })}
         </span>
         <div>
-          <Button size="sm" icon={Search} onClick={() => revealSettingsSection("#settings-knowledge-search")}>
+          <Button size="sm" icon={<Search size={15} />} onClick={() => revealSettingsSection("#settings-knowledge-search")}>
             {t("localModels.build.toIndex")}
           </Button>
         </div>
@@ -254,11 +254,11 @@ export function BuildFromFiles({
       </Field>
       <p className="muted small">{t("localModels.build.offlineNote")}</p>
       <div className="row-gap">
-        <Button icon={Hammer} variant="primary" disabled={!canInstall || !ready || running} busy={start.isPending} onClick={submit}>
+        <Button icon={<Hammer size={15} />} variant="primary" disabled={!canInstall || !ready || running} busy={start.isPending} onClick={submit}>
           {t("localModels.build.start")}
         </Button>
         {running && job ? (
-          <Button icon={X} disabled={!canInstall} busy={cancel.isPending} onClick={() => cancel.mutate(job.id)}>
+          <Button icon={<X size={15} />} disabled={!canInstall} busy={cancel.isPending} onClick={() => cancel.mutate(job.id)}>
             {t("common.cancel")}
           </Button>
         ) : null}
@@ -281,7 +281,7 @@ export function BuildFromFiles({
               <span>{problem.text}</span>
               {problem.hint ? <span className="muted small">{problem.hint}</span> : null}
               <div>
-                <Button size="sm" icon={RotateCcw} disabled={!canInstall || !ready} busy={start.isPending} onClick={submit}>
+                <Button size="sm" icon={<RotateCcw size={15} />} disabled={!canInstall || !ready} busy={start.isPending} onClick={submit}>
                   {t("localModels.build.retry")}
                 </Button>
               </div>

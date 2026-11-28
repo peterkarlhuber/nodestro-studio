@@ -1,13 +1,14 @@
 // The connections of the selected node as a list, plus "Connect to…": building a workflow without dragging
 // (keyboard, screen reader, touch). It uses the same store action and checks as a connection drawn on the canvas.
 
+import { Button, IconButton } from "@nodestro/ui-core";
 import { ArrowLeft, ArrowRight, Link2, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { WorkflowNode } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Field, IconButton, Section, Select } from "../components/ui";
+import { Field, Section, Select } from "../components/ui";
 import { branchLabel } from "./branches";
 import { branchHandles, useEditor, wouldCycle } from "./store";
 
@@ -87,7 +88,7 @@ export function NodeConnections({ nodeId }: { nodeId: string }) {
         <Button size="sm" variant="ghost" onClick={() => selectEdge(edgeId)} aria-label={t("a11y.connect.showLabel", { name: text })}>
           {t("a11y.connect.show")}
         </Button>
-        <IconButton icon={Trash2} label={t("a11y.connect.removeLabel", { name: text })} onClick={() => removeEdges([edgeId])} />
+        <IconButton icon={<Trash2 size={16} />} label={t("a11y.connect.removeLabel", { name: text })} onClick={() => removeEdges([edgeId])} />
       </li>
     );
   };
@@ -135,7 +136,7 @@ export function NodeConnections({ nodeId }: { nodeId: string }) {
                 />
               </Field>
               <div>
-                <Button icon={Link2} onClick={create} disabled={!chosen} data-testid="connect-create">
+                <Button icon={<Link2 size={15} />} onClick={create} disabled={!chosen} data-testid="connect-create">
                   {t("a11y.connect.create")}
                 </Button>
               </div>

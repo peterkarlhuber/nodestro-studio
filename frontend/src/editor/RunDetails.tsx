@@ -1,5 +1,5 @@
 import { ToolCallRow } from "@nodestro/ui-ai";
-import { HelpTip, Tooltip } from "@nodestro/ui-core";
+import { Button, HelpTip, Tooltip } from "@nodestro/ui-core";
 import {
   AlertTriangle,
   BookMarked,
@@ -20,7 +20,7 @@ import type { SkillSelection } from "../api/skills";
 import type { AdoptSource, KnowledgeProposal, KnowledgeRef, NodeRun, Run, WorkflowNode } from "../api/types";
 import { AdoptDialog } from "../components/AdoptDialog";
 import { Output, outputFieldsOf, stepFieldsOf } from "../components/Markdown";
-import { Badge, Button, Callout, StatusBadge } from "../components/ui";
+import { Badge, Callout, StatusBadge } from "../components/ui";
 import { NodeApproval } from "../runs/ApprovalCard";
 import { ToolOutputProblem } from "../runs/ToolOutputProblem";
 import { NodeToolApprovals, ToolCallApprovalNote } from "../runs/ToolApprovalCard";
@@ -319,7 +319,7 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
                   <Button
                     size="sm"
                     variant="ghost"
-                    icon={BookOpen}
+                    icon={<BookOpen size={15} />}
                     onClick={() => setAdopting([{ kind: "node_output", run_id: run.id, node_id: node.id }])}
                   >
                     {t("inputs.adopt.result")}
@@ -383,7 +383,7 @@ function Proposals({
           {t("inputs.proposals.title", { count: proposals.length })} <HelpTip id="inputs.proposals" topic={t("inputs.proposals.label")} />
         </strong>
         {open.length > 1 && !run.imported_at ? (
-          <Button size="sm" icon={BookOpen} onClick={() => onAdopt(open.map(source))}>
+          <Button size="sm" icon={<BookOpen size={15} />} onClick={() => onAdopt(open.map(source))}>
             {t("inputs.proposals.reviewAll", { count: open.length })}
           </Button>
         ) : null}
@@ -400,7 +400,7 @@ function Proposals({
             {item.adopted_file_id ? (
               <Badge tone="success">{t("inputs.proposals.adopted")}</Badge>
             ) : run.imported_at ? null : (
-              <Button size="sm" variant="ghost" icon={BookOpen} onClick={() => onAdopt([source(item)])}>
+              <Button size="sm" variant="ghost" icon={<BookOpen size={15} />} onClick={() => onAdopt([source(item)])}>
                 {t("inputs.proposals.review")}
               </Button>
             )}

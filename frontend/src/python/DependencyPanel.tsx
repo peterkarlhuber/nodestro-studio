@@ -1,6 +1,6 @@
 // What a workflow or a tool needs from PyPI: state, packages, actions and history.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Package, RefreshCw, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { api } from "../api/client";
 import { mcpApi } from "../api/mcp";
 import type { DependencyPlan, DependencyScope, DependencyState, DependencyStatus, WorkflowIn } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button } from "../components/ui";
+import { Badge } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { relativeTime } from "../lib/format";
 import { DependencyDialog, InstallProgress, useDependencyRefresh, useInstallation } from "./DependencyDialog";
@@ -100,17 +100,17 @@ function StatusBody({
       {installing ? <InstallProgress env={installation.data} /> : null}
       <div className="row-gap">
         {status.state === "approval_needed" ? (
-          <Button size="sm" variant="primary" icon={ShieldCheck} onClick={() => setDialog(true)} data-testid="review-dependencies">
+          <Button size="sm" variant="primary" icon={<ShieldCheck size={15} />} onClick={() => setDialog(true)} data-testid="review-dependencies">
             {t("python.panel.review")}
           </Button>
         ) : null}
         {status.state === "install_needed" || status.state === "failed" ? (
-          <Button size="sm" icon={RefreshCw} busy={install.isPending} onClick={() => install.mutate()}>
+          <Button size="sm" icon={<RefreshCw size={15} />} busy={install.isPending} onClick={() => install.mutate()}>
             {t("python.panel.install")}
           </Button>
         ) : null}
         {status.state === "ready" ? (
-          <Button size="sm" variant="ghost" icon={Package} onClick={() => setDialog(true)}>
+          <Button size="sm" variant="ghost" icon={<Package size={15} />} onClick={() => setDialog(true)}>
             {t("python.panel.check")}
           </Button>
         ) : null}

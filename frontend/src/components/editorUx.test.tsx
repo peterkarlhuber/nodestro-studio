@@ -1,3 +1,4 @@
+import { Button } from "@nodestro/ui-core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -11,7 +12,7 @@ import { useEditor } from "../editor/store";
 import { newNode } from "../lib/defaults";
 import { modelName } from "./ModelPicker";
 import { Toaster, useToasts } from "./toast";
-import { Button, DisabledReason, MenuButton } from "./ui";
+import { DisabledReason, MenuButton } from "./ui";
 import { UnsavedChangesModal } from "./UnsavedChanges";
 
 afterEach(() => {

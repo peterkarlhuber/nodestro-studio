@@ -161,7 +161,7 @@
   font-size: 13px;
 }
 
-.wl .nd-button:hover {
+.wl .ui-button:hover {
   text-decoration: none;
 }
 
@@ -494,7 +494,7 @@
     box-shadow var(--ui-duration-normal);
 }
 
-.wl-cta.nd-button--primary {
+.wl-cta.ui-button--primary {
   box-shadow: 0 10px 30px -14px var(--ui-color-primary);
 }
 

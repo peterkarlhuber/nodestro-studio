@@ -3,6 +3,7 @@
 // operating mode and permission) and how the action continues; it drives the existing download and setup jobs
 // (pages/LocalModelJobs.tsx) and lets the action continue once the model was checked, or with another ready model.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation } from "@tanstack/react-query";
 import { CheckCircle2, Copy, Download, RefreshCw, Settings2, Wrench } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -14,7 +15,7 @@ import { type LocalJob, localApi, useLocalJobs } from "../api/localModels";
 import { type ModelAlternative, type ModelProblem, type Readiness, type ReadinessAction, readinessApi } from "../api/modelReadiness";
 import { LiveAnnouncer } from "../components/Progress";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Modal, Spinner } from "../components/ui";
+import { Badge, Callout, Modal, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatLargeBytes, formatTokens } from "../lib/format";
 import { useSettingsHref } from "../lib/settingsLink";
@@ -134,7 +135,7 @@ export function MissingModelDialog({ request }: { request: MissingModelRequest }
       {stage === "ready" ? (
         <Button
           variant="primary"
-          icon={CheckCircle2}
+          icon={<CheckCircle2 size={15} />}
           data-testid="missing-model-continue"
           onClick={() => {
             if (continued.current) return;
@@ -214,7 +215,7 @@ export function MissingModelDialog({ request }: { request: MissingModelRequest }
                 {problem.actions.includes("download") ? (
                   <Button
                     variant="primary"
-                    icon={Download}
+                    icon={<Download size={15} />}
                     busy={begin.isPending}
                     disabled={busy}
                     data-testid="missing-model-download"
@@ -230,7 +231,7 @@ export function MissingModelDialog({ request }: { request: MissingModelRequest }
                 {problem.actions.includes("setup_server") ? (
                   <Button
                     variant="primary"
-                    icon={Wrench}
+                    icon={<Wrench size={15} />}
                     busy={begin.isPending}
                     disabled={busy}
                     data-testid="missing-model-setup"
@@ -240,7 +241,7 @@ export function MissingModelDialog({ request }: { request: MissingModelRequest }
                   </Button>
                 ) : null}
                 {problem.actions.includes("retry") ? (
-                  <Button icon={RefreshCw} busy={check.isPending} disabled={busy} data-testid="missing-model-retry" onClick={() => check.mutate()}>
+                  <Button icon={<RefreshCw size={15} />} busy={check.isPending} disabled={busy} data-testid="missing-model-retry" onClick={() => check.mutate()}>
                     {t("missingModel.actions.retry")}
                   </Button>
                 ) : null}
@@ -251,7 +252,7 @@ export function MissingModelDialog({ request }: { request: MissingModelRequest }
                 ) : null}
                 {problem.actions.includes("ask_admin") ? (
                   <Button
-                    icon={Copy}
+                    icon={<Copy size={15} />}
                     data-testid="missing-model-copy"
                     onClick={() => {
                       void navigator.clipboard
@@ -264,7 +265,7 @@ export function MissingModelDialog({ request }: { request: MissingModelRequest }
                   </Button>
                 ) : null}
                 {problem.actions.includes("open_settings") ? (
-                  <Link className="nd-button nd-button--default nd-button--md" to={settingsHref} onClick={() => done(null)} data-testid="missing-model-settings">
+                  <Link className="ui-button ui-button--secondary" to={settingsHref} onClick={() => done(null)} data-testid="missing-model-settings">
                     <Settings2 size={15} aria-hidden /> {t("missingModel.actions.openSettings")}
                   </Link>
                 ) : null}

@@ -1,6 +1,6 @@
 // Small, token-styled building blocks used across the app.
 
-import { HelpTip, Tooltip } from "@nodestro/ui-core";
+import { HelpTip, IconButton, Tooltip } from "@nodestro/ui-core";
 import {
   AlertTriangle,
   Ban,
@@ -21,13 +21,11 @@ import {
   XCircle,
 } from "lucide-react";
 import {
-  type ButtonHTMLAttributes,
   type InputHTMLAttributes,
   type MouseEvent,
   type ReactElement,
   type ReactNode,
   type SelectHTMLAttributes,
-  type Ref,
   type RefObject,
   type TextareaHTMLAttributes,
   cloneElement,
@@ -50,120 +48,6 @@ import type { NodeStatus, RunStatus } from "../api/types";
 import { useDocumentTitle } from "../lib/documentTitle";
 import { STATUS_TONE, type Tone } from "../lib/format";
 import { type HelpId, docPath } from "../lib/help";
-
-
-type ButtonVariant = "default" | "primary" | "ghost" | "danger";
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant;
-  icon?: LucideIcon;
-  busy?: boolean;
-  size?: "sm" | "md";
-}
-
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { variant = "default", icon: Icon, busy, size = "md", children, className = "", disabled, ...rest },
-  ref,
-) {
-  return (
-    <button
-      ref={ref}
-      type="button"
-      className={`nd-button nd-button--${variant} nd-button--${size} ${className}`}
-      disabled={disabled || busy}
-      aria-busy={busy || undefined}
-      {...rest}
-    >
-      {busy ? <Loader2 className="spin" size={15} aria-hidden /> : Icon ? <Icon size={15} aria-hidden /> : null}
-      {children}
-    </button>
-  );
-});
-
-/** An icon-only button; its label appears as a tooltip on hover and keyboard focus. */
-export function IconButton({
-  icon: Icon,
-  label,
-  className = "",
-  ref,
-  ...rest
-}: ButtonHTMLAttributes<HTMLButtonElement> & { icon: LucideIcon; label: string; ref?: Ref<HTMLButtonElement> }) {
-  return (
-    <Tooltip content={label}>
-      <button ref={ref} type="button" className={`icon-button ${className}`} aria-label={label} {...rest}>
-        <Icon size={16} aria-hidden />
-      </button>
-    </Tooltip>
-  );
-}
-
-/**
- * An icon button for an action that cannot be undone (deleting a run, a file, a key): the first
- * click turns it into a labelled "Delete?" button, the second click acts. Escape, leaving the
- * button or a few seconds without a click turn it back, so a stray click never deletes anything.
- */
-export function ConfirmIconButton({
-  icon,
-  label,
-  confirmLabel,
-  onConfirm,
-  busy,
-  ...rest
-}: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> & {
-  icon: LucideIcon;
-  label: string;
-  /** The text of the second step; "Delete?" by default. */
-  confirmLabel?: string;
-  onConfirm: () => void;
-  busy?: boolean;
-}) {
-  const { t } = useTranslation();
-  const [armed, setArmed] = useState(false);
-  const confirmRef = useRef<HTMLButtonElement | null>(null);
-  const iconRef = useRef<HTMLButtonElement | null>(null);
-  // Escape and the second click hand the focus back to the icon button instead of dropping it to the page.
-  const refocus = useRef(false);
-  useEffect(() => {
-    if (!armed) {
-      if (refocus.current) iconRef.current?.focus();
-      refocus.current = false;
-      return;
-    }
-    confirmRef.current?.focus();
-    const timer = window.setTimeout(() => setArmed(false), 5000);
-    return () => window.clearTimeout(timer);
-  }, [armed]);
-  if (!armed)
-    return <IconButton ref={iconRef} icon={icon} label={label} onClick={() => setArmed(true)} disabled={busy} {...rest} />;
-  return (
-    <Button
-      ref={confirmRef}
-      size="sm"
-      variant="danger"
-      icon={icon}
-      busy={busy}
-      aria-label={`${label}: ${confirmLabel ?? t("common.confirmDelete")}`}
-      onClick={() => {
-        refocus.current = true;
-        setArmed(false);
-        onConfirm();
-      }}
-      onBlur={() => {
-        if (!refocus.current) setArmed(false);
-      }}
-      onKeyDown={(event) => {
-        if (event.key === "Escape") {
-          event.stopPropagation();
-          refocus.current = true;
-          setArmed(false);
-        }
-      }}
-      {...rest}
-    >
-      {confirmLabel ?? t("common.confirmDelete")}
-    </Button>
-  );
-}
 
 /** What a blocked control offers instead: a link to where the cause can be fixed, or an action that shows it. */
 export interface ReasonAction {
@@ -273,7 +157,7 @@ export function MenuButton({ label, items, icon = MoreHorizontal }: { label: str
         <button
           ref={buttonRef}
           type="button"
-          className="icon-button"
+          className="ui-icon-button"
           aria-label={label}
           aria-haspopup="menu"
           aria-expanded={open}
@@ -803,7 +687,7 @@ export function Modal({
       {/* Plain divs: a <header>/<footer> in a dialog would count as the page's banner or contentinfo landmark (F5). */}
       <div className="modal__head">
         <h2>{title}</h2>
-        <IconButton icon={X} label={t("common.close")} onClick={onClose} />
+        <IconButton icon={<X size={16} />} label={t("common.close")} onClick={onClose} />
       </div>
       <div className="modal__body">{children}</div>
       {footer ? <div className="modal__foot">{footer}</div> : null}

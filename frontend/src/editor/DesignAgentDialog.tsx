@@ -1,3 +1,4 @@
+import { Button } from "@nodestro/ui-core";
 import { useMutation } from "@tanstack/react-query";
 import { Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -7,7 +8,7 @@ import { Link } from "react-router-dom";
 import { api } from "../api/client";
 import type { AgentConfig, AgentDraft } from "../api/types";
 import { useModelName } from "../components/ModelPicker";
-import { Button, Callout, Chip, Field, Modal, TextArea } from "../components/ui";
+import { Callout, Chip, Field, Modal, TextArea } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatCost, formatNumber } from "../lib/format";
 import { withLocalModel } from "../missingModel/store";
@@ -74,7 +75,7 @@ export function DesignAgentDialog({
             </Button>
             <Button
               variant="primary"
-              icon={Sparkles}
+              icon={<Sparkles size={15} />}
               busy={design.isPending}
               disabled={!description.trim()}
               onClick={() => design.mutate()}

@@ -2,6 +2,7 @@
 // Skills are imported, edited and versioned here; they never grant tools and their scripts are never run.
 // NAL-B4: skill groups and how often skills were used.
 
+import { Button } from "@nodestro/ui-core";
 import { BarChart3, Layers, Puzzle, Upload } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -9,7 +10,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { useAccess } from "../api/access";
 import { useSkills } from "../api/skills";
-import { Button, Callout, EmptyState, PageHeader, Segmented, Spinner, TextInput } from "../components/ui";
+import { Callout, EmptyState, PageHeader, Segmented, Spinner, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { changedText } from "../lib/format";
 import { SkillBadges } from "../skills/SkillBadges";
@@ -44,7 +45,7 @@ export function SkillsPage() {
   const all = skills.data ?? [];
   const shown = matchingSkills(all, query);
   const importButton = canEdit ? (
-    <Button variant="primary" icon={Upload} onClick={() => setImportOpen(true)}>
+    <Button variant="primary" icon={<Upload size={15} />} onClick={() => setImportOpen(true)}>
       {t("skills.import")}
     </Button>
   ) : null;

@@ -1,4 +1,4 @@
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, Tooltip } from "@nodestro/ui-core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Download, History, Play, Plug, RotateCcw, Save, Sparkles } from "lucide-react";
 import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -19,7 +19,7 @@ import type { ArchitectJob, Run, Workflow } from "../api/types";
 import { MountWhenOpened } from "../components/MountWhenOpened";
 import { toast } from "../components/toast";
 import { UnsavedChangesModal } from "../components/UnsavedChanges";
-import { Button, DisabledReason, DocLink, MenuButton, Modal, Spinner } from "../components/ui";
+import { DisabledReason, DocLink, MenuButton, Modal, Spinner } from "../components/ui";
 import { Canvas, type CanvasIssues } from "../editor/Canvas";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { Inspector } from "../editor/Inspector";
@@ -457,7 +457,7 @@ export function EditorPage() {
             <DiscussButton offer={offer} />
             {dirty ? (
               <Tooltip help="workflow.discard">
-                <Button icon={RotateCcw} variant="ghost" onClick={() => setDiscardOpen(true)}>
+                <Button icon={<RotateCcw size={15} />} variant="ghost" onClick={() => setDiscardOpen(true)}>
                   <span className="title-actions__label">{t("common.discard")}</span>
                 </Button>
               </Tooltip>
@@ -465,7 +465,7 @@ export function EditorPage() {
             {editDenied ? null : (
               <Tooltip help="architect.open">
                 <Button
-                  icon={Sparkles}
+                  icon={<Sparkles size={15} />}
                   variant="ghost"
                   onClick={() => {
                     setArchitectStart(undefined);
@@ -478,7 +478,7 @@ export function EditorPage() {
               </Tooltip>
             )}
             <Tooltip help="publish.open">
-              <Button icon={Plug} variant="ghost" onClick={() => setApiOpen(true)} data-testid="open-api">
+              <Button icon={<Plug size={15} />} variant="ghost" onClick={() => setApiOpen(true)} data-testid="open-api">
                 <span className="title-actions__label">{t("publish.button")}</span>
               </Button>
             </Tooltip>
@@ -491,7 +491,7 @@ export function EditorPage() {
               ]}
             />
             <Tooltip help="workflow.save">
-              <Button icon={Save} busy={saving} disabled={!dirty || Boolean(editDenied)} title={editDenied ?? undefined} onClick={() => void save().then((ok) => ok && toast.success(t("common.saved")))}>
+              <Button icon={<Save size={15} />} busy={saving} disabled={!dirty || Boolean(editDenied)} title={editDenied ?? undefined} onClick={() => void save().then((ok) => ok && toast.success(t("common.saved")))}>
                 {t("common.save")}
               </Button>
             </Tooltip>
@@ -505,7 +505,7 @@ export function EditorPage() {
                   : { label: t("editor.page.showProblem"), onClick: showProblem }
               }
             >
-              <Button variant="primary" icon={Play} disabled={Boolean(liveRunId)} onClick={() => setRunOpen(true)} data-testid="start-workflow">
+              <Button variant="primary" icon={<Play size={15} />} disabled={Boolean(liveRunId)} onClick={() => setRunOpen(true)} data-testid="start-workflow">
                 {t("editor.run.title")}
               </Button>
             </DisabledReason>
@@ -578,7 +578,7 @@ export function EditorPage() {
             </Button>
             <Button
               variant="danger"
-              icon={RotateCcw}
+              icon={<RotateCcw size={15} />}
               onClick={() => {
                 setDiscardOpen(false);
                 void discard().catch((error) => toast.error(error));

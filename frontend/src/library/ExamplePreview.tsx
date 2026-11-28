@@ -1,4 +1,4 @@
-import { HelpTip, Tooltip } from "@nodestro/ui-core";
+import { Button, HelpTip, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, Brain, Copy, Download, FlaskConical, ListChecks, Network, PlugZap, Scale, ShieldAlert, ShieldCheck } from "lucide-react";
 import { Suspense, lazy, useState } from "react";
@@ -10,7 +10,7 @@ import { keys, useExample, useMeta, useSettings } from "../api/hooks";
 import type { ExampleDetail } from "../api/types";
 import { agentIcon } from "../components/icons";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, Modal, Select, Spinner, TextInput, Toggle } from "../components/ui";
+import { Badge, Callout, Field, Modal, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { LANGUAGE_NAMES, LANGUAGES, type Language, currentLanguage } from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatCost } from "../lib/format";
@@ -184,7 +184,7 @@ export function ExamplePreview({
           <Tooltip help="library.copy">
             <Button
               variant="primary"
-              icon={Copy}
+              icon={<Copy size={15} />}
               busy={copy.isPending}
               disabled={!data || !spaceValid}
               onClick={() => copy.mutate()}

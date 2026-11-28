@@ -57,7 +57,7 @@
   gap: var(--ui-space-2);
 }
 
-.draft-card__actions .nd-button {
+.draft-card__actions .ui-button {
   max-width: 100%;
   white-space: normal;
 }

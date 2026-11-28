@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Cpu, Languages, Save, ScanText } from "lucide-react";
 import { type CSSProperties, useEffect, useRef, useState } from "react";
@@ -13,7 +13,7 @@ import type { Settings } from "../api/types";
 import { ModelPicker, providerLabel, useModelHint, useModelName } from "../components/ModelPicker";
 import { toast } from "../components/toast";
 import { UnsavedChangesModal } from "../components/UnsavedChanges";
-import { Badge, Button, Callout, Field, PageHeader, Select, Spinner, TextInput, Toggle } from "../components/ui";
+import { Badge, Callout, Field, PageHeader, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { LANGUAGES, LANGUAGE_NAMES, type Language, currentLanguage, setLanguage, storedLanguage } from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatCost } from "../lib/format";
@@ -343,7 +343,7 @@ export function SettingsPage() {
           <div>
             <Button
               variant="primary"
-              icon={Save}
+              icon={<Save size={15} />}
               disabled={!admin || modelsInvalid}
               busy={save.isPending}
               onClick={() => saveModels()}

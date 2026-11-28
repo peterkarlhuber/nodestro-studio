@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, ConfirmIconButton, HelpTip, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CalendarClock, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +10,7 @@ import { keys, useSchedules, useWorkflows } from "../api/hooks";
 import { type Activation, type Schedule, type ScheduleIn, type ScheduleKind, WEEKDAYS } from "../api/types";
 import { FormFields } from "../components/FormFields";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, IconButton, Modal, PageHeader, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
+import { Badge, Callout, EmptyState, Field, Modal, PageHeader, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 import { ModelFixButton } from "../missingModel/ModelFixButton";
@@ -277,7 +277,7 @@ export function SchedulesPage() {
         doc="automatisierung#zeitplaene"
         description={t("automation.schedule.description")}
         actions={
-          <Button variant="primary" icon={Plus} onClick={() => setEditing("new")}>
+          <Button variant="primary" icon={<Plus size={15} />} onClick={() => setEditing("new")}>
             {t("automation.schedule.new")}
           </Button>
         }
@@ -347,8 +347,8 @@ export function SchedulesPage() {
                     </td>
                     <td>
                       <span className="row-gap">
-                        <IconButton icon={Pencil} label={t("automation.schedule.edit")} onClick={() => setEditing(schedule)} />
-                        <ConfirmIconButton icon={Trash2} label={t("automation.schedule.delete")} onConfirm={() => remove.mutate(schedule.id)} />
+                        <IconButton icon={<Pencil size={16} />} label={t("automation.schedule.edit")} onClick={() => setEditing(schedule)} />
+                        <ConfirmIconButton icon={<Trash2 size={16} />} label={t("automation.schedule.delete")} onConfirm={() => remove.mutate(schedule.id)} />
                       </span>
                     </td>
                   </tr>

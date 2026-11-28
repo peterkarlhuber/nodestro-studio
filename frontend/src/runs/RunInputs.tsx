@@ -1,7 +1,7 @@
 // The files a run received: uploaded for it or taken from knowledge. Uploaded files can be
 // looked into and taken over into knowledge (also single files of a ZIP archive).
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip, IconButton } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { BookOpen, ChevronDown, Download, Eye } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +12,7 @@ import { keys } from "../api/hooks";
 import type { AdoptSource, InputFile, Run, RunInput } from "../api/types";
 import { AdoptDialog } from "../components/AdoptDialog";
 import { FilePreview, fileSummary } from "../components/FileInput";
-import { Badge, Button, IconButton } from "../components/ui";
+import { Badge } from "../components/ui";
 import { problemText } from "../lib/errors";
 import { formatBytes } from "../lib/format";
 
@@ -44,7 +44,7 @@ export function RunInputs({ run }: { run: Run }) {
           <Button
             size="sm"
             variant="ghost"
-            icon={BookOpen}
+            icon={<BookOpen size={15} />}
             onClick={() => setAdopting(uploads.map((item) => ({ kind: "input", input_id: item.id })))}
           >
             {t("inputs.adopt.all", { count: uploads.length })}
@@ -114,12 +114,12 @@ function RunInputRow({ item, field, onAdopt }: { item: RunInput; field: string; 
       </span>
       <span className="upload-row__actions">
         {!archive ? (
-          <Button size="sm" variant="ghost" icon={BookOpen} onClick={() => onAdopt([{ kind: "input", input_id: file.id }])}>
+          <Button size="sm" variant="ghost" icon={<BookOpen size={15} />} onClick={() => onAdopt([{ kind: "input", input_id: file.id }])}>
             {t("inputs.adopt.short")}
           </Button>
         ) : null}
         <a
-          className="nd-button nd-button--ghost nd-button--sm"
+          className="ui-button ui-button--ghost ui-button--sm"
           href={api.inputUrl(file.id)}
           download={file.name}
           aria-label={t("inputs.download", { name: file.name })}
@@ -127,7 +127,7 @@ function RunInputRow({ item, field, onAdopt }: { item: RunInput; field: string; 
           <Download size={14} aria-hidden />
         </a>
         <IconButton
-          icon={open ? ChevronDown : Eye}
+          icon={open ? <ChevronDown size={16} /> : <Eye size={16} />}
           label={open ? t("inputs.hidePreview") : archive ? t("inputs.showContents") : t("inputs.showPreview")}
           onClick={() => setOpen(!open)}
         />

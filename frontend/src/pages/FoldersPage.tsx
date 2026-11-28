@@ -3,6 +3,7 @@
 // server) and for administrators; the API checks both again and checks every path itself. The page never switches
 // the feature on: while it is off it only says so.
 
+import { Button, ConfirmIconButton } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowUp, Ban, Check, Folder, FolderLock, FolderOpen, History, Home, Plus } from "lucide-react";
 import { type FormEvent, type ReactNode, useId, useState } from "react";
@@ -14,7 +15,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { AccessMode, FolderAccessEntry, FolderGrantIn, FolderGrantView } from "../api/types";
 import { PermissionNote } from "../components/Access";
-import { Badge, Button, Callout, ConfirmIconButton, Field, Modal, PageHeader, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
+import { Badge, Callout, Field, Modal, PageHeader, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
 import { toast } from "../components/toast";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
@@ -161,7 +162,7 @@ function GrantForm() {
   if (!open)
     return (
       <div>
-        <Button variant="primary" icon={Plus} onClick={() => setOpen(true)} data-testid="folder-grant-open">
+        <Button variant="primary" icon={<Plus size={15} />} onClick={() => setOpen(true)} data-testid="folder-grant-open">
           {t("approvals.folders.grant")}
         </Button>
       </div>
@@ -238,7 +239,7 @@ function GrantForm() {
           </Callout>
         ) : null}
         <div className="row-gap">
-          <Button type="submit" variant="primary" icon={FolderLock} busy={grant.isPending} data-testid="folder-grant-submit">
+          <Button type="submit" variant="primary" icon={<FolderLock size={15} />} busy={grant.isPending} data-testid="folder-grant-submit">
             {t("approvals.folders.grantSubmit")}
           </Button>
           <Button
@@ -274,7 +275,7 @@ export function FolderPicker({ start, onChoose }: { start: string | null; onChoo
     <>
       <Button
         size="sm"
-        icon={FolderOpen}
+        icon={<FolderOpen size={15} />}
         onClick={() => {
           setPath(start);
           setOpen(true);
@@ -295,7 +296,7 @@ export function FolderPicker({ start, onChoose }: { start: string | null; onChoo
             </Button>
             <Button
               variant="primary"
-              icon={Check}
+              icon={<Check size={15} />}
               disabled={!data}
               onClick={() => {
                 if (!data) return;
@@ -329,7 +330,7 @@ export function FolderPicker({ start, onChoose }: { start: string | null; onChoo
           ) : null}
           {listing.error && path !== null ? (
             <div>
-              <Button size="sm" variant="ghost" icon={Home} onClick={() => show(null)}>
+              <Button size="sm" variant="ghost" icon={<Home size={15} />} onClick={() => show(null)}>
                 {t("approvals.folders.browse.home")}
               </Button>
             </div>
@@ -445,7 +446,7 @@ function FolderList() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          icon={History}
+                          icon={<History size={15} />}
                           aria-expanded={shown === folder.id}
                           aria-controls={logId}
                           onClick={() => setShown((current) => (current === folder.id ? null : folder.id))}
@@ -455,7 +456,7 @@ function FolderList() {
                         </Button>
                         {view.status === "active" ? (
                           <ConfirmIconButton
-                            icon={Ban}
+                            icon={<Ban size={16} />}
                             label={t("approvals.access.revoke")}
                             confirmLabel={t("approvals.access.revokeConfirm")}
                             busy={revoke.isPending && revoke.variables === folder.id}

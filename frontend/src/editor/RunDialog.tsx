@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation } from "@tanstack/react-query";
 import { Play } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { useSettings } from "../api/hooks";
 import type { InputField, Run, WorkflowCheck, WorkflowOrigin } from "../api/types";
 import { FileInput } from "../components/FileInput";
 import { providerList } from "../components/ModelPicker";
-import { Button, Callout, DisabledReason, Field, Modal, TextArea } from "../components/ui";
+import { Callout, DisabledReason, Field, Modal, TextArea } from "../components/ui";
 import { FormFields, fieldErrors, formDefaults } from "../components/FormFields";
 import { ErrorText, LocalError } from "../lib/errors";
 import { formatCost } from "../lib/format";
@@ -118,7 +118,7 @@ export function RunDialog({
           <DisabledReason
             reason={uploading ? t("inputs.waitForUploads") : check && !check.ok ? t("editor.run.fixFirst") : null}
           >
-            <Button variant="primary" icon={Play} busy={run.isPending} onClick={() => run.mutate()}>
+            <Button variant="primary" icon={<Play size={15} />} busy={run.isPending} onClick={() => run.mutate()}>
               {t("editor.run.start")}
             </Button>
           </DisabledReason>

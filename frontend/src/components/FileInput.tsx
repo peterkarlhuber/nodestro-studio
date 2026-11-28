@@ -6,7 +6,7 @@
 // A copy of an example offers the example's sample files for the field with one click (`samples`, ST-007): the
 // sample is fetched and then uploaded like a chosen file, with the same checks.
 
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, IconButton, Tooltip } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import {
   Archive,
@@ -45,7 +45,7 @@ import {
   type TreeNode,
 } from "../lib/files";
 import { formatBytes } from "../lib/format";
-import { Badge, Button, IconButton, Select } from "./ui";
+import { Badge, Select } from "./ui";
 
 const GROUP_ICON: Record<FormatGroup, LucideIcon> = {
   text: FileText,
@@ -233,11 +233,11 @@ export function FileInput({
           </small>
         </div>
         <div className="upload-drop__actions">
-          <Button size="sm" icon={Upload} disabled={full} onClick={() => fileRef.current?.click()}>
+          <Button size="sm" icon={<Upload size={15} />} disabled={full} onClick={() => fileRef.current?.click()}>
             {multiple ? t("inputs.chooseFiles") : t("inputs.chooseFile")}
           </Button>
           {multiple ? (
-            <Button size="sm" variant="ghost" icon={FolderUp} disabled={full} onClick={() => folderRef.current?.click()}>
+            <Button size="sm" variant="ghost" icon={<FolderUp size={15} />} disabled={full} onClick={() => folderRef.current?.click()}>
               {t("inputs.chooseFolder")}
             </Button>
           ) : null}
@@ -279,7 +279,7 @@ export function FileInput({
               <Tooltip key={sample.id} content={sample.description || undefined}>
                 <Button
                   size="sm"
-                  icon={FlaskConical}
+                  icon={<FlaskConical size={15} />}
                   // The format list checks the sample like any file: wait for it.
                   disabled={used || full || !formats.data || (sampleBusy !== null && sampleBusy !== sample.id)}
                   busy={sampleBusy === sample.id}
@@ -324,7 +324,7 @@ export function FileInput({
               </span>
               {item.status === "error" ? (
                 <IconButton
-                  icon={X}
+                  icon={<X size={16} />}
                   label={t("common.removeItem", { name: item.name })}
                   onClick={() => setPending((current) => current.filter((entry) => entry.key !== item.key))}
                 />
@@ -378,7 +378,7 @@ function GivenFile({
           <span className="upload-row__name">{knowledgeName ?? fileId}</span>
           <span className="upload-row__meta">{t("inputs.fromKnowledgeBadge")}</span>
         </span>
-        {onRemove ? <IconButton icon={X} label={t("common.removeItem", { name: knowledgeName ?? fileId })} onClick={onRemove} /> : null}
+        {onRemove ? <IconButton icon={<X size={16} />} label={t("common.removeItem", { name: knowledgeName ?? fileId })} onClick={onRemove} /> : null}
       </li>
     );
   if (!file)
@@ -391,7 +391,7 @@ function GivenFile({
           <span className="upload-row__name">{fileId}</span>
           <span className="upload-row__meta">{query.isError ? t("inputs.status.missing") : t("common.loading")}</span>
         </span>
-        {onRemove ? <IconButton icon={X} label={t("common.removeItem", { name: fileId })} onClick={onRemove} /> : null}
+        {onRemove ? <IconButton icon={<X size={16} />} label={t("common.removeItem", { name: fileId })} onClick={onRemove} /> : null}
       </li>
     );
   return <InputFileRow file={file} open={open} onToggle={() => setOpen(!open)} onRemove={onRemove} />;
@@ -440,11 +440,11 @@ export function InputFileRow({
       <span className="upload-row__actions">
         {actions}
         <IconButton
-          icon={open ? ChevronDown : Eye}
+          icon={open ? <ChevronDown size={16} /> : <Eye size={16} />}
           label={open ? t("inputs.hidePreview") : file.group === "archive" ? t("inputs.showContents") : t("inputs.showPreview")}
           onClick={onToggle}
         />
-        {onRemove ? <IconButton icon={X} label={t("common.removeItem", { name: file.name })} onClick={onRemove} /> : null}
+        {onRemove ? <IconButton icon={<X size={16} />} label={t("common.removeItem", { name: file.name })} onClick={onRemove} /> : null}
       </span>
     </li>
   );

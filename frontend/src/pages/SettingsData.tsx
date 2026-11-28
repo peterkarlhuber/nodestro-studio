@@ -2,7 +2,7 @@
 // and the secrets a restore could not bring along (they are never part of a backup). Only for the "install"
 // permission, like backup and restore; the API checks it again.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Download, KeyRound, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
 import type { DeleteResult } from "../api/types";
-import { Button, Callout, Field, Modal, TextInput } from "../components/ui";
+import { Callout, Field, Modal, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { settingsHref } from "../lib/settingsLink";
 
@@ -98,10 +98,10 @@ export function DataPanel() {
       </h2>
       <p className="muted small">{t("backup.data.intro")}</p>
       <div className="row-gap">
-        <a className="nd-button nd-button--default nd-button--md" href={api.dataExportUrl} download data-testid="data-export">
+        <a className="ui-button ui-button--secondary" href={api.dataExportUrl} download data-testid="data-export">
           <Download size={15} aria-hidden /> {t("backup.data.export")}
         </a>
-        <Button variant="danger" icon={Trash2} onClick={() => setDeleting(true)} data-testid="data-delete-open">
+        <Button variant="danger" icon={<Trash2 size={15} />} onClick={() => setDeleting(true)} data-testid="data-delete-open">
           {t("backup.data.delete")}
         </Button>
       </div>
@@ -169,7 +169,7 @@ function DeleteAllDialog({ onClose }: { onClose: () => void }) {
           </Button>
           <Button
             variant="danger"
-            icon={Trash2}
+            icon={<Trash2 size={15} />}
             busy={remove.isPending}
             disabled={!confirmed}
             onClick={() => remove.mutate()}

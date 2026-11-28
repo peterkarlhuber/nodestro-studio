@@ -1,7 +1,7 @@
 // Try the API inside Nodestro: validate a request body exactly like the API does, or start a
 // real run of the published version (it costs like any run and shows up in the history).
 
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CheckCheck, Play } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 import { api, ApiError } from "../api/client";
 import type { ApiOverview, ApiRunStatus, ApiValidation, Publication } from "../api/types";
-import { Button, Callout, Field, Select, Spinner, TextArea } from "../components/ui";
+import { Callout, Field, Select, Spinner, TextArea } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { CodeBlock } from "./common";
 import { RequestProblems, fieldErrorsOf } from "./RequestProblems";
@@ -80,7 +80,7 @@ export function ApiTry({
       <div className="row-gap">
         <Tooltip help="publish.validate">
           <Button
-            icon={CheckCheck}
+            icon={<CheckCheck size={15} />}
             disabled={waiting}
             busy={send.isPending && send.variables === true}
             onClick={() => send.mutate(true)}
@@ -92,7 +92,7 @@ export function ApiTry({
         <Tooltip help="publish.testRun">
           <Button
             variant="primary"
-            icon={Play}
+            icon={<Play size={15} />}
             disabled={!publication.enabled || waiting}
             busy={send.isPending && send.variables === false}
             onClick={() => send.mutate(false)}

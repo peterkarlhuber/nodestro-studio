@@ -1,7 +1,7 @@
 // Continue a failed or cancelled run: reuse what is still valid, run the rest again.
 // The failed run stays as it was; the continuation is a new, linked run.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { History, Play, RotateCcw } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import { api } from "../api/client";
 import type { ResumeAction } from "../api/types";
-import { Badge, Button, Callout, Modal, Spinner, Toggle } from "../components/ui";
+import { Badge, Callout, Modal, Spinner, Toggle } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatCost } from "../lib/format";
 
@@ -45,7 +45,7 @@ export function ResumeDialog({ runId, open, onClose }: { runId: string; open: bo
             {t("common.cancel")}
           </Button>
           <Button
-            icon={RotateCcw}
+            icon={<RotateCcw size={15} />}
             disabled={!data?.can_restart || start.isPending}
             busy={start.isPending && start.variables === "restart"}
             onClick={() => start.mutate("restart")}
@@ -54,7 +54,7 @@ export function ResumeDialog({ runId, open, onClose }: { runId: string; open: bo
           </Button>
           <Button
             variant="primary"
-            icon={Play}
+            icon={<Play size={15} />}
             disabled={!data?.possible || (data.needs_confirmation && !confirmed) || start.isPending}
             busy={start.isPending && start.variables === "continue"}
             onClick={() => start.mutate("continue")}

@@ -1,7 +1,7 @@
 // The result files of a run: written by its result nodes, created here afterwards, or drafts an agent prepared with
 // draft_email or draft_webhook (NAL-A4), which show as a draft card.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, ConfirmIconButton, HelpTip, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, Download, Eye, FilePlus2, FileText, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +12,7 @@ import { keys } from "../api/hooks";
 import type { AdoptSource, ReportFormat, ResultFile, Run } from "../api/types";
 import { AdoptDialog } from "../components/AdoptDialog";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, Field, IconButton, Modal, Select, TextInput, Toggle } from "../components/ui";
+import { Badge, Callout, Field, Modal, Select, TextInput, Toggle } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatBytes, formatDate } from "../lib/format";
 import { canPreview, isResultFormat, resultFormatOptions } from "../lib/resultFormats";
@@ -39,7 +39,7 @@ export function ResultFiles({ run }: { run: Run }) {
         <h2 className="panel__title">
           {t("flow.files.runTitle")} <HelpTip id="files.run" topic={t("flow.files.runTitle")} />
         </h2>
-        <Button size="sm" icon={FilePlus2} disabled={!finished} onClick={() => setCreating(true)}>
+        <Button size="sm" icon={<FilePlus2 size={15} />} disabled={!finished} onClick={() => setCreating(true)}>
           {t("flow.files.create")}
         </Button>
       </div>
@@ -72,10 +72,10 @@ export function ResultFiles({ run }: { run: Run }) {
               ) : (
                 <span className="row-gap">
                   {canPreview(file.format) ? (
-                    <IconButton icon={Eye} label={t("flow.files.view", { name: file.name })} onClick={() => setPreview(file)} />
+                    <IconButton icon={<Eye size={16} />} label={t("flow.files.view", { name: file.name })} onClick={() => setPreview(file)} />
                   ) : null}
                   <a
-                    className="nd-button nd-button--ghost nd-button--sm"
+                    className="ui-button ui-button--ghost ui-button--sm"
                     href={api.resultFileUrl(run.id, file.id)}
                     download={file.name}
                     aria-label={t("flow.files.download", { name: file.name })}
@@ -83,11 +83,11 @@ export function ResultFiles({ run }: { run: Run }) {
                     <Download size={14} aria-hidden />
                   </a>
                   <IconButton
-                    icon={BookOpen}
+                    icon={<BookOpen size={16} />}
                     label={t("inputs.adopt.resultFile", { name: file.name })}
                     onClick={() => setAdopting([{ kind: "result_file", run_id: run.id, file_id: file.id }])}
                   />
-                  <ConfirmIconButton icon={Trash2} label={t("flow.files.delete", { name: file.name })} onConfirm={() => remove.mutate(file)} />
+                  <ConfirmIconButton icon={<Trash2 size={16} />} label={t("flow.files.delete", { name: file.name })} onConfirm={() => remove.mutate(file)} />
                 </span>
               )}
             </li>

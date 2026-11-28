@@ -5,6 +5,7 @@
 // notify_user) is model output: it is rendered as React text nodes only, never as HTML or Markdown, links are not
 // made clickable, and it is marked as coming from an agent.
 
+import { Button, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { TFunction } from "i18next";
 import {
@@ -40,7 +41,7 @@ import {
   useUnreadNotifications,
 } from "../api/notifications";
 import type { RunStatus } from "../api/types";
-import { Button, IconButton, Spinner } from "../components/ui";
+import { Spinner } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatDate, relativeTime } from "../lib/format";
 
@@ -255,7 +256,7 @@ function NotificationPanel({ id, unread, onClose }: { id: string; unread: number
         <Button
           size="sm"
           variant="ghost"
-          icon={CheckCheck}
+          icon={<CheckCheck size={15} />}
           disabled={!anyUnread}
           busy={markRead.isPending && markRead.variables?.length === 0}
           onClick={() => markRead.mutate([])}
@@ -351,7 +352,7 @@ function NotificationItem({ item, onRead, onOpen }: { item: AppNotification; onR
         ) : null}
       </div>
       {unread ? (
-        <IconButton icon={Check} label={t("notifications.markRead")} onClick={onRead} data-testid="notification-read" />
+        <IconButton icon={<Check size={16} />} label={t("notifications.markRead")} onClick={onRead} data-testid="notification-read" />
       ) : null}
     </li>
   );

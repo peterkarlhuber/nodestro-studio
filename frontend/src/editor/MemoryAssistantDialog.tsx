@@ -1,3 +1,4 @@
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Sparkles } from "lucide-react";
 import { useState } from "react";
@@ -7,7 +8,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { AgentConfig, MemorySeed } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, Field, Modal, TextArea, TextInput } from "../components/ui";
+import { Callout, Field, Modal, TextArea, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 
 /** A background assistant proposes a memory structure; the user reviews and saves it. */
@@ -63,7 +64,7 @@ export function MemoryAssistantDialog({
         ) : (
           <Button
             variant="primary"
-            icon={Sparkles}
+            icon={<Sparkles size={15} />}
             busy={propose.isPending}
             disabled={!wishes.trim()}
             onClick={() => propose.mutate()}

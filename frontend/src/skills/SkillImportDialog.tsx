@@ -2,6 +2,7 @@
 // person has seen the validation report, the preview and the security note. A skill with the same name gets the file
 // as its next version instead of a second skill.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ShieldAlert, Upload } from "lucide-react";
 import { useRef, useState } from "react";
@@ -9,7 +10,7 @@ import { useTranslation } from "react-i18next";
 
 import { type Skill, type SkillCheck, skillKeys, skillsApi } from "../api/skills";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Modal, Section, Spinner } from "../components/ui";
+import { Badge, Callout, Modal, Section, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes } from "../lib/format";
 import { SkillIssues } from "./SkillIssues";
@@ -64,7 +65,7 @@ export function SkillImportDialog({ open, onClose, onImported }: { open: boolean
           <Button variant="ghost" onClick={close}>
             {t("common.cancel")}
           </Button>
-          <Button variant="primary" icon={Upload} disabled={!report || errors > 0} busy={store.isPending} onClick={() => store.mutate()}>
+          <Button variant="primary" icon={<Upload size={15} />} disabled={!report || errors > 0} busy={store.isPending} onClick={() => store.mutate()}>
             {existing ? t("skills.importDialog.submitVersion", { name: existing.name }) : t("skills.importDialog.submit")}
           </Button>
         </>
@@ -90,7 +91,7 @@ export function SkillImportDialog({ open, onClose, onImported }: { open: boolean
               if (chosen) choose(chosen);
             }}
           />
-          <Button icon={Upload} onClick={() => fileInput.current?.click()}>
+          <Button icon={<Upload size={15} />} onClick={() => fileInput.current?.click()}>
             {t("skills.importDialog.choose")}
           </Button>
           {file ? <span className="muted small">{`${file.name} · ${formatBytes(file.size)}`}</span> : null}

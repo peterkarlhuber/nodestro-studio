@@ -1,7 +1,7 @@
 // Inspectors of the nodes that steer a workflow: decisions, approvals and sub-workflows,
 // plus the input form of the start node and the result files of a result node.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip, IconButton } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -21,7 +21,7 @@ import type {
   SubworkflowConfig,
   WorkflowNode,
 } from "../api/types";
-import { Button, Callout, Chip, Field, IconButton, Section, Segmented, Select, TextArea, TextInput, Toggle } from "../components/ui";
+import { Callout, Chip, Field, Section, Segmented, Select, TextArea, TextInput, Toggle } from "../components/ui";
 import { newField, newRule } from "../lib/defaults";
 import { DEFAULT_FIELD_MB, FORMAT_GROUPS, fileFieldSummary } from "../lib/files";
 import { isResultFormat, resultFormatOptions } from "../lib/resultFormats";
@@ -119,11 +119,11 @@ export function RuleEditor({
         <span className="row-gap">
           {onMove ? (
             <>
-              <IconButton icon={ArrowUp} label={t("flow.moveUp")} onClick={() => onMove(-1)} />
-              <IconButton icon={ArrowDown} label={t("flow.moveDown")} onClick={() => onMove(1)} />
+              <IconButton icon={<ArrowUp size={16} />} label={t("flow.moveUp")} onClick={() => onMove(-1)} />
+              <IconButton icon={<ArrowDown size={16} />} label={t("flow.moveDown")} onClick={() => onMove(1)} />
             </>
           ) : null}
-          <IconButton icon={Trash2} label={t("flow.rule.remove")} onClick={onRemove} />
+          <IconButton icon={<Trash2 size={16} />} label={t("flow.rule.remove")} onClick={onRemove} />
         </span>
       </div>
       {showLabel ? (
@@ -193,7 +193,7 @@ export function Header({ node, title, tip, text }: { node: WorkflowNode; title: 
         </h2>
         <p className="muted small">{text}</p>
       </div>
-      <IconButton icon={Trash2} label={t("editor.inspector.deleteNode")} onClick={() => removeWithUndo([node.id])} />
+      <IconButton icon={<Trash2 size={16} />} label={t("editor.inspector.deleteNode")} onClick={() => removeWithUndo([node.id])} />
     </div>
   );
 }
@@ -265,7 +265,7 @@ export function ConditionInspector({ node }: { node: WorkflowNode }) {
           />
         ))}
         <Button
-          icon={Plus}
+          icon={<Plus size={15} />}
           size="sm"
           onClick={() =>
             set({ rules: [...config.rules, newRule({ label: t("editor.condition.branchN", { n: config.rules.length + 1 }) })] })
@@ -480,9 +480,9 @@ export function FormEditor({ node }: { node: WorkflowNode }) {
             <div className="flow-item__head">
               <strong>{field.label || field.name || t("flow.form.newField")}</strong>
               <span className="row-gap">
-                <IconButton icon={ArrowUp} label={t("flow.moveUp")} onClick={() => setFields(move(fields, index, -1))} />
-                <IconButton icon={ArrowDown} label={t("flow.moveDown")} onClick={() => setFields(move(fields, index, 1))} />
-                <IconButton icon={Trash2} label={t("flow.form.remove")} onClick={() => setFields(fields.filter((_, i) => i !== index))} />
+                <IconButton icon={<ArrowUp size={16} />} label={t("flow.moveUp")} onClick={() => setFields(move(fields, index, -1))} />
+                <IconButton icon={<ArrowDown size={16} />} label={t("flow.moveDown")} onClick={() => setFields(move(fields, index, 1))} />
+                <IconButton icon={<Trash2 size={16} />} label={t("flow.form.remove")} onClick={() => setFields(fields.filter((_, i) => i !== index))} />
               </span>
             </div>
             <div className="grid-2">
@@ -580,7 +580,7 @@ export function FormEditor({ node }: { node: WorkflowNode }) {
         );
       })}
       <Button
-        icon={Plus}
+        icon={<Plus size={15} />}
         size="sm"
         onClick={() => setFields([...fields, newField({ name: `field_${fields.length + 1}`, label: t("flow.form.newField") })])}
       >
@@ -728,11 +728,11 @@ export function OutputFilesEditor({ node }: { node: WorkflowNode }) {
               label={t("flow.files.sanitize")}
               tip="files.sanitize"
             />
-            <IconButton icon={Trash2} label={t("flow.files.remove")} onClick={() => setFiles(files.filter((_, i) => i !== index))} />
+            <IconButton icon={<Trash2 size={16} />} label={t("flow.files.remove")} onClick={() => setFiles(files.filter((_, i) => i !== index))} />
           </div>
         </div>
       ))}
-      <Button icon={Plus} size="sm" onClick={() => setFiles([...files, { format: "md", name: "", sanitize: false }])}>
+      <Button icon={<Plus size={15} />} size="sm" onClick={() => setFiles([...files, { format: "md", name: "", sanitize: false }])}>
         {t("flow.files.add")}
       </Button>
     </section>
@@ -758,7 +758,7 @@ export function OutputContractEditor({ node }: { node: WorkflowNode }) {
         <OutputFieldsEditor fields={contract} onChange={setContract} idPrefix="contract-field" />
       ) : (
         <Button
-          icon={Plus}
+          icon={<Plus size={15} />}
           size="sm"
           onClick={() =>
             setContract([{ name: "summary", type: "string", description: t("agent.output.defaultFieldDescription"), required: true }])

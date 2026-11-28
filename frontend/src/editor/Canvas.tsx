@@ -1,3 +1,4 @@
+import { Button, IconButton } from "@nodestro/ui-core";
 import {
   Background,
   BackgroundVariant,
@@ -21,7 +22,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import type { AgentConfig, NodeType } from "../api/types";
-import { Button, IconButton } from "../components/ui";
 import { toast } from "../components/toast";
 import { formatNumber } from "../lib/format";
 import { motionDuration } from "../lib/motion";
@@ -518,14 +518,14 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
       </ReactFlow>
       <div className="floortools">
         <div className="floatbox floatbox--group">
-          <IconButton icon={Minus} label={t("editor.canvas.zoomOut")} onClick={() => flow.zoomOut()} />
+          <IconButton icon={<Minus size={16} />} label={t("editor.canvas.zoomOut")} onClick={() => flow.zoomOut()} />
           <ZoomLabel />
-          <IconButton icon={Plus} label={t("editor.canvas.zoomIn")} onClick={() => flow.zoomIn()} />
+          <IconButton icon={<Plus size={16} />} label={t("editor.canvas.zoomIn")} onClick={() => flow.zoomIn()} />
         </div>
         <div className="floatbox floatbox--group">
-          <IconButton icon={Maximize} label={t("editor.canvas.fitView")} onClick={() => flow.fitView({ padding: 0.25, duration: motionDuration(200) })} />
+          <IconButton icon={<Maximize size={16} />} label={t("editor.canvas.fitView")} onClick={() => flow.fitView({ padding: 0.25, duration: motionDuration(200) })} />
           <IconButton
-            icon={LayoutGrid}
+            icon={<LayoutGrid size={16} />}
             label={t("editor.canvas.autoLayout")}
             onClick={() => {
               autoLayout();
@@ -534,13 +534,13 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
           />
         </div>
         <div className="floatbox floatbox--group">
-          <IconButton icon={Undo2} label={t("editor.canvas.undo")} onClick={undo} disabled={!canUndo} />
-          <IconButton icon={Redo2} label={t("editor.canvas.redo")} onClick={redo} disabled={!canRedo} />
+          <IconButton icon={<Undo2 size={16} />} label={t("editor.canvas.undo")} onClick={undo} disabled={!canUndo} />
+          <IconButton icon={<Redo2 size={16} />} label={t("editor.canvas.redo")} onClick={redo} disabled={!canRedo} />
         </div>
         {partlyHidden ? (
           <div className="floatbox canvas-more" role="status" data-testid="canvas-partly-hidden">
             <span>{t("editor.canvas.partlyHidden")}</span>
-            <Button size="sm" icon={Maximize} onClick={showAll}>
+            <Button size="sm" icon={<Maximize size={15} />} onClick={showAll}>
               {t("editor.canvas.showAll")}
             </Button>
           </div>
