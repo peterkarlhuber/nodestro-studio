@@ -38,10 +38,10 @@ interface Anchor {
   group: SettingsGroup;
 }
 
-/** A heading's own words, without the labels of its help button. */
-function headingText(heading: HTMLElement): string {
+/** A heading's own words, without its help (the button's label and the panel's text). */
+export function headingText(heading: HTMLElement): string {
   const copy = heading.cloneNode(true) as HTMLElement;
-  copy.querySelectorAll("button, [aria-hidden=true], .visually-hidden, .sr-only").forEach((element) => element.remove());
+  copy.querySelectorAll(".ui-helptip, button, [aria-hidden=true], .visually-hidden, .sr-only").forEach((element) => element.remove());
   return (copy.textContent ?? "").replace(/\s+/g, " ").trim();
 }
 

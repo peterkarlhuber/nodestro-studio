@@ -2,13 +2,14 @@
 // download. Nothing was sent; a person opens the file and sends it. "Open in mail program" is the same download of
 // the .eml file: the browser hands it to the mail program the person chooses.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { Download, Mail, MailX, Trash2, Webhook } from "lucide-react";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
 import type { EmailDraftPreview, ResultFile, WebhookDraftPreview } from "../api/types";
-import { Badge, ConfirmIconButton, HelpTip } from "../components/ui";
+import { Badge, ConfirmIconButton } from "../components/ui";
 import { formatBytes, formatDate } from "../lib/format";
 
 /** The draft preview of a result file a draft tool wrote, or null for every other file. */
@@ -54,7 +55,7 @@ export function DraftCard({
         </Badge>
       </div>
       <p className="small">
-        {t(email ? "drafts.card.notSentEmail" : "drafts.card.notSentWebhook")} <HelpTip id="files.drafts" label={t("drafts.card.help")} />
+        {t(email ? "drafts.card.notSentEmail" : "drafts.card.notSentWebhook")} <HelpTip id="files.drafts" topic={t("drafts.card.help")} />
       </p>
       <dl className="draft-card__facts small">
         {preview.kind === "email" ? (

@@ -4,6 +4,7 @@
 // creates the model and keeps it only if it reproduces the reference vectors (orkexa.local.build_model). Nothing is
 // downloaded here: the separate download in the catalog is the online way.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, Hammer, RotateCcw, Search, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -12,7 +13,7 @@ import type { TFunction } from "i18next";
 
 import { keys } from "../api/hooks";
 import { type BuildInput, type CatalogModel, type LocalJob, localApi, localKeys, useLocalJobs } from "../api/localModels";
-import { Badge, Button, Callout, Field, HelpTip, Select, TextInput } from "../components/ui";
+import { Badge, Button, Callout, Field, Select, TextInput } from "../components/ui";
 import { ErrorText, problemHint, problemText } from "../lib/errors";
 import { formatLargeBytes } from "../lib/format";
 import { revealSettingsSection } from "./SettingsNav";
@@ -226,7 +227,7 @@ export function BuildFromFiles({
     <div className="stack" data-testid="local-build">
       <h3 className="small">
         <Hammer size={13} aria-hidden /> {t("localModels.build.title")}{" "}
-        <HelpTip id="settings.localBuild" label={t("localModels.build.title")} />
+        <HelpTip id="settings.localBuild" topic={t("localModels.build.title")} />
       </h3>
       <p className="muted small">{t("localModels.build.text")}</p>
       {models.length > 1 ? (

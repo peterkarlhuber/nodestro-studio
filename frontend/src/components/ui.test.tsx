@@ -7,6 +7,7 @@ import { Trash2 } from "lucide-react";
 import { useRef, useState } from "react";
 import { MemoryRouter } from "react-router-dom";
 
+import { PlatformHelp } from "../lib/platformHelp";
 import { Button, ConfirmIconButton, Field, Modal, Section, Segmented, Select, StatusBadge, TextArea, TextInput, Toggle } from "./ui";
 
 function DialogHarness({ autoFocus = false, cancelFirst = false }: { autoFocus?: boolean; cancelFirst?: boolean }) {
@@ -169,11 +170,14 @@ describe("ui", () => {
     };
 
     it("keeps its help button next to the summary, not inside it (AX-09)", async () => {
+      // The help buttons read the studio's help registry, as everywhere in the app (routes.tsx).
       const { container } = render(
         <MemoryRouter>
-          <Section title="Memory" tip="agent.memory" summary="Off">
-            <input aria-label="Space" />
-          </Section>
+          <PlatformHelp>
+            <Section title="Memory" tip="agent.memory" summary="Off">
+              <input aria-label="Space" />
+            </Section>
+          </PlatformHelp>
         </MemoryRouter>,
       );
       const help = screen.getByRole("button", { name: "Hilfe: Memory" });

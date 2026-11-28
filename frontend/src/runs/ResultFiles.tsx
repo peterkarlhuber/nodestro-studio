@@ -1,6 +1,7 @@
 // The result files of a run: written by its result nodes, created here afterwards, or drafts an agent prepared with
 // draft_email or draft_webhook (NAL-A4), which show as a draft card.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, Download, Eye, FilePlus2, FileText, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -11,7 +12,7 @@ import { keys } from "../api/hooks";
 import type { AdoptSource, ReportFormat, ResultFile, Run } from "../api/types";
 import { AdoptDialog } from "../components/AdoptDialog";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, Field, HelpTip, IconButton, Modal, Select, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, Field, IconButton, Modal, Select, TextInput, Toggle } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatBytes, formatDate } from "../lib/format";
 import { canPreview, isResultFormat, resultFormatOptions } from "../lib/resultFormats";
@@ -36,7 +37,7 @@ export function ResultFiles({ run }: { run: Run }) {
     <section className="panel stack" aria-label={t("flow.files.runTitle")}>
       <div className="row-between">
         <h2 className="panel__title">
-          {t("flow.files.runTitle")} <HelpTip id="files.run" label={t("flow.files.runTitle")} />
+          {t("flow.files.runTitle")} <HelpTip id="files.run" topic={t("flow.files.runTitle")} />
         </h2>
         <Button size="sm" icon={FilePlus2} disabled={!finished} onClick={() => setCreating(true)}>
           {t("flow.files.create")}

@@ -6,13 +6,17 @@ import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { Run } from "../api/types";
+import { PlatformHelp } from "../lib/platformHelp";
 import { budgetRequest, runBudget } from "../test/budgetFixtures";
 import { BudgetDecisionForm, RunBudgetDecision, checkNewLimit, initialLimitInput } from "./BudgetDecisionCard";
 
 function wrap(children: ReactNode) {
   return (
     <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
-      <MemoryRouter>{children}</MemoryRouter>
+      <MemoryRouter>
+        {/* The help buttons read the studio's help registry, as everywhere in the app (routes.tsx). */}
+        <PlatformHelp>{children}</PlatformHelp>
+      </MemoryRouter>
     </QueryClientProvider>
   );
 }

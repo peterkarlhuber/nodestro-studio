@@ -2,6 +2,7 @@
 // OpenAI-compatible servers (Amazon Bedrock has its own card: SettingsBedrock.tsx). Keys are only ever sent, never shown: the backend reports where a
 // key comes from, not the key.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { KeyRound, Plug, Save, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -16,7 +17,7 @@ import { modelLabel } from "../lib/catalog";
 import { toast } from "../components/toast";
 import { useAccess } from "../api/access";
 import { PermissionNote } from "../components/Access";
-import { Badge, Button, Callout, Field, HelpTip, Section, Select, TextInput } from "../components/ui";
+import { Badge, Button, Callout, Field, Section, Select, TextInput } from "../components/ui";
 import i18n from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { defaultModelSwitch, providerOf } from "../lib/providers";
@@ -332,7 +333,7 @@ export function ProviderSettings({ settings }: { settings: Settings }) {
     <section className="panel stack" aria-labelledby="settings-providers" data-testid="providers">
       <h2 className="panel__title" id="settings-providers">
         <KeyRound size={15} aria-hidden /> {t("settings.providers.title")}{" "}
-        <HelpTip id="settings.providers" label={t("settings.providers.title")} />
+        <HelpTip id="settings.providers" topic={t("settings.providers.title")} />
       </h2>
       <p className="muted small">{t("settings.providers.intro")}</p>
       <PermissionNote permission="admin" />

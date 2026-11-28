@@ -1,6 +1,7 @@
 // Choosing an agent's model from the measured test runs of a series (AO M6). Only recorded measurements decide;
 // nothing changes until a person applies the recommendation, which saves the workflow as a new version.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +11,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { ModelChoice, ModelChoiceSkip, ModelMeasurement, ModelObjective, Workflow } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, HelpTip, Select, Spinner, TextInput } from "../components/ui";
+import { Badge, Button, Callout, Field, Select, Spinner, TextInput } from "../components/ui";
 import { codeSuffix } from "../lib/codes";
 import { ErrorText } from "../lib/errors";
 import { formatCost, formatDate, formatNumber } from "../lib/format";
@@ -56,7 +57,7 @@ export function ModelChoicePanel({ suiteId, workflow }: { suiteId: string; workf
   return (
     <section className="panel stack" aria-label={t("automation.modelChoice.title")} data-testid="model-choice">
       <h2 className="panel__title">
-        {t("automation.modelChoice.title")} <HelpTip id="automation.modelChoice" label={t("automation.modelChoice.title")} />
+        {t("automation.modelChoice.title")} <HelpTip id="automation.modelChoice" topic={t("automation.modelChoice.title")} />
       </h2>
       <p className="muted small">{t("automation.modelChoice.intro")}</p>
       <div className="grid-2">

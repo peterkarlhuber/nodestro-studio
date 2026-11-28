@@ -2,8 +2,8 @@
 # <package> <version> nodestro-ui@<commit> <tarball> sha256=<hex>
 # Written by frontend/scripts/vendor-ui.mjs; checked by frontend/scripts/check-vendor.mjs before every npm ci.
 # scripts/bump_pins.py moves the commit (pin kind npm-tarball); vendor-ui.mjs then makes files and hashes follow.
-@nodestro/ui-ai 0.2.0 nodestro-ui@bef3a45287ad6c4800bb46f41fbf1260b4a23a80 frontend/vendor/nodestro-ui-ai-0.2.0.tgz sha256=0dd89ebe6b33dfbc88bd1fed1677fcc37d9c7feb0c24fe5519d282a3fdbe5284
-@nodestro/ui-core 0.2.0 nodestro-ui@bef3a45287ad6c4800bb46f41fbf1260b4a23a80 frontend/vendor/nodestro-ui-core-0.2.0.tgz sha256=80d203ec4b0c0cf9d99707874f7fc51c51f2ac95a7b67fffec45fe5dac902b7e
-@nodestro/ui-help 0.1.0 nodestro-ui@bef3a45287ad6c4800bb46f41fbf1260b4a23a80 frontend/vendor/nodestro-ui-help-0.1.0.tgz sha256=d0e940f664e4bc4a5b49b0ca8a21d963bb73683cbf523c4a1040c3fda179c15d
-@nodestro/ui-themes 0.1.0 nodestro-ui@bef3a45287ad6c4800bb46f41fbf1260b4a23a80 frontend/vendor/nodestro-ui-themes-0.1.0.tgz sha256=c20f8e3acf68eaec2b13809925952cf01a546e0d1f607f00226a4cf493f2df27
-@nodestro/ui-tokens 0.1.0 nodestro-ui@bef3a45287ad6c4800bb46f41fbf1260b4a23a80 frontend/vendor/nodestro-ui-tokens-0.1.0.tgz sha256=22ab7c10d45c37bc1154c4d760b78c6328b761800f34605d798ef0c0d601008f
+@nodestro/ui-ai 0.2.0 nodestro-ui@02e69d1fa08193d60bbe02ed7dbc1255c8516b22 frontend/vendor/nodestro-ui-ai-0.2.0.tgz sha256=0dd89ebe6b33dfbc88bd1fed1677fcc37d9c7feb0c24fe5519d282a3fdbe5284
+@nodestro/ui-core 0.2.1 nodestro-ui@02e69d1fa08193d60bbe02ed7dbc1255c8516b22 frontend/vendor/nodestro-ui-core-0.2.1.tgz sha256=83f4f2ab5f1b7172162a12c6f8dccc4b5f65025118c5e6b204de7284dac8ea28
+@nodestro/ui-help 0.1.0 nodestro-ui@02e69d1fa08193d60bbe02ed7dbc1255c8516b22 frontend/vendor/nodestro-ui-help-0.1.0.tgz sha256=d0e940f664e4bc4a5b49b0ca8a21d963bb73683cbf523c4a1040c3fda179c15d
+@nodestro/ui-themes 0.1.0 nodestro-ui@02e69d1fa08193d60bbe02ed7dbc1255c8516b22 frontend/vendor/nodestro-ui-themes-0.1.0.tgz sha256=c20f8e3acf68eaec2b13809925952cf01a546e0d1f607f00226a4cf493f2df27
+@nodestro/ui-tokens 0.1.0 nodestro-ui@02e69d1fa08193d60bbe02ed7dbc1255c8516b22 frontend/vendor/nodestro-ui-tokens-0.1.0.tgz sha256=22ab7c10d45c37bc1154c4d760b78c6328b761800f34605d798ef0c0d601008f

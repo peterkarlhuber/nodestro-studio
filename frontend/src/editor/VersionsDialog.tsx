@@ -2,6 +2,7 @@
 // optional description. Restoring a version saves it as a new version, so no version is lost.
 // Undo/redo in the editor is independent of this and unchanged.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { History, Pencil, RotateCcw, Save } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +13,6 @@ import { keys } from "../api/hooks";
 import type { VersionSummary, Workflow } from "../api/types";
 import { WorkflowTestStatus } from "../automation/WorkflowTestStatus";
 import { TextDiff } from "../components/TextDiff";
-import { HelpTip } from "../components/Tooltip";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, Field, IconButton, Modal, Spinner, TextInput } from "../components/ui";
 import { ErrorText, LocalError } from "../lib/errors";
@@ -210,7 +210,7 @@ export function VersionsDialog({
   return (
     <Modal title={t("versions.title")} open={open} onClose={onClose} wide>
       <p className="muted small">
-        <History size={13} aria-hidden /> {t("versions.intro")} <HelpTip id="workflow.versions" label={t("versions.title")} />
+        <History size={13} aria-hidden /> {t("versions.intro")} <HelpTip id="workflow.versions" topic={t("versions.title")} />
       </p>
       <Field label={t("versions.note")} htmlFor="version-note" hint={t("versions.noteHint")}>
         <div className="row-gap">

@@ -1286,7 +1286,7 @@ details[open] > summary > .section__chevron {
   height: 18px;
 }
 
-.section__tip .help-tip {
+.section__tip .ui-helptip__button {
   margin: 0;
 }
 
@@ -3153,7 +3153,12 @@ body.is-resizing--y * {
   }
 }
 
-.help-tip {
+/* The shared help button (HelpTip of @nodestro/ui-core) in the studio's look: a small round "?" next to a label. */
+.ui-helptip {
+  flex: none;
+}
+
+.ui-helptip__button {
   display: inline-grid;
   place-items: center;
   flex: none;
@@ -3169,13 +3174,33 @@ body.is-resizing--y * {
   cursor: help;
 }
 
-.help-tip:hover,
-.help-tip--open {
+.ui-helptip__button > span {
+  display: inline-grid;
+  place-items: center;
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ui-helptip__button:hover,
+.ui-helptip__button[aria-expanded="true"] {
   color: var(--nd-brand);
   background: var(--nd-brand-soft);
 }
 
-.help-tip:focus-visible,
+.ui-helptip__panel {
+  max-width: min(300px, calc(100vw - 16px));
+}
+
+.ui-helptip__more {
+  font-weight: 620;
+}
+
+.ui-helptip__button:focus-visible,
 .doc-link:focus-visible {
   outline: 2px solid var(--nd-focus);
   outline-offset: 1px;
@@ -3183,7 +3208,7 @@ body.is-resizing--y * {
 
 @media (pointer: coarse) {
   /* A larger touch target without a larger icon. */
-  .help-tip {
+  .ui-helptip__button {
     width: 28px;
     height: 28px;
     margin: -7px -3px -7px 0;
@@ -3206,7 +3231,7 @@ body.is-resizing--y * {
   margin-bottom: 7px;
 }
 
-.field__label .help-tip {
+.field__label .ui-helptip__button {
   margin-bottom: 7px;
 }
 
@@ -3215,7 +3240,7 @@ body.is-resizing--y * {
   align-items: center;
 }
 
-.toggle .help-tip {
+.toggle > .ui-helptip {
   margin-left: auto;
 }
 
@@ -7115,7 +7140,7 @@ ul.gate-report__list > li.gate-report__item {
   display: flex;
 }
 
-.palette__group-tip .help-tip {
+.palette__group-tip .ui-helptip__button {
   margin: 0;
 }
 

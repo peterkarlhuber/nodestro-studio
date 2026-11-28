@@ -55,10 +55,13 @@ async function shot(page, name) {
   if (shots) await page.screenshot({ path: join(shots, `${name}.png`) });
 }
 
-/** Where the open tooltip is and whether it is the topmost element at several of its points. */
+/** The open panel of a help button (the shared HelpTip of @nodestro/ui-core; closed panels are hidden). */
+const HELP_PANEL = ".ui-helptip__panel:not([hidden])";
+
+/** Where the open help panel is and whether it is the topmost element at several of its points. */
 async function tooltipState(page) {
-  return page.evaluate(() => {
-    const tip = document.querySelector("[role=tooltip]");
+  return page.evaluate((selector) => {
+    const tip = document.querySelector(selector);
     if (!tip) return null;
     const box = tip.getBoundingClientRect();
     const points = [
@@ -70,14 +73,15 @@ async function tooltipState(page) {
     const style = getComputedStyle(tip);
     return {
       onTop,
-      host: tip.parentElement?.tagName,
+      // The dialog it is part of (a modal dialog makes everything outside it inert).
+      host: tip.closest("dialog[open]")?.tagName ?? tip.parentElement?.tagName,
       inside: box.left >= 0 && box.top >= 0 && box.right <= window.innerWidth && box.bottom <= window.innerHeight,
       width: box.width,
       color: style.color,
       background: style.backgroundColor,
       text: tip.textContent ?? "",
     };
-  });
+  }, HELP_PANEL);
 }
 
 function luminance(rgb) {
@@ -104,7 +108,7 @@ async function newWorkflowDialog(page, mode) {
 
 /** Every help icon of the open dialog shows a complete tooltip above the dialog. */
 async function checkDialogTips(page, label) {
-  const tips = page.locator("dialog[open] button.help-tip");
+  const tips = page.locator("dialog[open] button.ui-helptip__button");
   const count = await tips.count();
   check(count > 0, `${label}: the dialog has help icons (${count})`);
   for (let index = 0; index < count; index += 1) {
@@ -112,14 +116,14 @@ async function checkDialogTips(page, label) {
     const name = await tip.getAttribute("aria-label");
     await tip.scrollIntoViewIfNeeded();
     await tip.click();
-    await page.locator("[role=tooltip]").waitFor();
+    await page.locator(HELP_PANEL).waitFor();
     const state = await tooltipState(page);
     check(state.host === "DIALOG", `${label}: "${name}" renders inside the open dialog`);
     check(state.onTop, `${label}: "${name}" is painted on top of the dialog`);
     check(state.inside, `${label}: "${name}" lies completely inside the window`);
     check(state.text.trim().length > 40, `${label}: "${name}" explains more than its label`);
     await page.keyboard.press("Escape");
-    await page.locator("[role=tooltip]").waitFor({ state: "detached" });
+    await page.locator(HELP_PANEL).waitFor({ state: "detached" });
     check(await page.locator("dialog[open]").isVisible(), `${label}: Escape closes only the tooltip of "${name}", the dialog stays`);
   }
 }
@@ -144,25 +148,25 @@ try {
       await page.keyboard.press("Tab");
     }
     check(await help.evaluate((element) => element === document.activeElement), "keyboard: the help icon is reached with Tab");
-    await page.locator("[role=tooltip]").waitFor();
+    await page.locator(HELP_PANEL).waitFor();
     check(true, "keyboard: focus shows the tooltip");
-    const link = page.locator("[role=tooltip] a");
+    const link = page.locator(`${HELP_PANEL} a`);
     if (await link.count()) {
       // A tooltip shown by passing focus keeps the normal Tab order; Enter opens it on purpose and Tab enters its link.
       await page.keyboard.press("Enter");
-      await page.locator("[role=tooltip]").waitFor();
+      await page.locator(HELP_PANEL).waitFor();
       await page.keyboard.press("Tab");
       check(await link.evaluate((element) => element === document.activeElement), "keyboard: Tab leads into the tooltip's documentation link");
       await page.keyboard.press("Tab");
       const after = await page.evaluate(() => ({
-        inTip: Boolean(document.activeElement?.closest("[role=tooltip]")),
+        inTip: Boolean(document.activeElement?.closest(".ui-helptip__panel")),
         inDialog: Boolean(document.activeElement?.closest("dialog[open]")),
       }));
       check(!after.inTip && after.inDialog, "keyboard: the next Tab leaves the tooltip for the next control of the dialog");
     }
     await page.keyboard.press("Escape");
     await newWorkflowDialog(page, "Manually");
-    if (await page.locator("dialog[open] button.help-tip").count()) await checkDialogTips(page, "Manually");
+    if (await page.locator("dialog[open] button.ui-helptip__button").count()) await checkDialogTips(page, "Manually");
     await context.close();
   }
   for (const [label, options] of [

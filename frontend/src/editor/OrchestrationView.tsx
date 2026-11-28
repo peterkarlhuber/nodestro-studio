@@ -2,6 +2,7 @@
 // decision started (status, duration, cost, a link to each), how the team changed, who waits for a person, the
 // limits it used and what it cost. Only the structured record is shown (no model reasoning).
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { ExternalLink, Network, Save } from "lucide-react";
 import { useState } from "react";
@@ -25,7 +26,7 @@ import type {
 } from "../api/types";
 import { Output } from "../components/Markdown";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, HelpTip, Stat, StatusBadge } from "../components/ui";
+import { Badge, Button, Callout, Stat, StatusBadge } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatCost, formatDuration, type Tone } from "../lib/format";
 import { useModelName } from "../components/ModelPicker";
@@ -270,7 +271,7 @@ function RefusedGroup({ steps, names }: { steps: OrchestrationStep[]; names: Map
         </ol>
       </details>
       <p className="small muted" data-testid="orchestration-refused-hint">
-        {t("orchestration.run.refusedHint")} <HelpTip id="flow.orchestrator" label={t("orchestration.run.refusedHelp")} />
+        {t("orchestration.run.refusedHint")} <HelpTip id="flow.orchestrator" topic={t("orchestration.run.refusedHelp")} />
       </p>
     </li>
   );
@@ -395,7 +396,7 @@ function SaveTemplate({ run, node, record, names }: { run: Run; node: WorkflowNo
     <div className="stack-sm" data-testid="orchestration-template">
       <p className="small muted">
         {t("flow.orchestrator.run.templateText", { teams: teams.map((id) => names.get(id) ?? id).join(", ") })}{" "}
-        <HelpTip id="flow.orchestratorTemplate" label={t("flow.orchestrator.run.saveTemplate")} />
+        <HelpTip id="flow.orchestratorTemplate" topic={t("flow.orchestrator.run.saveTemplate")} />
       </p>
       <div>
         <Button size="sm" icon={Save} busy={busy} onClick={() => void save()}>
@@ -490,7 +491,7 @@ export function OrchestrationView({ node, state, run }: { node: WorkflowNode; st
       <PoolView node={node} names={names} />
       <TeamTimeline record={record} names={names} />
       <span className="nd-field-label">
-        {t("orchestration.run.rounds")} <HelpTip id="flow.orchestrator" label={t("orchestration.run.rounds")} />
+        {t("orchestration.run.rounds")} <HelpTip id="flow.orchestrator" topic={t("orchestration.run.rounds")} />
       </span>
       <ol className="stack-sm orch-rounds" data-testid="orchestration-rounds">
         {roundsOf(record.steps).map((round) =>

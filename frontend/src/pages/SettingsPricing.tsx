@@ -2,6 +2,7 @@
 // its status and source, individual prices, reviews of large changes, the change history and the comparison with
 // the providers' bills. Orkexa calculates every cost; this page only shows and edits the price catalog.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, Coins, History, Pencil, Plus, Receipt, RefreshCw, Trash2, Undo2, XCircle } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -30,21 +31,7 @@ import {
 import { AWS_REGION_PATTERN, type Settings } from "../api/types";
 import { DefaultMark } from "./SettingsDefaults";
 import { toast } from "../components/toast";
-import {
-  Badge,
-  Button,
-  Callout,
-  ConfirmIconButton,
-  Field,
-  HelpTip,
-  IconButton,
-  Modal,
-  Section,
-  Segmented,
-  Select,
-  Spinner,
-  TextInput,
-} from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, Field, IconButton, Modal, Section, Segmented, Select, Spinner, TextInput } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatCost, formatDate, formatDateOrDay, formatNumber, formatPrice } from "../lib/format";
 import { PRICE_STATUS_TONE, STALENESS_TONE } from "../lib/pricing";
@@ -522,7 +509,7 @@ export function PricingPanel({ settings, onMode }: { settings: Settings; onMode:
   return (
     <section className="panel stack" aria-labelledby="settings-prices" data-testid="pricing-panel">
       <h2 className="panel__title" id="settings-prices">
-        <Coins size={15} aria-hidden /> {t("pricing.title")} <HelpTip id="settings.prices" label={t("pricing.title")} />
+        <Coins size={15} aria-hidden /> {t("pricing.title")} <HelpTip id="settings.prices" topic={t("pricing.title")} />
       </h2>
       <p className="muted small">{t("pricing.intro")}</p>
       {status.error ? (
@@ -718,7 +705,7 @@ export function ReconciliationPanel() {
     <section className="panel stack" aria-labelledby="settings-reconciliation" data-testid="reconciliation-panel">
       <h2 className="panel__title" id="settings-reconciliation">
         <Receipt size={15} aria-hidden /> {t("pricing.reconciliation.title")}{" "}
-        <HelpTip id="settings.reconciliation" label={t("pricing.reconciliation.title")} />
+        <HelpTip id="settings.reconciliation" topic={t("pricing.reconciliation.title")} />
       </h2>
       <p className="muted small">{t("pricing.reconciliation.intro")}</p>
       {billing.error ? <ErrorText error={billing.error} /> : null}

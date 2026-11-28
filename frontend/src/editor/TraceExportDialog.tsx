@@ -1,6 +1,7 @@
 // Export a run as a trace file: complete, or sanitized for sharing. Sanitizing happens on the
 // server on a copy for the download only; the stored run stays unchanged.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation } from "@tanstack/react-query";
 import { Download, ShieldCheck } from "lucide-react";
 import { useState } from "react";
@@ -9,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { api } from "../api/client";
 import type { Run, SanitizeKind, SanitizeReport } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, HelpTip, Modal, Segmented, Toggle } from "../components/ui";
+import { Button, Callout, Modal, Segmented, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 
 function downloadJson(data: unknown, name: string) {
@@ -68,7 +69,7 @@ export function TraceExportDialog({ open, onClose, run }: { open: boolean; onClo
             { value: "full", label: t("export.full") },
           ]}
         />
-        <HelpTip id="runs.exportTrace" label={t("export.title")} />
+        <HelpTip id="runs.exportTrace" topic={t("export.title")} />
       </div>
       {mode === "full" ? (
         <>

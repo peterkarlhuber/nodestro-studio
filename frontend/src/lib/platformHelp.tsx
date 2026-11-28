@@ -1,7 +1,11 @@
-// The shared help of the platform (@nodestro/ui-help): a short explanation per family of API error codes, in the
-// interface language, shown next to an error message (ProblemText) and found by the offline help search of the
-// documentation overview. Each entry links to the chapter of the built-in documentation that covers it; a unit test
-// checks that every reference exists.
+// The help registry of the studio, in the interface language, for the shared help components of @nodestro/ui-core:
+// - the platform's help (@nodestro/ui-help): a short explanation per family of API error codes, shown next to an
+//   error message (ProblemText);
+// - the studio's own help (lib/help.ts, texts help.<id> and titles helpTitles.<id> in the language files): the help
+//   buttons (HelpTip) next to labels, settings and values all over the studio, and the settings search, which reads
+//   a setting's help by the data-help id of its button (pages/settingsSearchIndex.ts).
+// All of it is found by the offline help search of the documentation overview. Each entry links to the section of
+// the built-in documentation that covers it; unit tests check that every reference exists.
 
 import { HelpProvider, type HelpEntry, type HelpRegistry, UiTextProvider } from "@nodestro/ui-core";
 import { platformHelp } from "@nodestro/ui-help";
@@ -10,7 +14,7 @@ import { type ReactNode, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { docPath } from "./help";
+import { HELP_IDS, docPath, helpEntry } from "./help";
 
 /** Help entry id of @nodestro/ui-help -> "<chapter>#<section>" of the built-in documentation. */
 export const PLATFORM_HELP_DOCS: Record<string, string> = {
@@ -58,14 +62,19 @@ export const STUDIO_HELP_ERRORS: Record<string, string> = {
 /** The help registry of the studio in one language: the shared help plus the studio's entries and error families. */
 export function studioHelp(t: TFunction, language: string): Required<HelpRegistry> {
   const help = platformHelp(language, { hrefs: HREFS });
-  const own: Record<string, HelpEntry> = {
+  const own: Record<string, HelpEntry> = {};
+  for (const id of HELP_IDS) {
+    const { text, doc } = helpEntry(t, id);
+    own[id] = { title: t(`helpTitles.${id}`), summary: text, ...(doc ? { href: docPath(doc) } : {}) };
+  }
+  Object.assign(own, {
     "studio.exchange": {
       title: t("exchange.help.title"),
       summary: t("exchange.help.summary"),
       href: docPath(STUDIO_HELP_DOCS["studio.exchange"]),
       keywords: "exchange import export nodestro-mcp nodestro-connection nodestro-collection nodestro-workflow",
     },
-  };
+  });
   return { entries: { ...help.entries, ...own }, errors: { ...help.errors, ...STUDIO_HELP_ERRORS } };
 }
 

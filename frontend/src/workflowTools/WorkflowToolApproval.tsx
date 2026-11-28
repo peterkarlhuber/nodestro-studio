@@ -5,6 +5,7 @@
 // this start only and is never remembered as a grant or a deny (the runtime refuses pre-grants for it as well).
 // The card is the shared package's (@nodestro/ui-ai ApprovalCard); the decision uses the tool approval route.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { ApprovalCard, type ApprovalDecision } from "@nodestro/ui-ai";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
@@ -13,7 +14,6 @@ import { Link } from "react-router-dom";
 import { ApiError, api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { Run, ToolApprovalRequest, WorkflowToolConfig } from "../api/types";
-import { HelpTip } from "../components/Tooltip";
 import { toast } from "../components/toast";
 import { ErrorText } from "../lib/errors";
 import { formatDate } from "../lib/format";
@@ -95,7 +95,7 @@ export function WorkflowToolApprovalForm({
             {t("approvals.waitingSince", { time: formatDate(request.requested_at) })}
           </>
         }
-        help={<HelpTip id="tools.workflowCall" label={t("workflowTools.approval.help")} />}
+        help={<HelpTip id="tools.workflowCall" topic={t("workflowTools.approval.help")} />}
         badges={<FixedVersion version={binding.version} />}
         arguments={request.input}
         secondsLeft={secondsLeft}

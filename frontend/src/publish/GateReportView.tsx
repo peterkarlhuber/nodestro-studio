@@ -1,12 +1,12 @@
 // What the release gate says about the version to publish (Q-3), in three separate sections: blocking checks,
 // deterministic results and AI verdicts (probabilistic).
 
+import { HelpTip } from "@nodestro/ui-core";
 import { CheckCircle2, Sparkles, XCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import type { GateItem, GateItemKind, GateReport } from "../api/types";
-import { HelpTip } from "../components/Tooltip";
 import { Badge, Callout } from "../components/ui";
 import { codeSuffix } from "../lib/codes";
 
@@ -61,7 +61,7 @@ export function GateReportView({ report }: { report: GateReport }) {
   if (report.status === "off") return null;
   const of = (kind: GateItemKind) => report.items.filter((item) => item.kind === kind);
   // What the gate checks and how a weaker result is released, with the way into the documentation (TX-11).
-  const tip = <HelpTip id="publish.gate" label={t("publish.gate.title")} />;
+  const tip = <HelpTip id="publish.gate" topic={t("publish.gate.title")} />;
   return (
     <div className="gate-report stack-sm" data-testid="gate-report" data-status={report.status}>
       {report.status === "passed" ? (

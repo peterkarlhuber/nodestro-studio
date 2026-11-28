@@ -8,12 +8,13 @@
 // Both are found by the settings search (an h3 and a <details> are part of its convention), and a hit inside a
 // closed advanced part opens it.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { HelpId } from "../lib/help";
-import { Badge, HelpTip } from "../components/ui";
+import { Badge } from "../components/ui";
 
 export function SettingsGroup({
   title,
@@ -31,7 +32,7 @@ export function SettingsGroup({
     <div className="settings-group">
       <h3 className="settings-group__title">
         {title}
-        {tip ? <HelpTip id={tip} label={title} /> : null}
+        {tip ? <HelpTip id={tip} topic={title} /> : null}
       </h3>
       <div className={columns ? "settings-columns" : "stack"}>{children}</div>
     </div>

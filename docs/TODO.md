@@ -133,31 +133,25 @@ from #121). Both have status `Needs external review`.
 
 ### ST-068 · Shared UI library: move the studio's components to @nodestro/ui-* step by step (N-16)
 
-- **Priority:** P3 Low · **Status:** Open (first step and part of step 5 done) · **Refs:** N-16, N-17, nodestro-ui `docs/TODO.md`,
+- **Priority:** P3 Low · **Status:** Open (steps 1 and 5 done) · **Refs:** N-16, N-17, nodestro-ui `docs/TODO.md`,
   `platform/internal-ui.txt`
-- **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`, `ui-help`; core and ai 0.2.0) are vendored as
+- **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`, `ui-help`) are vendored as
   tarballs in `frontend/vendor/`, pinned with their SHA-256 in `platform/internal-ui.txt`, checked by
   `frontend/scripts/check-vendor.mjs` before every `npm ci` and against `node_modules` after it, compared in CI with
   nodestro-ui's `artifacts/manifest.json` at the pinned commit (`frontend/scripts/verify-ui-pin.mjs`), moved with `scripts/bump_pins.py` (pin kind `npm-tarball`) plus `frontend/scripts/vendor-ui.mjs`. The studio loads
-  the tokens, the `nodestro` brand theme and the component styles (`src/main.tsx`); the first component in use is the
-  package's `RememberOptions` in the tool approval card, with the studio's own texts. Contract tests:
-  `src/runs/uiPackages.contract.test.tsx`, `scripts/ui-vendor.test.mjs`.
-  The shared help of `ui-help` (N-17) explains error codes next to `ProblemText` (the package's `HelpTip` under
-  `HelpProvider`, `src/lib/platformHelp.tsx`) and in the help search of the documentation overview.
-- **Next steps, in order:** (1) re-pin to the nodestro-ui merge commit of its pull request #2 (same tarballs, only the
-  commit moves); (2) the step approval card (`runs/ApprovalCard.tsx`) and the tool approval card
+  the tokens, the `nodestro` brand theme and the component styles (`src/main.tsx`); the package's `RememberOptions`
+  is in the tool approval card. Contract tests: `src/runs/uiPackages.contract.test.tsx`, `scripts/ui-vendor.test.mjs`.
+  Step 5 (Welle 7): every help icon is the package's `HelpTip` (core 0.2.1: hover and focus, top layer above modal
+  dialogs, `data-help`) with the studio's help registry (`src/lib/platformHelp.tsx`: all `lib/help.ts` ids with
+  titles `helpTitles.<id>` in six languages); the settings search reads help from that registry; the studio's own
+  HelpTip is gone and `npm run lint` refuses it (`eslint.config.js`, `src/lint/helpGuard.test.ts`).
+- **Next steps, in order:** (2) the step approval card (`runs/ApprovalCard.tsx`) and the tool approval card
   (`runs/ToolApprovalCard.tsx`) onto `ApprovalCard`, keeping the data hooks here; (3) the budget decision card
   (`runs/BudgetDecisionCard.tsx`); (4) tool call rows, chat messages (`assistant/MessageView.tsx`) and web sources
-  (`runs/WebSources.tsx` onto `SourceList`); (5) the studio's own `HelpTip` (`components/Tooltip.tsx`, `help.json`) onto the
-  package's HelpTip with the studio's help registry (the `helpCoverage` test of the API's error codes and the studio
-  entry `studio.exchange` are done, Welle 6; the about 110 existing tooltips stay on the studio's component until the
-  package's HelpTip opens on hover and focus, shows above modal dialogs (top layer) and carries `data-help` for the
-  settings search, and the studio's help ids have titles; Welle 7 counted 113 `HelpTip` uses, the two new ones of
-ST-070 included: moving them needs a nodestro-ui release of HelpTip with those three behaviours, its re-vendoring,
-titles for the studio's help ids in six languages and the settings search on the new attribute, so it was not done as
-a small follow-up in Welle 7 and stays the next step of its own); (6) buttons, fields, dialogs and sections from `components/ui.tsx`; (7) an
-  alias layer `--nd-*: var(--ui-*)` and a codemod, then drop `midnight-citron.css`. Each step keeps the existing
-  tests and browser suites unchanged.
+  (`runs/WebSources.tsx` onto `SourceList`); (6) buttons, fields, dialogs and sections from `components/ui.tsx`, and
+  the tooltips of buttons and values (`components/Tooltip.tsx`: `Tooltip`, `Hint`) onto the package's `Tooltip` once
+  it renders in the top layer too (nodestro-ui `docs/TODO.md`); (7) an alias layer `--nd-*: var(--ui-*)` and a
+  codemod, then drop `midnight-citron.css`. Each step keeps the existing tests and browser suites unchanged.
 - **Also:** nodestro-server (`image/Dockerfile`) and nodestro-desktop (`scripts/build_backend.sh`) run `npm ci` on a
   studio checkout without the SHA-256 check; add `node scripts/check-vendor.mjs` before it and
   `node scripts/check-vendor.mjs --installed` after it there, as the studio's workflows, Makefile and docs do.

@@ -1,5 +1,6 @@
 // What a workflow or a tool needs from PyPI: state, packages, actions and history.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Package, RefreshCw, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -9,7 +10,7 @@ import { api } from "../api/client";
 import { mcpApi } from "../api/mcp";
 import type { DependencyPlan, DependencyScope, DependencyState, DependencyStatus, WorkflowIn } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, HelpTip } from "../components/ui";
+import { Badge, Button } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { relativeTime } from "../lib/format";
 import { DependencyDialog, InstallProgress, useDependencyRefresh, useInstallation } from "./DependencyDialog";
@@ -154,7 +155,7 @@ export function WorkflowDependencies({ workflowId, workflow }: { workflowId: str
   return (
     <section className="check-panel dep-panel" aria-labelledby="workflow-dependencies" data-testid="workflow-dependencies">
       <h3 className="check-panel__title" id="workflow-dependencies">
-        <Package size={13} aria-hidden /> {t("python.panel.title")} <HelpTip id="python.workflow" label={t("python.panel.title")} />
+        <Package size={13} aria-hidden /> {t("python.panel.title")} <HelpTip id="python.workflow" topic={t("python.panel.title")} />
       </h3>
       {data.state === "none" ? (
         <p className="muted small">{t("python.panel.unused", { count: data.packages.length })}</p>
@@ -194,7 +195,7 @@ export function ToolDependencies({
   return (
     <section className="dep-panel stack-sm" aria-labelledby={`tool-deps-${name}`} data-testid="tool-dependencies">
       <h3 className="check-panel__title" id={`tool-deps-${name}`}>
-        <Package size={13} aria-hidden /> {t("python.panel.toolTitle")} <HelpTip id="python.tool" label={t("python.panel.toolTitle")} />
+        <Package size={13} aria-hidden /> {t("python.panel.toolTitle")} <HelpTip id="python.tool" topic={t("python.panel.toolTitle")} />
       </h3>
       <StatusBody
         status={data}
@@ -222,7 +223,7 @@ export function McpServerDependencies({ serverId, name }: { serverId: string; na
   return (
     <section className="dep-panel stack-sm" aria-labelledby={`mcp-deps-${serverId}`} data-testid="mcp-dependencies">
       <h3 className="check-panel__title" id={`mcp-deps-${serverId}`}>
-        <Package size={13} aria-hidden /> {t("python.panel.mcpTitle")} <HelpTip id="tools.servicesLocal" label={t("python.panel.mcpTitle")} />
+        <Package size={13} aria-hidden /> {t("python.panel.mcpTitle")} <HelpTip id="tools.servicesLocal" topic={t("python.panel.mcpTitle")} />
       </h3>
       <StatusBody status={data} kind="mcp" refName={serverId} label={name} loadPlan={() => mcpApi.environmentPlan(serverId)} />
     </section>

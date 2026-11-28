@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   BookOpen,
@@ -43,7 +44,6 @@ import { useContextOffer } from "../assistant/useContextOffer";
 import { ModelReasoningNote } from "../components/ModelReasoningNote";
 import { CodeEditor } from "../components/CodeEditor";
 import { ModelPicker, providerLabel, useModelHint } from "../components/ModelPicker";
-import { HelpTip } from "../components/Tooltip";
 import { AGENT_ICONS, AGENT_ICON_NAMES, agentIcon } from "../components/icons";
 import { toast } from "../components/toast";
 import {
@@ -393,7 +393,7 @@ export function AgentForm({
         <TaskTemplateInput id="agent-task" value={agent.task_template} onChange={(task_template) => update({ task_template })} />
         {placeholders.length ? (
           <div className="chip-row" aria-label={t("agent.insertPlaceholder")}>
-            <HelpTip id="agent.placeholders" label={t("agent.placeholders")} />
+            <HelpTip id="agent.placeholders" topic={t("agent.placeholders")} />
             {placeholders.map((label) => (
               <button
                 key={label}
@@ -608,7 +608,7 @@ function ToolsSection({ agent, update, issues = [], ui, workflowId }: SectionPro
       <div className="stack-sm">
         <span className="field__label">
           <span className="nd-field-label">{t("agent.tools.serverTools")}</span>
-          <HelpTip id="agent.serverTools" label={t("agent.tools.serverToolsShort")} />
+          <HelpTip id="agent.serverTools" topic={t("agent.tools.serverToolsShort")} />
         </span>
         {(meta.data?.server_tools ?? []).map((tool) => {
           // Provider-native tools run at the provider: offered where the model can use them, else the reason.
@@ -715,7 +715,7 @@ function KnowledgeSection({ agent, update, issues = [], ui }: SectionProps) {
             { value: "search", label: t("agent.knowledge.mode.search") },
           ]}
         />
-        <HelpTip id="agent.knowledgeMode" label={t("agent.knowledge.modeShort")} />
+        <HelpTip id="agent.knowledgeMode" topic={t("agent.knowledge.modeShort")} />
       </div>
       <p className="field__hint">{t(`agent.knowledge.modeHint.${agent.knowledge.mode}`)}</p>
       {agent.knowledge.mode === "search" ? <RetrievalPicker agent={agent} onChange={(retrieval) => setKnowledge({ retrieval })} /> : null}
@@ -1046,7 +1046,7 @@ function QualitySection({ agent, update, issues = [], ui }: SectionProps) {
         <>
           <span className="field__label">
             <span className="nd-field-label">{t("agent.quality.criteria")}</span>
-            <HelpTip id="agent.qualityCriterion" label={t("agent.quality.criteria")} />
+            <HelpTip id="agent.qualityCriterion" topic={t("agent.quality.criteria")} />
           </span>
           {quality.criteria.map((criterion, index) => (
             <div className="criterion" key={index}>
@@ -1231,7 +1231,7 @@ function AdvancedSection({
               { value: "1h", label: t("agent.advanced.hours", { count: 1 }) },
             ]}
           />
-          <HelpTip id="agent.cacheTtl" label={t("agent.advanced.cacheTtl")} />
+          <HelpTip id="agent.cacheTtl" topic={t("agent.advanced.cacheTtl")} />
         </div>
       ) : null}
       <Field label={t("agent.advanced.refusal")} tip="agent.refusal">

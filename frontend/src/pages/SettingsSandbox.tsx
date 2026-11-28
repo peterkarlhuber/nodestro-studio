@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, Container, FlaskConical, RefreshCw, XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -7,7 +8,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { SandboxBackendStatus, SandboxCheck, SandboxMode, SandboxSelection, SandboxStatus, Settings } from "../api/types";
 import { dockerReasonKey, isDockerReason } from "../api/types";
-import { Badge, Button, Callout, DocLink, HelpTip, Segmented } from "../components/ui";
+import { Badge, Button, Callout, DocLink, Segmented } from "../components/ui";
 import { ErrorText, TechnicalDetails } from "../lib/errors";
 import { formatDate, type Tone } from "../lib/format";
 import { DefaultMark } from "./SettingsDefaults";
@@ -400,7 +401,7 @@ export function SandboxPanel({
     <section className="panel stack" aria-labelledby="settings-sandbox">
       <h2 className="panel__title" id="settings-sandbox">
         <Container size={15} aria-hidden /> {t("settings.sandbox.title")}{" "}
-        <HelpTip id="settings.sandbox" label={t("settings.sandbox.label")} />
+        <HelpTip id="settings.sandbox" topic={t("settings.sandbox.label")} />
         <DocLink to="einstellungen#sandbox" />
       </h2>
       <p className="muted small">{t("settings.sandbox.text")}</p>

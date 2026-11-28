@@ -4,6 +4,7 @@
 // cover, allows it, sees every consent and withdraws one. The section shows only where the API offers consents (a
 // member of a server); elsewhere it is not asked, and a 404 memory.consent_unavailable hides it too.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Ban, Eye, ShieldCheck } from "lucide-react";
 import { useState } from "react";
@@ -15,7 +16,7 @@ import { ApiError, api } from "../api/client";
 import { keys, useMemorySpaces, useWorkflows } from "../api/hooks";
 import type { MemoryConsent, MemoryConsentPreview } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, ConfirmIconButton, Field, HelpTip, Select, Spinner } from "../components/ui";
+import { Button, Callout, ConfirmIconButton, Field, Select, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 
@@ -41,7 +42,7 @@ export function MemoryConsents({ space }: { space: string | null }) {
     <section className="panel stack" aria-labelledby="memory-consents-title" data-testid="memory-consents">
       <h2 className="panel__title" id="memory-consents-title">
         <ShieldCheck size={15} aria-hidden /> {t("memory.consents.title")}{" "}
-        <HelpTip id="memory.consents" label={t("memory.consents.title")} />
+        <HelpTip id="memory.consents" topic={t("memory.consents.title")} />
       </h2>
       <p className="muted small">{t("memory.consents.intro")}</p>
       {consents.error ? (

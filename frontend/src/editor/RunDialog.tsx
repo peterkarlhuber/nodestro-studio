@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation } from "@tanstack/react-query";
 import { Play } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -9,7 +10,7 @@ import { useSettings } from "../api/hooks";
 import type { InputField, Run, WorkflowCheck, WorkflowOrigin } from "../api/types";
 import { FileInput } from "../components/FileInput";
 import { providerList } from "../components/ModelPicker";
-import { Button, Callout, DisabledReason, Field, HelpTip, Modal, TextArea } from "../components/ui";
+import { Button, Callout, DisabledReason, Field, Modal, TextArea } from "../components/ui";
 import { FormFields, fieldErrors, formDefaults } from "../components/FormFields";
 import { ErrorText, LocalError } from "../lib/errors";
 import { formatCost } from "../lib/format";
@@ -144,7 +145,7 @@ export function RunDialog({
       {fields.length ? (
         <>
           <p className="field__hint">
-            {t("flow.form.runIntro")} <HelpTip id="flow.form" label={t("flow.form.title")} />
+            {t("flow.form.runIntro")} <HelpTip id="flow.form" topic={t("flow.form.title")} />
           </p>
           {/* The first form field gets the focus when the dialog opens. */}
           <div data-autofocus>
@@ -180,7 +181,7 @@ export function RunDialog({
         files
       )}
       <p className="field__hint">
-        <HelpTip id="workflow.runBudget" label={t("editor.run.budget")} />{" "}
+        <HelpTip id="workflow.runBudget" topic={t("editor.run.budget")} />{" "}
         {t("editor.run.budgetText", { budget: effectiveBudget === null ? t("editor.run.unlimited") : formatCost(effectiveBudget) })}
       </p>
       {run.error ? (

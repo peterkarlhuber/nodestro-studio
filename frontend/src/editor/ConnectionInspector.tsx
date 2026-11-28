@@ -1,10 +1,11 @@
 // Inspector of a selected connection: where it leads, and the limits of a loop connection.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { Repeat, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { MAX_LOOP_ITERATIONS, type EdgeLoop } from "../api/types";
-import { Button, Callout, DocLink, Field, HelpTip, IconButton, Select, TextInput } from "../components/ui";
+import { Button, Callout, DocLink, Field, IconButton, Select, TextInput } from "../components/ui";
 import { toast } from "../components/toast";
 import { branchLabel } from "./branches";
 import { DEFAULT_LOOP, useEditor, wouldCycle } from "./store";
@@ -44,7 +45,7 @@ export function ConnectionInspector({ edgeId }: { edgeId: string }) {
         <div>
           <h2 className="inspector__heading">
             {loop ? t("editor.loop.title") : t("editor.connection.title")}{" "}
-            {loop ? <HelpTip id="workflow.loop" label={t("editor.loop.title")} /> : null}
+            {loop ? <HelpTip id="workflow.loop" topic={t("editor.loop.title")} /> : null}
           </h2>
           <p className="muted small">
             {t("editor.connection.path", { source: from?.label ?? "", target: to?.label ?? "" })}

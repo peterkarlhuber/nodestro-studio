@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Cpu, Languages, Save, ScanText } from "lucide-react";
 import { type CSSProperties, useEffect, useRef, useState } from "react";
@@ -12,7 +13,7 @@ import type { Settings } from "../api/types";
 import { ModelPicker, providerLabel, useModelHint, useModelName } from "../components/ModelPicker";
 import { toast } from "../components/toast";
 import { UnsavedChangesModal } from "../components/UnsavedChanges";
-import { Badge, Button, Callout, Field, HelpTip, PageHeader, Select, Spinner, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Callout, Field, PageHeader, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { LANGUAGES, LANGUAGE_NAMES, type Language, currentLanguage, setLanguage, storedLanguage } from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatCost } from "../lib/format";
@@ -70,7 +71,7 @@ function LanguagePicker() {
     <section className="panel stack" aria-labelledby="settings-language">
       <h2 className="panel__title" id="settings-language">
         <Languages size={15} aria-hidden /> {t("settings.language.title")}{" "}
-        <HelpTip id="settings.language" label={t("settings.language.title")} />
+        <HelpTip id="settings.language" topic={t("settings.language.title")} />
       </h2>
       <Field
         label={t("settings.language.label")}
@@ -217,7 +218,7 @@ export function SettingsPage() {
         <section className="panel stack" aria-labelledby="settings-models">
           <h2 className="panel__title" id="settings-models">
             <Cpu size={15} aria-hidden /> {t("settings.models.title")}{" "}
-            <HelpTip id="settings.defaultModel" label={t("settings.models.title")} />
+            <HelpTip id="settings.defaultModel" topic={t("settings.models.title")} />
           </h2>
           {settings.data ? <DefaultModelNotice settings={settings.data} /> : null}
           <SettingsGroup title={t("settingsUi.models.groupModels")}>
@@ -364,7 +365,7 @@ export function SettingsPage() {
 
         <section className="panel stack" aria-labelledby="settings-ocr">
           <h2 className="panel__title" id="settings-ocr">
-            <ScanText size={15} aria-hidden /> {t("settings.ocr.title")} <HelpTip id="files.ocr" label={t("settings.ocr.title")} />
+            <ScanText size={15} aria-hidden /> {t("settings.ocr.title")} <HelpTip id="files.ocr" topic={t("settings.ocr.title")} />
           </h2>
           <p className="muted small">{t("settings.ocr.text")}</p>
           <div className="row-gap">

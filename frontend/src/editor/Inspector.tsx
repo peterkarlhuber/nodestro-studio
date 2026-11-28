@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { CheckCircle2, Copy, Keyboard, PanelRightClose, PanelRightOpen, Trash2 } from "lucide-react";
 import { type Ref, memo, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -9,7 +10,7 @@ import {
   MAX_STEPS_LIMIT,
   type WorkflowCheck,
 } from "../api/types";
-import { Button, Chip, DocLink, Field, HelpTip, IconButton, TextArea, TextInput } from "../components/ui";
+import { Button, Chip, DocLink, Field, IconButton, TextArea, TextInput } from "../components/ui";
 import { removeWithUndo } from "./actions";
 import { WorkflowDependencies } from "../python/DependencyPanel";
 import { AgentInspector } from "./AgentInspector";
@@ -149,7 +150,7 @@ function TerminalInspector({ nodeId }: { nodeId: string }) {
       <div className="row-between">
         <div>
           <h2 className="inspector__heading">
-            {title} <HelpTip id={isStart ? "workflow.startNode" : "workflow.outputNode"} label={title} />
+            {title} <HelpTip id={isStart ? "workflow.startNode" : "workflow.outputNode"} topic={title} />
           </h2>
           <p className="muted small">{isStart ? t("editor.inspector.startText") : t("editor.inspector.outputText")}</p>
         </div>
@@ -204,7 +205,7 @@ function WorkflowInspector({ check }: { check: WorkflowCheck | undefined }) {
       {check ? (
         <section className="check-panel" tabIndex={-1} aria-label={t("editor.inspector.problemsLabel")}>
           <h3 className="check-panel__title">
-            {t("editor.check.title")} <HelpTip id="workflow.problems" label={t("editor.inspector.problemsLabel")} />
+            {t("editor.check.title")} <HelpTip id="workflow.problems" topic={t("editor.inspector.problemsLabel")} />
           </h3>
           {check.ok && !check.warnings ? (
             <p className="check-panel__ok">

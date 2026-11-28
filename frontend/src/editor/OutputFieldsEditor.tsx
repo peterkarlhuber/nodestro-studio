@@ -1,9 +1,10 @@
+import { HelpTip } from "@nodestro/ui-core";
 import type { TFunction } from "i18next";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import type { OutputField, OutputFieldSource, OutputFieldType } from "../api/types";
-import { HelpTip, Tooltip } from "../components/Tooltip";
+import { Tooltip } from "../components/Tooltip";
 import { Button, IconButton, Select, TextInput } from "../components/ui";
 import { helpEntry } from "../lib/help";
 import { fieldNameProblem } from "../lib/validation";
@@ -52,7 +53,7 @@ export function OutputFieldsEditor({
               <div className="output-field__name">
                 <span className="output-field__label">
                   <label htmlFor={`${id}-name`}>{t("agent.output.fieldName")}</label>
-                  {index === 0 ? <HelpTip id="agent.outputFieldName" label={t("agent.output.fieldName")} /> : null}
+                  {index === 0 ? <HelpTip id="agent.outputFieldName" topic={t("agent.output.fieldName")} /> : null}
                 </span>
                 <TextInput
                   id={`${id}-name`}
@@ -73,7 +74,7 @@ export function OutputFieldsEditor({
               <div className="output-field__type">
                 <span className="output-field__label">
                   <label htmlFor={`${id}-type`}>{t("agent.output.fieldType")}</label>
-                  {index === 0 ? <HelpTip id="agent.outputFieldType" label={t("agent.output.fieldType")} /> : null}
+                  {index === 0 ? <HelpTip id="agent.outputFieldType" topic={t("agent.output.fieldType")} /> : null}
                 </span>
                 <Select
                   id={`${id}-type`}
@@ -92,7 +93,7 @@ export function OutputFieldsEditor({
               <div className="output-field__description">
                 <span className="output-field__label">
                   <label htmlFor={`${id}-description`}>{t("common.description")}</label>
-                  {index === 0 ? <HelpTip id="agent.outputFieldDescription" label={t("common.description")} /> : null}
+                  {index === 0 ? <HelpTip id="agent.outputFieldDescription" topic={t("common.description")} /> : null}
                 </span>
                 <TextInput
                   id={`${id}-description`}

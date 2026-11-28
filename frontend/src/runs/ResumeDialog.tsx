@@ -1,6 +1,7 @@
 // Continue a failed or cancelled run: reuse what is still valid, run the rest again.
 // The failed run stays as it was; the continuation is a new, linked run.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { History, Play, RotateCcw } from "lucide-react";
 import { useState } from "react";
@@ -9,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import { api } from "../api/client";
 import type { ResumeAction } from "../api/types";
-import { Badge, Button, Callout, HelpTip, Modal, Spinner, Toggle } from "../components/ui";
+import { Badge, Button, Callout, Modal, Spinner, Toggle } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatCost } from "../lib/format";
 
@@ -64,7 +65,7 @@ export function ResumeDialog({ runId, open, onClose }: { runId: string; open: bo
       }
     >
       <p className="muted">
-        {t("flow.resume.intro")} <HelpTip id="flow.resume" label={t("flow.resume.title")} />
+        {t("flow.resume.intro")} <HelpTip id="flow.resume" topic={t("flow.resume.title")} />
       </p>
       {plan.isLoading ? <Spinner /> : null}
       {plan.error ? (

@@ -1,8 +1,9 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { Hand } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { pendingBudgetRequests, useApprovals, useBudgetRequests, useToolApprovals } from "../api/hooks";
-import { Callout, EmptyState, HelpTip, PageHeader, Spinner } from "../components/ui";
+import { Callout, EmptyState, PageHeader, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { ApprovalForm } from "../runs/ApprovalCard";
 import { BudgetRequestCard } from "../runs/BudgetDecisionCard";
@@ -39,7 +40,7 @@ export function ApprovalsPage() {
         {budgets.length ? (
           <section className="stack-sm" aria-labelledby="approvals-budget-title" data-testid="approvals-budget">
             <h2 className="panel__title" id="approvals-budget-title">
-              {t("budget.approvals.title")} <HelpTip id="budget.decision" label={t("budget.approvals.title")} />
+              {t("budget.approvals.title")} <HelpTip id="budget.decision" topic={t("budget.approvals.title")} />
             </h2>
             <p className="muted small">{t("budget.approvals.description")}</p>
             <div className="approval-list">

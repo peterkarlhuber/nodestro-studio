@@ -1,5 +1,6 @@
 // Settings panels for keeping an installation healthy: system diagnosis and backup/restore.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Activity, Archive, CheckCircle2, Download, Plug, RefreshCw, Save, Upload, XCircle, AlertTriangle } from "lucide-react";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
@@ -10,7 +11,7 @@ import { api } from "../api/client";
 import type { BackupContents, BackupInfo, DiagnosticCheck, DiagnosticStatus } from "../api/types";
 import { dockerReasonKey } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, HelpTip, Hint, Modal, Section, Spinner, TextInput } from "../components/ui";
+import { Badge, Button, Callout, Field, Hint, Modal, Section, Spinner, TextInput } from "../components/ui";
 import { codeSuffix } from "../lib/codes";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatDate, formatNumber } from "../lib/format";
@@ -75,7 +76,7 @@ export function DiagnosticsPanel() {
     <section className="panel stack" aria-labelledby="settings-diagnostics" data-testid="diagnostics">
       <h2 className="panel__title" id="settings-diagnostics">
         <Activity size={15} aria-hidden /> {t("diagnostics.title")}{" "}
-        <HelpTip id="settings.diagnostics" label={t("diagnostics.title")} />
+        <HelpTip id="settings.diagnostics" topic={t("diagnostics.title")} />
       </h2>
       <p className="muted small">{t("diagnostics.intro")}</p>
       <div className="row-gap">
@@ -212,7 +213,7 @@ export function BackupPanel() {
   return (
     <section className="panel stack" aria-labelledby="settings-backup" data-testid="backup">
       <h2 className="panel__title" id="settings-backup">
-        <Archive size={15} aria-hidden /> {t("backup.title")} <HelpTip id="settings.backup" label={t("backup.title")} />
+        <Archive size={15} aria-hidden /> {t("backup.title")} <HelpTip id="settings.backup" topic={t("backup.title")} />
       </h2>
       <p className="muted small">{t("backup.intro")}</p>
       <Callout tone="info">{t("backup.noKey")}</Callout>
@@ -328,7 +329,7 @@ export function InputStoragePanel() {
   return (
     <section className="panel stack" aria-labelledby="settings-inputs" data-testid="input-storage">
       <h2 className="panel__title" id="settings-inputs">
-        <Upload size={15} aria-hidden /> {t("inputs.storage.title")} <HelpTip id="inputs.storage" label={t("inputs.storage.title")} />
+        <Upload size={15} aria-hidden /> {t("inputs.storage.title")} <HelpTip id="inputs.storage" topic={t("inputs.storage.title")} />
       </h2>
       <p className="muted small">{t("inputs.storage.intro")}</p>
       {data ? (

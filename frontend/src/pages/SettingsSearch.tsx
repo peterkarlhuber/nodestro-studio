@@ -2,7 +2,10 @@
 // interface language, and jumps to one (opening the parts around it, focusing its control, highlighting it).
 // A combobox with a list of hits (WAI-ARIA combobox pattern): arrow keys choose, Enter jumps, Escape clears.
 // The index is read from the page (pages/settingsSearchIndex.ts), so new sections are found without a list here.
+// A setting's help is the entry of the shared help registry (lib/platformHelp.tsx) that its help button names with
+// data-help: its title and summary, the same texts the button shows.
 
+import { nodeText, useHelpRegistry } from "@nodestro/ui-core";
 import { Search, X } from "lucide-react";
 import { type KeyboardEvent, type RefObject, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,6 +25,7 @@ const CONDITIONAL = [
 
 export function SettingsSearch({ container }: { container: RefObject<HTMLElement | null> }) {
   const { t, i18n } = useTranslation();
+  const registry = useHelpRegistry();
   // The global search (Ctrl+K) opens /settings?search=… to search here (ST-058).
   const [params] = useSearchParams();
   const initial = params.get("search")?.trim() ?? "";
@@ -61,9 +65,9 @@ export function SettingsSearch({ container }: { container: RefObject<HTMLElement
   const hits = useMemo<SettingHit[]>(() => {
     const root = container.current;
     if (!root || !query.trim()) return [];
-    const help = (key: string) => {
-      const text = t(`help.${key}`, { defaultValue: "" });
-      return typeof text === "string" ? text : "";
+    const help = (id: string) => {
+      const entry = registry.entries[id];
+      return entry ? `${entry.title}. ${nodeText(entry.summary)}` : "";
     };
     const conditional: ConditionalSetting[] = CONDITIONAL.map(([section, helpId, label]) => ({
       section,
@@ -74,7 +78,7 @@ export function SettingsSearch({ container }: { container: RefObject<HTMLElement
     return searchSettings(indexSettings(root, help, conditional), query);
     // The language is part of the key: the page's texts change with it; version: the page changed.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [container, query, i18n.language, open, version]);
+  }, [container, query, i18n.language, open, version, registry]);
 
   const choose = (hit: SettingHit | undefined) => {
     if (!hit || !hit.element.isConnected) return;

@@ -34,8 +34,9 @@ conventions below. This keeps the page open for sections that other features add
    files* or *Maintenance*; otherwise it appears under *More*. If other pages link to it, add it to
    `SettingsSection` in `lib/settingsLink.ts` and to the global search's page list (`layout/GlobalSearch.tsx`).
 3. Settings use the shared controls, which the search understands: `Field` (label, hint, `tip`), `Toggle` (label,
-   description, `tip`), `Section` (collapsible, `tip`). A help icon (`HelpTip`) carries `data-help`, so the search
-   also finds a setting by its help text. Anything else that should be found gets
+   description, `tip`), `Section` (collapsible, `tip`). A help icon (the shared `HelpTip` of `@nodestro/ui-core`) carries
+   `data-help`, and the search reads that entry (title and text) from the studio's help registry
+   (`lib/platformHelp.tsx`), so it also finds a setting by its help. Anything else that should be found gets
    `data-setting="Label"` and optionally `data-setting-text="…"`; parts that must not be found get
    `data-settings-search="skip"`.
 4. Group related settings with `SettingsGroup` (an `h3`; `columns` puts short fields side by side on wide screens).
@@ -61,20 +62,23 @@ conventions below. This keeps the page open for sections that other features add
 
 ## Tooltips
 
-`components/Tooltip.tsx` is the one tooltip implementation (`Tooltip` around an element, `HelpTip` for the **?**
-icon, `Hint` for help ids). The bubble is rendered into the anchor's open `<dialog>` (else `<body>`) and shown as a
-manual popover, so it lies in the browser's top layer: above modal dialogs (which `showModal()` puts into the top
-layer, where no z-index reaches) and outside every `overflow` or `transform`. It stays inside the window (flips
-below, shifts sideways, scrolls when taller than the window), Escape closes only the tooltip, and Tab leads from the
-icon into its documentation link and on to the next control. Help texts live in `help.<id>` of the language files
-and should say what a setting does, what it needs and what follows from it, not repeat the label or the hint
-beside it.
+The **?** icon is the shared `HelpTip` of `@nodestro/ui-core` (ST-068), with the studio's help registry
+(`lib/platformHelp.tsx`: every id of `lib/help.ts` with its title `helpTitles.<id>`, text `help.<id>` and
+documentation section). It opens on hover and keyboard focus, a press pins it; its panel follows the icon in the DOM
+(inside a modal dialog it is part of the dialog) and is shown as a manual popover in the browser's top layer: above
+modal dialogs (which `showModal()` puts into the top layer, where no z-index reaches) and outside every `overflow`
+or `transform`. It stays inside the window (flips below, shifts sideways, scrolls when taller than the window),
+Escape closes only the panel, and once pinned Tab leads from the icon into its documentation link and on to the next
+control. `npm run lint` refuses a help button of the studio's own (`eslint.config.js`, `src/lint/helpGuard.test.ts`).
+`components/Tooltip.tsx` keeps the tooltips of buttons and values (`Tooltip`, `Hint` for help ids) with the same
+placement. Help texts should say what a setting does, what it needs and what follows from it, not repeat the label
+or the hint beside it.
 
 ## Tests
 
 - Unit: `pages/SettingsDefaults.test.tsx`, `pages/settingsWidth.test.ts`, `pages/settingsSearchIndex.test.ts`, `pages/SettingsResizer.test.tsx`,
   `pages/SettingsNav.test.tsx`, `pages/SettingsParts.test.tsx`, `pages/settingsModelsForm.test.ts`,
-  `components/Tooltip.test.tsx`, `layout/settingsEntry.test.ts`.
+  `components/Tooltip.test.tsx`, `components/HelpTip.test.tsx`, `layout/settingsEntry.test.ts`.
 - Browser: `frontend/e2e/settings-ui.mjs` (`scripts/e2e.sh settings-ui`): tooltips inside modal dialogs
   (`elementFromPoint`, window bounds, phone width, dark mode contrast, keyboard), the width (drag, keyboard,
   persistence, reset, 1280/1920/2560/800/375 px), the search (also in German), the settings entry and the "Changed"

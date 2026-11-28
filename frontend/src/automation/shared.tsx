@@ -1,11 +1,12 @@
 // Pieces shared by batches, test series and schedules: limits, the cost estimate and the
 // confirmation for tools that reach outside Nodestro.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import type { CostEstimate, Problem } from "../api/types";
-import { Callout, Field, HelpTip, TextInput, Toggle } from "../components/ui";
+import { Callout, Field, TextInput, Toggle } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { formatCost } from "../lib/format";
 
@@ -25,7 +26,7 @@ export function ToolWarnings({ items }: { items: Problem[] }) {
     <Callout tone="warning">
       <div className="stack-sm" data-testid="tool-warnings">
         <strong>
-          {t("automation.toolWarnings.title")} <HelpTip id="tools.callApproval" label={t("automation.toolWarnings.title")} />
+          {t("automation.toolWarnings.title")} <HelpTip id="tools.callApproval" topic={t("automation.toolWarnings.title")} />
         </strong>
         <ul className="small">
           {items.map((item, index) => (
@@ -103,7 +104,7 @@ export function EstimateView({
     <div className="stack-sm">
       <Callout tone="info">
         <strong>
-          {t("automation.estimate.title")} <HelpTip id="automation.estimate" label={t("automation.estimate.title")} />
+          {t("automation.estimate.title")} <HelpTip id="automation.estimate" topic={t("automation.estimate.title")} />
         </strong>
         <div>
           {estimate.total_usd !== null

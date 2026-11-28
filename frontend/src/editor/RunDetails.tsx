@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import {
   AlertTriangle,
   BookMarked,
@@ -19,7 +20,7 @@ import type { SkillSelection } from "../api/skills";
 import type { AdoptSource, KnowledgeProposal, KnowledgeRef, NodeRun, Run, WorkflowNode } from "../api/types";
 import { AdoptDialog } from "../components/AdoptDialog";
 import { Output, outputFieldsOf, stepFieldsOf } from "../components/Markdown";
-import { Badge, Button, Callout, HelpTip, StatusBadge, Tooltip } from "../components/ui";
+import { Badge, Button, Callout, StatusBadge, Tooltip } from "../components/ui";
 import { ApprovalCard } from "../runs/ApprovalCard";
 import { ToolOutputProblem } from "../runs/ToolOutputProblem";
 import { NodeToolApprovals, ToolCallApprovalNote } from "../runs/ToolApprovalCard";
@@ -274,7 +275,7 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
           {t(state.evaluation.passed ? "runs.evaluation.passed" : "runs.evaluation.failed", {
             count: state.evaluation.attempts,
           })}{" "}
-          <HelpTip id="runs.evaluation" label={t("agent.quality.title")} />
+          <HelpTip id="runs.evaluation" topic={t("agent.quality.title")} />
           <details>
             <summary>{t("runs.evaluation.feedback")}</summary>
             <pre className="code-block code-block--prose">{state.evaluation.feedback}</pre>
@@ -322,7 +323,7 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
                   >
                     {t("inputs.adopt.result")}
                   </Button>
-                  <HelpTip id="inputs.adopt" label={t("inputs.adopt.title")} />
+                  <HelpTip id="inputs.adopt" topic={t("inputs.adopt.title")} />
                 </div>
               ) : null}
             </>
@@ -378,7 +379,7 @@ function Proposals({
     <Callout tone="brand">
       <div className="row-between">
         <strong>
-          {t("inputs.proposals.title", { count: proposals.length })} <HelpTip id="inputs.proposals" label={t("inputs.proposals.label")} />
+          {t("inputs.proposals.title", { count: proposals.length })} <HelpTip id="inputs.proposals" topic={t("inputs.proposals.label")} />
         </strong>
         {open.length > 1 && !run.imported_at ? (
           <Button size="sm" icon={BookOpen} onClick={() => onAdopt(open.map(source))}>

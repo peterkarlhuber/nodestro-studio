@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { Download, FileDown, FlaskConical, History, Pencil, ShieldCheck } from "lucide-react";
 import { useMemo, useState, type ReactNode } from "react";
@@ -14,7 +15,7 @@ import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { Output, outputFieldsOf, stepFieldsOf } from "../components/Markdown";
 import { Tooltip } from "../components/Tooltip";
-import { Button, Callout, HelpTip, Hint, PageHeader, Spinner, Stat, StatusBadge } from "../components/ui";
+import { Button, Callout, Hint, PageHeader, Spinner, Stat, StatusBadge } from "../components/ui";
 import { prefersReducedMotion } from "../lib/motion";
 import { NodeRunDetails, startFiles } from "../editor/RunDetails";
 import { liveUsage, runWaitsForBudget, runWaitsForToolApproval, waitsForToolApproval } from "../editor/store";
@@ -226,7 +227,7 @@ export function RunDetailPage() {
             <strong>
               <FileDown size={13} aria-hidden /> {t("runs.detail.importedTrace")}
             </strong>{" "}
-            <HelpTip id="runs.imported" label={t("runs.detail.importedTrace")} />
+            <HelpTip id="runs.imported" topic={t("runs.detail.importedTrace")} />
             <div className="small">
               {t("runs.detail.importedAt", { date: formatDate(data.imported_at) })}
               {data.source_run_id ? (
@@ -316,7 +317,7 @@ export function RunDetailPage() {
             <RunInputs run={data} />
             <section className="panel stack" aria-label={t("runs.detail.trace")}>
               <h2 className="panel__title">
-                {t("runs.detail.trace")} <HelpTip id="runs.trace" label={t("runs.detail.trace")} />
+                {t("runs.detail.trace")} <HelpTip id="runs.trace" topic={t("runs.detail.trace")} />
               </h2>
               <Trace run={data} selected={node?.id ?? null} onSelect={setSelected} />
             </section>
@@ -352,7 +353,7 @@ function budgetHint(run: Run, t: TFunction): ReactNode {
     <>
       {t("runs.budget.limit", { limit: formatCost(run.budget_usd) })}
       {raisedFrom ? <span data-testid="budget-raised-from"> · {t("budget.panel.raised", { initial: formatMoney(raisedFrom) })}</span> : null}{" "}
-      <HelpTip id="budget.runBudget" label={t("budget.summary.title")} />
+      <HelpTip id="budget.runBudget" topic={t("budget.summary.title")} />
     </>
   );
   if (run.budget_hard_maximum !== false) return <span className="budget-hint">{limit}</span>;
