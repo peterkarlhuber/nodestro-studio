@@ -33,11 +33,16 @@ export const TOOLTIP_GUARD = [
 const AI_ONLY_SHARED =
   "Approval cards and their remember options are the shared ApprovalCard and RememberOptions of @nodestro/ui-ai (the studio keeps the data and the decision; its wording through lib/uiTexts.tsx).";
 
+const OLD_CARD_CLASS = "/(^|\\s)(approval-card|budget-card)(\\s|$|--)|(^|\\s)approval-card__(head|actions)/";
+
 /** Selectors of the studio's former approval cards (ST-068 step 2): one of its own, or the shared one from elsewhere. */
 export const APPROVAL_GUARD = [
   { selector: "ImportDeclaration[source.value!='@nodestro/ui-ai'] > ImportSpecifier[imported.name=/^(ApprovalCard|RememberOptions)$/]", message: AI_ONLY_SHARED },
   { selector: "ExportNamedDeclaration[source=null] > ExportSpecifier[local.name=/^(ApprovalCard|RememberOptions)$/]", message: AI_ONLY_SHARED },
   { selector: ":matches(FunctionDeclaration, ClassDeclaration, VariableDeclarator)[id.name=/^(ApprovalCard|RememberOptions|RememberDecision)$/]", message: AI_ONLY_SHARED },
+  // The former card frame (step 3: the budget card was the last one); its own parts (__note, __count) stay.
+  { selector: `JSXAttribute[name.name='className'] Literal[value=${OLD_CARD_CLASS}]`, message: AI_ONLY_SHARED },
+  { selector: `JSXAttribute[name.name='className'] TemplateElement[value.raw=${OLD_CARD_CLASS}]`, message: AI_ONLY_SHARED },
 ];
 
 export default tseslint.config(
@@ -54,8 +59,8 @@ export default tseslint.config(
   },
   {
     // ST-068: every help button is the shared HelpTip and every tooltip the shared Tooltip of @nodestro/ui-core,
-    // with the studio's help registry (lib/platformHelp.tsx); the step and tool approval cards are the shared
-    // ApprovalCard of @nodestro/ui-ai. The studio's own versions are gone; this keeps them from coming back (tested in
+    // with the studio's help registry (lib/platformHelp.tsx); the step, tool and budget approval cards are the
+    // shared ApprovalCard of @nodestro/ui-ai, also the budget card. The studio's own versions are gone; this keeps them from coming back (tested in
     // src/lint/helpGuard.test.ts).
     files: ["src/**/*.{ts,tsx}"],
     rules: {

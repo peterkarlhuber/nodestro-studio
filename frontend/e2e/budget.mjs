@@ -24,6 +24,11 @@ const STATUS = Object.fromEntries(
   ["de", "en", "es", "fr", "it", "pt-BR"].map((language) => [language, require(`../src/i18n/locales/${language}/status.json`)]),
 );
 
+// The decisions of the shared approval card, by their German names (the card carries no test ids of its own).
+const RAISE = { name: TEXTS.de.card.raise, exact: true };
+const END = { name: TEXTS.de.card.end, exact: true };
+const END_CONFIRM = { name: TEXTS.de.card.endConfirm, exact: true };
+
 const browser = await browserType.launch();
 let passed = 0;
 const errors = [];
@@ -132,13 +137,13 @@ try {
     await input.fill("0.00005");
     check((await card.getByRole("alert").textContent()).includes("höher sein"), "validation: a value below the current limit is refused");
     await input.fill("abc");
-    await card.getByTestId("budget-raise").click();
+    await card.getByRole("button", RAISE).click();
     check((await card.getByRole("alert").isVisible()), "validation: nothing is sent while the value is invalid");
     await shot(page, "budget-02-validation-de");
 
     const first = await card.getAttribute("data-request");
     await input.fill("0,03");
-    await card.getByTestId("budget-raise").click();
+    await card.getByRole("button", RAISE).click();
     // The suggestion covers exactly the first request: the second agent pauses with a new decision.
     const second = await until(async () => {
       const id = await page.getByTestId("run-panel").getByTestId("budget-decision").getAttribute("data-request", { timeout: 1000 }).catch(() => null);
@@ -148,7 +153,7 @@ try {
     const again = page.getByTestId("run-panel").getByTestId("budget-decision");
     check((await again.getByTestId("budget-history").textContent()).includes("→"), "editor: the card lists the earlier raise");
     await again.getByTestId("budget-limit-input").fill("1");
-    await again.getByTestId("budget-raise").click();
+    await again.getByRole("button", RAISE).click();
     const runs = await api(`/runs?workflow_id=${workflow.id}`);
     const editorRun = runs[0].id;
     await until(async () => (await api(`/runs/${editorRun}`)).status === "succeeded", "the run succeeds after the second raise", 30000);
@@ -172,11 +177,11 @@ try {
     await page.getByTestId("budget-decision").waitFor();
     check(true, "reload: the decision is found again after reloading the page");
     check(await page.locator(".stats [data-status=awaiting_budget]").isVisible(), "details: the status shows Waiting for budget decision");
-    await page.getByTestId("budget-end").focus();
+    await page.getByRole("button", END).focus();
     await page.keyboard.press("Enter");
-    check(await page.getByTestId("budget-end-confirm").evaluate((element) => element === document.activeElement), "keyboard: the confirmation takes the focus");
+    check(await page.getByRole("button", END_CONFIRM).evaluate((element) => element === document.activeElement), "keyboard: the confirmation takes the focus");
     await page.keyboard.press("Escape");
-    check(await page.getByTestId("budget-end").evaluate((element) => element === document.activeElement), "keyboard: Escape returns the focus to End run");
+    check(await page.getByRole("button", END).evaluate((element) => element === document.activeElement), "keyboard: Escape returns the focus to End run");
     await page.keyboard.press("Enter");
     await page.keyboard.press("Enter");
     await until(async () => (await api(`/runs/${id}`)).error_code === "run.budget_ended", "the run is ended");
@@ -232,7 +237,7 @@ try {
     await page.getByTestId("budget-decision").waitFor();
     const budget = await api(`/runs/${id}/budget`);
     await api(`/runs/${id}/budget/decisions`, "POST", { request_id: budget.pending.id, action: "raise", limit_usd: "1.00", idempotency_key: "e2e-elsewhere" });
-    await page.getByTestId("budget-raise").click({ timeout: 2000 }).catch(() => undefined);
+    await page.getByRole("button", RAISE).click({ timeout: 2000 }).catch(() => undefined);
     const outcome = await until(async () => {
       if (await page.getByTestId("budget-conflict").isVisible().catch(() => false)) return "conflict";
       if (await page.getByTestId("budget-decided").isVisible().catch(() => false)) return "decided";
@@ -268,7 +273,7 @@ try {
     const refused = await raw(`/runs/${id}/budget/decisions`, "POST", { request_id: budget.pending.id, action: "raise", limit_usd: "0.60" });
     check(refused.status() === 403 && (await refused.json()).code === "budget.over_policy", "maximum: the server refuses it with budget.over_policy");
     await input.fill("0.50");
-    await page.getByTestId("budget-raise").click();
+    await page.getByRole("button", RAISE).click();
     await until(async () => (await api(`/runs/${id}`)).status !== "paused" || (await api(`/runs/${id}`)).budget?.raises?.length, "raised to the maximum");
     check(true, "maximum: a raise up to the maximum is accepted");
     // Clean up: no cap again (an empty field clears it).
