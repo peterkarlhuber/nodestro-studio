@@ -4,10 +4,13 @@
 // the decision applies to this run only; the workflow and the settings stay as they are.
 //
 // Everything shown comes from the API (GET /runs/{id}/budget), so the decision is found again after leaving the page.
+// The card is the shared ApprovalCard of @nodestro/ui-ai, like the step and tool approvals: raising is approving
+// (checked here in onApprove), ending is a rejection that needs a second press; the data and the decision stay here.
 
+import { ApprovalCard } from "@nodestro/ui-ai";
 import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CircleDollarSign, History, PlayCircle, Square } from "lucide-react";
+import { History } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -17,14 +20,21 @@ import { ApiError, api } from "../api/client";
 import { isRunBudget, keys, useRunBudget } from "../api/hooks";
 import type { BudgetDecisionIn, BudgetRaise, BudgetRequest, Run, RunBudgetOut } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, StatusBadge, TextInput } from "../components/ui";
+import { Badge, Callout, Field, StatusBadge, TextInput } from "../components/ui";
 import { useEditor } from "../editor/store";
 import type { HelpId } from "../lib/help";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 import { compareMoney, formatMoney, moneyDifference, moneyInputText, normalizeMoneyInput, parseMoney } from "../lib/money";
+import { type StudioTextMap, StudioTexts } from "../lib/uiTexts";
 import { newClientId } from "./runChatModel";
-import { CONFIRM_MS } from "./CancelRunButton";
+
+/** The budget card's wording in the shared approval card: raising is approving, ending the run is rejecting. */
+export const BUDGET_DECISION_TEXTS: StudioTextMap = {
+  "ai.approval.approve": "budget.card.raise",
+  "ai.approval.reject": "budget.card.end",
+  "ai.approval.rejectConfirm": "budget.card.endConfirm",
+};
 
 /** When pages that show a decided run read it again (it continues a moment after the decision). */
 const FOLLOW_UP_MS = [700, 2000];
@@ -133,9 +143,6 @@ export function BudgetDecisionForm({
   const runId = budget.run_id;
   const [input, setInput] = useState(() => initialLimitInput(request));
   const [touched, setTouched] = useState(false);
-  const [armed, setArmed] = useState(false);
-  const confirmRef = useRef<HTMLButtonElement | null>(null);
-  const endRef = useRef<HTMLButtonElement | null>(null);
   // One key per open card: the same decision sent twice (a retry, a double click that got through) is stored once.
   const cardKey = useRef(newClientId());
   const [conflict, setConflict] = useState<ApiError | null>(null);
@@ -172,13 +179,6 @@ export function BudgetDecisionForm({
   const busy = decide.isPending;
   const canDecide = budget.policy?.can_decide !== false && !deadlinePassed && !conflict;
 
-  useEffect(() => {
-    if (!armed) return;
-    confirmRef.current?.focus();
-    const timer = window.setTimeout(() => setArmed(false), CONFIRM_MS);
-    return () => window.clearTimeout(timer);
-  }, [armed]);
-
   const raise = () => {
     setTouched(true);
     if (busy || !canDecide || check.problem || !check.value) return;
@@ -190,7 +190,6 @@ export function BudgetDecisionForm({
     });
   };
   const end = () => {
-    setArmed(false);
     if (busy || !canDecide) return;
     decide.mutate({ request_id: request.id, action: "end", idempotency_key: `${cardKey.current}:end` });
   };
@@ -202,229 +201,185 @@ export function BudgetDecisionForm({
   const unbounded = (request.requests ?? []).some((item) => !item.bounded || item.max_cost_usd === null);
 
   return (
-    <article
-      className="approval-card budget-card"
-      aria-label={t("budget.card.label", { name: showContext ? `${workflow} · ${formatDate(request.created_at)}` : workflow })}
-      data-testid="budget-decision"
-      data-request={request.id}
-    >
-      <header className="approval-card__head">
-        <CircleDollarSign size={15} aria-hidden />
-        <div>
-          {/* A decision whose deadline passed no longer waits for anyone (NJR-03). */}
-          <strong>{t(deadlinePassed ? "budget.card.titleExpired" : "budget.card.title")}</strong>
-          <div className="muted small">
+    <StudioTexts texts={BUDGET_DECISION_TEXTS}>
+      <ApprovalCard
+        kind="budget"
+        data-testid="budget-decision"
+        data-request={request.id}
+        // A decision whose deadline passed no longer waits for anyone (NJR-03).
+        title={t(deadlinePassed ? "budget.card.titleExpired" : "budget.card.title")}
+        label={t("budget.card.label", { name: showContext ? `${workflow} · ${formatDate(request.created_at)}` : workflow })}
+        context={
+          <>
             {showContext ? (
-              <>
-                <Link to={`/executions/${request.run_id}`} data-testid="budget-run-link">
-                  {workflow}
-                </Link>
-                {" · "}
-              </>
+              <Link to={`/executions/${request.run_id}`} data-testid="budget-run-link">
+                {workflow}
+              </Link>
             ) : (
-              <>{workflow} · </>
+              workflow
             )}
+            {" · "}
             {t("approvals.waitingSince", { time: formatDate(request.created_at) })}
-          </div>
-        </div>
-        <HelpTip id="budget.decision" topic={t("budget.card.title")} />
-      </header>
-      <div className="row-gap">
-        {deadlinePassed ? <Badge tone="idle">{t("budget.status.expired")}</Badge> : <StatusBadge status="awaiting_budget" />}
-        {request.reason === "request_too_large" ? (
-          <Badge tone="warning">{t("budget.card.reason.request_too_largeBadge")}</Badge>
-        ) : null}
-      </div>
-      <p className="small" data-testid="budget-reason">
-        {t(`budget.card.reason.${request.reason}`, {
-          next: formatMoney((request.requests?.find((item) => item.refused) ?? request.requests?.[0])?.max_cost_usd ?? null),
-          left: formatMoney(clampZero(moneyDifference(request.limit_usd, request.spent_usd))),
-        })}{" "}
-        <HelpTip id="budget.reason" topic={t("budget.card.reasonLabel")} />
-      </p>
-      <p className="small" data-testid="budget-block">
-        <strong>{blockText(t, request)}</strong> {t("budget.card.block.appliesExactly")} <HelpTip id="budget.block" topic={t("budget.card.blockLabel")} />
-      </p>
-      <dl className="form-values budget-facts">
-        {scope === "run" && budget.initial_limit_usd !== null ? (
-          <Fact label={t("budget.card.initialLimit")} help="budget.initialLimit" testId="budget-initial">
-            {formatMoney(budget.initial_limit_usd)}
-          </Fact>
-        ) : null}
-        <Fact label={t("budget.card.currentLimit")} help="budget.currentLimit" testId="budget-current">
-          {formatMoney(request.limit_usd)}
-        </Fact>
-        <Fact label={t("budget.card.knownCost")} help="budget.knownCost" testId="budget-spent">
-          {formatMoney(request.spent_usd)}
-          {request.unknown_cost ? (
+          </>
+        }
+        help={<HelpTip id="budget.decision" topic={t("budget.card.title")} />}
+        badges={
+          <>
+            {deadlinePassed ? <Badge tone="idle">{t("budget.status.expired")}</Badge> : <StatusBadge status="awaiting_budget" />}
+            {request.reason === "request_too_large" ? <Badge tone="warning">{t("budget.card.reason.request_too_largeBadge")}</Badge> : null}
+          </>
+        }
+        extra={
+          canDecide ? (
             <>
-              {" "}
-              <Badge tone="warning">{t("budget.card.plusUnknown")}</Badge>
+              <Field
+                label={t("budget.card.newLimit")}
+                htmlFor={inputId}
+                tip="budget.newLimit"
+                hint={max ? t("budget.card.newLimitHintMax", { max: formatMoney(max) }) : t("budget.card.newLimitHint")}
+              >
+                <TextInput
+                  id={inputId}
+                  inputMode="decimal"
+                  autoComplete="off"
+                  value={input}
+                  disabled={busy}
+                  aria-invalid={showProblem ? true : undefined}
+                  aria-describedby={showProblem ? errorId : undefined}
+                  onChange={(event) => {
+                    setInput(event.target.value);
+                    setTouched(true);
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      raise();
+                    }
+                  }}
+                  data-testid="budget-limit-input"
+                />
+              </Field>
+              {showProblem ? (
+                <p className="small text-danger" id={errorId} role="alert" data-testid="budget-limit-error">
+                  {t(`budget.card.validation.${showProblem}`, { current: formatMoney(request.limit_usd), max: formatMoney(max) })}
+                </p>
+              ) : null}
+              <p className="small" aria-live="polite" data-testid="budget-difference">
+                {difference ? (
+                  <>
+                    {t("budget.card.difference", { amount: formatMoney(difference) })}{" "}
+                    <HelpTip id="budget.difference" topic={t("budget.card.differenceLabel")} />
+                  </>
+                ) : null}
+              </p>
             </>
+          ) : null
+        }
+        rejectHint={
+          <span data-testid="budget-scope-note">
+            {t("budget.card.thisRunOnly")} {t("budget.card.chatNever")}
+          </span>
+        }
+        error={decide.error && !conflict ? <ErrorText error={decide.error} /> : null}
+        pending={busy ? (decide.variables?.action === "raise" ? "approve" : "reject") : null}
+        readOnly={!canDecide}
+        confirmReject
+        actionsHelp={<HelpTip id="budget.end" topic={t("budget.card.end")} />}
+        footer={<BudgetRaiseHistory raises={budget.raises ?? []} />}
+        onApprove={raise}
+        onReject={end}
+      >
+        <p className="small" data-testid="budget-reason">
+          {t(`budget.card.reason.${request.reason}`, {
+            next: formatMoney((request.requests?.find((item) => item.refused) ?? request.requests?.[0])?.max_cost_usd ?? null),
+            left: formatMoney(clampZero(moneyDifference(request.limit_usd, request.spent_usd))),
+          })}{" "}
+          <HelpTip id="budget.reason" topic={t("budget.card.reasonLabel")} />
+        </p>
+        <p className="small" data-testid="budget-block">
+          <strong>{blockText(t, request)}</strong> {t("budget.card.block.appliesExactly")}{" "}
+          <HelpTip id="budget.block" topic={t("budget.card.blockLabel")} />
+        </p>
+        <dl className="form-values budget-facts">
+          {scope === "run" && budget.initial_limit_usd !== null ? (
+            <Fact label={t("budget.card.initialLimit")} help="budget.initialLimit" testId="budget-initial">
+              {formatMoney(budget.initial_limit_usd)}
+            </Fact>
           ) : null}
-        </Fact>
-        <Fact label={t("budget.card.remaining")} help="budget.remaining" testId="budget-remaining">
-          {formatMoney(
-            scope === "run" && budget.remaining_usd !== null ? budget.remaining_usd : clampZero(moneyDifference(request.limit_usd, request.spent_usd)),
-          )}
-          {request.unknown_cost ? <span className="muted small"> · {t("budget.card.remainingUnknown")}</span> : null}
-        </Fact>
-        {parseMoney(request.reserved_usd) ? (
-          <Fact label={t("budget.card.reserved")} help="budget.reserved" testId="budget-reserved">
-            {formatMoney(request.reserved_usd)}
+          <Fact label={t("budget.card.currentLimit")} help="budget.currentLimit" testId="budget-current">
+            {formatMoney(request.limit_usd)}
           </Fact>
-        ) : null}
-        {request.deadline ? (
-          <Fact label={t("budget.card.deadline")} help="budget.deadline" testId="budget-deadline">
-            <span className={deadlinePassed ? "text-danger" : undefined}>
-              {deadlinePassed ? t("budget.card.deadlinePassed") : t("budget.card.deadlineAt", { time: formatDate(request.deadline) })}
-            </span>
-          </Fact>
-        ) : null}
-      </dl>
-      <div className="stack-sm">
-        <span className="nd-field-label">
-          {t("budget.card.blocked", { count: request.requests?.length ?? 0 })}{" "}
-          <HelpTip id="budget.blockedRequest" topic={t("budget.card.blockedLabel")} />
-        </span>
-        <ul className="budget-requests small" data-testid="budget-blocked">
-          {(request.requests ?? []).map((item, index) => (
-            <li key={`${item.run_id}:${item.node_id ?? ""}:${index}`}>
-              <code>{item.model}</code>
-              {item.label || item.agent || item.node_id ? <span className="muted"> · {item.label || item.agent || item.node_id}</span> : null}
-              {" · "}
-              {item.bounded && item.max_cost_usd !== null
-                ? t("budget.card.canCostUpTo", { cost: formatMoney(item.max_cost_usd) })
-                : t("budget.card.unbounded")}
-            </li>
-          ))}
-        </ul>
-        {unbounded ? <p className="muted small">{t("budget.card.unboundedHint")}</p> : null}
-      </div>
-      <p className="small" data-testid="budget-suggested">
-        <strong>{t("budget.card.suggestedLabel")}</strong>{" "}
-        {request.suggested_limit_usd
-          ? t("budget.card.suggested", { limit: formatMoney(request.suggested_limit_usd) })
-          : t("budget.card.noSuggestion")}{" "}
-        <HelpTip id="budget.suggested" topic={t("budget.card.suggestedLabel")} />
-      </p>
-      {conflict ? (
-        <div role="status" data-testid="budget-conflict">
-          <Callout tone="warning">
-            {decidedText(t, conflict.params.request_status as string | undefined, conflict.params.decided_by as string | undefined)}
-          </Callout>
-        </div>
-      ) : null}
-      {budget.policy?.can_decide === false ? (
-        <div data-testid="budget-cannot-decide">
-          <Callout tone="info">
-            {t("budget.card.cannotDecide")}
-            {budget.policy.reason ? ` ${problemText(t, { code: budget.policy.reason })}` : ""}
-          </Callout>
-        </div>
-      ) : null}
-      {canDecide ? (
-        <>
-          <Field
-            label={t("budget.card.newLimit")}
-            htmlFor={inputId}
-            tip="budget.newLimit"
-            hint={max ? t("budget.card.newLimitHintMax", { max: formatMoney(max) }) : t("budget.card.newLimitHint")}
-          >
-            <TextInput
-              id={inputId}
-              inputMode="decimal"
-              autoComplete="off"
-              value={input}
-              disabled={busy}
-              aria-invalid={showProblem ? true : undefined}
-              aria-describedby={showProblem ? errorId : undefined}
-              onChange={(event) => {
-                setInput(event.target.value);
-                setTouched(true);
-              }}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  event.preventDefault();
-                  raise();
-                }
-              }}
-              data-testid="budget-limit-input"
-            />
-          </Field>
-          {showProblem ? (
-            <p className="small text-danger" id={errorId} role="alert" data-testid="budget-limit-error">
-              {t(`budget.card.validation.${showProblem}`, { current: formatMoney(request.limit_usd), max: formatMoney(max) })}
-            </p>
-          ) : null}
-          <p className="small" aria-live="polite" data-testid="budget-difference">
-            {difference ? (
+          <Fact label={t("budget.card.knownCost")} help="budget.knownCost" testId="budget-spent">
+            {formatMoney(request.spent_usd)}
+            {request.unknown_cost ? (
               <>
-                {t("budget.card.difference", { amount: formatMoney(difference) })}{" "}
-                <HelpTip id="budget.difference" topic={t("budget.card.differenceLabel")} />
+                {" "}
+                <Badge tone="warning">{t("budget.card.plusUnknown")}</Badge>
               </>
             ) : null}
-          </p>
-        </>
-      ) : null}
-      <p className="muted small" data-testid="budget-scope-note">
-        {t("budget.card.thisRunOnly")} {t("budget.card.chatNever")}
-      </p>
-      {decide.error && !conflict ? (
-        <Callout tone="danger">
-          <ErrorText error={decide.error} />
-        </Callout>
-      ) : null}
-      {canDecide ? (
-        <div className="row-gap approval-card__actions">
-          <Button
-            variant="primary"
-            icon={PlayCircle}
-            busy={busy && decide.variables?.action === "raise"}
-            disabled={busy}
-            aria-disabled={busy || undefined}
-            onClick={raise}
-            data-testid="budget-raise"
-          >
-            {t("budget.card.raise")}
-          </Button>
-          {armed ? (
-            <Button
-              ref={confirmRef}
-              variant="danger"
-              icon={Square}
-              disabled={busy}
-              onClick={end}
-              onBlur={() => setArmed(false)}
-              onKeyDown={(event) => {
-                if (event.key === "Escape") {
-                  event.stopPropagation();
-                  setArmed(false);
-                  endRef.current?.focus();
-                }
-              }}
-              data-testid="budget-end-confirm"
-            >
-              {t("budget.card.endConfirm")}
-            </Button>
-          ) : (
-            <Button
-              ref={endRef}
-              variant="danger"
-              icon={Square}
-              busy={busy && decide.variables?.action === "end"}
-              disabled={busy}
-              onClick={() => setArmed(true)}
-              data-testid="budget-end"
-            >
-              {t("budget.card.end")}
-            </Button>
-          )}
-          <HelpTip id="budget.end" topic={t("budget.card.end")} />
+          </Fact>
+          <Fact label={t("budget.card.remaining")} help="budget.remaining" testId="budget-remaining">
+            {formatMoney(
+              scope === "run" && budget.remaining_usd !== null ? budget.remaining_usd : clampZero(moneyDifference(request.limit_usd, request.spent_usd)),
+            )}
+            {request.unknown_cost ? <span className="muted small"> · {t("budget.card.remainingUnknown")}</span> : null}
+          </Fact>
+          {parseMoney(request.reserved_usd) ? (
+            <Fact label={t("budget.card.reserved")} help="budget.reserved" testId="budget-reserved">
+              {formatMoney(request.reserved_usd)}
+            </Fact>
+          ) : null}
+          {request.deadline ? (
+            <Fact label={t("budget.card.deadline")} help="budget.deadline" testId="budget-deadline">
+              <span className={deadlinePassed ? "text-danger" : undefined}>
+                {deadlinePassed ? t("budget.card.deadlinePassed") : t("budget.card.deadlineAt", { time: formatDate(request.deadline) })}
+              </span>
+            </Fact>
+          ) : null}
+        </dl>
+        <div className="stack-sm">
+          <span className="nd-field-label">
+            {t("budget.card.blocked", { count: request.requests?.length ?? 0 })}{" "}
+            <HelpTip id="budget.blockedRequest" topic={t("budget.card.blockedLabel")} />
+          </span>
+          <ul className="budget-requests small" data-testid="budget-blocked">
+            {(request.requests ?? []).map((item, index) => (
+              <li key={`${item.run_id}:${item.node_id ?? ""}:${index}`}>
+                <code>{item.model}</code>
+                {item.label || item.agent || item.node_id ? <span className="muted"> · {item.label || item.agent || item.node_id}</span> : null}
+                {" · "}
+                {item.bounded && item.max_cost_usd !== null
+                  ? t("budget.card.canCostUpTo", { cost: formatMoney(item.max_cost_usd) })
+                  : t("budget.card.unbounded")}
+              </li>
+            ))}
+          </ul>
+          {unbounded ? <p className="muted small">{t("budget.card.unboundedHint")}</p> : null}
         </div>
-      ) : null}
-      <BudgetRaiseHistory raises={budget.raises ?? []} />
-    </article>
+        <p className="small" data-testid="budget-suggested">
+          <strong>{t("budget.card.suggestedLabel")}</strong>{" "}
+          {request.suggested_limit_usd
+            ? t("budget.card.suggested", { limit: formatMoney(request.suggested_limit_usd) })
+            : t("budget.card.noSuggestion")}{" "}
+          <HelpTip id="budget.suggested" topic={t("budget.card.suggestedLabel")} />
+        </p>
+        {conflict ? (
+          <div role="status" data-testid="budget-conflict">
+            <Callout tone="warning">
+              {decidedText(t, conflict.params.request_status as string | undefined, conflict.params.decided_by as string | undefined)}
+            </Callout>
+          </div>
+        ) : null}
+        {budget.policy?.can_decide === false ? (
+          <div data-testid="budget-cannot-decide">
+            <Callout tone="info">
+              {t("budget.card.cannotDecide")}
+              {budget.policy.reason ? ` ${problemText(t, { code: budget.policy.reason })}` : ""}
+            </Callout>
+          </div>
+        ) : null}
+      </ApprovalCard>
+    </StudioTexts>
   );
 }
 
@@ -487,7 +442,7 @@ export function BudgetRequestCard({ request }: { request: BudgetRequest }) {
   const data = isRunBudget(budget.data) ? budget.data : null;
   if (budget.error) {
     return (
-      <article className="approval-card" data-testid="budget-decision-error">
+      <article className="ui-approval ui-approval--budget" data-testid="budget-decision-error">
         <Link to={`/executions/${request.run_id}`}>{request.workflow_name || request.run_id}</Link>
         <Callout tone="danger">
           <ErrorText error={budget.error} />

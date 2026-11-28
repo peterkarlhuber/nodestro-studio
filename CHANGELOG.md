@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Shared budget decision card (ST-068, 2026-11-28)
+
+- The budget decision card is now the shared `ApprovalCard` of `@nodestro/ui-ai` 0.4.0 (nodestro-ui #11), like the
+  step and tool approvals: "Check and continue" checks the new limit as before, "End run" still asks "Really end the
+  run?" (focus moves there, Escape goes back), a person who may not decide sees the card without decisions, and the
+  earlier raises stay under it. Facts, texts and help are unchanged in six languages. The old `approval-card` frame
+  and its styles are removed; `npm run lint` refuses them. The stylesheet checks of the lint guard test now read the
+  real stylesheets (they were handed over empty before). Lock: `nodestro-ui` at the merge of #11, ai 0.4.0.
+
 ### Shared approval cards (ST-068, 2026-11-28)
 
 - The step and tool approval cards are now the shared `ApprovalCard` of `@nodestro/ui-ai` 0.3.0 (nodestro-ui #10),

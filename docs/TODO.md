@@ -133,7 +133,7 @@ from #121). Both have status `Needs external review`.
 
 ### ST-068 · Shared UI library: move the studio's components to @nodestro/ui-* step by step (N-16)
 
-- **Priority:** P3 Low · **Status:** Open (steps 1, 2 and 5 done, step 6 in part) · **Refs:** N-16, N-17, nodestro-ui `docs/TODO.md`,
+- **Priority:** P3 Low · **Status:** Open (steps 1, 2, 3 and 5 done, step 6 in part) · **Refs:** N-16, N-17, nodestro-ui `docs/TODO.md`,
   `platform/internal-ui.txt`
 - **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`, `ui-help`) are vendored as
   tarballs in `frontend/vendor/`, pinned with their SHA-256 in `platform/internal-ui.txt`, checked by
@@ -150,8 +150,10 @@ from #121). Both have status `Needs external review`.
   Step 2: the step and tool approval cards are the package's `ApprovalCard` (ai 0.3.0), like the workflow tool card;
   the data hooks, the decision, the note to the agent and the remembered grant or deny stay here, the wording through
   `src/lib/uiTexts.tsx`; the lint refuses a card or remember options of the studio's own.
-- **Next steps, in order:** (3) the budget decision card
-  (`runs/BudgetDecisionCard.tsx`); (4) tool call rows, chat messages (`assistant/MessageView.tsx`) and web sources
+  Step 3: the budget decision card is the package's `ApprovalCard` too (ai 0.4.0: "End run" with its second press,
+  read-only for whoever may not decide, the help next to the decisions, the earlier raises under them); the limit,
+  its checks and the decision stay here. The old `approval-card` frame and its styles are gone and refused by the lint.
+- **Next steps, in order:** (4) tool call rows, chat messages (`assistant/MessageView.tsx`) and web sources
   (`runs/WebSources.tsx` onto `SourceList`); (6) buttons, fields, dialogs and sections from `components/ui.tsx`; (7) an alias layer `--nd-*: var(--ui-*)` and a
   codemod, then drop `midnight-citron.css`. Each step keeps the existing tests and browser suites unchanged.
 - **Also:** nodestro-server (`image/Dockerfile`) and nodestro-desktop (`scripts/build_backend.sh`) run `npm ci` on a

@@ -7,7 +7,16 @@ import { ESLint } from "eslint";
 import { describe, expect, it } from "vitest";
 
 const FRONTEND = decodeURIComponent(new URL("../..", import.meta.url).pathname).replace(/\/$/, "");
-const styles = import.meta.glob<string>("../styles/*.css", { eager: true, query: "?raw", import: "default" });
+// Read from disk: with `css: false` (vite.config.ts) vitest hands stylesheets over empty, also with `?raw`, which
+// would let every stylesheet check pass. The frontend has no Node types, so the module is typed here.
+type Fs = { readdirSync(path: string): string[]; readFileSync(path: string, encoding: "utf-8"): string };
+const { readdirSync, readFileSync } = (globalThis as unknown as { process: { getBuiltinModule(id: string): Fs } }).process.getBuiltinModule("node:fs");
+const STYLES = `${FRONTEND}/src/styles`;
+const styles = Object.fromEntries(
+  readdirSync(STYLES)
+    .filter((name) => name.endsWith(".css"))
+    .map((name) => [name, readFileSync(`${STYLES}/${name}`, "utf-8")]),
+);
 const eslint = new ESLint({ cwd: FRONTEND });
 
 async function problems(code: string): Promise<string[]> {
@@ -38,6 +47,7 @@ describe("the help guard", () => {
 
   it("finds no style for the old class in the stylesheets", () => {
     expect(Object.keys(styles).length).toBeGreaterThan(5);
+    expect(styles["app.css"]).toMatch(/\.ui-tooltip/);
     for (const [file, text] of Object.entries(styles)) expect(text, file).not.toMatch(/\.help-tip\b/);
   });
 });
@@ -77,15 +87,23 @@ describe("the approval card guard", () => {
     ["the studio's former remember fields", "function RememberDecision() {\n  return null;\n}\nexport const a = RememberDecision;\n"],
     ["the shared card from elsewhere", 'import { ApprovalCard } from "../runs/cards";\nexport const a = ApprovalCard;\n'],
     ["a re-export of the shared card", 'import { ApprovalCard } from "@nodestro/ui-ai";\nexport { ApprovalCard };\n'],
+    ["the former card frame", 'export const a = <article className="approval-card" />;\n'],
+    ["the former budget card", 'export const a = <article className="approval-card budget-card" />;\n'],
+    ["the former card's actions in a template", "export const a = (x: string) => <div className={`row-gap approval-card__actions ${x}`} />;\n"],
+    ["the former card's head", 'export const a = <header className="approval-card__head" />;\n'],
   ])("fails on %s", async (_name, code) => {
     expect(await problems(code)).not.toEqual([]);
   });
 
-  it("passes the shared card", async () => {
+  it("passes the shared card and the studio's own parts inside it", async () => {
     expect(
       await problems(
-        'import { ApprovalCard } from "@nodestro/ui-ai";\nexport const a = <ApprovalCard title="x" onApprove={() => {}} onReject={() => {}} />;\n',
+        'import { ApprovalCard } from "@nodestro/ui-ai";\nexport const a = (\n  <ApprovalCard title="x" onApprove={() => {}} onReject={() => {}}>\n    <div className="approval-card__note approval-note" />\n  </ApprovalCard>\n);\n',
       ),
     ).toEqual([]);
+  });
+
+  it("finds no style for the former card frame in the stylesheets", () => {
+    for (const [file, text] of Object.entries(styles)) expect(text, file).not.toMatch(/\.(approval-card|budget-card)(\s|\{|,|\.|__head|__actions)/);
   });
 });

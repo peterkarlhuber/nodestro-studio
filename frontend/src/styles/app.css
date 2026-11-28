@@ -5965,42 +5965,6 @@ kbd {
   color: var(--nd-warning);
 }
 
-.approval-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--nd-space-3);
-  margin-top: var(--nd-space-2);
-  padding: 14px;
-  border: 1px solid var(--nd-border);
-  border-radius: var(--nd-radius-md);
-  background: var(--nd-surface);
-  color: var(--nd-text);
-}
-
-.approval-card__head {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--nd-space-2);
-}
-
-.approval-card__head > div {
-  flex: 1;
-}
-
-.approval-card__actions {
-  /* F1: the decision comes after what is reviewed and is not sticky, so Approve is only in reach once the
-     content above it has been scrolled through (run panel, approvals page). */
-  align-items: flex-start;
-  margin: 0 -14px -14px;
-  padding: 10px 14px 14px;
-  border-top: 1px solid var(--nd-border);
-}
-
-.approval-card__actions .disabled-reason--below {
-  /* the reason sits under Reject, the buttons stay on one line */
-  align-items: flex-start;
-}
-
 /* a structured result as labelled fields */
 .structured-output {
   display: flex;
@@ -6162,10 +6126,6 @@ kbd {
   gap: var(--nd-space-1);
   padding-top: var(--nd-space-2);
   border-top: 1px solid var(--nd-border);
-}
-
-.budget-card .approval-card__actions {
-  flex-wrap: wrap;
 }
 
 @media (max-width: 560px) {

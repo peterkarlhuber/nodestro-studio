@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
@@ -193,6 +193,21 @@ describe("BudgetDecisionForm", () => {
     await waitFor(() => expect(decisionPosts(fetch)).toHaveLength(2));
     const keys = decisionPosts(fetch).map(([, init]) => JSON.parse(String((init as RequestInit).body)).idempotency_key);
     expect(keys[0]).toBe(keys[1]);
+  });
+
+  it("is the shared approval card of @nodestro/ui-ai, with the help next to the decisions and the history under them (ST-068)", () => {
+    serveDecisions(() => json(runBudget()));
+    const budget = runBudget();
+    render(wrap(<BudgetDecisionForm budget={budget} request={budget.pending!} />));
+    const card = screen.getByRole("article", { name: "Budget-Entscheidung Angebot schreiben" });
+    expect(card).toHaveClass("ui-approval", "ui-approval--budget");
+    expect(card).toHaveAttribute("data-testid", "budget-decision");
+    expect(card).toHaveAttribute("data-request", "bud_1");
+    const actions = screen.getByRole("button", { name: "Lauf beenden" }).parentElement!;
+    expect(actions).toHaveClass("ui-approval__actions");
+    expect(within(actions).getByRole("button", { name: "Prüfen und fortsetzen" })).toBeInTheDocument();
+    expect(within(actions).getAllByRole("button")).toHaveLength(3);
+    expect(actions.compareDocumentPosition(screen.getByTestId("budget-history")) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
   it("ends the run only after the confirmation", async () => {
