@@ -1409,6 +1409,8 @@
     "refused_dependency": "Le paquet a besoin d’autres bibliothèques ; ces paquets ne sont pas encore pris en charge.",
     "refused_data_part": "Les paquets avec des scripts ou des dossiers de données supplémentaires ne sont pas acceptés.",
     "refused_exists": "Ce paquet ou une autre version est déjà conservé ; ajoutez-le comme mise à jour.",
-    "refused_revoked": "Ce paquet a été révoqué et ne sera plus jamais accepté."
+    "refused_revoked": "Ce paquet a été révoqué et ne sera plus jamais accepté.",
+    "refused_reserved_name": "Le paquet utilise le nom d’un paquet ou d’un module de confiance ou intégré.",
+    "refused_storage": "Le paquet n’a pas pu être enregistré. Vérifiez l’espace libre et réessayez."
   }
 }

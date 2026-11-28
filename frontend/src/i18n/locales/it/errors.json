@@ -1409,6 +1409,8 @@
     "refused_dependency": "Il pacchetto richiede altre librerie; questi pacchetti non sono ancora supportati.",
     "refused_data_part": "I pacchetti con script o cartelle di dati aggiuntive non sono accettati.",
     "refused_exists": "Questo pacchetto o un'altra sua versione è già conservato; aggiungerlo come aggiornamento.",
-    "refused_revoked": "Questo pacchetto è stato revocato e non viene mai più accettato."
+    "refused_revoked": "Questo pacchetto è stato revocato e non viene mai più accettato.",
+    "refused_reserved_name": "Il pacchetto usa il nome di un pacchetto o modulo attendibile o incluso.",
+    "refused_storage": "Non è stato possibile salvare il pacchetto. Controlla lo spazio libero e riprova."
   }
 }

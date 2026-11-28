@@ -1409,6 +1409,8 @@
     "refused_dependency": "The package needs other libraries; such packages are not supported yet.",
     "refused_data_part": "Packages with scripts or extra data folders are not accepted.",
     "refused_exists": "This package or another version of it is kept already; add it as an update.",
-    "refused_revoked": "This package was revoked and is never accepted again."
+    "refused_revoked": "This package was revoked and is never accepted again.",
+    "refused_reserved_name": "The package uses the name of a trusted or built-in package or module.",
+    "refused_storage": "The package could not be written to the store. Check the free space and try again."
   }
 }

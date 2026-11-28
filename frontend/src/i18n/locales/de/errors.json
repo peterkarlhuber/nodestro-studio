@@ -1409,6 +1409,8 @@
     "refused_dependency": "Das Paket benötigt weitere Bibliotheken; solche Pakete werden noch nicht unterstützt.",
     "refused_data_part": "Pakete mit Skripten oder zusätzlichen Datenordnern werden nicht angenommen.",
     "refused_exists": "Dieses Paket oder eine andere Version davon wird bereits aufbewahrt; füge es als Aktualisierung hinzu.",
-    "refused_revoked": "Dieses Paket wurde widerrufen und wird nie wieder angenommen."
+    "refused_revoked": "Dieses Paket wurde widerrufen und wird nie wieder angenommen.",
+    "refused_reserved_name": "Das Paket verwendet den Namen eines vertrauenswürdigen oder mitgelieferten Pakets oder Moduls.",
+    "refused_storage": "Das Paket konnte nicht gespeichert werden. Prüfe den freien Speicherplatz und versuche es erneut."
   }
 }

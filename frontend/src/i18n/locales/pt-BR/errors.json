@@ -1409,6 +1409,8 @@
     "refused_dependency": "O pacote precisa de outras bibliotecas; esses pacotes ainda não são suportados.",
     "refused_data_part": "Pacotes com scripts ou pastas de dados extras não são aceitos.",
     "refused_exists": "Este pacote ou outra versão dele já está guardado; adicione-o como atualização.",
-    "refused_revoked": "Este pacote foi revogado e nunca mais é aceito."
+    "refused_revoked": "Este pacote foi revogado e nunca mais é aceito.",
+    "refused_reserved_name": "O pacote usa o nome de um pacote ou módulo confiável ou incluído.",
+    "refused_storage": "Não foi possível salvar o pacote. Verifique o espaço livre e tente de novo."
   }
 }

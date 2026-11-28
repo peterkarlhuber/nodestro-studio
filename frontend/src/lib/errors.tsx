@@ -63,6 +63,8 @@ export const STORE_REASONS = new Set([
   "data_part",
   "exists",
   "revoked",
+  "reserved_name",
+  "storage",
 ]);
 
 /** Reasons of ``folder.not_grantable`` that are the file system's own codes (``fs.<reason>``). */
