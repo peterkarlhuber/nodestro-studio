@@ -254,9 +254,17 @@ describe("the conversation area", () => {
     expect(await within(answer).findByText("20 Grad")).toBeInTheDocument();
     expect(within(answer).getByTestId("conversation-tool-call")).toHaveTextContent("web_search");
     expect(within(answer).getByTestId("conversation-tool-call")).toHaveTextContent("dauerte 1000 ms");
-    expect(within(answer).getByRole("link", { name: "Wetter" })).toHaveAttribute("href", "https://example.org/wetter");
+    expect(within(answer).getByRole("link", { name: /^Wetter \(/ })).toHaveAttribute("href", "https://example.org/wetter");
     expect(within(answer).getByTestId("conversation-answer-meta")).toHaveTextContent("ollama:qwen3:8b");
     expect(within(answer).getByRole("link", { name: /Ausführung öffnen/ })).toHaveAttribute("href", "/executions/run_7");
+    // The shared ChatMessage, ToolCallRow and SourceList of @nodestro/ui-ai (ST-068 step 4).
+    expect(answer).toHaveClass("ui-chat-message", "ui-chat-message--assistant");
+    expect(answer).toHaveAccessibleName("Antwort");
+    expect(answer).not.toHaveAttribute("aria-busy");
+    const call = within(answer).getByRole("group", { name: /web_search/ });
+    expect(call).toHaveClass("ui-tool-call", "ui-tool-call--disclosure");
+    expect(call.tagName).toBe("DETAILS");
+    expect(within(answer).getByTestId("web-sources")).toHaveClass("ui-sources");
     // A file no longer in the conversation keeps its name, without a download.
     const user = screen.getByTestId("conversation-message-user");
     expect(within(user).getByText("alt.pdf")).toBeInTheDocument();
@@ -294,6 +302,8 @@ describe("the conversation area", () => {
     );
     show("/conversations/conv_1");
     const card = await screen.findByTestId("tool-approval");
+    // An answer still being written is busy (the shared ChatMessage).
+    expect(screen.getByTestId("conversation-message-answer")).toHaveAttribute("aria-busy", "true");
     expect(within(card).getByLabelText("Argumente, genau so, wie sie gesendet werden")).toHaveTextContent("a@example.org");
   });
 });

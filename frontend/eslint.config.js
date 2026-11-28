@@ -45,6 +45,23 @@ export const APPROVAL_GUARD = [
   { selector: `JSXAttribute[name.name='className'] TemplateElement[value.raw=${OLD_CARD_CLASS}]`, message: AI_ONLY_SHARED },
 ];
 
+const CHAT_ONLY_SHARED =
+  "Chat messages, tool call rows and source lists are the shared ChatMessage, ToolCallRow and SourceList of @nodestro/ui-ai (the studio keeps the data; its look through app.css, its wording through lib/uiTexts.tsx).";
+const OLD_CHAT_CLASS = "/(^|\\s)(chat-answer|tool-calls__body|web-sources__item|web-sources__text)(\\s|$)/";
+
+/** Selectors of the studio's former chat messages, tool call rows and web source list (ST-068 step 4). */
+export const CHAT_GUARD = [
+  {
+    selector:
+      "ImportDeclaration[importKind!='type'][source.value!='@nodestro/ui-ai'] > ImportSpecifier[importKind!='type'][imported.name=/^(ChatMessage|ToolCallRow|SourceList)$/]",
+    message: CHAT_ONLY_SHARED,
+  },
+  { selector: "ExportNamedDeclaration[source=null] > ExportSpecifier[local.name=/^(ToolCallRow|SourceList)$/]", message: CHAT_ONLY_SHARED },
+  { selector: ":matches(FunctionDeclaration, ClassDeclaration, VariableDeclarator)[id.name=/^(ChatMessage|ToolCallRow|SourceList|ToolCall)$/]", message: CHAT_ONLY_SHARED },
+  { selector: `JSXAttribute[name.name='className'] Literal[value=${OLD_CHAT_CLASS}]`, message: CHAT_ONLY_SHARED },
+  { selector: `JSXAttribute[name.name='className'] TemplateElement[value.raw=${OLD_CHAT_CLASS}]`, message: CHAT_ONLY_SHARED },
+];
+
 export default tseslint.config(
   { ignores: ["dist", "node_modules", "e2e"] },
   {
@@ -60,11 +77,12 @@ export default tseslint.config(
   {
     // ST-068: every help button is the shared HelpTip and every tooltip the shared Tooltip of @nodestro/ui-core,
     // with the studio's help registry (lib/platformHelp.tsx); the step, tool and budget approval cards are the
-    // shared ApprovalCard of @nodestro/ui-ai, also the budget card. The studio's own versions are gone; this keeps them from coming back (tested in
+    // shared ApprovalCard of @nodestro/ui-ai, and chat messages, tool call rows and web sources its ChatMessage,
+    // ToolCallRow and SourceList. The studio's own versions are gone; this keeps them from coming back (tested in
     // src/lint/helpGuard.test.ts).
     files: ["src/**/*.{ts,tsx}"],
     rules: {
-      "no-restricted-syntax": ["error", ...HELP_GUARD, ...TOOLTIP_GUARD, ...APPROVAL_GUARD],
+      "no-restricted-syntax": ["error", ...HELP_GUARD, ...TOOLTIP_GUARD, ...APPROVAL_GUARD, ...CHAT_GUARD],
     },
   },
 );

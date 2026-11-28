@@ -1,9 +1,11 @@
 // The web sources of a run (NAL-A2): ids, plain titles, domain, time and read/hit status; safe links.
 
 import { cleanup, render, screen, within } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it } from "vitest";
 
 import type { Run, SourceEntry } from "../api/types";
+import { PlatformHelp } from "../lib/platformHelp";
 import { WebSources, sourceHref } from "./WebSources";
 
 afterEach(cleanup);
@@ -16,9 +18,24 @@ const source = (entry: Partial<SourceEntry> & Pick<SourceEntry, "id" | "url">): 
   ...entry,
 });
 
-const show = (sources: SourceEntry[] | undefined) => render(<WebSources run={{ sources } as Run} />);
+const show = (sources: SourceEntry[] | undefined) =>
+  render(
+    <MemoryRouter>
+      <PlatformHelp>
+        <WebSources run={{ sources } as Run} />
+      </PlatformHelp>
+    </MemoryRouter>,
+  );
 
 describe("web sources of a run", () => {
+  it("is the shared SourceList of @nodestro/ui-ai, a section named by its heading (ST-068)", () => {
+    show([source({ id: "S1", url: "https://example.org" })]);
+    const list = screen.getByRole("region", { name: "Webquellen" });
+    expect(list).toHaveClass("ui-sources");
+    expect(list).toHaveAttribute("data-testid", "web-sources");
+    expect(screen.getByRole("heading", { level: 2, name: "Webquellen" })).toBeInTheDocument();
+  });
+
   it("is hidden without sources", () => {
     show(undefined);
     expect(screen.queryByTestId("web-sources")).not.toBeInTheDocument();
@@ -50,7 +67,8 @@ describe("web sources of a run", () => {
     expect(first.getByText(/example\.org/)).toBeInTheDocument();
     expect(first.getByText("Nur Treffer")).toBeInTheDocument();
     const second = within(screen.getByTestId("web-source-S2"));
-    expect(second.getByRole("link", { name: "Read page" })).toHaveAttribute("href", "https://docs.example.com/page");
+    // The shared SourceList (ST-068) also says that the link opens a new tab.
+    expect(second.getByRole("link", { name: "Read page (öffnet in einem neuen Tab)" })).toHaveAttribute("href", "https://docs.example.com/page");
     expect(second.getByText(/docs\.example\.com/)).toBeInTheDocument();
     expect(second.getByText("Gelesen")).toBeInTheDocument();
   });

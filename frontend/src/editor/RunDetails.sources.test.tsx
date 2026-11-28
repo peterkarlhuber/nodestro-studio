@@ -2,6 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it } from "vitest";
 
@@ -73,5 +74,24 @@ describe("knowledge sources of a result", () => {
   it("is not shown without a knowledge search", () => {
     show(state([]));
     expect(screen.queryByTestId("used-sources")).toBeNull();
+  });
+});
+
+describe("tool calls of a step", () => {
+  it("are the shared ToolCallRow of @nodestro/ui-ai as compact disclosures with the step's words (ST-068)", async () => {
+    show(state([search("ok"), { ...search("kaputt"), id: "c2", name: "mailer", input: { to: "a@example.org" }, is_error: true }]));
+    await userEvent.click(screen.getByRole("tab", { name: /Tools/ }));
+    const rows = screen.getAllByRole("group", { name: /search|mailer/ });
+    expect(rows).toHaveLength(2);
+    for (const row of rows) expect(row).toHaveClass("ui-tool-call", "ui-tool-call--disclosure");
+    const failed = rows[1] as HTMLDetailsElement;
+    expect(failed.open).toBe(false);
+    expect(failed.querySelector("summary")).toHaveTextContent(/mailer.*Fehler · .* · /);
+    await userEvent.click(failed.querySelector("summary")!);
+    expect(failed.open).toBe(true);
+    expect(within(failed).getByText("Eingabe")).toBeInTheDocument();
+    expect(within(failed).getByText("Ergebnis")).toBeInTheDocument();
+    expect(within(failed).getByText(/a@example\.org/)).toBeInTheDocument();
+    expect(within(failed).getByText("kaputt")).toHaveClass("code-block--error");
   });
 });

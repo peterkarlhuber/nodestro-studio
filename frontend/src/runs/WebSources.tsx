@@ -1,7 +1,9 @@
 // The web sources of a run (NAL-A2, runtime source ledger): every search hit and every page its web tools saw, by
-// id (S1, S2 ...), so cited sources (`source: ledger` result fields) can be looked up. Titles come from web pages:
-// they are shown as plain text, and a link opens only an http(s) address, in a new tab without a referrer.
+// id (S1, S2 ...), so cited sources (`source: ledger` result fields) can be looked up. The list is the shared
+// SourceList of @nodestro/ui-ai (ST-068): titles come from web pages and are shown as plain text, and a link opens
+// only an http(s) address, in a new tab without a referrer.
 
+import { SourceList } from "@nodestro/ui-ai";
 import { Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -23,55 +25,39 @@ export function sourceHref(source: SourceEntry): string | null {
   return null;
 }
 
-function domainOf(source: SourceEntry): string {
-  try {
-    return new URL(source.final_url || source.url).hostname.replace(/^www\./, "");
-  } catch {
-    return "";
-  }
-}
-
 /** The sources of a run, or of anything that lists them the same way (an answer of a conversation). */
 export function WebSources({ run }: { run: Pick<Run, "sources"> }) {
   const { t } = useTranslation();
   const sources = run.sources ?? [];
-  if (!sources.length) return null;
   return (
-    <section className="panel stack" aria-label={t("runs.webSources.title")} data-testid="web-sources">
-      <h2 className="panel__title">
-        <Globe size={14} aria-hidden /> {t("runs.webSources.title")}
-      </h2>
-      <p className="muted small">{t("runs.webSources.hint")}</p>
-      <ul className="web-sources">
-        {sources.map((source) => {
-          const href = sourceHref(source);
-          const title = source.title.trim() || source.url || source.id;
-          return (
-            <li key={source.id} className="web-sources__item" data-testid={`web-source-${source.id}`}>
-              <code>{source.id}</code>
-              <span className="web-sources__text">
-                {href ? (
-                  <a href={href} target="_blank" rel="noopener noreferrer">
-                    {title}
-                  </a>
-                ) : (
-                  <span>{title}</span>
-                )}
-                <span className="muted small">
-                  {domainOf(source)}
-                  {domainOf(source) ? " · " : ""}
-                  <time dateTime={source.retrieved_at} title={formatDate(source.retrieved_at)}>
-                    {formatTime(source.retrieved_at)}
-                  </time>
-                </span>
-              </span>
-              <Badge tone={source.origin === "fetched" ? "success" : "idle"}>
-                {t(source.origin === "fetched" ? "runs.webSources.fetched" : "runs.webSources.search")}
-              </Badge>
-            </li>
-          );
-        })}
-      </ul>
-    </section>
+    <SourceList
+      className="panel stack web-sources"
+      data-testid="web-sources"
+      level={2}
+      hideEmpty
+      title={
+        <>
+          <Globe size={14} aria-hidden /> {t("runs.webSources.title")}
+        </>
+      }
+      hint={t("runs.webSources.hint")}
+      itemProps={(item) => ({ "data-testid": `web-source-${item.id}` }) as React.LiHTMLAttributes<HTMLLIElement>}
+      sources={sources.map((source) => ({
+        id: source.id,
+        title: source.title.trim() || source.url || source.id,
+        // The address that opens: after redirects when the page was read.
+        url: sourceHref(source) ?? (source.final_url || source.url),
+        meta: (
+          <time dateTime={source.retrieved_at} title={formatDate(source.retrieved_at)}>
+            {formatTime(source.retrieved_at)}
+          </time>
+        ),
+        badge: (
+          <Badge tone={source.origin === "fetched" ? "success" : "idle"}>
+            {t(source.origin === "fetched" ? "runs.webSources.fetched" : "runs.webSources.search")}
+          </Badge>
+        ),
+      }))}
+    />
   );
 }

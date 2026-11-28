@@ -107,3 +107,28 @@ describe("the approval card guard", () => {
     for (const [file, text] of Object.entries(styles)) expect(text, file).not.toMatch(/\.(approval-card|budget-card)(\s|\{|,|\.|__head|__actions)/);
   });
 });
+
+describe("the chat guard (ST-068 step 4)", () => {
+  it.each([
+    ["an answer column of its own", 'export const a = <div className="chat-answer" />;\n'],
+    ["a tool call body of its own", "export const a = (x: string) => <div className={`tool-calls__body ${x}`} />;\n"],
+    ["a source item of its own", 'export const a = <li className="web-sources__item" />;\n'],
+    ["a tool call row of its own", "export function ToolCall() {\n  return null;\n}\n"],
+    ["a source list of its own", "export const SourceList = () => null;\n"],
+    ["the shared row from elsewhere", 'import { ToolCallRow } from "../runs/rows";\nexport const a = ToolCallRow;\n'],
+  ])("fails on %s", async (_name, code) => {
+    expect(await problems(code)).not.toEqual([]);
+  });
+
+  it("passes the shared components and the studio's own message type", async () => {
+    expect(
+      await problems(
+        'import { ChatMessage, SourceList, ToolCallRow } from "@nodestro/ui-ai";\nimport type { ChatMessage as Stored } from "../api/types";\nexport const a = (m: Stored) => (\n  <ChatMessage role="assistant" className="chat-message">\n    {m.content}\n    <ToolCallRow name="x" status="running" disclosure />\n    <SourceList sources={[]} className="web-sources" />\n  </ChatMessage>\n);\n',
+      ),
+    ).toEqual([]);
+  });
+
+  it("finds no style for the former answer column, tool call body or source items", () => {
+    for (const [file, text] of Object.entries(styles)) expect(text, file).not.toMatch(/\.(chat-answer|tool-calls__body|web-sources__item|web-sources__text)\b/);
+  });
+});
