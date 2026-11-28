@@ -124,6 +124,21 @@ try {
   const badge = page.locator(".nav-item__badge").first();
   check((await badge.textContent()).trim() === "1", "The navigation badge counts the waiting call");
   await shot("approvals-01-inbox");
+  // The card's own controls keep the shared look (ST-068 step 6): the studio's skins for its own buttons and fields
+  // stay off them. A probe inside the card resolves the shared tokens for the comparison.
+  const look = await card.evaluate((element) => {
+    const probe = (style) => {
+      const span = document.createElement("span");
+      span.style.cssText = style;
+      element.append(span);
+      const { backgroundColor, fontSize, fontWeight } = getComputedStyle(span);
+      span.remove();
+      return { backgroundColor, fontSize, fontWeight };
+    };
+    const reject = [...element.querySelectorAll(".ui-approval__actions > .ui-button")].find((button) => button.textContent.includes("Ablehnen"));
+    return { reject: reject ? getComputedStyle(reject).backgroundColor : null, danger: probe("background: var(--ui-color-danger)").backgroundColor };
+  });
+  check(look.reject === look.danger, `The card's reject button keeps the shared danger fill (${look.reject} vs ${look.danger})`);
   await card.getByRole("button", { name: "Diesen Aufruf erlauben" }).click();
   const approved = await finished(first.run.id);
   check(approved.status === "succeeded", `The approved run succeeds (${approved.status})`);
