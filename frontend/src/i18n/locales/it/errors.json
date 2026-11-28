@@ -1412,5 +1412,12 @@
     "refused_revoked": "Questo pacchetto è stato revocato e non viene mai più accettato.",
     "refused_reserved_name": "Il pacchetto usa il nome di un pacchetto o modulo attendibile o incluso.",
     "refused_storage": "Non è stato possibile salvare il pacchetto. Controlla lo spazio libero e riprova."
+  },
+  "workflow_tool": {
+    "approval_required": "Questo workflow può modificare qualcosa e il suo avvio non può essere confermato qui perché le approvazioni degli strumenti sono disattivate.",
+    "disabled": "Gli strumenti workflow sono disattivati qui, quindi {{node}} non può avviarsi. Rimuovi i suoi strumenti workflow o chiedi alla tua amministrazione.",
+    "missing": "Il workflow dello strumento {{name}} (o la sua versione fissa) non esiste più.",
+    "name_taken": "Lo strumento workflow {{name}} ha il nome di un altro strumento dell’agente. Scegli un altro nome.",
+    "not_waiting": "L’agente che ha avviato questo workflow non lo attende più (stato: {{status}}), quindi la decisione non è stata presa."
   }
 }

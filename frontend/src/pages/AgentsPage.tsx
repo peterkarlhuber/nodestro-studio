@@ -269,7 +269,10 @@ export function AgentsPage() {
                         <span className="muted small">
                           {modelLabel(template.agent.model)} ·{" "}
                           {t("agents.toolCount", {
-                            count: template.agent.tools.length + template.agent.server_tools.length,
+                            count:
+                              template.agent.tools.length +
+                              template.agent.server_tools.length +
+                              (template.agent.workflow_tools?.length ?? 0),
                           })}
                         </span>
                       </div>

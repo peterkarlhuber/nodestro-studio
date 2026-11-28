@@ -1412,5 +1412,12 @@
     "refused_revoked": "Ce paquet a été révoqué et ne sera plus jamais accepté.",
     "refused_reserved_name": "Le paquet utilise le nom d’un paquet ou d’un module de confiance ou intégré.",
     "refused_storage": "Le paquet n’a pas pu être enregistré. Vérifiez l’espace libre et réessayez."
+  },
+  "workflow_tool": {
+    "approval_required": "Ce workflow peut modifier quelque chose, et son démarrage ne peut pas être confirmé ici, car les validations d’outils sont désactivées.",
+    "disabled": "Les outils workflow sont désactivés ici, donc {{node}} ne peut pas démarrer. Retirez ses outils workflow ou demandez à votre administration.",
+    "missing": "Le workflow de l’outil {{name}} (ou sa version fixe) n’existe plus.",
+    "name_taken": "L’outil workflow {{name}} porte le nom d’un autre outil de l’agent. Choisissez un autre nom.",
+    "not_waiting": "L’agent qui a démarré ce workflow ne l’attend plus (statut : {{status}}) ; la décision n’a pas été prise en compte."
   }
 }

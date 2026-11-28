@@ -61,6 +61,17 @@ En dessous, vous activez les **outils serveur d’Anthropic** : *Recherche web*,
 
 L’agent décide lui-même s’il appelle un outil et quand, d’après son nom et sa description. Le nombre d’appels permis dépend de [Tours d’outils max. et Outils en parallèle](/docs/agenten#limits) ; l’obligation d’appeler dépend du [Tool choice](/docs/agenten#tool-choice).
 
+## Workflows comme outils {#workflow-tools}
+<!-- keywords: outil workflow, workflow comme outil, version fixe, workflow imbriqué, validation, arguments, fichiers de résultat -->
+
+Un agent peut démarrer un workflow enregistré comme outil. C’est **désactivé par défaut** : la partie **Workflows comme outils** dans les **Outils** de l’agent ne le propose que si votre administration a activé les outils workflow. Tant qu’ils sont désactivés, un agent qui a déjà des outils workflow les affiche avec une remarque et ne démarre pas tant qu’ils ne sont pas retirés.
+
+- **Ajouter** : **Ajouter un workflow comme outil** ouvre une boîte de dialogue. Choisissez le workflow et l’une de ses versions enregistrées. Avant l’ajout, la boîte de dialogue montre le nom de l’outil que voit le modèle, les arguments que le modèle remplit (les champs du formulaire de démarrage ; les champs de fichier ne sont jamais proposés, donc un workflow qui a besoin de fichiers au démarrage ne peut pas être ajouté) et ce que le workflow peut faire.
+- **Version fixe** : l’agent appelle toujours la version choisie. Quand une version plus récente est enregistrée, l’éditeur et la conversation la signalent seulement ; rien ne change tant que vous ne modifiez pas l’agent.
+- **Ce qu’il peut faire** : l’accès le plus haut (lecture seule, modifie des données, supprime) et la portée la plus haute (reste dans Nodestro, agit vers l’extérieur) de tout ce qu’il contient, à toute profondeur : ses agents et leurs modèles, outils, fichiers de résultat, sous-workflows, équipes et outils workflow imbriqués. L’inconnu compte comme modifiant et externe. Chaque appel le recalcule, et la valeur la plus haute compte.
+- **Validation** : un workflow qui peut modifier quelque chose attend votre validation avant chaque démarrage. La carte nomme le workflow et sa version fixe et montre les arguments et ce qu’il peut faire ; la décision vaut pour ce démarrage seulement. Les étapes de validation et les appels d’outils dans le workflow apparaissent aussi comme cartes dans la réponse.
+- **Résultat** : la sortie du workflow revient à l’agent ; ses fichiers de résultat sont des pièces jointes de la réponse et se téléchargent depuis l’exécution du workflow.
+
 ## Attribuer des connaissances {#wissen}
 <!-- keywords: attribuer des connaissances, fichiers, pdf, contexte, à la demande, recherche, citations -->
 

@@ -1,0 +1,79 @@
+{
+  "fixedVersion": "Versão {{version}} (fixa)",
+  "newerVersion": "Mais recente: versão {{version}}",
+  "noArguments": "Sem argumentos.",
+  "effect": {
+    "label": "O que o fluxo de trabalho pode fazer",
+    "title": "O que o fluxo de trabalho pode fazer, em qualquer profundidade",
+    "unknownEffect": "Ainda não calculado. Cada chamada o calcula de novo antes do início.",
+    "memory": "Usa memória persistente",
+    "approvals_one": "{{count}} etapa de aprovação",
+    "approvals_other": "{{count}} etapas de aprovação",
+    "scope": "Conta tudo o que ele contém: seus agentes e modelos, ferramentas, arquivos de resultado, subfluxos, equipes e ferramentas de fluxo aninhadas. Cada chamada o calcula de novo, e o valor mais alto conta.",
+    "raised": "Agora ele pode fazer mais do que quando foi adicionado. A chamada é perguntada com o valor atual.",
+    "contains_one": "Contém mais {{count}} fluxo de trabalho",
+    "contains_other": "Contém mais {{count}} fluxos de trabalho",
+    "nestedItem": "{{name}} (versão {{version}})",
+    "unknown": "Desconhecido, tratado como alterador e externo: {{items}}"
+  },
+  "approval": {
+    "title": "Iniciar o fluxo de trabalho “{{name}}”",
+    "asTool": "como ferramenta {{tool}}",
+    "help": "Sobre fluxos de trabalho como ferramentas",
+    "argumentsList": "Argumentos por campo",
+    "everyStart": "Um fluxo de trabalho que pode alterar algo é perguntado antes de cada início. Esta decisão vale só para este início e não é lembrada.",
+    "rejectHint": "Se rejeitado, o fluxo de trabalho não inicia e o agente fica sabendo que foi recusado. Sem decisão, o início conta como rejeitado.",
+    "startedToast": "Início permitido"
+  },
+  "call": {
+    "label": "Fluxo de trabalho {{name}}, versão {{version}}",
+    "openRun": "Abrir a execução do fluxo de trabalho",
+    "waiting": "O fluxo de trabalho espera uma decisão",
+    "stepWaiting": "Uma etapa de aprovação do fluxo de trabalho espera por você.",
+    "stepRejectHint": "O que uma rejeição faz é definido na etapa de aprovação do fluxo de trabalho.",
+    "toolWaiting": "Uma chamada de ferramenta do fluxo de trabalho (“{{tool}}”) espera aprovação.",
+    "openApprovals": "Abrir aprovações",
+    "files": "Arquivos de resultado do fluxo de trabalho",
+    "filesAttached_one": "{{count}} arquivo de resultado, anexado à resposta: {{names}}",
+    "filesAttached_other": "{{count}} arquivos de resultado, anexados à resposta: {{names}}",
+    "attachments": "Anexos da resposta"
+  },
+  "updates": {
+    "intro": "Existe uma versão mais recente para ferramentas de fluxo deste agente. O agente mantém sua versão fixa até alguém alterá-lo:",
+    "item": "{{name}} usa a versão {{version}}, a mais recente é {{latest}}"
+  },
+  "section": {
+    "title": "Fluxos de trabalho como ferramentas",
+    "help": "Sobre fluxos de trabalho como ferramentas",
+    "off": "As ferramentas de fluxo estão desligadas aqui. Este agente não inicia enquanto tiver ferramentas de fluxo: remova-as ou peça à sua administração para ligá-las.",
+    "add": "Adicionar fluxo de trabalho como ferramenta",
+    "remove": "Remover a ferramenta de fluxo {{name}}",
+    "full": "No máximo {{max}} ferramentas de fluxo por agente.",
+    "hint": "O agente pode iniciar um fluxo de trabalho salvo em uma versão fixa e recebe seu resultado e seus arquivos."
+  },
+  "dialog": {
+    "title": "Adicionar um fluxo de trabalho como ferramenta",
+    "description": "O agente chama o fluxo de trabalho na versão que você escolher aqui. Uma versão mais recente só é informada e nunca usada sozinha.",
+    "workflow": "Fluxo de trabalho",
+    "chooseWorkflow": "Escolha um fluxo de trabalho",
+    "noVersions": "Este fluxo de trabalho ainda não tem versão salva. Salve-o primeiro.",
+    "version": "Versão",
+    "versionHint": "Fixa: o agente sempre chama esta versão.",
+    "versionOption": "Versão {{version}} · {{date}}",
+    "preview": "Prévia da ferramenta",
+    "arguments": "Argumentos que o modelo preenche",
+    "argName": "Nome",
+    "argType": "Tipo",
+    "argDescription": "Descrição",
+    "required": "obrigatório",
+    "blocked": "Este fluxo de trabalho precisa de arquivos no início ({{fields}}). Um modelo não consegue preencher campos de arquivo, então ele não pode rodar como ferramenta.",
+    "asked": "Este fluxo de trabalho pode alterar algo: cada início espera aprovação na conversa ou na execução.",
+    "name": "Nome da ferramenta",
+    "nameHint": "O nome que o modelo vê.",
+    "name_invalid": "Use só letras, dígitos, _ e -, no máximo 64 caracteres.",
+    "name_taken": "O agente já tem uma ferramenta com este nome.",
+    "toolDescription": "Descrição para o modelo (opcional)",
+    "toolDescriptionHint": "Adicionada à descrição própria do fluxo de trabalho.",
+    "add": "Adicionar"
+  }
+}

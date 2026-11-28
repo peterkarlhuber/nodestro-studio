@@ -16,6 +16,24 @@
   9cf9d9c, #232, plus a test fix for the component jobs); `nodestro-api` (#192) and `nodestro-sdk` (#154) at the heads
   of their `claude/w7-ext-store`. Re-pin all three to their merge commits once they merge.
 
+### N-20 studio interface (Welle 7)
+
+- New (N-20, off by default: `NODESTRO_WORKFLOW_TOOLS`): workflows as tools in the studio. The agent editor's
+  **Tools** section lists an agent's workflow tools (tool name, workflow, fixed version, what it may do) and, only
+  while `/api/meta` lists `workflow_tools`, offers **Add workflow as tool**: a dialog (`@nodestro/ui-core` Dialog)
+  picks a workflow and a saved version, reads `GET /api/workflows/{id}/versions/{n}/tool` and shows the effect
+  (access, reach, memory, approval steps, the workflows inside at every depth, unknown parts), the arguments and the
+  newest version before the binding is added; a workflow with required file fields cannot be added. A workflow tool's
+  start gets its own approval card (`@nodestro/ui-ai` ApprovalCard: fixed version, arguments as a list and as JSON,
+  the effect it is asked with, decided for this start only, never remembered). A conversation's tool call shows the
+  workflow's run, status and cost, the approval steps and tool calls its run waits for as cards, and the answer's
+  `result_files` as attachments; newer saved versions are reported. Texts in six languages (also for the
+  `workflow_tool.*` codes), help entries and a documentation section (`agenten#workflow-tools`).
+- Tests: `src/workflowTools/workflowTools.test.tsx`; the conversations browser suite (its server switches workflow
+  tools and tool approvals on for itself) covers the start card, the workflow's approval step, the result file and
+  the dialog against the real `/api/meta` feature. No new suite or CI job.
+- Lock: `nodestro-api` 74b3238 (#191: `workflow_tools` in `/api/meta` features), `nodestro-runtime` b4d11ad (master).
+
 ### N-22 R1 paired CI (2026-11-27)
 
 - CI (N-22 R1): the component jobs (`platform`, `components-at-master`) close the hosted runner's interpreter

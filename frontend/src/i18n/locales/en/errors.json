@@ -1412,5 +1412,12 @@
     "refused_revoked": "This package was revoked and is never accepted again.",
     "refused_reserved_name": "The package uses the name of a trusted or built-in package or module.",
     "refused_storage": "The package could not be written to the store. Check the free space and try again."
+  },
+  "workflow_tool": {
+    "approval_required": "This workflow may change something, and its start cannot be confirmed here because tool approvals are off.",
+    "disabled": "Workflow tools are switched off here, so {{node}} cannot start. Remove its workflow tools or ask your administrator.",
+    "missing": "The workflow of the tool {{name}} (or its fixed version) no longer exists.",
+    "name_taken": "The workflow tool {{name}} has the name of another tool of the agent. Choose another name.",
+    "not_waiting": "The agent that started this workflow no longer waits for it (status: {{status}}), so the decision was not taken."
   }
 }

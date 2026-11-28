@@ -1412,5 +1412,12 @@
     "refused_revoked": "Este paquete fue revocado y nunca se vuelve a aceptar.",
     "refused_reserved_name": "El paquete usa el nombre de un paquete o módulo de confianza o incluido.",
     "refused_storage": "No se pudo guardar el paquete. Comprueba el espacio libre y vuelve a intentarlo."
+  },
+  "workflow_tool": {
+    "approval_required": "Este flujo de trabajo puede modificar algo y su inicio no se puede confirmar aquí porque las aprobaciones de herramientas están desactivadas.",
+    "disabled": "Las herramientas de flujo están desactivadas aquí, así que {{node}} no puede iniciarse. Quita sus herramientas de flujo o consulta a tu administración.",
+    "missing": "El flujo de trabajo de la herramienta {{name}} (o su versión fija) ya no existe.",
+    "name_taken": "La herramienta de flujo {{name}} tiene el nombre de otra herramienta del agente. Elige otro nombre.",
+    "not_waiting": "El agente que inició este flujo de trabajo ya no lo espera (estado: {{status}}), así que la decisión no se tomó."
   }
 }

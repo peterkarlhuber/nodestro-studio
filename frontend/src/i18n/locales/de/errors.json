@@ -1412,5 +1412,12 @@
     "refused_revoked": "Dieses Paket wurde widerrufen und wird nie wieder angenommen.",
     "refused_reserved_name": "Das Paket verwendet den Namen eines vertrauenswürdigen oder mitgelieferten Pakets oder Moduls.",
     "refused_storage": "Das Paket konnte nicht gespeichert werden. Prüfe den freien Speicherplatz und versuche es erneut."
+  },
+  "workflow_tool": {
+    "approval_required": "Dieser Workflow darf etwas ändern, und sein Start kann hier nicht bestätigt werden, weil Tool-Freigaben ausgeschaltet sind.",
+    "disabled": "Workflow-Tools sind hier ausgeschaltet, deshalb kann {{node}} nicht starten. Entferne seine Workflow-Tools oder frag deine Administration.",
+    "missing": "Der Workflow des Tools {{name}} (oder seine feste Version) existiert nicht mehr.",
+    "name_taken": "Das Workflow-Tool {{name}} hat den Namen eines anderen Tools des Agenten. Wähle einen anderen Namen.",
+    "not_waiting": "Der Agent, der diesen Workflow gestartet hat, wartet nicht mehr darauf (Status: {{status}}); die Entscheidung wurde nicht übernommen."
   }
 }

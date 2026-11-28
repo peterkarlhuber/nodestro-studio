@@ -61,6 +61,17 @@ Debajo activas las **herramientas de servidor de Anthropic**: *Búsqueda web*, *
 
 El agente decide por sí mismo si llama a una herramienta y cuándo, según su nombre y su descripción. Cuántas veces puede hacerlo lo controlan [Máx. rondas de herramientas y Herramientas en paralelo](/docs/agenten#limits); si está obligado, lo controla [Tool choice](/docs/agenten#tool-choice).
 
+## Flujos de trabajo como herramientas {#workflow-tools}
+<!-- keywords: herramienta de flujo, flujo de trabajo como herramienta, versión fija, flujo anidado, aprobación, argumentos, archivos de resultado -->
+
+Un agente puede iniciar un flujo de trabajo guardado como herramienta. Esto está **desactivado por defecto**: la sección **Flujos de trabajo como herramientas** en las **Herramientas** del agente solo lo ofrece cuando tu administración activó las herramientas de flujo. Mientras estén desactivadas, un agente que ya tiene herramientas de flujo las muestra con un aviso y no se inicia hasta que se quiten.
+
+- **Añadir**: **Añadir flujo de trabajo como herramienta** abre un diálogo. Elige el flujo de trabajo y una de sus versiones guardadas. Antes de añadirlo, el diálogo muestra el nombre de la herramienta que ve el modelo, los argumentos que rellena el modelo (los campos del formulario de inicio; los campos de archivo nunca se ofrecen, así que un flujo de trabajo que necesita archivos al iniciar no se puede añadir) y lo que puede hacer el flujo de trabajo.
+- **Versión fija**: el agente llama siempre a la versión elegida. Cuando se guarda una versión más reciente, el editor y la conversación solo la indican; nada cambia hasta que cambies el agente.
+- **Lo que puede hacer**: el acceso más alto (solo lee, modifica datos, borra) y el alcance más alto (se queda en Nodestro, actúa hacia fuera) de todo lo que contiene, a cualquier profundidad: sus agentes y sus modelos, herramientas, archivos de resultado, subflujos, equipos y herramientas de flujo anidadas. Lo desconocido cuenta como modificador y externo. Cada llamada lo calcula de nuevo y cuenta el valor más alto.
+- **Aprobación**: un flujo de trabajo que puede modificar algo espera tu aprobación antes de cada inicio. La tarjeta nombra el flujo de trabajo y su versión fija y muestra los argumentos y lo que puede hacer; la decisión vale solo para este inicio. Los pasos de aprobación y las llamadas a herramientas dentro del flujo de trabajo también aparecen como tarjetas en la respuesta.
+- **Resultado**: la salida del flujo de trabajo vuelve al agente; sus archivos de resultado son adjuntos de la respuesta y se descargan de la ejecución del flujo de trabajo.
+
 ## Asignar conocimiento {#wissen}
 <!-- keywords: asignar conocimiento, archivos, pdf, contexto, bajo demanda, búsqueda, citas -->
 

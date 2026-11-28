@@ -136,7 +136,67 @@ export interface AgentConfig {
   request_options: Record<string, unknown>;
   /** N-09: local models only, and no tool that needs the internet (checked at every call); missing means off. */
   offline?: boolean;
+  /** N-20: saved workflows in a fixed version the agent may call as tools; missing while empty. */
+  workflow_tools?: WorkflowToolConfig[];
 }
+
+/**
+ * What a workflow may do as a whole (N-20, runtime ``WorkflowEffect``): the highest access and reach of everything it
+ * contains, at every depth. Something unknown counts as write + external and is named in ``unknown``.
+ */
+export interface WorkflowEffect {
+  access: "read" | "write" | "destructive";
+  reach: "internal" | "external";
+  /** A step at some depth uses a persistent memory space. */
+  memory: boolean;
+  /** Approval steps at every depth (each pauses the call until a person decides). */
+  approvals: number;
+  /** Every workflow it contains as ``workflow_id@version``, itself first. */
+  workflows: string[];
+  /** What counted as unknown (tool names, ``workflow_id@version``, ``team selection``). */
+  unknown: string[];
+}
+
+/** A saved workflow in one fixed version an agent may call as a tool (N-20, runtime ``WorkflowToolConfig``). */
+export interface WorkflowToolConfig {
+  workflow_id: string;
+  /** Fixed: a newer saved version is only reported, never used by itself. */
+  version: number;
+  /** The tool's name for the model (letters, digits, ``_`` and ``-``, at most 64). */
+  name: string;
+  description?: string;
+  /** Computed when the workflow was added; every call computes it again and the higher one counts. */
+  effect?: WorkflowEffect | null;
+}
+
+/** ``GET /api/workflows/{id}/versions/{number}/tool`` (N-20, API-079): a saved version as a tool. */
+export interface WorkflowToolInfo {
+  binding: WorkflowToolConfig;
+  workflow_name: string;
+  /** What the model reads about the tool. */
+  description: string;
+  /** The model's arguments: the start form as JSON Schema (file fields are never offered). */
+  input_schema: { type?: string; properties?: Record<string, WorkflowToolArgument>; required?: string[] };
+  /** The newest saved version (null: unknown). */
+  latest_version: number | null;
+  /** Required file fields a model cannot fill: the workflow cannot run as a tool. */
+  blocked_fields: string[];
+}
+
+/** One argument of a workflow tool (a field of the workflow's start form). */
+export interface WorkflowToolArgument {
+  type?: string;
+  description?: string;
+  title?: string;
+  enum?: unknown[];
+  default?: unknown;
+  format?: string;
+}
+
+/** Tool names of a workflow tool (runtime ``WORKFLOW_TOOL_NAME``). */
+export const WORKFLOW_TOOL_NAME = /^[a-zA-Z0-9_-]{1,64}$/;
+/** Most workflow tools of one agent (runtime ``MAX_WORKFLOW_TOOLS``). */
+export const MAX_WORKFLOW_TOOLS = 20;
 
 export interface Position {
   x: number;
@@ -593,6 +653,8 @@ export interface ToolCallRecord {
   };
   /** What the per-call approval rules did with this call; absent when no rule applied (approvals off). */
   approval?: ToolCallApproval | null;
+  /** N-20: a workflow tool's call, with the child run that executes it. */
+  workflow?: { workflow_id: string; version: number; run_id: string } | null;
 }
 
 /** The shared capability statement of a tool: access read/write/destructive, reach internal/external, source. */

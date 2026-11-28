@@ -1412,5 +1412,12 @@
     "refused_revoked": "Este pacote foi revogado e nunca mais é aceito.",
     "refused_reserved_name": "O pacote usa o nome de um pacote ou módulo confiável ou incluído.",
     "refused_storage": "Não foi possível salvar o pacote. Verifique o espaço livre e tente de novo."
+  },
+  "workflow_tool": {
+    "approval_required": "Este fluxo de trabalho pode alterar algo, e seu início não pode ser confirmado aqui porque as aprovações de ferramentas estão desligadas.",
+    "disabled": "As ferramentas de fluxo estão desligadas aqui, então {{node}} não pode iniciar. Remova suas ferramentas de fluxo ou fale com sua administração.",
+    "missing": "O fluxo de trabalho da ferramenta {{name}} (ou sua versão fixa) não existe mais.",
+    "name_taken": "A ferramenta de fluxo {{name}} tem o nome de outra ferramenta do agente. Escolha outro nome.",
+    "not_waiting": "O agente que iniciou este fluxo de trabalho não espera mais por ele (status: {{status}}), então a decisão não foi tomada."
   }
 }

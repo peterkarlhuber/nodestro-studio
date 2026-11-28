@@ -110,3 +110,81 @@
 .conversation__composer-actions > .muted {
   flex: 1;
 }
+
+/* Workflows as tools (N-20): a call's workflow below its row, the agent editor's bindings and the add dialog. */
+
+.workflow-call {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+  padding: 6px 10px;
+  border: 1px solid var(--nd-border);
+  border-left: 3px solid var(--nd-brand);
+  border-radius: var(--nd-radius-sm);
+}
+
+.workflow-call__head,
+.workflow-tool__head {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.workflow-tool__bindings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workflow-tool {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-sm);
+}
+
+.workflow-tool__head code {
+  overflow-wrap: anywhere;
+}
+
+.workflow-tool__list {
+  margin: 2px 0 0;
+  padding-left: 18px;
+}
+
+.workflow-tool__args {
+  display: grid;
+  gap: 2px 12px;
+  margin: 0;
+}
+
+.workflow-tool__args > div {
+  display: grid;
+  grid-template-columns: minmax(80px, max-content) 1fr;
+  gap: 12px;
+}
+
+.workflow-tool__args dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.workflow-tool__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--nd-font-size-sm, 0.875rem);
+}
+
+.workflow-tool__table th,
+.workflow-tool__table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--nd-border);
+  text-align: left;
+  vertical-align: top;
+}

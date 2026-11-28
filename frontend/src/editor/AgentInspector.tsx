@@ -25,6 +25,7 @@ import { LocalModelSuggestion } from "./LocalModelSuggestion";
 import { TaskTemplateInput } from "./TaskTemplateInput";
 import { SkillsSection } from "./SkillsSection";
 import { ToolBindings } from "./ToolBindings";
+import { WorkflowToolsSection } from "../workflowTools/WorkflowToolsSection";
 import { keys, useKnowledge, useMemorySpaces, useMeta, useModelOptions, useSettings, useTools } from "../api/hooks";
 import type {
   AgentConfig,
@@ -218,6 +219,7 @@ export function AgentInspector({ node }: { node: WorkflowNode }) {
       agent={agent}
       onChange={(patch) => updateAgent(node.id, patch)}
       onReplace={(config) => replaceAgent(node.id, config)}
+      workflowId={workflowId}
       placeholders={upstream.map((item) => item.label)}
       existing={nodes.map((item) => item.label)}
       testInput={start?.start?.default_input ?? ""}
@@ -244,6 +246,7 @@ export function AgentForm({
   actions,
   testInput = "",
   preview,
+  workflowId = null,
 }: {
   agent: AgentConfig;
   onChange: (patch: Partial<AgentConfig>) => void;
@@ -255,6 +258,8 @@ export function AgentForm({
   testInput?: string;
   /** Shown below the task: the input preview in the workflow editor. */
   preview?: ReactNode;
+  /** The workflow being edited (it cannot call itself as a workflow tool); null in the agent library. */
+  workflowId?: string | null;
 }) {
   const { t } = useTranslation();
   const modelOptions = useModelOptions("anthropic");
@@ -405,7 +410,7 @@ export function AgentForm({
 
       {preview}
 
-      <ToolsSection agent={agent} update={update} issues={issues} ui={ui("tools")} />
+      <ToolsSection agent={agent} update={update} issues={issues} ui={ui("tools")} workflowId={workflowId} />
       <SkillsSection agent={agent} update={update} issues={issues} ui={ui("skills")} />
       <KnowledgeSection agent={agent} update={update} issues={issues} ui={ui("knowledge")} />
       <MemorySection agent={agent} update={update} onAssistant={() => setMemoryOpen(true)} ui={ui("memory")} />
@@ -553,12 +558,12 @@ function useBedrockCapability(model: string, capability: string): CapabilityStat
   return (fromModel ?? fromRoute ?? fromProvider ?? "unknown") as CapabilityState;
 }
 
-function ToolsSection({ agent, update, issues = [], ui }: SectionProps) {
+function ToolsSection({ agent, update, issues = [], ui, workflowId }: SectionProps & { workflowId?: string | null }) {
   const { t } = useTranslation();
   const tools = useTools();
   const meta = useMeta();
   const available = (tools.data ?? []).filter((tool) => !agent.tools.includes(tool.name));
-  const count = agent.tools.length + agent.server_tools.length;
+  const count = agent.tools.length + agent.server_tools.length + (agent.workflow_tools?.length ?? 0);
   const profile = useModelProfile(agent.model);
   const provider = providerOf(agent.model);
   return (
@@ -599,6 +604,7 @@ function ToolsSection({ agent, update, issues = [], ui }: SectionProps) {
         <Trans i18nKey="agent.tools.missingHint" components={{ a: <Link to="/tools" /> }} />
       </p>
       <ToolBindings agent={agent} update={update} />
+      <WorkflowToolsSection agent={agent} update={update} currentWorkflowId={workflowId} />
       <div className="stack-sm">
         <span className="field__label">
           <span className="nd-field-label">{t("agent.tools.serverTools")}</span>
@@ -631,6 +637,7 @@ function ToolsSection({ agent, update, issues = [], ui }: SectionProps) {
       </div>
       <FieldErrors issues={issues} field="server_tools" />
       <FieldErrors issues={issues} field="tools" />
+      <FieldErrors issues={issues} field="workflow_tools" />
       {[...new Set(issues.flatMap((issue) => (issue.field?.startsWith("tool_settings.") ? [issue.field] : [])))].map((field) => (
         <FieldErrors key={field} issues={issues} field={field} />
       ))}
