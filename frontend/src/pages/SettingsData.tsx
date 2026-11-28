@@ -2,6 +2,7 @@
 // and the secrets a restore could not bring along (they are never part of a backup). Only for the "install"
 // permission, like backup and restore; the API checks it again.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Download, KeyRound, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +11,7 @@ import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
 import type { DeleteResult } from "../api/types";
-import { Button, Callout, Field, HelpTip, Modal, TextInput } from "../components/ui";
+import { Button, Callout, Field, Modal, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { settingsHref } from "../lib/settingsLink";
 
@@ -93,7 +94,7 @@ export function DataPanel() {
   return (
     <section className="panel stack" aria-labelledby="settings-data" data-testid="data">
       <h2 className="panel__title" id="settings-data">
-        <Download size={15} aria-hidden /> {t("backup.data.title")} <HelpTip id="settings.data" label={t("backup.data.title")} />
+        <Download size={15} aria-hidden /> {t("backup.data.title")} <HelpTip id="settings.data" topic={t("backup.data.title")} />
       </h2>
       <p className="muted small">{t("backup.data.intro")}</p>
       <div className="row-gap">

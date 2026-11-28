@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Columns2, FlaskConical, History, Play, Plus, Save, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -16,7 +17,7 @@ import { FormFields } from "../components/FormFields";
 import { ModelPicker } from "../components/ModelPicker";
 import { Output } from "../components/Markdown";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, DisabledReason, EmptyState, Field, HelpTip, IconButton, Modal, PageHeader, Section, Select, Spinner, Stat, TextArea, TextInput } from "../components/ui";
+import { Badge, Button, Callout, DisabledReason, EmptyState, Field, IconButton, Modal, PageHeader, Section, Select, Spinner, Stat, TextArea, TextInput } from "../components/ui";
 import { RuleEditor, outputFieldsOf } from "../editor/FlowInspectors";
 import { sanitizeSummary } from "../editor/TraceExportDialog";
 import { newId, newRule } from "../lib/defaults";
@@ -188,7 +189,7 @@ function CaseEditor({
         </Field>
         <div className="field__head">
           <span className="field__label nd-field-label">
-            {t("automation.benchmark.checks")} <HelpTip id="automation.benchmarkChecks" label={t("automation.benchmark.checks")} />
+            {t("automation.benchmark.checks")} <HelpTip id="automation.benchmarkChecks" topic={t("automation.benchmark.checks")} />
           </span>
         </div>
         {value.checks.map((rule, ruleIndex) => (
@@ -500,7 +501,7 @@ export function SuitePage() {
         <section className="panel stack" aria-label={t("automation.benchmark.runs")}>
           <div className="row-between">
             <h2 className="panel__title">
-              {t("automation.benchmark.runs")} <HelpTip id="automation.benchmarkCompare" label={t("automation.benchmark.compareTitle")} />
+              {t("automation.benchmark.runs")} <HelpTip id="automation.benchmarkCompare" topic={t("automation.benchmark.compareTitle")} />
             </h2>
             <Button size="sm" icon={Columns2} disabled={picked.length !== 2} onClick={() => setComparing(true)}>
               {t("compare.button", { count: picked.length })}

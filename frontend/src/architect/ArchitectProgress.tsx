@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import {
   AlertTriangle,
   Boxes,
@@ -19,7 +20,6 @@ import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { ArchitectEvent, ArchitectJob, ArchitectPhase } from "../api/types";
-import { HelpTip } from "../components/Tooltip";
 import { formatCost, formatTime } from "../lib/format";
 import { ArchitectGraph, MarkLegend } from "./ArchitectGraph";
 import { ArchitectReasoning } from "./ArchitectReasoning";
@@ -83,7 +83,7 @@ function ActivityLog({ job }: { job: ArchitectJob }) {
   return (
     <section className="architect-log" aria-label={t("architect.progress.log")}>
       <h3 className="architect-panel__title">
-        {t("architect.progress.log")} <HelpTip id="architect.log" label={t("architect.progress.log")} />
+        {t("architect.progress.log")} <HelpTip id="architect.log" topic={t("architect.progress.log")} />
       </h3>
       <ol className="architect-log__list" aria-live="polite">
         {entries.map((event) => {
@@ -110,7 +110,7 @@ export function CostMeter({ job }: { job: ArchitectJob }) {
     <span className="architect-cost" data-testid="architect-cost">
       {t("architect.progress.cost", { cost: formatCost(job.usage.estimated_cost_usd) })}
       {job.budget_usd !== null ? ` · ${t("architect.progress.limit", { limit: formatCost(job.budget_usd) })}` : null}
-      <HelpTip id="architect.cost" label={t("architect.progress.costLabel")} />
+      <HelpTip id="architect.cost" topic={t("architect.progress.costLabel")} />
     </span>
   );
 }

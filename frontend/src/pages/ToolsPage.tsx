@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Cable,
@@ -44,7 +45,7 @@ import {
 import { NoSendBadge } from "../components/NoSendBadge";
 import { toast } from "../components/toast";
 import { DeleteUsed, UsedByList, useUsedBy } from "../components/UsedBy";
-import { Badge, Button, Callout, EmptyState, Field, HelpTip, Hint, PageHeader, Section, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
+import { Badge, Button, Callout, EmptyState, Field, Hint, PageHeader, Section, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
 import { isDraftTool, toolDescription, toolDisplayName } from "../lib/catalog";
 import { ToolDependencies } from "../python/DependencyPanel";
 import { PlanTable } from "../python/PlanTable";
@@ -115,7 +116,7 @@ export function ToolsPage() {
         {tab === "generate" ? <GenerateTool /> : null}
         {settings.data && sandboxNote ? (
           <p className="muted small page__note">
-            <HelpTip id="tools.sandbox" label={t("tools.sandbox")} />{" "}
+            <HelpTip id="tools.sandbox" topic={t("tools.sandbox")} />{" "}
             <ShieldCheck size={12} aria-hidden />{" "}
             {t("tools.sandboxNote", {
               sandbox:
@@ -145,7 +146,7 @@ function PendingDrafts() {
     <section className="panel stack" aria-labelledby="tool-drafts" data-testid="tool-drafts">
       <h2 className="panel__title" id="tool-drafts">
         <Sparkles size={15} aria-hidden /> {t("tools.drafts.title", { count: drafts.data.length })}{" "}
-        <HelpTip id="tools.drafts" label={t("tools.drafts.label")} />
+        <HelpTip id="tools.drafts" topic={t("tools.drafts.label")} />
       </h2>
       <p className="muted small">{t("tools.drafts.text")}</p>
       {drafts.data.map((draft) => (
@@ -453,7 +454,7 @@ function ToolDetail({
             <code>{tool.name}</code> {isDraftTool(tool) ? <NoSendBadge /> : null}
           </h2>
           <p className="muted small">
-            <HelpTip id="tools.kind" label={t("tools.kindLabel")} />{" "}
+            <HelpTip id="tools.kind" topic={t("tools.kindLabel")} />{" "}
             {t(`tools.kind.${tool.kind}`)}
             {tool.kind !== "builtin" && tool.kind !== "mcp"
               ? ` · ${t("tools.trustLine", { label: t("tools.trustLabel"), value: t(`tools.trust.${tool.trust}`) })}`
@@ -874,7 +875,7 @@ function GenerateTool() {
               <div className="approval" data-testid="job-dependencies">
                 <Callout tone="warning">
                   {t("tools.generate.dependenciesNote")}{" "}
-                  <HelpTip id="python.tool" label={t("python.panel.toolTitle")} />
+                  <HelpTip id="python.tool" topic={t("python.panel.toolTitle")} />
                 </Callout>
                 <PlanTable plan={job.dependency_plan} />
                 <div className="row-gap">
@@ -915,7 +916,7 @@ function GenerateTool() {
                   {t("tools.generate.reviewNote")}{" "}
                   <HelpTip
                     id="tools.approve"
-                    label={t("tools.generate.approval")}
+                    topic={t("tools.generate.approval")}
                   />
                 </Callout>
                 <p className="small">{String(job.approval.summary ?? "")}</p>

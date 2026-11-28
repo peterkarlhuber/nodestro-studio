@@ -3,8 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import i18n from "../i18n";
-import { HelpTip, Tooltip, focusableAfter, placeTip, tipHost } from "./Tooltip";
+import { Tooltip, placeTip, tipHost } from "./Tooltip";
 
 function renderInRouter(ui: React.ReactNode) {
   return render(<MemoryRouter>{ui}</MemoryRouter>);
@@ -62,48 +61,6 @@ describe("Tooltip", () => {
   });
 });
 
-describe("HelpTip", () => {
-  afterEach(cleanup);
-
-  it("opens on click or tap with a link to the documentation", async () => {
-    renderInRouter(<HelpTip id="agent.effort" label="Aufwand" />);
-    const button = screen.getByRole("button", { name: "Hilfe: Aufwand" });
-    await userEvent.click(button);
-    expect(button).toHaveAttribute("aria-expanded", "true");
-    expect(screen.getByRole("tooltip")).toHaveTextContent(i18n.t("help.agent.effort"));
-    expect(screen.getByRole("link", { name: /Mehr in der Dokumentation/ })).toHaveAttribute("href", "/docs/agenten#denken");
-    await userEvent.click(button);
-    expect(screen.queryByRole("tooltip")).toBeNull();
-  });
-
-  it("keeps only one explanation open at a time", async () => {
-    renderInRouter(
-      <>
-        <HelpTip id="agent.effort" label="Aufwand" />
-        <HelpTip id="agent.model" label="Modell" />
-      </>,
-    );
-    await userEvent.click(screen.getByRole("button", { name: "Hilfe: Aufwand" }));
-    await userEvent.click(screen.getByRole("button", { name: "Hilfe: Modell" }));
-    expect(screen.getAllByRole("tooltip")).toHaveLength(1);
-    expect(screen.getByRole("tooltip")).toHaveTextContent(i18n.t("help.agent.model"));
-  });
-
-  it("stays open on keyboard focus that follows the mouse leaving it within the close delay", async () => {
-    // The mouse leaves the icon (a click elsewhere) and Tab reaches it before the leave's close timer ran: that
-    // timer must not close the explanation the focus just opened (settings-ui e2e, PR #249 head cf514c4).
-    renderInRouter(<HelpTip id="agent.effort" label="Aufwand" />);
-    const button = screen.getByRole("button", { name: "Hilfe: Aufwand" });
-    fireEvent.pointerEnter(button, { pointerType: "mouse" });
-    fireEvent.pointerLeave(button, { pointerType: "mouse" });
-    await userEvent.tab();
-    expect(button).toHaveFocus();
-    expect(screen.getByRole("tooltip")).toHaveTextContent(i18n.t("help.agent.effort"));
-    await act(() => new Promise((resolve) => window.setTimeout(resolve, 400)));
-    expect(screen.getByRole("tooltip")).toHaveTextContent(i18n.t("help.agent.effort"));
-  });
-});
-
 describe("tooltip placement", () => {
   const view = { width: 1000, height: 800 };
   const size = { width: 300, height: 100 };
@@ -137,31 +94,20 @@ describe("tooltips in dialogs", () => {
     render(
       <MemoryRouter>
         <dialog open>
-          <HelpTip id="agent.effort" label="Aufwand" />
+          <Tooltip content="Im Dialog">
+            <button type="button">Aufwand</button>
+          </Tooltip>
         </dialog>
-        <HelpTip id="agent.model" label="Modell" />
+        <Tooltip content="Auf der Seite">
+          <button type="button">Modell</button>
+        </Tooltip>
       </MemoryRouter>,
     );
-    const inDialog = screen.getByRole("button", { name: "Hilfe: Aufwand" });
+    const inDialog = screen.getByRole("button", { name: "Aufwand" });
     expect(tipHost(inDialog).tagName).toBe("DIALOG");
-    expect(tipHost(screen.getByRole("button", { name: "Hilfe: Modell" }))).toBe(document.body);
-    await userEvent.click(inDialog);
+    expect(tipHost(screen.getByRole("button", { name: "Modell" }))).toBe(document.body);
+    await userEvent.tab();
     expect(screen.getByRole("tooltip").parentElement?.tagName).toBe("DIALOG");
-  });
-
-  it("close with Escape without letting the dialog see the key", async () => {
-    const onDialogKey = vi.fn();
-    render(
-      <MemoryRouter>
-        <dialog open onKeyDown={(event) => onDialogKey(event.key)}>
-          <HelpTip id="agent.effort" label="Aufwand" />
-        </dialog>
-      </MemoryRouter>,
-    );
-    await userEvent.click(screen.getByRole("button", { name: "Hilfe: Aufwand" }));
-    await userEvent.keyboard("{Escape}");
-    expect(screen.queryByRole("tooltip")).toBeNull();
-    expect(onDialogKey).not.toHaveBeenCalled();
   });
 
   it("that only name a control let Escape through, so the dialog still closes with one key", async () => {
@@ -180,23 +126,5 @@ describe("tooltips in dialogs", () => {
     await userEvent.keyboard("{Escape}");
     expect(screen.queryByRole("tooltip")).toBeNull();
     expect(onDialogKey).toHaveBeenCalledWith("Escape");
-  });
-
-  it("lead Tab into the documentation link and on to the next control, never trapping the focus", async () => {
-    render(
-      <MemoryRouter>
-        <dialog open>
-          <HelpTip id="agent.effort" label="Aufwand" />
-          <button type="button">Weiter</button>
-        </dialog>
-      </MemoryRouter>,
-    );
-    const help = screen.getByRole("button", { name: "Hilfe: Aufwand" });
-    await userEvent.click(help);
-    await userEvent.tab();
-    expect(document.activeElement).toBe(screen.getByRole("link", { name: /Mehr in der Dokumentation/ }));
-    await userEvent.tab();
-    expect(screen.queryByRole("tooltip")).toBeNull();
-    expect(focusableAfter(help)).toBeDefined();
   });
 });

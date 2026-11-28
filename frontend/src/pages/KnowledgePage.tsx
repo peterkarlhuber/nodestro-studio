@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, ExternalLink, FileImage, FileText, Search, Trash2, Upload } from "lucide-react";
 import { type DragEvent, useEffect, useRef, useState } from "react";
@@ -12,7 +13,7 @@ import { DiscussIcon } from "../assistant/DiscussButton";
 import { ExportButton, ImportButton } from "../components/ExchangeDialog";
 import { toast } from "../components/toast";
 import { DeleteUsed, UsedByList, useUsedBy } from "../components/UsedBy";
-import { Badge, Button, Callout, EmptyState, Field, HelpTip, Hint, PageHeader, Spinner, TextInput, Tooltip } from "../components/ui";
+import { Badge, Button, Callout, EmptyState, Field, Hint, PageHeader, Spinner, TextInput, Tooltip } from "../components/ui";
 import i18n from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatNumber, relativeTime } from "../lib/format";
@@ -130,7 +131,7 @@ export function KnowledgePage() {
             </button>{" "}
             · {t("knowledge.formats")}
           </span>
-          <HelpTip id="knowledge.upload" label={t("knowledge.formatsLabel")} />
+          <HelpTip id="knowledge.upload" topic={t("knowledge.formatsLabel")} />
         </div>
         <div className="row-gap small">
           <label htmlFor="knowledge-target">{t("inputs.collections.uploadTo")}</label>
@@ -148,7 +149,7 @@ export function KnowledgePage() {
               <option key={item.name} value={item.name} />
             ))}
           </datalist>
-          <HelpTip id="knowledge.collections" label={t("inputs.collections.title")} />
+          <HelpTip id="knowledge.collections" topic={t("inputs.collections.title")} />
         </div>
 
         <div className="two-column two-column--wide-left">
@@ -203,7 +204,7 @@ export function KnowledgePage() {
           </section>
           <section className="panel stack" aria-label={t("knowledge.searchTitle")}>
             <h2 className="panel__title">
-              {t("knowledge.searchTitle")} <HelpTip id="knowledge.search" label={t("knowledge.searchTitle")} />
+              {t("knowledge.searchTitle")} <HelpTip id="knowledge.search" topic={t("knowledge.searchTitle")} />
             </h2>
             <p className="muted small">{t("knowledge.searchText")}</p>
             <form

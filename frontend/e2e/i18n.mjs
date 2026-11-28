@@ -137,7 +137,7 @@ async function rawKeys(page) {
 /** Every visible help icon inside ``scope`` shows its tooltip on hover: the translation keys found in the tooltips. */
 async function tipKeys(page, scope) {
   const pattern = new RegExp(`\\b(?:${AREAS.join("|")})(?:\\.[A-Za-z0-9_-]+){2,}\\b`);
-  const icons = page.locator(`${scope} button.help-tip`);
+  const icons = page.locator(`${scope} button.ui-helptip__button`);
   const found = [];
   const count = await icons.count();
   let shown = 0;
@@ -146,7 +146,8 @@ async function tipKeys(page, scope) {
     if (!(await icon.isVisible())) continue;
     await icon.scrollIntoViewIfNeeded();
     await icon.hover();
-    const tip = page.locator("[role=tooltip]");
+    // The open panel of the shared help button (closed panels are hidden).
+    const tip = page.locator(".ui-helptip__panel:not([hidden])");
     try {
       await tip.first().waitFor({ timeout: 3000 });
     } catch {

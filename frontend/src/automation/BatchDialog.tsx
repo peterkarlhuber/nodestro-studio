@@ -1,6 +1,7 @@
 // A new batch: one workflow over the rows of a CSV, XLSX or JSON file.
 // Nothing starts before the user saw the rows, the mapping and the estimated cost.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FileUp, Play } from "lucide-react";
 import { type ChangeEvent, useMemo, useRef, useState } from "react";
@@ -10,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../api/client";
 import { keys, useWorkflows } from "../api/hooks";
 import type { BatchIn, ParsedRows } from "../api/types";
-import { Badge, Button, Callout, Field, HelpTip, Modal, Select, Spinner, TextInput } from "../components/ui";
+import { Badge, Button, Callout, Field, Modal, Select, Spinner, TextInput } from "../components/ui";
 import { rowsFromRecords } from "../lib/batch";
 import { ErrorText, problemText } from "../lib/errors";
 import { EstimateView, type Limits, LimitFields } from "./shared";
@@ -101,7 +102,7 @@ export function BatchDialog({ open, onClose, workflowId: initial = "" }: { open:
       }
     >
       <p className="muted">
-        {t("automation.batch.intro")} <HelpTip id="automation.batch" label={t("nav.batches")} />
+        {t("automation.batch.intro")} <HelpTip id="automation.batch" topic={t("nav.batches")} />
       </p>
       <div className="grid-2">
         <Field label={t("automation.workflow")}>
@@ -133,7 +134,7 @@ export function BatchDialog({ open, onClose, workflowId: initial = "" }: { open:
         <>
           <h3 className="panel__title">
             {t("automation.batch.mapping", { count: parsed.rows.length })}{" "}
-            <HelpTip id="automation.batchMapping" label={t("automation.batch.mappingTitle")} />
+            <HelpTip id="automation.batchMapping" topic={t("automation.batch.mappingTitle")} />
           </h3>
           <table className="table table--compact mapping-table">
             <thead>

@@ -1,5 +1,6 @@
 // Settings › Maintenance: the managed Python environments, their size and owners, and cleanup.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Package, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -8,7 +9,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { EnvironmentInfo } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, HelpTip, Hint, IconButton, Spinner } from "../components/ui";
+import { Badge, Button, Callout, Hint, IconButton, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, relativeTime } from "../lib/format";
 import { useDependencyRefresh } from "./DependencyDialog";
@@ -46,7 +47,7 @@ export function PythonMaintenance() {
     <section className="panel stack" aria-labelledby="settings-python" data-testid="python-maintenance">
       <h2 className="panel__title" id="settings-python">
         <Package size={15} aria-hidden /> {t("python.maintenance.title")}{" "}
-        <HelpTip id="python.maintenance" label={t("python.maintenance.title")} />
+        <HelpTip id="python.maintenance" topic={t("python.maintenance.title")} />
       </h2>
       <p className="muted small">{t("python.maintenance.intro")}</p>
       {status.isLoading ? <Spinner /> : null}

@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import type { TFunction } from "i18next";
 import { Bot, Flag, GitBranch, Hand, Network, PanelLeftClose, PanelLeftOpen, Play, Sparkles, Users, Workflow } from "lucide-react";
 import { type DragEvent, type Ref, memo, useState } from "react";
@@ -8,7 +9,7 @@ import type { AgentConfig, ContractFieldSummary, NodeType } from "../api/types";
 import { agentIcon } from "../components/icons";
 import { descriptionLabel } from "../components/Markdown";
 import { useModelName } from "../components/ModelPicker";
-import { HelpTip, Tooltip } from "../components/Tooltip";
+import { Tooltip } from "../components/Tooltip";
 import { IconButton, TextInput } from "../components/ui";
 import { helpEntry } from "../lib/help";
 import { DRAG_TYPE, type DragPayload } from "./Canvas";
@@ -125,7 +126,7 @@ function PaletteView({ onDesign, panelRef }: { onDesign: () => void; panelRef?: 
       <div className="panel-head palette__head">
         {open ? (
           <h2 className="panel-head__title">
-            {t("editor.palette.title")} <HelpTip id="workflow.palette" label={t("editor.palette.title")} />
+            {t("editor.palette.title")} <HelpTip id="workflow.palette" topic={t("editor.palette.title")} />
           </h2>
         ) : null}
         <IconButton
@@ -196,7 +197,7 @@ function PaletteView({ onDesign, panelRef }: { onDesign: () => void; panelRef?: 
           // The help button stands next to the summary, not inside it (a button in a button, AX-09).
           <div className="palette__group-frame">
             <span className="palette__group-tip">
-              <HelpTip id="workflow.contract" label={t("editor.palette.teams")} />
+              <HelpTip id="workflow.contract" topic={t("editor.palette.teams")} />
             </span>
             <details className="palette__group" open={teams.length <= TEAM_SEARCH_FROM} data-testid="palette-teams">
               <summary className="palette__label palette__label--toggle">{t("editor.palette.teamsCount", { count: teams.length })}</summary>

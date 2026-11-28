@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, Brain, Copy, Download, FlaskConical, ListChecks, Network, PlugZap, Scale, ShieldAlert, ShieldCheck } from "lucide-react";
 import { Suspense, lazy, useState } from "react";
@@ -9,7 +10,7 @@ import { keys, useExample, useMeta, useSettings } from "../api/hooks";
 import type { ExampleDetail } from "../api/types";
 import { agentIcon } from "../components/icons";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, HelpTip, Hint, Modal, Select, Spinner, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Callout, Field, Hint, Modal, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { LANGUAGE_NAMES, LANGUAGES, type Language, currentLanguage } from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatCost } from "../lib/format";
@@ -310,7 +311,7 @@ export function ExamplePreview({
           ) : null}
           <h3 className="example-preview__input-title">
             <FlaskConical size={14} aria-hidden /> {t("library.preview.testInput")}
-            <HelpTip id="library.synthetic" label={t("library.preview.testInput")} />
+            <HelpTip id="library.synthetic" topic={t("library.preview.testInput")} />
           </h3>
           <p className="muted small">{t("library.preview.syntheticNote")}</p>
           <pre className="example-input">{data.input}</pre>

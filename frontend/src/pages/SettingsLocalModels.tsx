@@ -3,6 +3,7 @@
 // recommends models for this computer; this panel shows that and starts the jobs. Nothing is downloaded or started
 // without a click, and the strict offline mode refuses every download.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Activity, Database, Download, FolderInput, Hammer, HardDrive, Play, RefreshCw, Search, Square, Trash2, X } from "lucide-react";
 import { useState } from "react";
@@ -26,7 +27,7 @@ import type { Settings } from "../api/types";
 import { PermissionNote } from "../components/Access";
 import { toast } from "../components/toast";
 import { withLocalModel } from "../missingModel/store";
-import { Badge, Button, Callout, ConfirmIconButton, Field, HelpTip, Segmented, Select, Spinner, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, Field, Segmented, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatLargeBytes } from "../lib/format";
 import { reasonText } from "../lib/localRecommend";
@@ -79,7 +80,7 @@ function Recommendations({
   return (
     <div className="stack">
       <h3 className="small">
-        {title} <HelpTip id="settings.localRecommendations" label={title} />
+        {title} <HelpTip id="settings.localRecommendations" topic={title} />
       </h3>
       <p className="muted small">{overview.hardware ? t("localModels.recommend.text") : t("localModels.recommend.textServer")}</p>
       {/* Focusable, so the table can be scrolled with the keyboard on a phone even when it holds no button. */}
@@ -356,7 +357,7 @@ function ImportForm({ canInstall, packages }: { canInstall: boolean; packages: b
   return (
     <div className="stack" data-testid="local-import">
       <h3 className="small">
-        {t("localModels.import.title")} <HelpTip id="settings.localImport" label={t("localModels.import.title")} />
+        {t("localModels.import.title")} <HelpTip id="settings.localImport" topic={t("localModels.import.title")} />
       </h3>
       <Segmented
         label={t("localModels.import.title")}
@@ -417,7 +418,7 @@ function StorageForm({ overview, canInstall }: { overview: LocalOverview; canIns
     <div className="stack" data-testid="local-storage">
       <h3 className="small">
         <HardDrive size={13} aria-hidden /> {t("localModels.storage.title")}{" "}
-        <HelpTip id="settings.localStorage" label={t("localModels.storage.title")} />
+        <HelpTip id="settings.localStorage" topic={t("localModels.storage.title")} />
       </h3>
       <p className="muted small">
         {t("localModels.storage.current", {
@@ -564,7 +565,7 @@ export function LocalModelsPanel({
     <section className="panel stack" aria-labelledby="settings-local-models" data-testid="settings-local-models">
       <h2 className="panel__title" id="settings-local-models">
         <Database size={15} aria-hidden /> {t("localModels.title")}{" "}
-        <HelpTip id="settings.localModels" label={t("localModels.title")} />
+        <HelpTip id="settings.localModels" topic={t("localModels.title")} />
       </h2>
       <p className="muted small">{overview.data && !overview.data.hardware ? t("localModels.textServer") : t("localModels.text")}</p>
       {overview.error ? (
@@ -786,7 +787,7 @@ export function KnowledgeSearchPanel({
     <section className="panel stack" aria-labelledby="settings-knowledge-search" data-testid="settings-knowledge-search">
       <h2 className="panel__title" id="settings-knowledge-search">
         <Search size={15} aria-hidden /> {t("localModels.search.title")}{" "}
-        <HelpTip id="settings.knowledgeSearch" label={t("localModels.search.title")} />
+        <HelpTip id="settings.knowledgeSearch" topic={t("localModels.search.title")} />
       </h2>
       <p className="muted small">{t("localModels.search.text")}</p>
       <Field

@@ -1,6 +1,7 @@
 // Turn a failed run into a test case (Q-4): the server proposes the run's input with credentials and, by default,
 // personal data replaced. Nothing is stored until the person picks a series and adds the case.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FlaskConical, ShieldCheck } from "lucide-react";
 import { useState } from "react";
@@ -11,7 +12,7 @@ import { api } from "../api/client";
 import { keys, useSuites } from "../api/hooks";
 import type { Run, SanitizeReport, TestCase } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, Field, HelpTip, Modal, Select, Spinner, TextInput, Toggle } from "../components/ui";
+import { Button, Callout, Field, Modal, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { sanitizeSummary } from "../editor/TraceExportDialog";
 import { ErrorText } from "../lib/errors";
 import { formatDate } from "../lib/format";
@@ -88,7 +89,7 @@ export function TestCaseFromRunDialog({ run, open, onClose }: { run: Run; open: 
     >
       <div className="stack-sm" data-testid="case-from-run">
         <p className="muted">
-          {t("automation.benchmark.fromRun.intro")} <HelpTip id="automation.caseFromRun" label={t("automation.benchmark.fromRun.title")} />
+          {t("automation.benchmark.fromRun.intro")} <HelpTip id="automation.caseFromRun" topic={t("automation.benchmark.fromRun.title")} />
         </p>
         <ul className="small export-list">
           <li>{t("export.alwaysSecrets")}</li>

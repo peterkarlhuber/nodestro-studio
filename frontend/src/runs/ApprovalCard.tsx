@@ -2,6 +2,7 @@
 // (the only text of the decision later agents read), and approve or reject.
 // Nothing is ever approved automatically; the run waits until someone decides here.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Hand, X } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +13,7 @@ import { api } from "../api/client";
 import { keys, useApprovals } from "../api/hooks";
 import type { PendingApproval, Run } from "../api/types";
 import { Output, outputFieldsOf, stepFieldsOf } from "../components/Markdown";
-import { Button, Callout, DisabledReason, Field, HelpTip, Section, TextArea } from "../components/ui";
+import { Button, Callout, DisabledReason, Field, Section, TextArea } from "../components/ui";
 import { toast } from "../components/toast";
 import { useEditor } from "../editor/store";
 import { ErrorText } from "../lib/errors";
@@ -98,7 +99,7 @@ export function ApprovalForm({ approval, showContext = false }: { approval: Pend
             </div>
           ) : null}
         </div>
-        <HelpTip id="flow.approval" label={t("editor.nodes.approval")} />
+        <HelpTip id="flow.approval" topic={t("editor.nodes.approval")} />
       </header>
       {approval.instructions ? <p className="approval-card__instructions">{approval.instructions}</p> : null}
       {approval.items.length ? (

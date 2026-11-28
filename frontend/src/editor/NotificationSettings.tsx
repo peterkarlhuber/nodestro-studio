@@ -1,6 +1,7 @@
 // The workflow's notification rules (NAL-A3): which events of its runs notify, and whom. They are saved with the
 // workflow like its budget and limits. Notifications stay inside Nodestro (the bell in the top bar); no e-mail.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -10,7 +11,6 @@ import {
   type NotificationEvent,
   notificationsOf,
 } from "../api/notifications";
-import { HelpTip } from "../components/ui";
 import { useEditor } from "./store";
 
 export function NotificationSettings() {
@@ -30,7 +30,7 @@ export function NotificationSettings() {
     <section className="notify-settings stack-sm" aria-labelledby={titleId} data-testid="workflow-notifications">
       <h3 id={titleId} className="notify-settings__title">
         {t("notifications.settings.title")}
-        <HelpTip id="workflow.notifications" label={t("notifications.settings.title")} />
+        <HelpTip id="workflow.notifications" topic={t("notifications.settings.title")} />
       </h3>
       <fieldset>
         <legend className="nd-field-label">{t("notifications.settings.events")}</legend>

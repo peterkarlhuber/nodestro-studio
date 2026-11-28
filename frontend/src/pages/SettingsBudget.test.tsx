@@ -1,8 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { Settings } from "../api/types";
+import { PlatformHelp } from "../lib/platformHelp";
 import { BudgetPolicyFields, budgetPolicyUpdate, hasBudgetPolicy, settingsForm } from "./SettingsBudget";
 
 afterEach(cleanup);
@@ -38,7 +40,14 @@ describe("the workspace's budget policy (BUDGET-1)", () => {
     const onChange = vi.fn();
     // The "Changed" marks read the settings defaults (ST-059).
     const view = render(<BudgetPolicyFields form={form({ max_run_budget_usd: "8.00" })} admin onChange={onChange} />, {
-      wrapper: ({ children }) => <QueryClientProvider client={new QueryClient()}>{children}</QueryClientProvider>,
+      // The help buttons read the studio's help registry, as everywhere in the app (routes.tsx).
+      wrapper: ({ children }) => (
+        <QueryClientProvider client={new QueryClient()}>
+          <MemoryRouter>
+            <PlatformHelp>{children}</PlatformHelp>
+          </MemoryRouter>
+        </QueryClientProvider>
+      ),
     });
     expect(screen.getByLabelText("Höchstes Budget pro Lauf (USD)")).toHaveValue("8.00");
     expect(screen.getByLabelText("Frist für Budget-Entscheidungen (Stunden)")).toHaveValue(24);

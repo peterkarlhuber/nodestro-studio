@@ -2,18 +2,23 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { indexSettings, normalize, revealSetting, searchSettings, snippet } from "./settingsSearchIndex";
 
+/** The markup of the shared help button (HelpTip of @nodestro/ui-core), with its panel (hidden unless open). */
+function tip(id: string, open = false): string {
+  return `<span class="ui-helptip"><button type="button" class="ui-helptip__button" data-help="${id}" aria-label="Help: ${id}">?</button><span class="ui-helptip__panel" role="group"${open ? "" : " hidden"}><strong class="ui-helptip__title">Title of ${id}</strong><span class="ui-helptip__summary">Panel text of ${id}</span></span></span>`;
+}
+
 /** A page that follows the convention: sections with an h2, fields, toggles, groups, closed parts. */
 function page(): HTMLElement {
   const root = document.createElement("div");
   root.className = "settings";
   root.innerHTML = `
     <section>
-      <h2 class="panel__title" id="settings-models">Models and budget <button class="help-tip" data-help="models">?</button></h2>
+      <h2 class="panel__title" id="settings-models">Models and budget ${tip("models")}</h2>
       <p>Which models new agents use.</p>
       <div class="settings-group"><h3>Budget per run</h3>
         <div class="field">
           <div class="field__head"><span class="field__label"><label for="deadline">Budget decision deadline (hours)</label>
-          <button class="help-tip" data-help="deadline">?</button></span></div>
+          ${tip("deadline", true)}</span></div>
           <input id="deadline" type="number" />
           <p class="field__hint">How long a run waits.</p>
         </div>
@@ -121,7 +126,7 @@ describe("parts that are rendered only when they apply (ST-058)", () => {
 
   it("are not listed twice when they are on the page, nor for a section that is missing", () => {
     const root = page();
-    root.querySelector("#settings-ocr")!.insertAdjacentHTML("beforeend", '<button class="help-tip" data-help="import">?</button>');
+    root.querySelector("#settings-ocr")!.insertAdjacentHTML("beforeend", tip("import"));
     expect(indexSettings(root, () => "x", [IMPORT]).some((entry) => entry.key.startsWith("conditional."))).toBe(false);
     expect(indexSettings(root, () => "x", [{ ...IMPORT, help: "other", section: "settings-missing" }]).some((entry) => entry.key.startsWith("conditional."))).toBe(false);
   });

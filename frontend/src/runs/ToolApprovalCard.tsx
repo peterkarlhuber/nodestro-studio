@@ -3,7 +3,7 @@
 // a question nobody answers in time counts as rejected, and a decision about a changed call is refused.
 
 import { RememberOptions } from "@nodestro/ui-ai";
-import { UiTextProvider, type Translate } from "@nodestro/ui-core";
+import { HelpTip, type Translate, UiTextProvider } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, ShieldQuestion, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
@@ -14,7 +14,7 @@ import { useAccess } from "../api/access";
 import { ApiError, api } from "../api/client";
 import { keys, useAccessGrantsEnabled, useToolApprovals } from "../api/hooks";
 import type { AccessDeny, AccessGrant, Run, ToolApprovalRequest, ToolCallApproval } from "../api/types";
-import { Badge, Button, Callout, Field, HelpTip, Spinner, TextArea } from "../components/ui";
+import { Badge, Button, Callout, Field, Spinner, TextArea } from "../components/ui";
 import { toast } from "../components/toast";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
@@ -253,7 +253,7 @@ function StandardToolApprovalForm({ request, showContext = false }: { request: T
             {t("approvals.waitingSince", { time: formatDate(request.requested_at) })}
           </div>
         </div>
-        <HelpTip id="tools.callApproval" label={t("approvals.tool.help")} />
+        <HelpTip id="tools.callApproval" topic={t("approvals.tool.help")} />
       </header>
       <div className="row-gap">
         <Badge tone={access === "destructive" ? "danger" : access === "write" ? "warning" : "idle"}>

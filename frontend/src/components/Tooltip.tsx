@@ -1,8 +1,9 @@
-// Contextual tooltips: one short explanation at the control, optionally with a link into the documentation.
+// Tooltips of controls: one short explanation at a button, badge or value, optionally with a link into the
+// documentation. The help buttons next to labels are the shared HelpTip of @nodestro/ui-core (with the studio's help
+// registry, lib/platformHelp.tsx); this file has no help button of its own any more (eslint.config.js forbids one).
 //
 // - Hover (mouse) shows a tooltip after a short delay, keyboard focus at once; leaving or Escape hides it. Showing
 //   cancels a pending timer, so a close queued by an earlier leave never hides a tooltip focus just opened.
-// - The help icon (<HelpTip>) also opens on click and tap, so it works on touch devices.
 // - Only one tooltip is open at a time.
 // - Placement: the bubble is rendered into the nearest open <dialog> of its anchor (else <body>), and shown in the
 //   browser's top layer with the Popover API where available. A modal <dialog> (showModal) lives in the top layer
@@ -11,9 +12,9 @@
 //   ancestors. Without the Popover API (old browsers, jsdom) it is a fixed element with a high z-index.
 // - It is kept inside the window: flipped below the anchor when there is no room above, shifted sideways at the
 //   edges, and scrolls itself when it is taller than the window (high zoom, large text).
-// - Escape closes a help text (HelpTip) without closing the dialog around it; see useTip's `ownEscape`.
+// - Escape closes the tooltip and still does what it does without one (a tooltip names a control, often the one a
+//   dialog focuses first: one Escape closes the tooltip and the dialog).
 
-import { CircleHelp } from "lucide-react";
 import {
   type FocusEvent,
   type KeyboardEvent as ReactKeyboardEvent,
@@ -33,7 +34,7 @@ import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { type HelpId, docPath, helpEntry } from "../lib/help";
+import { docPath } from "../lib/help";
 
 const OPEN_DELAY = 350;
 const CLOSE_DELAY = 140;
@@ -50,31 +51,13 @@ function focusVisible(element: HTMLElement): boolean {
   }
 }
 
-const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])';
-
-/** The control after `anchor` in the keyboard order of its dialog (or the page), skipping tooltips. */
-export function focusableAfter(anchor: HTMLElement): HTMLElement | undefined {
-  const scope: ParentNode = anchor.closest("dialog[open]") ?? document;
-  const all = [...scope.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
-    (element) => element === anchor || !element.closest("[role=tooltip], [hidden], [inert], details:not([open]) > :not(summary)"),
-  );
-  const index = all.indexOf(anchor);
-  return index >= 0 ? all[index + 1] : undefined;
-}
-
 interface TipState {
   anchor: HTMLElement | null;
-  pinned: boolean;
 }
 
-/** The shared behaviour of all tooltips: timers, a single open tooltip, Escape, outside clicks. */
-/**
- * `ownEscape`: Escape closes only this tooltip and goes no further, so a help text opened inside a dialog does not
- * close the dialog with it (HelpTip). A plain Tooltip names a control (often the one a dialog focuses first): there
- * Escape closes the tooltip and still does what it does without one, e.g. close the dialog.
- */
-function useTip({ ownEscape = false }: { ownEscape?: boolean } = {}) {
-  const [state, setState] = useState<TipState>({ anchor: null, pinned: false });
+/** The behaviour of all tooltips: timers, a single open tooltip, Escape, outside clicks. */
+function useTip() {
+  const [state, setState] = useState<TipState>({ anchor: null });
   const timer = useRef<number | undefined>(undefined);
   const bubbleRef = useRef<HTMLDivElement | null>(null);
   const id = useId();
@@ -82,16 +65,16 @@ function useTip({ ownEscape = false }: { ownEscape?: boolean } = {}) {
   const clear = () => window.clearTimeout(timer.current);
   const close = useCallback(() => {
     window.clearTimeout(timer.current);
-    setState({ anchor: null, pinned: false });
+    setState({ anchor: null });
   }, []);
   const show = useCallback(
-    (anchor: HTMLElement, pinned = false) => {
+    (anchor: HTMLElement) => {
       // A close still pending from an earlier pointer leave or blur must not hide what is shown now (e.g. the mouse
       // left the icon and Tab reached it within CLOSE_DELAY).
       window.clearTimeout(timer.current);
       if (closeActive && closeActive !== close) closeActive();
       closeActive = close;
-      setState({ anchor, pinned });
+      setState({ anchor });
     },
     [close],
   );
@@ -106,14 +89,8 @@ function useTip({ ownEscape = false }: { ownEscape?: boolean } = {}) {
       if (closeActive === close) closeActive = null;
       return;
     }
-    // Captured before the dialog's own handler (see ownEscape).
     const onKey = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      if (ownEscape) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      close();
+      if (event.key === "Escape") close();
     };
     const onPointer = (event: globalThis.PointerEvent) => {
       const target = event.target as Node;
@@ -132,7 +109,7 @@ function useTip({ ownEscape = false }: { ownEscape?: boolean } = {}) {
       window.removeEventListener("scroll", onScroll, true);
       window.removeEventListener("resize", close);
     };
-  }, [state.anchor, close, ownEscape]);
+  }, [state.anchor, close]);
 
   const hoverProps = {
     onPointerEnter: (event: PointerEvent<HTMLElement>) => {
@@ -142,50 +119,27 @@ function useTip({ ownEscape = false }: { ownEscape?: boolean } = {}) {
       else later(() => show(anchor), OPEN_DELAY);
     },
     onPointerLeave: (event: PointerEvent<HTMLElement>) => {
-      if (event.pointerType === "touch" || state.pinned) return;
+      if (event.pointerType === "touch") return;
       later(close, CLOSE_DELAY);
     },
     onFocus: (event: FocusEvent<HTMLElement>) => {
-      if (focusVisible(event.currentTarget)) show(event.currentTarget, state.pinned);
+      if (focusVisible(event.currentTarget)) show(event.currentTarget);
     },
     onBlur: (event: FocusEvent<HTMLElement>) => {
       if (bubbleRef.current?.contains(event.relatedTarget as Node)) return;
-      if (!state.pinned) later(close, CLOSE_DELAY);
-    },
-    // The bubble is rendered elsewhere in the page: once opened on purpose (click, Enter, Space), Tab from the anchor
-    // leads into its link ("More in the docs"). A tooltip shown only by passing focus keeps the normal Tab order.
-    onKeyDown: (event: ReactKeyboardEvent<HTMLElement>) => {
-      if (event.key !== "Tab" || event.shiftKey || !state.anchor || !state.pinned) return;
-      const link = bubbleRef.current?.querySelector<HTMLElement>("a[href]");
-      if (!link) return;
-      event.preventDefault();
-      clear();
-      link.focus();
+      later(close, CLOSE_DELAY);
     },
   };
   const bubbleProps = {
     onPointerEnter: clear,
-    onPointerLeave: () => {
-      if (!state.pinned) later(close, CLOSE_DELAY);
-    },
-    // ... and from the link back to the anchor (Shift+Tab) or on to the control after the anchor (Tab): never a trap.
-    onKeyDown: (event: ReactKeyboardEvent<HTMLElement>) => {
-      const anchor = state.anchor;
-      if (event.key !== "Tab" || !anchor) return;
-      event.preventDefault();
-      const next = event.shiftKey ? anchor : (focusableAfter(anchor) ?? anchor);
-      close();
-      next.focus();
-      // A control that cannot take the focus (not rendered): back to the anchor rather than to nowhere.
-      if (document.activeElement !== next) anchor.focus();
-    },
+    onPointerLeave: () => later(close, CLOSE_DELAY),
     onBlur: (event: FocusEvent<HTMLElement>) => {
       const to = event.relatedTarget as Node | null;
       if (bubbleRef.current?.contains(to) || state.anchor?.contains(to)) return;
-      if (!state.pinned) later(close, CLOSE_DELAY);
+      later(close, CLOSE_DELAY);
     },
   };
-  return { id, state, show, close, clear, hoverProps, bubbleProps, bubbleRef };
+  return { id, state, show, close, hoverProps, bubbleProps, bubbleRef };
 }
 
 /** Where a bubble is rendered: the anchor's open dialog (a modal dialog makes everything else inert), else <body>. */
@@ -239,7 +193,6 @@ function TipBubble({
   bubbleRef: RefObject<HTMLDivElement | null>;
   onPointerEnter: () => void;
   onPointerLeave: () => void;
-  onKeyDown: (event: ReactKeyboardEvent<HTMLElement>) => void;
   onBlur: (event: FocusEvent<HTMLElement>) => void;
 }) {
   const { t } = useTranslation();
@@ -320,10 +273,6 @@ export function Tooltip({
       own.onBlur?.(event);
       tip.hoverProps.onBlur(event);
     },
-    onKeyDown: (event) => {
-      own.onKeyDown?.(event);
-      if (!event.defaultPrevented) tip.hoverProps.onKeyDown(event);
-    },
   });
   return (
     <>
@@ -334,55 +283,6 @@ export function Tooltip({
           anchor={tip.state.anchor}
           content={content}
           doc={doc}
-          onClose={tip.close}
-          bubbleRef={tip.bubbleRef}
-          {...tip.bubbleProps}
-        />
-      ) : null}
-    </>
-  );
-}
-
-/**
- * A small help icon next to a label. Hover or focus shows the explanation; click or tap pins it open,
- * which makes it usable on touch screens. Texts live in the language files (help.<id>); lib/help.ts
- * keeps their documentation links.
- */
-export function HelpTip({ id, label }: { id: HelpId; label?: string }) {
-  const { t } = useTranslation();
-  const tip = useTip({ ownEscape: true });
-  const help = helpEntry(t, id);
-  const open = tip.state.anchor !== null;
-  return (
-    <>
-      <button
-        type="button"
-        className={`help-tip ${open ? "help-tip--open" : ""}`}
-        // Names its text for the settings search, which finds settings by their help as well (pages/settingsSearchIndex.ts).
-        data-help={id}
-        aria-label={label ? t("common.helpFor", { label }) : t("common.help")}
-        aria-expanded={open}
-        aria-describedby={open ? tip.id : undefined}
-        {...tip.hoverProps}
-        onClick={(event) => {
-          // Inside a <summary> the click would also open or close the section.
-          event.preventDefault();
-          event.stopPropagation();
-          if (tip.state.pinned) tip.close();
-          else {
-            tip.clear();
-            tip.show(event.currentTarget, true);
-          }
-        }}
-      >
-        <CircleHelp size={13} aria-hidden />
-      </button>
-      {tip.state.anchor ? (
-        <TipBubble
-          id={tip.id}
-          anchor={tip.state.anchor}
-          content={help.text}
-          doc={help.doc}
           onClose={tip.close}
           bubbleRef={tip.bubbleRef}
           {...tip.bubbleProps}

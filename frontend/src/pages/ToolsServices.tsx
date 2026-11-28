@@ -2,6 +2,7 @@
 // administrator's decision per tool (classification, diff review of changed definitions). The runtime enforces every
 // rule; this page shows the state and edits the configuration. Texts from a service are shown as foreign text.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Activity, Ban, CheckCircle2, History, LogIn, LogOut, Pencil, PlugZap, Plus, RefreshCw, ShieldAlert, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -31,24 +32,7 @@ import {
   useMcpTools,
 } from "../api/mcp";
 import { toast } from "../components/toast";
-import {
-  Badge,
-  Button,
-  Callout,
-  ConfirmIconButton,
-  EmptyState,
-  Field,
-  HelpTip,
-  IconButton,
-  Modal,
-  Section,
-  Segmented,
-  Select,
-  Spinner,
-  TextArea,
-  TextInput,
-  Toggle,
-} from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, IconButton, Modal, Section, Segmented, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText, ProblemText, codedError } from "../lib/errors";
 import { type Tone, formatDate, relativeTime } from "../lib/format";
 import { McpServerDependencies } from "../python/DependencyPanel";
@@ -116,7 +100,7 @@ export function ServicesTab() {
   return (
     <div className="stack" data-testid="mcp-services">
       <p className="muted small">
-        {t("tools.services.intro")} <HelpTip id="tools.services" label={t("tools.services.title")} />
+        {t("tools.services.intro")} <HelpTip id="tools.services" topic={t("tools.services.title")} />
       </p>
       {status.data ? <StatusNotes status={status.data} /> : null}
       <PermissionNote permission="admin" />
@@ -449,7 +433,7 @@ function OAuthSummary({ server }: { server: McpServer }) {
       {scope ? ` · ${t("tools.services.oauth.scope", { scope })}` : ""}
       {expires ? ` · ${t("tools.services.oauth.expires", { when: relativeTime(expires) })}` : ""}
       {pending && !server.token_set ? ` · ${t("tools.services.oauth.pending")}` : ""}{" "}
-      <HelpTip id="tools.servicesOAuth" label={t("tools.services.auth.oauth")} />
+      <HelpTip id="tools.servicesOAuth" topic={t("tools.services.auth.oauth")} />
     </p>
   );
 }

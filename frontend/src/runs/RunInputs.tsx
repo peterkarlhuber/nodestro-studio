@@ -1,6 +1,7 @@
 // The files a run received: uploaded for it or taken from knowledge. Uploaded files can be
 // looked into and taken over into knowledge (also single files of a ZIP archive).
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { BookOpen, ChevronDown, Download, Eye } from "lucide-react";
 import { useState } from "react";
@@ -11,7 +12,7 @@ import { keys } from "../api/hooks";
 import type { AdoptSource, InputFile, Run, RunInput } from "../api/types";
 import { AdoptDialog } from "../components/AdoptDialog";
 import { FilePreview, fileSummary } from "../components/FileInput";
-import { Badge, Button, HelpTip, IconButton } from "../components/ui";
+import { Badge, Button, IconButton } from "../components/ui";
 import { problemText } from "../lib/errors";
 import { formatBytes } from "../lib/format";
 
@@ -37,7 +38,7 @@ export function RunInputs({ run }: { run: Run }) {
     <section className="panel stack" aria-labelledby="run-inputs" data-testid="run-inputs">
       <div className="row-between">
         <h2 className="panel__title" id="run-inputs">
-          {t("inputs.run.title", { count: list.length })} <HelpTip id="inputs.received" label={t("inputs.run.titleShort")} />
+          {t("inputs.run.title", { count: list.length })} <HelpTip id="inputs.received" topic={t("inputs.run.titleShort")} />
         </h2>
         {uploads.length > 1 ? (
           <Button

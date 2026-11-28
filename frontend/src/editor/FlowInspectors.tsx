@@ -1,6 +1,7 @@
 // Inspectors of the nodes that steer a workflow: decisions, approvals and sub-workflows,
 // plus the input form of the start node and the result files of a result node.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -20,20 +21,7 @@ import type {
   SubworkflowConfig,
   WorkflowNode,
 } from "../api/types";
-import {
-  Button,
-  Callout,
-  Chip,
-  Field,
-  HelpTip,
-  IconButton,
-  Section,
-  Segmented,
-  Select,
-  TextArea,
-  TextInput,
-  Toggle,
-} from "../components/ui";
+import { Button, Callout, Chip, Field, IconButton, Section, Segmented, Select, TextArea, TextInput, Toggle } from "../components/ui";
 import { newField, newRule } from "../lib/defaults";
 import { DEFAULT_FIELD_MB, FORMAT_GROUPS, fileFieldSummary } from "../lib/files";
 import { isResultFormat, resultFormatOptions } from "../lib/resultFormats";
@@ -201,7 +189,7 @@ export function Header({ node, title, tip, text }: { node: WorkflowNode; title: 
     <div className="row-between">
       <div>
         <h2 className="inspector__heading">
-          {title} <HelpTip id={tip} label={title} />
+          {title} <HelpTip id={tip} topic={title} />
         </h2>
         <p className="muted small">{text}</p>
       </div>
@@ -261,7 +249,7 @@ export function ConditionInspector({ node }: { node: WorkflowNode }) {
       </Field>
       <div className="field__head">
         <span className="field__label nd-field-label">
-          {t("flow.condition.rules")} <HelpTip id="flow.conditionRules" label={t("flow.condition.rules")} />
+          {t("flow.condition.rules")} <HelpTip id="flow.conditionRules" topic={t("flow.condition.rules")} />
         </span>
       </div>
       <div className="stack-sm">
@@ -481,7 +469,7 @@ export function FormEditor({ node }: { node: WorkflowNode }) {
     <section className="stack-sm" aria-label={t("flow.form.title")}>
       <div className="field__head">
         <span className="field__label nd-field-label">
-          {t("flow.form.title")} <HelpTip id="flow.form" label={t("flow.form.title")} />
+          {t("flow.form.title")} <HelpTip id="flow.form" topic={t("flow.form.title")} />
         </span>
       </div>
       <p className="field__hint">{fields.length ? t("flow.form.hint", { example: "{{form.name}}" }) : t("flow.form.empty")}</p>
@@ -585,7 +573,7 @@ export function FormEditor({ node }: { node: WorkflowNode }) {
                   { value: "optional", label: t("flow.form.optional") },
                 ]}
               />
-              <HelpTip id="inputs.optional" label={t("flow.form.requiredLabel")} />
+              <HelpTip id="inputs.optional" topic={t("flow.form.requiredLabel")} />
             </div>
             <p className="field__hint">{field.required ? t("flow.form.requiredHint") : t("flow.form.optionalHint")}</p>
           </div>
@@ -708,7 +696,7 @@ export function OutputFilesEditor({ node }: { node: WorkflowNode }) {
     <section className="stack-sm" aria-label={t("flow.files.title")}>
       <div className="field__head">
         <span className="field__label nd-field-label">
-          {t("flow.files.title")} <HelpTip id="files.output" label={t("flow.files.title")} />
+          {t("flow.files.title")} <HelpTip id="files.output" topic={t("flow.files.title")} />
         </span>
       </div>
       <p className="field__hint">{t("flow.files.hint")}</p>
@@ -762,7 +750,7 @@ export function OutputContractEditor({ node }: { node: WorkflowNode }) {
     <section className="stack-sm" aria-label={t("flow.contract.title")} data-testid="output-contract">
       <div className="field__head">
         <span className="field__label nd-field-label">
-          {t("flow.contract.title")} <HelpTip id="workflow.contract" label={t("flow.contract.title")} />
+          {t("flow.contract.title")} <HelpTip id="workflow.contract" topic={t("flow.contract.title")} />
         </span>
       </div>
       <p className="field__hint">{contract.length ? t("flow.contract.hint") : t("flow.contract.none")}</p>

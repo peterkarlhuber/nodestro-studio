@@ -1,5 +1,6 @@
 // Small, token-styled building blocks used across the app.
 
+import { HelpTip } from "@nodestro/ui-core";
 import {
   AlertTriangle,
   Ban,
@@ -49,9 +50,9 @@ import type { NodeStatus, RunStatus } from "../api/types";
 import { useDocumentTitle } from "../lib/documentTitle";
 import { STATUS_TONE, type Tone } from "../lib/format";
 import { type HelpId, docPath, helpEntry } from "../lib/help";
-import { HelpTip, Tooltip } from "./Tooltip";
+import { Tooltip } from "./Tooltip";
 
-export { HelpTip, Tooltip };
+export { Tooltip };
 
 type ButtonVariant = "default" | "primary" | "ghost" | "danger";
 
@@ -442,7 +443,7 @@ export function Field({
           <label className="nd-field-label" htmlFor={htmlFor ?? owner?.id}>
             {label}
           </label>
-          {tip ? <HelpTip id={tip} label={typeof label === "string" ? label : undefined} /> : null}
+          {tip ? <HelpTip id={tip} topic={typeof label === "string" ? label : undefined} /> : null}
         </span>
         {action}
       </div>
@@ -591,7 +592,7 @@ export function Toggle({
       ) : (
         text
       )}
-      {tip ? <HelpTip id={tip} label={typeof label === "string" ? label : undefined} /> : null}
+      {tip ? <HelpTip id={tip} topic={typeof label === "string" ? label : undefined} /> : null}
     </div>
   );
 }
@@ -719,7 +720,7 @@ export function Section({
   return (
     <div className="section-frame">
       <span className="section__tip">
-        <HelpTip id={tip} label={title} />
+        <HelpTip id={tip} topic={title} />
       </span>
       {details}
     </div>
@@ -727,7 +728,7 @@ export function Section({
 }
 
 const FIELDS = 'input:not([type="hidden"]):not([disabled]), select:not([disabled]), textarea:not([disabled])';
-const CONTROLS = `${FIELDS}, button:not([disabled]):not(.help-tip)`;
+const CONTROLS = `${FIELDS}, button:not([disabled]):not([data-help])`;
 const FOCUSABLE = `${FIELDS}, button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])`;
 
 /** The first element matching `selector` that is rendered (a hidden file input cannot take the focus). */
@@ -880,7 +881,7 @@ export function Stat({ label, value, hint, tip }: { label: string; value: ReactN
     <div className="stat">
       <span className="stat__label">
         {label}
-        {tip ? <HelpTip id={tip} label={label} /> : null}
+        {tip ? <HelpTip id={tip} topic={label} /> : null}
       </span>
       <strong className="stat__value">{value}</strong>
       {hint ? <span className="stat__hint">{hint}</span> : null}

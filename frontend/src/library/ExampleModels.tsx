@@ -2,6 +2,7 @@
 // every agent the model its task needs on this computer; the dialog shows that plan with the reason and lets the
 // person choose another model per agent. A choice made here is sent with the copy and always wins.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { Download } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -11,7 +12,7 @@ import { Link } from "react-router-dom";
 import { api } from "../api/client";
 import { useLocalModels } from "../api/localModels";
 import type { ExampleAgentModel, ExampleDetail, ExampleModelPlan as Plan } from "../api/types";
-import { Badge, HelpTip, Select } from "../components/ui";
+import { Badge, Select } from "../components/ui";
 import { providerOf } from "../lib/providers";
 import { useSettingsHref } from "../lib/settingsLink";
 
@@ -103,7 +104,7 @@ export function ExampleModelPlan({
   return (
     <section className="stack" aria-labelledby="example-models-title" data-testid="example-models">
       <h3 id="example-models-title">
-        {t("library.models.title")} <HelpTip id="library.models" label={t("library.models.title")} />
+        {t("library.models.title")} <HelpTip id="library.models" topic={t("library.models.title")} />
       </h3>
       <p className="muted small">{t("library.models.text")}</p>
       <div className="table-wrap">

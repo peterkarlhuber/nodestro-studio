@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CalendarClock, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -9,7 +10,7 @@ import { keys, useSchedules, useWorkflows } from "../api/hooks";
 import { type Activation, type Schedule, type ScheduleIn, type ScheduleKind, WEEKDAYS } from "../api/types";
 import { FormFields } from "../components/FormFields";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, IconButton, Modal, PageHeader, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, IconButton, Modal, PageHeader, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 import { ModelFixButton } from "../missingModel/ModelFixButton";
@@ -134,7 +135,7 @@ function ScheduleDialog({ schedule, onClose }: { schedule: Schedule | null; onCl
       }
     >
       <p className="muted small">
-        {t("automation.schedule.intro")} <HelpTip id="automation.schedule" label={t("nav.schedules")} />
+        {t("automation.schedule.intro")} <HelpTip id="automation.schedule" topic={t("nav.schedules")} />
       </p>
       <div className="grid-2">
         <Field label={t("automation.columns.name")}>

@@ -4,15 +4,16 @@
 //
 //   <div class="settings">                                   the content column
 //     <section> <h2 class="panel__title" id="settings-…">     a section (also what the navigation lists)
-//       .field     label (.field__label label), hint (.field__hint), help (.help-tip[data-help])   ← Field
+//       .field     label (.field__label label), hint (.field__hint), help ([data-help])            ← Field
 //       .toggle    label (.toggle__label > span), description (small), help                     ← Toggle
 //       details > summary                                     a collapsible part (Section, SettingsAdvanced)
 //       h3                                                    a group heading (SettingsGroup)
 //       [data-setting="Label"] (+ data-setting-text)          anything else that should be found
 //
-// Help texts are only rendered when a tooltip opens; the help button names its text with data-help, and the
-// caller passes a function that returns the text for an id. Parts marked [data-settings-search="skip"] (and
-// tooltips) are left out. Content of a closed <details> is found and opened when the hit is shown. Content that is
+// Help comes from the shared help registry (one path for help buttons, the help search and this search): the help
+// button (HelpTip of @nodestro/ui-core) names its entry with data-help, and the caller passes a function that
+// returns the entry's text for an id (SettingsSearch reads the registry). Parts marked [data-settings-search="skip"]
+// (and help panels and tooltips) are left out. Content of a closed <details> is found and opened when the hit is shown. Content that is
 // not rendered at all (it applies only to some installations) is found through its help text when the caller lists
 // it as a ConditionalSetting: the hit then leads to its section and says that the part is not shown right now.
 
@@ -54,11 +55,11 @@ export function normalize(text: string): string {
     .trim();
 }
 
-/** An element's own words, without its help button, icons and visually hidden parts. */
+/** An element's own words, without its help (button and panel), icons and visually hidden parts. */
 export function ownText(element: Element | null | undefined): string {
   if (!element) return "";
   const copy = element.cloneNode(true) as HTMLElement;
-  copy.querySelectorAll("button.help-tip, [aria-hidden=true], svg, .visually-hidden, .sr-only, [role=tooltip]").forEach((node) => node.remove());
+  copy.querySelectorAll(".ui-helptip, [aria-hidden=true], svg, .visually-hidden, .sr-only, [role=tooltip]").forEach((node) => node.remove());
   return (copy.textContent ?? "").replace(/\s+/g, " ").trim();
 }
 
@@ -107,11 +108,11 @@ export function indexSettings(
       kind: "section",
       label: sectionTitle,
       context: "",
-      text: [ownText(section.querySelector(":scope > p")), helpOf(heading.querySelector(".help-tip"), help)].filter(Boolean).join(" "),
+      text: [ownText(section.querySelector(":scope > p")), helpOf(heading.querySelector("[data-help]"), help)].filter(Boolean).join(" "),
       element: section,
     });
     section.querySelectorAll<HTMLElement>(SETTING_SELECTOR).forEach((element, index) => {
-      if (element.closest("[data-settings-search=skip], [role=tooltip], [hidden]")) return;
+      if (element.closest("[data-settings-search=skip], .ui-helptip, [role=tooltip], [hidden]")) return;
       // A field inside a toggle or a marked part belongs to that one entry.
       const owner = element.parentElement?.closest(".field, .toggle, [data-setting]");
       if (owner && section.contains(owner) && !element.matches("details > summary, h3")) return;
@@ -120,21 +121,21 @@ export function indexSettings(
       let kind: SettingEntry["kind"] = "setting";
       if (element.matches("[data-setting]")) {
         label = element.getAttribute("data-setting") ?? "";
-        text = [element.getAttribute("data-setting-text") ?? "", helpOf(element.querySelector(".help-tip"), help)].join(" ");
+        text = [element.getAttribute("data-setting-text") ?? "", helpOf(element.querySelector("[data-help]"), help)].join(" ");
       } else if (element.matches(".field")) {
         label = ownText(element.querySelector(".field__label label") ?? element.querySelector(".field__label"));
-        text = [ownText(element.querySelector(":scope > .field__hint")), helpOf(element.querySelector(".field__label .help-tip"), help)].join(" ");
+        text = [ownText(element.querySelector(":scope > .field__hint")), helpOf(element.querySelector(".field__label [data-help]"), help)].join(" ");
       } else if (element.matches(".toggle")) {
         label = ownText(element.querySelector(".toggle__label > span"));
-        text = [ownText(element.querySelector(".toggle__label > small")), helpOf(element.querySelector(":scope > .help-tip"), help)].join(" ");
+        text = [ownText(element.querySelector(".toggle__label > small")), helpOf(element.querySelector(":scope > .ui-helptip > [data-help]"), help)].join(" ");
       } else if (element.matches("details > summary")) {
         label = ownText(element.querySelector(".section__title, .settings-advanced__title") ?? element);
         const frame = element.parentElement?.parentElement;
-        text = helpOf(frame?.querySelector(":scope > .section__tip .help-tip") ?? element.querySelector(".help-tip"), help);
+        text = helpOf(frame?.querySelector(":scope > .section__tip [data-help]") ?? element.querySelector("[data-help]"), help);
         kind = "group";
       } else {
         label = ownText(element);
-        text = helpOf(element.querySelector(".help-tip"), help);
+        text = helpOf(element.querySelector("[data-help]"), help);
         kind = "group";
       }
       if (!label) return;
@@ -215,7 +216,7 @@ export function revealSetting(element: HTMLElement, reducedMotion = false): void
   const control =
     element.matches("details") ? element.querySelector<HTMLElement>(":scope > summary")
     : element.matches("section") ? element.querySelector<HTMLElement>(":scope > h2")
-    : element.querySelector<HTMLElement>("input:not([type=hidden]):not([disabled]), select:not([disabled]), textarea:not([disabled]), [role=switch]:not([disabled]), button:not(.help-tip):not([disabled])");
+    : element.querySelector<HTMLElement>("input:not([type=hidden]):not([disabled]), select:not([disabled]), textarea:not([disabled]), [role=switch]:not([disabled]), button:not([data-help]):not([disabled])");
   const target = control ?? element;
   if (!target.matches("a[href], button, input, select, textarea, summary, [tabindex]")) target.setAttribute("tabindex", "-1");
   target.focus({ preventScroll: true });

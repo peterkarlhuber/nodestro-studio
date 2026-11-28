@@ -2,6 +2,7 @@
 // advice (small context, CPU only, memory, slow or too large models) and whether a model suits this hardware.
 // Speeds are only ever measured ones ("Measure speed"); nothing here estimates how fast a model will be.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Cpu, Gauge } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -20,7 +21,7 @@ import {
   useLocalModels,
 } from "../api/localModels";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, HelpTip } from "../components/ui";
+import { Badge, Button, Callout } from "../components/ui";
 import i18n from "../i18n";
 import { formatLargeBytes } from "../lib/format";
 
@@ -157,7 +158,7 @@ export function MachinePanel({ overview }: { overview: LocalOverview }) {
   return (
     <div className="stack" data-testid="local-hardware">
       <h3 className="small">
-        <Cpu size={13} aria-hidden /> {title} <HelpTip id="settings.localHardware" label={title} />
+        <Cpu size={13} aria-hidden /> {title} <HelpTip id="settings.localHardware" topic={title} />
       </h3>
       {hardware ? null : (
         <p className="muted small" data-testid="local-hardware-hidden">

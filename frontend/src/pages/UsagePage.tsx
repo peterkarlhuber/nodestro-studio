@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { Activity } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -5,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useUsage } from "../api/hooks";
 import type { UsageBucket, UsageBucketSource, UsageBudgets, UsageEntry } from "../api/types";
 import { useModelName } from "../components/ModelPicker";
-import { Badge, Callout, EmptyState, HelpTip, PageHeader, Segmented, Spinner, Stat } from "../components/ui";
+import { Badge, Callout, EmptyState, PageHeader, Segmented, Spinner, Stat } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatCost, formatDate, formatDay, formatNumber, formatTokens } from "../lib/format";
 import { bucketCost, bucketState, usageCost } from "../lib/pricing";
@@ -50,7 +51,7 @@ function BucketTable({
     <section className="panel stack" aria-label={title}>
       <h2 className="panel__title">
         {title}
-        {tip ? <HelpTip id={tip} label={title} /> : null}
+        {tip ? <HelpTip id={tip} topic={title} /> : null}
       </h2>
       {!buckets.length ? <p className="muted small">{t("usage.noData")}</p> : null}
       {buckets.length ? (
@@ -62,7 +63,7 @@ function BucketTable({
               <th className="num">{t("runs.stats.tokens")}</th>
               <th className="num">{t("executions.columns.cost")}</th>
               <th>
-                {t("usage.share")} <HelpTip id="usage.share" label={t("usage.share")} />
+                {t("usage.share")} <HelpTip id="usage.share" topic={t("usage.share")} />
               </th>
             </tr>
           </thead>
@@ -101,7 +102,7 @@ function CostNotices({ total }: { total: UsageBucket }) {
       {state === "partial" || state === "unknown" ? (
         <Callout tone="warning">
           {t(state === "partial" ? "usage.cost.partialNotice" : "usage.cost.unknownNotice", { count: total.unpriced })}{" "}
-          <HelpTip id="settings.prices" label={t("usage.cost.prices")} />
+          <HelpTip id="settings.prices" topic={t("usage.cost.prices")} />
         </Callout>
       ) : null}
       {stale ? <Callout tone="info">{t("usage.cost.staleNotice", { count: stale })}</Callout> : null}

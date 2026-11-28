@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { AlertTriangle, ArrowRight, Info, XCircle } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -6,7 +7,6 @@ import { useMeta } from "../api/hooks";
 import type { ArchitectJob, CheckIssue, ConfigIssue, ToolDraft, WorkflowNode } from "../api/types";
 import { agentIcon } from "../components/icons";
 import { TextDiff } from "../components/TextDiff";
-import { HelpTip } from "../components/Tooltip";
 import { Badge, Callout, Chip, Field, TextInput } from "../components/ui";
 import { findings } from "../editor/CheckList";
 import { ProblemText } from "../lib/errors";
@@ -43,7 +43,7 @@ function Validation({ job }: { job: ArchitectJob }) {
   return (
     <section className="stack-sm" data-testid="architect-validation">
       <h4 className="architect-panel__title">
-        {t("architect.review.validation")} <HelpTip id="architect.validation" label={t("architect.review.validation")} />
+        {t("architect.review.validation")} <HelpTip id="architect.validation" topic={t("architect.review.validation")} />
       </h4>
       {!errors.length ? (
         <Callout tone="brand">{t("architect.review.validOk")}</Callout>
@@ -136,7 +136,7 @@ function Overview({ job, name, onName }: { job: ArchitectJob; name: string; onNa
       </dl>
       <section className="stack-sm">
         <h4 className="architect-panel__title">
-          {t("architect.review.assumptions")} <HelpTip id="architect.assumptions" label={t("architect.review.assumptions")} />
+          {t("architect.review.assumptions")} <HelpTip id="architect.assumptions" topic={t("architect.review.assumptions")} />
         </h4>
         {job.assumptions.length ? <List items={job.assumptions} /> : <p className="muted small">{t("architect.review.noAssumptions")}</p>}
       </section>
@@ -287,12 +287,12 @@ function Tools({ job, onTool }: { job: ArchitectJob; onTool: (name: string, draf
   return (
     <div className="stack">
       <p className="muted small">
-        {t("architect.review.toolsIntro")} <HelpTip id="architect.toolDraft" label={t("architect.review.tabTools")} />
+        {t("architect.review.toolsIntro")} <HelpTip id="architect.toolDraft" topic={t("architect.review.tabTools")} />
       </p>
       {libraries.length ? (
         <Callout tone="warning">
           <span data-testid="architect-libraries">{t("architect.review.libraries", { names: libraries.join(", ") })}</span>{" "}
-          <HelpTip id="python.architect" label={t("python.panel.title")} />
+          <HelpTip id="python.architect" topic={t("python.panel.title")} />
         </Callout>
       ) : null}
       {job.tool_drafts.map((draft) => (

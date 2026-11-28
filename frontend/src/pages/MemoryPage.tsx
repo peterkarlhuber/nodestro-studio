@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Brain, FilePlus, Save, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -11,7 +12,7 @@ import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { toast } from "../components/toast";
 import { UsedByList, UsedByWarning, useUsedBy } from "../components/UsedBy";
-import { Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, Hint, IconButton, Modal, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
+import { Button, Callout, ConfirmIconButton, EmptyState, Field, Hint, IconButton, Modal, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatDate } from "../lib/format";
 import type { MemoryFile } from "../api/types";
@@ -150,7 +151,7 @@ function SpaceDetail({ space, onCleared }: { space: string; onCleared: () => voi
     <section className="panel stack" aria-label={t("memory.space", { name: space })}>
       <div className="row-between">
         <h2 className="panel__title">
-          {space} <HelpTip id="memory.space" label={t("agent.memory.space")} />
+          {space} <HelpTip id="memory.space" topic={t("agent.memory.space")} />
         </h2>
         <span className="row-gap">
           <DiscussIcon offer={offer} paths={current ? [current] : []} label={current ? t("assistant.discussFile", { name: current }) : undefined} />
@@ -165,7 +166,7 @@ function SpaceDetail({ space, onCleared }: { space: string; onCleared: () => voi
       <div className="memory-files">
         <div className="stack-sm">
           <span className="muted small">
-            {t("memory.entries")} <HelpTip id="memory.origin" label={t("memory.origin.label")} />
+            {t("memory.entries")} <HelpTip id="memory.origin" topic={t("memory.origin.label")} />
           </span>
           {files.data?.map((file) => (
             <button

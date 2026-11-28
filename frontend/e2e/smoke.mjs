@@ -321,9 +321,10 @@ try {
   await page.getByRole("dialog").getByRole("button", { name: "Abbrechen" }).click();
 
   await page.goto(base + "/settings");
-  await page.locator(".help-tip").first().click();
-  await page.getByRole("tooltip").waitFor();
-  check(await page.getByRole("tooltip").getByRole("link").isVisible(), "Help tip opens on click with a documentation link");
+  await page.locator(".ui-helptip__button").first().click();
+  const helpPanel = page.locator(".ui-helptip__panel:not([hidden])");
+  await helpPanel.waitFor();
+  check(await helpPanel.getByRole("link").isVisible(), "Help tip opens on click with a documentation link");
   await shot("15-help-tip");
 
   await page.goto(base + "/tools");

@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Shared help buttons (ST-068, 2026-11-28)
+
+- Every help icon (116 uses, 126 more through the `tip` of fields, toggles, sections and values) is now the shared
+  `HelpTip` of `@nodestro/ui-core` 0.2.1 (nodestro-ui #7: hover and keyboard focus, Escape closes only the panel,
+  top layer above modal dialogs, `data-help`), with the studio's help registry: every help id with a title in six
+  languages (`helpTitles.json`), its text and documentation link; the panel shows the title, the text and
+  "Learn more". The settings search reads help from that registry. The studio's own help tooltip is removed and
+  `npm run lint` refuses it again. Lock: `nodestro-ui` core 0.2.1.
+
 ### Data-only extension store (2026-11-27)
 
 - Approvals: a new **Extension packages** page (admin only, linked on **Approvals**, never on a server) for the

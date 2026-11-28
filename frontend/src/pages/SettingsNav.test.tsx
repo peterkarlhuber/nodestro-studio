@@ -1,3 +1,4 @@
+import { HelpTip } from "@nodestro/ui-core";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRef } from "react";
@@ -14,7 +15,8 @@ function Page({ sections, onReset }: { sections: [string, string][]; onReset?: (
         {sections.map(([id, title]) => (
           <section key={id}>
             <h2 className="panel__title" id={id}>
-              {title} <button aria-label="Hilfe">?</button>
+              {/* The shared help button: its label and its panel's text are not part of the section's name. */}
+              {title} <HelpTip id={id} entry={{ title, summary: `Erklärung zu ${title}` }} />
             </h2>
             <div className="field">
               <span className="field__label">

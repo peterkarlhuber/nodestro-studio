@@ -7,7 +7,7 @@
 // workflow be added. Bindings that exist are always shown (with a note that the agent does not start while it is
 // off), so they can be seen and removed.
 
-import { Button, Dialog, Field, IconButton, Select, TextArea, TextInput } from "@nodestro/ui-core";
+import { Button, Dialog, Field, HelpTip, IconButton, Select, TextArea, TextInput } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { Plus, Trash2, Workflow as WorkflowIcon } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -17,7 +17,6 @@ import { api } from "../api/client";
 import { useWorkflowToolsEnabled } from "../api/conversations";
 import { keys, useWorkflows } from "../api/hooks";
 import { MAX_WORKFLOW_TOOLS, WORKFLOW_TOOL_NAME, type AgentConfig, type WorkflowToolConfig, type WorkflowToolInfo } from "../api/types";
-import { HelpTip } from "../components/Tooltip";
 import { Callout, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatDate } from "../lib/format";
@@ -260,7 +259,7 @@ export function WorkflowToolsSection({
     <div className="stack-sm" data-testid="workflow-tools">
       <span className="field__label">
         <span className="nd-field-label">{t("workflowTools.section.title")}</span>
-        <HelpTip id="agent.workflowTools" label={t("workflowTools.section.help")} />
+        <HelpTip id="agent.workflowTools" topic={t("workflowTools.section.help")} />
       </span>
       {!enabled ? (
         <Callout tone="warning">

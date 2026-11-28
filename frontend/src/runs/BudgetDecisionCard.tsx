@@ -5,6 +5,7 @@
 //
 // Everything shown comes from the API (GET /runs/{id}/budget), so the decision is found again after leaving the page.
 
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CircleDollarSign, History, PlayCircle, Square } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
@@ -16,7 +17,7 @@ import { ApiError, api } from "../api/client";
 import { isRunBudget, keys, useRunBudget } from "../api/hooks";
 import type { BudgetDecisionIn, BudgetRaise, BudgetRequest, Run, RunBudgetOut } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, HelpTip, StatusBadge, TextInput } from "../components/ui";
+import { Badge, Button, Callout, Field, StatusBadge, TextInput } from "../components/ui";
 import { useEditor } from "../editor/store";
 import type { HelpId } from "../lib/help";
 import { ErrorText, problemText } from "../lib/errors";
@@ -68,7 +69,7 @@ function Fact({ label, help, testId, children }: { label: string; help: HelpId; 
   return (
     <div>
       <dt>
-        {label} <HelpTip id={help} label={label} />
+        {label} <HelpTip id={help} topic={label} />
       </dt>
       <dd data-testid={testId}>{children}</dd>
     </div>
@@ -83,7 +84,7 @@ export function BudgetRaiseHistory({ raises }: { raises: BudgetRaise[] }) {
   return (
     <div className="budget-history" data-testid="budget-history">
       <span className="nd-field-label">
-        <History size={13} aria-hidden /> {label} <HelpTip id="budget.history" label={label} />
+        <History size={13} aria-hidden /> {label} <HelpTip id="budget.history" topic={label} />
       </span>
       <ol className="budget-history__list small">
         {raises.map((raise) => (
@@ -226,7 +227,7 @@ export function BudgetDecisionForm({
             {t("approvals.waitingSince", { time: formatDate(request.created_at) })}
           </div>
         </div>
-        <HelpTip id="budget.decision" label={t("budget.card.title")} />
+        <HelpTip id="budget.decision" topic={t("budget.card.title")} />
       </header>
       <div className="row-gap">
         {deadlinePassed ? <Badge tone="idle">{t("budget.status.expired")}</Badge> : <StatusBadge status="awaiting_budget" />}
@@ -239,10 +240,10 @@ export function BudgetDecisionForm({
           next: formatMoney((request.requests?.find((item) => item.refused) ?? request.requests?.[0])?.max_cost_usd ?? null),
           left: formatMoney(clampZero(moneyDifference(request.limit_usd, request.spent_usd))),
         })}{" "}
-        <HelpTip id="budget.reason" label={t("budget.card.reasonLabel")} />
+        <HelpTip id="budget.reason" topic={t("budget.card.reasonLabel")} />
       </p>
       <p className="small" data-testid="budget-block">
-        <strong>{blockText(t, request)}</strong> {t("budget.card.block.appliesExactly")} <HelpTip id="budget.block" label={t("budget.card.blockLabel")} />
+        <strong>{blockText(t, request)}</strong> {t("budget.card.block.appliesExactly")} <HelpTip id="budget.block" topic={t("budget.card.blockLabel")} />
       </p>
       <dl className="form-values budget-facts">
         {scope === "run" && budget.initial_limit_usd !== null ? (
@@ -284,7 +285,7 @@ export function BudgetDecisionForm({
       <div className="stack-sm">
         <span className="nd-field-label">
           {t("budget.card.blocked", { count: request.requests?.length ?? 0 })}{" "}
-          <HelpTip id="budget.blockedRequest" label={t("budget.card.blockedLabel")} />
+          <HelpTip id="budget.blockedRequest" topic={t("budget.card.blockedLabel")} />
         </span>
         <ul className="budget-requests small" data-testid="budget-blocked">
           {(request.requests ?? []).map((item, index) => (
@@ -305,7 +306,7 @@ export function BudgetDecisionForm({
         {request.suggested_limit_usd
           ? t("budget.card.suggested", { limit: formatMoney(request.suggested_limit_usd) })
           : t("budget.card.noSuggestion")}{" "}
-        <HelpTip id="budget.suggested" label={t("budget.card.suggestedLabel")} />
+        <HelpTip id="budget.suggested" topic={t("budget.card.suggestedLabel")} />
       </p>
       {conflict ? (
         <div role="status" data-testid="budget-conflict">
@@ -360,7 +361,7 @@ export function BudgetDecisionForm({
             {difference ? (
               <>
                 {t("budget.card.difference", { amount: formatMoney(difference) })}{" "}
-                <HelpTip id="budget.difference" label={t("budget.card.differenceLabel")} />
+                <HelpTip id="budget.difference" topic={t("budget.card.differenceLabel")} />
               </>
             ) : null}
           </p>
@@ -419,7 +420,7 @@ export function BudgetDecisionForm({
               {t("budget.card.end")}
             </Button>
           )}
-          <HelpTip id="budget.end" label={t("budget.card.end")} />
+          <HelpTip id="budget.end" topic={t("budget.card.end")} />
         </div>
       ) : null}
       <BudgetRaiseHistory raises={budget.raises ?? []} />
