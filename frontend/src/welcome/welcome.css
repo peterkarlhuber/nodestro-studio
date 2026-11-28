@@ -161,7 +161,7 @@
   font-size: 13px;
 }
 
-.wl .ui-button:hover {
+.wl .ui-button:not(:where(.ui-icon-button)):hover {
   text-decoration: none;
 }
 

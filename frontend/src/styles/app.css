@@ -2768,7 +2768,7 @@ body.is-resizing--y * {
   gap: 4px;
 }
 
-.inspector__actions .ui-button {
+.inspector__actions .ui-button:not(:where(.ui-icon-button)) {
   margin-right: auto;
 }
 
@@ -3360,7 +3360,7 @@ body.is-resizing--y * {
     gap: 2px;
   }
 
-  .editor .title-actions .ui-button--ghost {
+  .editor .title-actions .ui-button--ghost:not(:where(.ui-icon-button)) {
     padding-left: 8px;
     padding-right: 8px;
   }
@@ -4460,7 +4460,7 @@ kbd {
   color: var(--ui-color-primary);
 }
 
-.example-gallery__head .ui-button:hover {
+.example-gallery__head .ui-button:not(:where(.ui-icon-button)):hover {
   text-decoration: none;
 }
 
@@ -6475,7 +6475,7 @@ kbd {
   font-size: var(--ui-text-xs);
 }
 
-.upload-samples .ui-button {
+.upload-samples .ui-button:not(:where(.ui-icon-button)) {
   max-width: 100%;
   overflow-wrap: anywhere;
   text-align: start;
@@ -6973,7 +6973,7 @@ ul.gate-report__list > li.gate-report__item {
 /* ---- editor UX (wp-editor): reasons for blocked controls, menus, problems on nodes ------------------- */
 
 /* A control that cannot be used says why next to it (DisabledReason in components/ui.tsx). It stays focusable. */
-.ui-button.is-blocked {
+.ui-button.is-blocked:not(:where(.ui-icon-button)) {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -7764,7 +7764,7 @@ ul.gate-report__list > li.gate-report__item {
     grid-template-columns: 1fr;
   }
 
-  .lrc-composer__foot .ui-button {
+  .lrc-composer__foot .ui-button:not(:where(.ui-icon-button)) {
     width: 100%;
     justify-content: center;
   }
