@@ -312,5 +312,48 @@
       "failed": "Não foi possível ler a pasta.",
       "offEnded": "O compartilhamento terminou, por isso o índice foi removido."
     }
+  },
+  "extensions": {
+    "title": "Pacotes de extensão",
+    "description": "Pacotes de extensão de outros autores, mantidos separados dos arquivos do próprio Nodestro. Suas ferramentas rodam apenas na sandbox isolada do Docker.",
+    "link": "Pacotes de extensão",
+    "lockedTitle": "Suas ferramentas continuam bloqueadas.",
+    "switchOff": "As ferramentas de extensão não estão ativadas nesta instalação, então nenhuma ferramenta de um pacote é executada. Um pacote adicionado é apenas verificado e guardado.",
+    "switchOn": "A chave de desenvolvimento das ferramentas de extensão está ligada. As ferramentas rodam apenas na sandbox do Docker, sem rede, arquivos do computador ou segredos, e só depois que a sandbox passou nas verificações.",
+    "upload": "Adicionar um pacote",
+    "uploadText": "O Nodestro verifica o pacote antes de guardá-lo: checksum, arquivos, descrição e dependências. Ele nunca é instalado no próprio Nodestro.",
+    "file": "Arquivo do pacote",
+    "fileHint": "Um wheel do Python (.whl) de no máximo {{mb}} MB, somente Python puro.",
+    "tooLarge": "Este arquivo é maior do que o aceito.",
+    "sha256": "SHA-256 esperado",
+    "sha256Hint": "O checksum de 64 dígitos informado pelo editor para este arquivo. Um arquivo com outro checksum é recusado.",
+    "origin": "Origem",
+    "originHint": "Por exemplo, o endereço da página de lançamento do editor. Ele é guardado com o pacote.",
+    "replaces": "Atualização de",
+    "replacesHint": "Opcional. A versão instalada que este pacote substitui; a antiga é removida quando a nova é guardada.",
+    "replacesNone": "Sem atualização: um pacote novo",
+    "uploadButton": "Verificar e adicionar",
+    "uploaded": "{{name}} {{version}} foi verificado e adicionado.",
+    "packages": "Pacotes guardados",
+    "empty": "Nenhum pacote de extensão está guardado aqui.",
+    "sandboxed": "Na sandbox",
+    "locked": "Bloqueado",
+    "remove": "Remover {{name}}",
+    "removeConfirm": "Remover?",
+    "revoke": "Revogar {{name}}",
+    "revokeConfirm": "Revogar para sempre?",
+    "tools": "Ferramentas: {{tools}}",
+    "hash": "Soma de verificação (SHA-256)",
+    "originLabel": "Origem",
+    "installedBy": "Adicionado por",
+    "revoked": "Pacotes revogados",
+    "revokedBy": "revogado por {{by}} em {{at}}; nunca mais é aceito",
+    "hostRefused": "Encontrados no ambiente de programa do Nodestro e nunca usados: {{names}}. Remova-os de lá.",
+    "reasons": {
+      "off": "Bloqueado: as ferramentas de extensão estão desligadas.",
+      "not_secured": "Bloqueado: a sandbox do Docker não passou nas verificações.",
+      "invalid": "Bloqueado: o pacote falhou em uma verificação.",
+      "pending": "Adicionado depois do início: suas ferramentas serão listadas no próximo início."
+    }
   }
 }

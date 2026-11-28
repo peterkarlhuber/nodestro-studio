@@ -1392,6 +1392,27 @@
     "zip_bomb": "{{name}} dans le fichier se décompresserait bien au-delà de sa taille, le fichier n’est donc pas utilisé.",
     "zip_invalid": "Le fichier n’est pas un ZIP lisible."
   },
+  "extension_store": {
+    "disabled": "Cette installation ne conserve aucun paquet d’extension.",
+    "not_found": "Ce paquet d’extension n’est pas conservé ici.",
+    "refused": "Le paquet d’extension a été refusé.",
+    "unreadable": "La liste des paquets d’extension conservés ne peut pas être lue.",
+    "refused_hash_mismatch": "La somme de contrôle du paquet n’est pas la SHA-256 attendue.",
+    "refused_origin": "Indiquez la provenance du paquet.",
+    "refused_too_large": "Le paquet est trop volumineux.",
+    "refused_archive": "Le fichier n’est pas une roue Python lisible.",
+    "refused_unsafe_path": "Le paquet contient un nom de fichier qui sort de son dossier ou qui apparaît deux fois.",
+    "refused_unsafe_member": "Le paquet contient un lien, un périphérique, du code natif ou un fichier qui s’exécuterait au démarrage de Python.",
+    "refused_record": "La liste des fichiers et des sommes de contrôle du paquet ne correspond pas à son contenu.",
+    "refused_manifest": "La description, la version ou les points d’entrée du paquet ne sont pas valides.",
+    "refused_not_pure": "Seuls les paquets en Python pur sont acceptés.",
+    "refused_dependency": "Le paquet a besoin d’autres bibliothèques ; ces paquets ne sont pas encore pris en charge.",
+    "refused_data_part": "Les paquets avec des scripts ou des dossiers de données supplémentaires ne sont pas acceptés.",
+    "refused_exists": "Ce paquet ou une autre version est déjà conservé ; ajoutez-le comme mise à jour.",
+    "refused_revoked": "Ce paquet a été révoqué et ne sera plus jamais accepté.",
+    "refused_reserved_name": "Le paquet utilise le nom d’un paquet ou d’un module de confiance ou intégré.",
+    "refused_storage": "Le paquet n’a pas pu être enregistré. Vérifiez l’espace libre et réessayez."
+  },
   "workflow_tool": {
     "approval_required": "Ce workflow peut modifier quelque chose, et son démarrage ne peut pas être confirmé ici, car les validations d’outils sont désactivées.",
     "disabled": "Les outils workflow sont désactivés ici, donc {{node}} ne peut pas démarrer. Retirez ses outils workflow ou demandez à votre administration.",

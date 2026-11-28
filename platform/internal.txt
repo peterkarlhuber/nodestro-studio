@@ -1,9 +1,9 @@
 # The lock of the platform's internal packages, studio profile: generated from platform/versions.json by
 # scripts/check_versions.py --write-lock (do not edit). Install with: pip install -r <this file> <target>
-nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@74b323808f9bb5dc27525d656999237bf59d0cf8
+nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@43041e973c52964cd19b32caf8d4d0e74b051027
 nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@c5f466244c48db105e6588bbe709bba83509fcae
 nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@59f266eb232462ff516fe9246fc0b6e7491c890a
-nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@b4d11ad89254305ea39dac4281863db5fe5613b4
+nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@da47678b99c1d22ccb2cb19fd21e5b60d08081ca
 nodestro-session @ git+https://github.com/peterkarlhuber/nodestro-session.git@4d500285581fdea5d8cd6752cf225077e100dfca
 orkexa @ git+https://github.com/peterkarlhuber/orkexa.git@22826465d8c3bae5025e5b9be896bbe568d2cf25
 tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@5bc690e2de74a92cd44bb4522cf2533cc2c8d14f

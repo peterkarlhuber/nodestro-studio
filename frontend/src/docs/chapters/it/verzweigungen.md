@@ -111,6 +111,13 @@ La pagina mostra ogni condivisione con chi l’ha data e il suo stato. Il **regi
 
 Con **Mantieni un indice di ricerca** (disattivato finché non lo attivi), Nodestro mantiene un indice dei file di testo e PDF della cartella, in cui gli agenti cercano per significato. L’elenco ne mostra lo stato: **Indicizzazione …**, **Indice pronto** con il numero di file e l’ora dell’ultimo aggiornamento, **Indice incompleto** se alcuni file sono stati esclusi a un limite, oppure **Indice non riuscito** con il motivo. Non nomina mai un file. Quando la condivisione termina, il suo indice viene rimosso.
 
+## Pacchetti di estensione {#erweiterungspakete}
+<!-- keywords: pacchetto di estensione, archivio estensioni, wheel, sha-256, revocare, sandbox -->
+
+I pacchetti di estensione di altri autori sono tenuti separati dai file di programma di Nodestro, nella cartella dei dati di questa installazione; un server non ne ha. Un amministratore apre **Pacchetti di estensione** (collegato da **Approvazioni**), sceglie un wheel Python puro (`.whl`), indica la somma di controllo SHA-256 fornita dall’editore e la sua provenienza, e seleziona **Controlla e aggiungi**. Nodestro verifica il file prima di conservare qualsiasi cosa: somma di controllo, dimensione, ogni nome di file e ogni file, la descrizione e che non servano altre librerie. Un pacchetto rifiutato non viene mai conservato, e la pagina dice perché. Un pacchetto non viene mai installato in Nodestro stesso.
+
+Gli strumenti di un pacchetto conservato restano **bloccati**. Vengono eseguiti solo quando l’interruttore di sviluppo degli strumenti di estensione è attivo, e allora solo nella sandbox Docker isolata, senza rete, file del computer né segreti; nessun tipo di strumento di estensione è ancora abilitato. Un pacchetto aggiunto dopo l’avvio compare con i suoi strumenti all’avvio successivo. **Rimuovi** toglie un pacchetto; si può aggiungere di nuovo e viene verificato di nuovo. **Revoca** lo toglie per sempre: un file con quella somma di controllo non viene mai più accettato. Per aggiornare un pacchetto, aggiungi la nuova versione e scegli quella installata in **Aggiornamento di**; la vecchia viene tolta nello stesso passaggio.
+
 ## Contenuto protetto {#geschuetzte-inhalte}
 <!-- keywords: contenuto protetto, fonte condivisa, provenienza, modello cloud, permesso, uscita -->
 

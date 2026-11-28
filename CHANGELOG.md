@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Data-only extension store (2026-11-27)
+
+- Approvals: a new **Extension packages** page (admin only, linked on **Approvals**, never on a server) for the
+  data-only extension store (runtime RT-098, api API-081). An administrator adds a pure-Python wheel with its
+  expected SHA-256 and origin, optionally as an update of an installed version, and removes or revokes a package.
+  The page shows each package's state (`locked` with its reason, or `sandboxed` with its tools), the revoked hashes
+  and packages refused in the host environment. It never switches anything on: tools stay locked unless the
+  backend's development switch is on, and no tool class is released. Texts in six languages, a help section
+  (`verzweigungen#erweiterungspakete`), refusal reasons as their own sentences (`extension_store.refused_<reason>`),
+  the help family `extension_store.*` and `apiErrorCodes.json` with the four new codes.
+- Lock: `nodestro-runtime` at its master merge of the RT-098 follow-up (#233, da47678; includes RT-098 #232 and
+  RT-096 #230); `nodestro-api` at its merge of the export count of the runtime's `step_slots` module (#193, 43041e9;
+  includes API-081 #192); `nodestro-sdk` at its merge of the store client methods (#154, 0a0f8f3).
+
 ### N-20 studio interface (Welle 7)
 
 - New (N-20, off by default: `NODESTRO_WORKFLOW_TOOLS`): workflows as tools in the studio. The agent editor's
@@ -19,6 +33,7 @@
   tools and tool approvals on for itself) covers the start card, the workflow's approval step, the result file and
   the dialog against the real `/api/meta` feature. No new suite or CI job.
 - Lock: `nodestro-api` 74b3238 (#191: `workflow_tools` in `/api/meta` features), `nodestro-runtime` b4d11ad (master).
+
 ### N-22 R1 paired CI (2026-11-27)
 
 - CI (N-22 R1): the component jobs (`platform`, `components-at-master`) close the hosted runner's interpreter

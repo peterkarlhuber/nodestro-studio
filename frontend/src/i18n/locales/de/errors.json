@@ -1392,6 +1392,27 @@
     "zip_bomb": "{{name}} in der Datei würde sich auf ein Vielfaches seiner Größe entpacken, daher wird die Datei nicht verwendet.",
     "zip_invalid": "Die Datei ist keine lesbare ZIP-Datei."
   },
+  "extension_store": {
+    "disabled": "Diese Installation bewahrt keine Erweiterungspakete auf.",
+    "not_found": "Dieses Erweiterungspaket wird hier nicht aufbewahrt.",
+    "refused": "Das Erweiterungspaket wurde abgelehnt.",
+    "unreadable": "Die Liste der aufbewahrten Erweiterungspakete kann nicht gelesen werden.",
+    "refused_hash_mismatch": "Die Prüfsumme des Pakets ist nicht die erwartete SHA-256.",
+    "refused_origin": "Gib an, woher das Paket stammt.",
+    "refused_too_large": "Das Paket ist zu groß.",
+    "refused_archive": "Die Datei ist kein lesbares Python-Wheel.",
+    "refused_unsafe_path": "Das Paket enthält einen Dateinamen, der seinen Ordner verlässt oder doppelt vorkommt.",
+    "refused_unsafe_member": "Das Paket enthält einen Link, ein Gerät, nativen Code oder eine Datei, die beim Start von Python ausgeführt würde.",
+    "refused_record": "Die Datei- und Prüfsummenliste des Pakets passt nicht zu seinem Inhalt.",
+    "refused_manifest": "Beschreibung, Version oder Einstiegspunkte des Pakets sind ungültig.",
+    "refused_not_pure": "Nur reine Python-Pakete werden angenommen.",
+    "refused_dependency": "Das Paket benötigt weitere Bibliotheken; solche Pakete werden noch nicht unterstützt.",
+    "refused_data_part": "Pakete mit Skripten oder zusätzlichen Datenordnern werden nicht angenommen.",
+    "refused_exists": "Dieses Paket oder eine andere Version davon wird bereits aufbewahrt; füge es als Aktualisierung hinzu.",
+    "refused_revoked": "Dieses Paket wurde widerrufen und wird nie wieder angenommen.",
+    "refused_reserved_name": "Das Paket verwendet den Namen eines vertrauenswürdigen oder mitgelieferten Pakets oder Moduls.",
+    "refused_storage": "Das Paket konnte nicht gespeichert werden. Prüfe den freien Speicherplatz und versuche es erneut."
+  },
   "workflow_tool": {
     "approval_required": "Dieser Workflow darf etwas ändern, und sein Start kann hier nicht bestätigt werden, weil Tool-Freigaben ausgeschaltet sind.",
     "disabled": "Workflow-Tools sind hier ausgeschaltet, deshalb kann {{node}} nicht starten. Entferne seine Workflow-Tools oder frag deine Administration.",

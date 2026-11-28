@@ -111,6 +111,13 @@ La página muestra cada carpeta compartida con quién la compartió y su estado.
 
 Con **Mantener un índice de búsqueda** (desactivado hasta que lo activas), Nodestro mantiene un índice de los archivos de texto y PDF de la carpeta, en el que los agentes buscan por significado. La lista muestra su estado: **Indexando …**, **Índice listo** con el número de archivos y la hora de la última actualización, **Índice incompleto** si se omitieron archivos al llegar a un límite, o **Índice fallido** con el motivo. Nunca nombra un archivo. Cuando termina el uso compartido, su índice se elimina.
 
+## Paquetes de extensión {#erweiterungspakete}
+<!-- keywords: paquete de extensión, almacén de extensiones, wheel, sha-256, revocar, sandbox -->
+
+Los paquetes de extensión de otros autores se guardan aparte de los archivos de programa de Nodestro, en la carpeta de datos de esta instalación; un servidor no tiene ninguno. Un administrador abre **Paquetes de extensión** (enlazado en **Aprobaciones**), elige un wheel de Python puro (`.whl`), indica la suma de verificación SHA-256 que da el editor y su procedencia, y selecciona **Comprobar y añadir**. Nodestro comprueba el archivo antes de guardar nada: suma de verificación, tamaño, cada nombre de archivo y cada archivo, la descripción y que no necesite otras bibliotecas. Un paquete rechazado nunca se guarda, y la página dice por qué. Un paquete nunca se instala en Nodestro mismo.
+
+Las herramientas de un paquete guardado quedan **bloqueadas**. Solo se ejecutan cuando el interruptor de desarrollo de las herramientas de extensión está activado, y entonces solo en el sandbox de Docker aislado, sin red, archivos del equipo ni secretos; todavía no se ha habilitado ningún tipo de herramienta de extensión. Un paquete añadido después del inicio aparece con sus herramientas en el siguiente inicio. **Eliminar** quita un paquete; se puede añadir de nuevo y se vuelve a comprobar. **Revocar** lo quita para siempre: un archivo con esa suma de verificación no se vuelve a aceptar nunca. Para actualizar un paquete, añade la nueva versión y elige la instalada en **Actualización de**; la antigua se quita en el mismo paso.
+
 ## Contenido protegido {#geschuetzte-inhalte}
 <!-- keywords: contenido protegido, fuente compartida, procedencia, modelo en la nube, permiso, salida -->
 

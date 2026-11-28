@@ -151,6 +151,8 @@ import type {
   FolderGrantIn,
   FolderGrantView,
   FolderState,
+  ExtensionStoreView,
+  StoredExtension,
   ToolApprovalEvent,
   ToolPreGrant,
   BudgetDecisionIn,
@@ -539,6 +541,19 @@ export const api = {
   revokeFolder: (id: string) => request<FolderGrantView>("DELETE", `/folders/${encodeURIComponent(id)}`),
   /** The access log of a folder grant, newest first: agent, run, outcome and code, never a path. */
   folderAccesses: (id: string) => request<FolderAccessEntry[]>("GET", `/folders/${encodeURIComponent(id)}/accesses`),
+  /** The data-only extension store (RT-098; ``admin``; 404 ``extension_store.disabled`` on a server). */
+  extensions: () => request<ExtensionStoreView>("GET", "/extensions"),
+  /** Takes a wheel into the store; the backend checks hash, origin and contents (``extension_store.refused``). */
+  uploadExtension: (file: File, fields: { sha256: string; origin: string; replaces?: string }) => {
+    const form = new FormData();
+    form.append("file", file, file.name);
+    form.append("sha256", fields.sha256);
+    form.append("origin", fields.origin);
+    if (fields.replaces) form.append("replaces", fields.replaces);
+    return request<StoredExtension>("POST", "/extensions", form);
+  },
+  removeExtension: (sha256: string) => request<ExtensionStoreView>("DELETE", `/extensions/${encodeURIComponent(sha256)}`),
+  revokeExtension: (sha256: string) => request<ExtensionStoreView>("POST", `/extensions/${encodeURIComponent(sha256)}/revoke`),
   resultFiles: (runId: string) => request<ResultFile[]>("GET", `/runs/${runId}/files`),
   createResultFile: (runId: string, body: FileRequest) => request<ResultFile>("POST", `/runs/${runId}/files`, body),
   deleteResultFile: (runId: string, fileId: string) => request<void>("DELETE", `/runs/${runId}/files/${fileId}`),

@@ -312,5 +312,48 @@
       "failed": "The folder could not be read.",
       "offEnded": "The grant ended, so its index was removed."
     }
+  },
+  "extensions": {
+    "title": "Extension packages",
+    "description": "Extension packages from other authors, kept apart from Nodestro's own program files. Their tools run only in the isolated Docker sandbox.",
+    "link": "Extension packages",
+    "lockedTitle": "Their tools stay locked.",
+    "switchOff": "Extension tools are not switched on for this installation, so no tool of a package runs. A package you add is only checked and kept.",
+    "switchOn": "The development switch for extension tools is on. Tools run only in the Docker sandbox, without network, host files or secrets, and only after the sandbox passed its checks.",
+    "upload": "Add a package",
+    "uploadText": "Nodestro checks the package before it keeps it: its hash, its files, its description and what it needs. It is never installed into Nodestro itself.",
+    "file": "Package file",
+    "fileHint": "A Python wheel (.whl) of at most {{mb}} MB, pure Python only.",
+    "tooLarge": "This file is larger than the store accepts.",
+    "sha256": "Expected SHA-256",
+    "sha256Hint": "The 64-digit checksum the publisher states for this file. A file with another checksum is refused.",
+    "origin": "Where it comes from",
+    "originHint": "For example the address of the publisher's release page. It is kept with the package.",
+    "replaces": "Update of",
+    "replacesHint": "Optional. The installed version this package replaces; the old one is removed when the new one is kept.",
+    "replacesNone": "No update: a new package",
+    "uploadButton": "Check and add",
+    "uploaded": "{{name}} {{version}} was checked and added.",
+    "packages": "Kept packages",
+    "empty": "No extension package is kept here.",
+    "sandboxed": "In the sandbox",
+    "locked": "Locked",
+    "remove": "Remove {{name}}",
+    "removeConfirm": "Remove?",
+    "revoke": "Revoke {{name}}",
+    "revokeConfirm": "Revoke for good?",
+    "tools": "Tools: {{tools}}",
+    "hash": "SHA-256",
+    "originLabel": "Origin",
+    "installedBy": "Added by",
+    "revoked": "Revoked packages",
+    "revokedBy": "revoked by {{by}} on {{at}}; never accepted again",
+    "hostRefused": "Found in Nodestro's own program environment and never used: {{names}}. Remove them from there.",
+    "reasons": {
+      "off": "Locked: extension tools are switched off.",
+      "not_secured": "Locked: the Docker sandbox did not pass its checks.",
+      "invalid": "Locked: the package failed a check.",
+      "pending": "Added after the start: its tools are listed at the next start."
+    }
   }
 }

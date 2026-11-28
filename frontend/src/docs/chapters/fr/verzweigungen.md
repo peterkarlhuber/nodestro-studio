@@ -111,6 +111,13 @@ La page affiche chaque partage avec la personne qui l’a donné et son état. L
 
 Avec **Tenir un index de recherche** (désactivé tant que vous ne l’activez pas), Nodestro tient un index des fichiers texte et PDF du dossier, dans lequel les agents cherchent selon le sens. La liste affiche son état : **Indexation …**, **Index prêt** avec le nombre de fichiers et l’heure de la dernière mise à jour, **Index incomplet** si des fichiers ont été laissés de côté à une limite, ou **Échec de l’index** avec la raison. Elle ne nomme jamais de fichier. Quand le partage prend fin, son index est supprimé.
 
+## Paquets d’extension {#erweiterungspakete}
+<!-- keywords: paquet d’extension, magasin d’extensions, wheel, sha-256, révoquer, bac à sable -->
+
+Les paquets d’extension d’autres auteurs sont tenus à l’écart des fichiers de Nodestro, dans le dossier de données de cette installation ; un serveur n’en a pas. Un administrateur ouvre **Paquets d’extension** (lien sur **Validations**), choisit une roue Python pure (`.whl`), indique la somme de contrôle SHA-256 donnée par l’éditeur et sa provenance, puis sélectionne **Vérifier et ajouter**. Nodestro vérifie le fichier avant de conserver quoi que ce soit : somme de contrôle, taille, chaque nom de fichier et chaque fichier, la description et l’absence d’autres bibliothèques requises. Un paquet refusé n’est jamais conservé, et la page dit pourquoi. Un paquet n’est jamais installé dans Nodestro lui-même.
+
+Les outils d’un paquet conservé restent **verrouillés**. Ils ne s’exécutent que si le commutateur de développement des outils d’extension est activé, et alors seulement dans le bac à sable Docker isolé, sans réseau, fichiers de l’hôte ni secrets ; aucun type d’outil d’extension n’est encore autorisé. Un paquet ajouté après le démarrage est listé avec ses outils au démarrage suivant. **Supprimer** retire un paquet ; il peut être ajouté de nouveau et sera vérifié de nouveau. **Révoquer** le retire définitivement : un fichier avec cette somme de contrôle n’est plus jamais accepté. Pour mettre à jour un paquet, ajoutez la nouvelle version et choisissez la version installée sous **Mise à jour de** ; l’ancienne disparaît dans la même étape.
+
 ## Contenu protégé {#geschuetzte-inhalte}
 <!-- keywords: contenu protégé, source partagée, provenance, modèle cloud, autorisation, sortie -->
 

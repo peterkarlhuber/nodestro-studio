@@ -312,5 +312,48 @@
       "failed": "Le dossier n’a pas pu être lu.",
       "offEnded": "Le partage a pris fin, son index a donc été supprimé."
     }
+  },
+  "extensions": {
+    "title": "Paquets d’extension",
+    "description": "Paquets d’extension d’autres auteurs, tenus à l’écart des fichiers de Nodestro. Leurs outils ne s’exécutent que dans le bac à sable Docker isolé.",
+    "link": "Paquets d’extension",
+    "lockedTitle": "Leurs outils restent verrouillés.",
+    "switchOff": "Les outils d’extension ne sont pas activés pour cette installation : aucun outil d’un paquet ne s’exécute. Un paquet ajouté est seulement vérifié et conservé.",
+    "switchOn": "Le commutateur de développement des outils d’extension est activé. Les outils s’exécutent uniquement dans le bac à sable Docker, sans réseau, fichiers de l’hôte ni secrets, et seulement après la réussite de ses vérifications.",
+    "upload": "Ajouter un paquet",
+    "uploadText": "Nodestro vérifie le paquet avant de le conserver : somme de contrôle, fichiers, description et dépendances. Il n’est jamais installé dans Nodestro lui-même.",
+    "file": "Fichier du paquet",
+    "fileHint": "Une roue Python (.whl) de {{mb}} Mo au plus, en Python pur uniquement.",
+    "tooLarge": "Ce fichier dépasse la taille acceptée.",
+    "sha256": "SHA-256 attendue",
+    "sha256Hint": "La somme de contrôle à 64 chiffres indiquée par l’éditeur pour ce fichier. Un fichier avec une autre somme est refusé.",
+    "origin": "Provenance",
+    "originHint": "Par exemple l’adresse de la page de publication de l’éditeur. Elle est conservée avec le paquet.",
+    "replaces": "Mise à jour de",
+    "replacesHint": "Facultatif. La version installée que ce paquet remplace ; l’ancienne est supprimée dès que la nouvelle est conservée.",
+    "replacesNone": "Pas de mise à jour : un nouveau paquet",
+    "uploadButton": "Vérifier et ajouter",
+    "uploaded": "{{name}} {{version}} a été vérifié et ajouté.",
+    "packages": "Paquets conservés",
+    "empty": "Aucun paquet d’extension n’est conservé ici.",
+    "sandboxed": "Dans le bac à sable",
+    "locked": "Verrouillé",
+    "remove": "Supprimer {{name}}",
+    "removeConfirm": "Supprimer ?",
+    "revoke": "Révoquer {{name}}",
+    "revokeConfirm": "Révoquer définitivement ?",
+    "tools": "Outils : {{tools}}",
+    "hash": "Somme de contrôle (SHA-256)",
+    "originLabel": "Provenance",
+    "installedBy": "Ajouté par",
+    "revoked": "Paquets révoqués",
+    "revokedBy": "révoqué par {{by}} le {{at}} ; plus jamais accepté",
+    "hostRefused": "Trouvés dans l’environnement de programme de Nodestro et jamais utilisés : {{names}}. Supprimez-les de cet endroit.",
+    "reasons": {
+      "off": "Verrouillé : les outils d’extension sont désactivés.",
+      "not_secured": "Verrouillé : le bac à sable Docker n’a pas réussi ses vérifications.",
+      "invalid": "Verrouillé : le paquet a échoué à une vérification.",
+      "pending": "Ajouté après le démarrage : ses outils seront listés au prochain démarrage."
+    }
   }
 }

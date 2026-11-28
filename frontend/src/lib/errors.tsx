@@ -48,6 +48,25 @@ export function legacyCode(text: string): { code: string; params: Record<string,
 /** Reasons of ``folder.not_browsable`` (N-11) with a sentence of their own (errors.folder.not_browsable_<reason>). */
 const BROWSE_REASONS = new Set(["hidden", "not_found", "not_a_folder", "no_access", "changed", "invalid_path", "network_path"]);
 
+/** Reasons of ``extension_store.refused`` (nodestro-runtime ``extension_store``) with a sentence of their own. */
+export const STORE_REASONS = new Set([
+  "hash_mismatch",
+  "origin",
+  "too_large",
+  "archive",
+  "unsafe_path",
+  "unsafe_member",
+  "record",
+  "manifest",
+  "not_pure",
+  "dependency",
+  "data_part",
+  "exists",
+  "revoked",
+  "reserved_name",
+  "storage",
+]);
+
 /** Reasons of ``folder.not_grantable`` that are the file system's own codes (``fs.<reason>``). */
 const FOLDER_FS_REASONS = new Set(["protected_root", "network_path", "not_found", "not_a_directory", "link"]);
 
@@ -230,6 +249,9 @@ export function refineProblem(
     if (FOLDER_FS_REASONS.has(params.reason)) return { code: `fs.${params.reason}`, params };
     if (params.reason === "invalid_path") return { code: "access.folder_path", params };
   }
+  // The extension store (RT-098) names why it refused a package.
+  if (code === "extension_store.refused" && typeof params.reason === "string" && STORE_REASONS.has(params.reason))
+    return { code: `extension_store.refused_${params.reason}`, params };
   // Exchange files (N-14): without its parameters a sentence stays general.
   if (code === "exchange.too_large" && !(Number(params.limit) > 0)) return { code: "exchange.too_large_plain", params };
   if (code === "exchange.content_invalid" && !(Array.isArray(params.problems) && params.problems.length))

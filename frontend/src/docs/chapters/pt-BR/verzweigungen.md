@@ -111,6 +111,13 @@ A página mostra cada compartilhamento com quem o deu e o seu estado. O **regist
 
 Com **Manter um índice de busca** (desligado até você ligar), o Nodestro mantém um índice dos arquivos de texto e PDF da pasta, no qual os agentes buscam pelo significado. A lista mostra o estado dele: **Indexando …**, **Índice pronto** com o número de arquivos e a hora da última atualização, **Índice incompleto** quando arquivos foram deixados de fora em um limite, ou **Falha no índice** com o motivo. Ela nunca nomeia um arquivo. Quando o compartilhamento termina, o índice é removido.
 
+## Pacotes de extensão {#erweiterungspakete}
+<!-- keywords: pacote de extensão, armazenamento de extensões, wheel, sha-256, revogar, sandbox -->
+
+Os pacotes de extensão de outros autores ficam separados dos arquivos de programa do Nodestro, na pasta de dados desta instalação; um servidor não tem nenhum. Um administrador abre **Pacotes de extensão** (com link em **Aprovações**), escolhe um wheel de Python puro (`.whl`), informa a soma de verificação SHA-256 que o editor fornece e a origem, e seleciona **Verificar e adicionar**. O Nodestro verifica o arquivo antes de guardar qualquer coisa: soma de verificação, tamanho, cada nome de arquivo e cada arquivo, a descrição e que ele não precise de outras bibliotecas. Um pacote recusado nunca é guardado, e a página diz por quê. Um pacote nunca é instalado no próprio Nodestro.
+
+As ferramentas de um pacote guardado ficam **bloqueadas**. Elas só rodam quando a chave de desenvolvimento das ferramentas de extensão está ligada, e então apenas no sandbox Docker isolado, sem rede, arquivos do computador nem segredos; nenhum tipo de ferramenta de extensão foi liberado ainda. Um pacote adicionado depois da inicialização aparece com suas ferramentas na próxima inicialização. **Remover** tira um pacote; ele pode ser adicionado de novo e é verificado de novo. **Revogar** o tira para sempre: um arquivo com essa soma de verificação nunca mais é aceito. Para atualizar um pacote, adicione a nova versão e escolha a instalada em **Atualização de**; a antiga sai na mesma etapa.
+
 ## Conteúdo protegido {#geschuetzte-inhalte}
 <!-- keywords: conteúdo protegido, fonte compartilhada, procedência, modelo na nuvem, permissão, saída -->
 
