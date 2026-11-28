@@ -17,7 +17,7 @@
 - The studio's own token layer is gone: every stylesheet uses the `--ui-*` tokens of `@nodestro/ui-tokens` and the
   `nodestro` brand theme of `@nodestro/ui-themes` directly (the former `--nd-*` names mapped after
   `nodestro-ui/migration/nodestro-studio.json`), and `styles/midnight-citron.css` (with its copy in `docs/design/`) is
-  removed. Colours, sizes and type are unchanged in light and dark: they had the same values, and
+  removed. Colors, sizes and type are unchanged in light and dark: they had the same values, and
   `src/lint/tokens.test.ts` checks that against the vendored theme. Two type sizes without a shared step (11 and 18 px)
   stay as `--nd-font-size-xs` and `--nd-font-size-xl` in `styles/app.css`, the only studio tokens left.
 

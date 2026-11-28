@@ -9,7 +9,7 @@ import { useMemo } from "react";
 import i18n from "../i18n";
 import type { CodeEditorProps } from "./CodeEditor";
 
-// The editor takes its colours from the shared --ui-* tokens (nodestro brand theme), so it follows the theme.
+// The editor takes its colors from the shared --ui-* tokens (nodestro brand theme), so it follows the theme.
 const tokens = EditorView.theme({
   "&": {
     color: "var(--ui-color-text)",
@@ -33,7 +33,7 @@ const tokens = EditorView.theme({
   ".cm-cursor": { borderLeftColor: "var(--ui-color-primary)" },
 });
 
-// Syntax colours from the status roles, readable in both themes.
+// Syntax colors from the status roles, readable in both themes.
 const highlight = syntaxHighlighting(
   HighlightStyle.define([
     { tag: [tags.keyword, tags.controlKeyword, tags.moduleKeyword, tags.operatorKeyword], color: "var(--ui-color-running)" },

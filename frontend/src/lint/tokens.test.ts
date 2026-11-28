@@ -22,8 +22,8 @@ const SOURCES = fs
 /** The two steps of the studio's type scale that stay in the studio (styles/app.css). */
 const KEPT = new Set(["--nd-font-size-xs", "--nd-font-size-xl"]);
 
-/** The former Midnight Citron colours (light, dark) and the token that carries each now. */
-const FORMER_COLOURS: [string, string, string][] = [
+/** The former Midnight Citron colors (light, dark) and the token that carries each now. */
+const FORMER_COLORS: [string, string, string][] = [
   ["--ui-color-bg", "#F6F7F2", "#151819"],
   ["--ui-color-chrome", "#FFFFFF", "#1B2120"],
   ["--ui-color-canvas", "#EDF0E9", "#1A2020"],
@@ -116,11 +116,11 @@ describe("the studio's tokens (ST-068 step 7)", () => {
     for (const [name, text] of SOURCES) expect(text, name).not.toMatch(/(^|[;{\s])--ui-[a-z0-9-]+\s*:/m);
   });
 
-  it("keeps every former colour in the nodestro brand theme, in both themes", () => {
+  it("keeps every former color in the nodestro brand theme, in both themes", () => {
     const light = block(THEME, ":root,\n[data-theme='light']");
     const dark = block(THEME, "[data-theme='dark']");
-    expect(FORMER_COLOURS).toHaveLength(31);
-    for (const [token, lightValue, darkValue] of FORMER_COLOURS) {
+    expect(FORMER_COLORS).toHaveLength(31);
+    for (const [token, lightValue, darkValue] of FORMER_COLORS) {
       expect(same(light.get(token) ?? "", lightValue), `${token} light`).toBe(true);
       expect(same(dark.get(token) ?? "", darkValue), `${token} dark`).toBe(true);
     }

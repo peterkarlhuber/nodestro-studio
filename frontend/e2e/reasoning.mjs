@@ -95,8 +95,8 @@ try {
   await until(async () => (await reasoning.locator(".reasoning__body").textContent()).includes(THOUGHT), "the text shows");
   check(true, "Opened, the summary shows the text the model sent");
   await answer.and(page.locator("[data-status=complete]")).waitFor({ timeout: 30000 });
-  check((await answer.locator(".chat-answer").textContent()).includes("Ein Lauf ist eine Ausführung"), "The answer follows");
-  const markdown = await answer.locator(".chat-answer > :not(.reasoning)").allTextContents();
+  check((await answer.locator(".ui-chat-message__body").textContent()).includes("Ein Lauf ist eine Ausführung"), "The answer follows");
+  const markdown = await answer.locator(".ui-chat-message__body > :not(.reasoning)").allTextContents();
   check(!markdown.join(" ").includes(THOUGHT), "The reasoning is not part of the answer text");
   check(await reasoning.getByText("Nachgedacht").isVisible(), "After the answer the status says the model reasoned");
   await shot("reasoning-02-opened");
