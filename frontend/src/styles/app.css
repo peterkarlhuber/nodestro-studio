@@ -2939,6 +2939,8 @@ body.is-resizing--y * {
   gap: 10px;
 }
 
+/* The tool calls of a step and of an answer: the shared ToolCallRow (ST-068) as compact disclosures, in the
+   studio's look (plain rows, labels and code blocks like the rest of the run details). */
 .tool-calls {
   list-style: none;
   padding: 0;
@@ -2947,33 +2949,53 @@ body.is-resizing--y * {
   gap: 4px;
 }
 
-.tool-calls summary {
-  display: flex;
-  align-items: center;
+.tool-calls .ui-tool-call {
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: inherit;
+}
+
+.tool-calls .ui-tool-call__line {
   gap: 8px;
   padding: 6px 8px;
   border-radius: var(--nd-radius-sm);
-  list-style: none;
-  cursor: pointer;
 }
 
-.tool-calls summary::-webkit-details-marker {
-  display: none;
-}
-
-.tool-calls summary:hover {
+.tool-calls .ui-tool-call__line:hover {
   background: var(--nd-surface-hover);
 }
 
-.tool-calls__body {
-  display: flex;
-  flex-direction: column;
+.tool-calls .ui-tool-call__body {
   gap: 6px;
   padding: 4px 8px 10px 30px;
 }
 
-.tool-calls__body .nd-field-label {
-  margin-bottom: 0;
+.tool-calls .ui-tool-call__status,
+.conversation__calls .ui-tool-call__status {
+  font-size: var(--nd-font-size-sm);
+}
+
+.tool-calls .ui-tool-call__label,
+.conversation__calls .ui-tool-call__label {
+  margin: 0;
+  color: var(--nd-text-muted);
+  font-size: var(--nd-font-size-xs);
+  font-weight: 600;
+}
+
+.tool-calls .ui-tool-call__code,
+.conversation__calls .ui-tool-call__code {
+  padding: 10px 12px;
+  max-height: 420px;
+  border-color: var(--nd-border);
+  background: var(--nd-surface);
+  color: var(--nd-text);
+  font-size: var(--nd-font-size-sm);
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 /* ---- responsive --------------------------------------------------------------- */
@@ -5350,16 +5372,38 @@ kbd {
   background: var(--nd-surface-hover);
 }
 
-.chat-message {
+/* A message of a chat: the shared ChatMessage (ST-068) in the studio's look, without the card frame: a person's
+   message is a bubble on the right, an answer sits next to its avatar. */
+.chat-message.ui-chat-message {
+  gap: 10px;
+  min-width: 0;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.chat-message .ui-chat-message__main,
+.chat-message .ui-chat-message__body {
   display: flex;
+  flex-direction: column;
   gap: 10px;
   min-width: 0;
 }
 
-.chat-message--user {
-  flex-direction: column;
+.chat-message--user.ui-chat-message {
+  align-self: stretch;
   align-items: flex-end;
   gap: 6px;
+}
+
+.chat-message--user .ui-chat-message__body {
+  align-items: flex-end;
+  gap: 6px;
+  width: 100%;
 }
 
 .chat-bubble {
@@ -5383,14 +5427,6 @@ kbd {
   border-radius: 50%;
   background: var(--nd-brand);
   color: var(--nd-brand-on);
-}
-
-.chat-answer {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 0;
-  flex: 1;
 }
 
 .chat-markdown table {
@@ -7863,27 +7899,34 @@ ul.gate-report__list > li.gate-report__item {
 }
 
 /* The web sources of a run (NAL-A2). */
-.web-sources {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
+/* The web sources of a run: the shared SourceList (ST-068) in the studio's panel look. */
+.web-sources .ui-sources__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--nd-font-size-md);
+  font-weight: 680;
+}
+
+.web-sources .ui-sources__hint {
+  font-size: var(--nd-font-size-sm);
+}
+
+.web-sources .ui-sources__list {
   gap: 0.4rem;
 }
 
-.web-sources__item {
-  display: flex;
+.web-sources .ui-sources__item {
   gap: 0.6rem;
-  align-items: flex-start;
   min-width: 0;
 }
 
-.web-sources__text {
-  display: grid;
+.web-sources .ui-sources__id {
+  font-size: inherit;
+}
+
+.web-sources .ui-sources__text {
   gap: 0.1rem;
-  flex: 1;
-  min-width: 0;
-  overflow-wrap: anywhere;
 }
 
 /* The instructions of a skill (NAL-B3): shown as plain text, never rendered as HTML. */

@@ -1,10 +1,10 @@
+import { ToolCallRow } from "@nodestro/ui-ai";
 import { HelpTip, Tooltip } from "@nodestro/ui-core";
 import {
   AlertTriangle,
   BookMarked,
   BookOpen,
   Brain,
-  ChevronRight,
   ExternalLink,
   History,
   ListFilter,
@@ -27,6 +27,7 @@ import { NodeToolApprovals, ToolCallApprovalNote } from "../runs/ToolApprovalCar
 import { ProblemText, runProblem } from "../lib/errors";
 import { formatDuration, formatTime, formatNumber, formatTokens, tokenBreakdown } from "../lib/format";
 import { usedSources } from "../lib/knowledge";
+import { type StudioTextMap, StudioTexts } from "../lib/uiTexts";
 import { type AgentContext, ContextView } from "./ContextView";
 import { branchLabel } from "./branches";
 import { OrchestrationView } from "./OrchestrationView";
@@ -526,48 +527,60 @@ export function SkillChoice({ selection }: { selection: SkillSelection }) {
   );
 }
 
+/** The wording of a step's tool calls in the shared ToolCallRow: input and output, as the step's details say. */
+export const RUN_TOOL_CALL_TEXTS: StudioTextMap = {
+  "ai.toolCall.arguments": "runs.toolCalls.input",
+  "ai.toolCall.result": "runs.toolCalls.output",
+};
+
 function ToolCalls({ state }: { state: NodeRun }) {
   const { t } = useTranslation();
   if (!state.tool_calls.length) return <p className="muted">{t("runs.toolCalls.none")}</p>;
   return (
-    <ol className="tool-calls">
-      {state.tool_calls.map((call) => (
-        <li key={call.id}>
-          <details>
-            <summary>
-              <ChevronRight size={13} className="section__chevron" aria-hidden />
-              {call.is_error ? <AlertTriangle size={13} aria-hidden className="text-danger" /> : <Wrench size={13} aria-hidden />}
-              <code>{call.name}</code>
-              <span className="muted small">
-                {call.finished_at
+    <StudioTexts texts={RUN_TOOL_CALL_TEXTS}>
+      <ol className="tool-calls">
+        {state.tool_calls.map((call) => (
+          <li key={call.id}>
+            {/* The shared row (@nodestro/ui-ai, ST-068) as one disclosure, like the list it replaces. */}
+            <ToolCallRow
+              disclosure
+              name={call.name}
+              status={call.finished_at ? (call.is_error ? "failed" : "succeeded") : state.status === "running" ? "running" : "pending"}
+              statusText={
+                call.finished_at
                   ? `${call.is_error ? t("runs.toolCalls.error") : t("runs.toolCalls.succeeded")} · ${formatTime(call.started_at)} · ${formatDuration(call.started_at, call.finished_at)}`
                   : state.status === "running"
                     ? t("runs.toolCalls.running")
-                    : t("runs.toolCalls.unfinished")}
-              </span>
-            </summary>
-            <div className="tool-calls__body">
-              <span className="nd-field-label">{t("runs.toolCalls.input")}</span>
-              <pre className="code-block">{JSON.stringify(call.input, null, 2)}</pre>
-              {call.provenance?.source === "mcp" ? (
-                <p className="muted small" data-testid="tool-provenance">
-                  {t("runs.toolCalls.mcp", {
-                    server: call.provenance.server_name ?? "",
-                    name: call.provenance.qualified_name ?? call.name,
-                    hash: (call.provenance.definition_hash ?? "").slice(0, 12),
-                  })}{" "}
-                  {call.provenance.external_cost === "unknown" ? t("runs.toolCalls.externalCostUnknown") : null}
-                </p>
-              ) : null}
-              {call.approval ? <ToolCallApprovalNote approval={call.approval} /> : null}
-              <span className="nd-field-label">{t("runs.toolCalls.output")}</span>
-              <ToolOutputProblem output={call.is_error ? call.output : null} />
-              <pre className={`code-block ${call.is_error ? "code-block--error" : ""}`}>{call.output ?? "…"}</pre>
-            </div>
-          </details>
-        </li>
-      ))}
-    </ol>
+                    : t("runs.toolCalls.unfinished")
+              }
+              icon={call.is_error ? <AlertTriangle size={13} className="text-danger" /> : <Wrench size={13} />}
+              arguments={call.input}
+              details={
+                <>
+                  {call.provenance?.source === "mcp" ? (
+                    <p className="muted small" data-testid="tool-provenance">
+                      {t("runs.toolCalls.mcp", {
+                        server: call.provenance.server_name ?? "",
+                        name: call.provenance.qualified_name ?? call.name,
+                        hash: (call.provenance.definition_hash ?? "").slice(0, 12),
+                      })}{" "}
+                      {call.provenance.external_cost === "unknown" ? t("runs.toolCalls.externalCostUnknown") : null}
+                    </p>
+                  ) : null}
+                  {call.approval ? <ToolCallApprovalNote approval={call.approval} /> : null}
+                </>
+              }
+              result={
+                <>
+                  <ToolOutputProblem output={call.is_error ? call.output : null} />
+                  <pre className={`code-block ${call.is_error ? "code-block--error" : ""}`}>{call.output ?? "…"}</pre>
+                </>
+              }
+            />
+          </li>
+        ))}
+      </ol>
+    </StudioTexts>
   );
 }
 

@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Shared chat messages, tool call rows and sources (ST-068, 2026-11-28)
+
+- The messages of the assistant panel and of conversations are now the shared `ChatMessage` of `@nodestro/ui-ai`
+  0.5.0, the tool calls of a step and of an answer its `ToolCallRow` and the web sources its `SourceList` (nodestro-ui
+  #12). The look, texts and order stay as they were: a person's message is a bubble, an answer sits next to its
+  avatar, a tool call is one compact disclosure with the step's own words. New: messages are named articles and an
+  answer that is still written is marked busy for screen readers; a source link says that it opens a new tab (six
+  languages). `npm run lint` refuses the former parts.
+
 ### Shared budget decision card (ST-068, 2026-11-28)
 
 - The budget decision card is now the shared `ApprovalCard` of `@nodestro/ui-ai` 0.4.0 (nodestro-ui #11), like the

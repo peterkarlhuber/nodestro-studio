@@ -1,3 +1,4 @@
+import { ChatMessage as ChatMessageView } from "@nodestro/ui-ai";
 import { Tooltip } from "@nodestro/ui-core";
 import {
   ArrowUpRight,
@@ -103,7 +104,11 @@ function HandoverCard({ handover }: { handover: Handover }) {
     <div className="handover-card" data-testid="handover-card">
       <div className="handover-card__head">
         <Icon size={15} aria-hidden />
-        <strong>{t(`assistant.handover.${target}.title`, { name: handover.workflow_name ?? "" })}</strong>
+        <strong>
+          {t(`assistant.handover.${target}.title`, {
+            name: handover.workflow_name ?? "",
+          })}
+        </strong>
       </div>
       <p className="small handover-card__text">{handover.instruction}</p>
       <p className="muted small">{t("assistant.handover.note")}</p>
@@ -171,62 +176,72 @@ export function MessageView({
   const { display } = useThinkingDisplay(`conversation:${conversationId}`);
   if (message.role === "user") {
     return (
-      <div className="chat-message chat-message--user" data-testid="chat-user">
+      // The shared message (@nodestro/ui-ai, ST-068) in the studio's look: a bubble on the right, no author line.
+      <ChatMessageView role="user" hideHead className="chat-message chat-message--user" data-testid="chat-user">
         {message.content ? <div className="chat-bubble">{message.content}</div> : null}
         <SentFileChips files={message.files ?? []} />
         <ContextChips context={message.context} conversationId={conversationId} />
-      </div>
+      </ChatMessageView>
     );
   }
   const streaming = message.status === "streaming";
   return (
-    <div className="chat-message chat-message--assistant" data-testid="chat-assistant" data-status={message.status}>
-      <div className="chat-avatar" aria-hidden>
-        <Sparkles size={13} />
-      </div>
-      <div className="chat-answer">
-        <ReasoningView trace={message.reasoning} display={display} testId="chat-reasoning" />
-        {message.content ? <AssistantMarkdown text={message.content} /> : null}
-        {streaming ? <StepLine step={message.steps[message.steps.length - 1]} /> : null}
-        {message.sources.length ? (
-          <div className="chat-sources">
-            <span className="muted small">
-              <FileSearch size={12} aria-hidden /> {t("assistant.message.sources")}
-            </span>
-            {message.sources.map((source) => (
-              <Link key={source.ref} to={source.link} className="chat-source" data-testid="chat-source">
-                {source.chapter_title} · {source.title}
-              </Link>
-            ))}
-          </div>
-        ) : null}
-        {message.handovers.map((handover) => (
-          <HandoverCard key={handover.id} handover={handover} />
-        ))}
-        {message.status === "failed" && message.error ? (
-          <Callout tone="danger">
-            <ProblemText item={message.error} />
-            {message.error.code === "api_key_missing" || message.error.code === "provider.not_configured" || message.error.code === "assistant.auth_failed" ? (
-              <>
-                {" "}
-                <Link to="/settings">{t("assistant.openSettings")}</Link>
-              </>
-            ) : null}
-          </Callout>
-        ) : null}
-        {message.status === "cancelled" ? <p className="muted small">{t("assistant.message.cancelled")}</p> : null}
-        {!streaming ? (
-          <div className="chat-meta">
-            <UsageLine message={message} />
-            {canRetry && (message.status === "failed" || message.status === "cancelled") ? (
-              <Button size="sm" variant="ghost" icon={RotateCcw} onClick={onRetry} data-testid="chat-retry">
-                {t("assistant.message.retry")}
-              </Button>
-            ) : null}
-          </div>
-        ) : null}
-        {!streaming ? <Steps steps={message.steps} /> : null}
-      </div>
-    </div>
+    <ChatMessageView
+      role="assistant"
+      hideHead
+      className="chat-message chat-message--assistant"
+      data-testid="chat-assistant"
+      data-status={message.status}
+      // Busy while it is written; the step line below says what the assistant is doing.
+      status={streaming ? "streaming" : "complete"}
+      statusLine={null}
+      avatar={
+        <span className="chat-avatar">
+          <Sparkles size={13} />
+        </span>
+      }
+    >
+      <ReasoningView trace={message.reasoning} display={display} testId="chat-reasoning" />
+      {message.content ? <AssistantMarkdown text={message.content} /> : null}
+      {streaming ? <StepLine step={message.steps[message.steps.length - 1]} /> : null}
+      {message.sources.length ? (
+        <div className="chat-sources">
+          <span className="muted small">
+            <FileSearch size={12} aria-hidden /> {t("assistant.message.sources")}
+          </span>
+          {message.sources.map((source) => (
+            <Link key={source.ref} to={source.link} className="chat-source" data-testid="chat-source">
+              {source.chapter_title} · {source.title}
+            </Link>
+          ))}
+        </div>
+      ) : null}
+      {message.handovers.map((handover) => (
+        <HandoverCard key={handover.id} handover={handover} />
+      ))}
+      {message.status === "failed" && message.error ? (
+        <Callout tone="danger">
+          <ProblemText item={message.error} />
+          {message.error.code === "api_key_missing" || message.error.code === "provider.not_configured" || message.error.code === "assistant.auth_failed" ? (
+            <>
+              {" "}
+              <Link to="/settings">{t("assistant.openSettings")}</Link>
+            </>
+          ) : null}
+        </Callout>
+      ) : null}
+      {message.status === "cancelled" ? <p className="muted small">{t("assistant.message.cancelled")}</p> : null}
+      {!streaming ? (
+        <div className="chat-meta">
+          <UsageLine message={message} />
+          {canRetry && (message.status === "failed" || message.status === "cancelled") ? (
+            <Button size="sm" variant="ghost" icon={RotateCcw} onClick={onRetry} data-testid="chat-retry">
+              {t("assistant.message.retry")}
+            </Button>
+          ) : null}
+        </div>
+      ) : null}
+      {!streaming ? <Steps steps={message.steps} /> : null}
+    </ChatMessageView>
   );
 }
