@@ -9,7 +9,7 @@
   top layer above modal dialogs, `data-help`), with the studio's help registry: every help id with a title in six
   languages (`helpTitles.json`), its text and documentation link; the panel shows the title, the text and
   "Learn more". The settings search reads help from that registry. The studio's own help tooltip is removed and
-  `npm run lint` refuses it again. Lock: `nodestro-ui` core 0.2.1.
+  `npm run lint` refuses it again. Lock: `nodestro-ui` at the merge of #7 (02e69d1), core 0.2.1.
 
 ### Data-only extension store (2026-11-27)
 
