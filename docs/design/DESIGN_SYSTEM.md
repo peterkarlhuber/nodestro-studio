@@ -6,7 +6,8 @@ light mode is an equivalent working view.
 ## Design principles
 
 1. **Neutral canvas, clear connections.** Colored areas only for selection, primary actions and important status.
-2. **Semantic tokens instead of hard-coded values.** The app references CSS variables such as `var(--nd-surface)`.
+2. **Semantic tokens instead of hard-coded values.** The app references the shared tokens of `@nodestro/ui-tokens`
+   such as `var(--ui-color-surface)`; the `nodestro` brand theme of `@nodestro/ui-themes` gives them the values below.
 3. **Brand ≠ success.** Citron is brand, interaction and selection; green is success, blue is an execution in
    progress, amber is warning, coral is error.
 4. **Status always with text and icon.** Color alone is not enough; tool and agent status must be readable without
@@ -35,8 +36,11 @@ light mode is an equivalent working view.
 | Danger | `#F1958B` | `#B43E3A` | Error, cancelled execution |
 | Idle | `#AFBBB4` | `#5C6B61` | Waiting, not started yet |
 
-All color values and additional hover, pressed and focus tokens are in `nodestro-midnight-citron.css` and
-`nodestro-theme-tokens.json`.
+All color values and additional hover, pressed and focus tokens are in the `nodestro` brand theme of
+`@nodestro/ui-themes` (vendored, `platform/internal-ui.txt`) and in `nodestro-theme-tokens.json`. Since ST-068 step 7
+the studio has no token file of its own: the former `--nd-*` roles map one to one to `--ui-*` tokens (nodestro-ui
+`docs/token-mapping.md`), for example `--nd-surface` → `--ui-color-surface`, `--nd-brand` → `--ui-color-primary`,
+`--nd-brand-soft` → `--ui-color-primary-subtle`, `--nd-shadow` → `--ui-shadow-md`, `--nd-space-2` → `--ui-space-2`.
 
 ## Workflow editor
 
@@ -91,29 +95,31 @@ All color values and additional hover, pressed and focus tokens are in `nodestro
 - Font sizes come only from the type scale below; no literal pixel sizes in style sheets or inline styles.
 - Border radius: 7px (controls), 11px (panels), 15px (nodes), 20px (larger areas).
 - Spacing: 4 / 8 / 12 / 16 / 24 / 32 px.
-- Focus: a visible 2px ring via `--nd-focus`; not just a color change.
+- Focus: a visible 2px ring via `--ui-color-focus`; not just a color change.
 - Motion: short, 130–220ms; respect `prefers-reduced-motion`, also in script animations (`lib/motion.ts`).
 
 ### Type scale
 
-Eight steps, defined as tokens in `midnight-citron.css`. The body text is `--nd-font-size-base` (13px); line heights
-are unitless (1.4–1.55 for running text), so they follow the step.
+Eight steps: six are shared tokens of `@nodestro/ui-tokens`, two have no step in the shared scale and stay in the
+studio (`styles/app.css`, top). The body text is `--ui-text-sm` (13px); line heights are unitless (1.4–1.55 for
+running text), so they follow the step.
 
 | Token | Size | Use |
 |---|---|---|
-| `--nd-font-size-2xs` | 10px | Status badges, statistic labels, chart labels, node meta and edge labels on the canvas |
-| `--nd-font-size-xs` | 11px | Chips, tags, uppercase eyebrows and panel titles, table headers, `kbd`, one-line palette hints (full text in a tooltip) |
-| `--nd-font-size-sm` | 12px | Secondary text: field hints, errors, notes, small buttons, inputs, code blocks |
-| `--nd-font-size-base` | 13px | Body text, lists, tables, buttons, node titles, the code editor |
-| `--nd-font-size-md` | 14px | Card and panel titles, docs body, section titles |
-| `--nd-font-size-lg` | 16px | Page section headings, dialog titles, the workflow title |
-| `--nd-font-size-xl` | 18px | The page title in the title bar, large headings |
-| `--nd-font-size-2xl` | 20px | The wordmark and important metrics |
+| `--ui-text-2xs` | 10px | Status badges, statistic labels, chart labels, node meta and edge labels on the canvas |
+| `--nd-font-size-xs` (studio) | 11px | Chips, tags, uppercase eyebrows and panel titles, table headers, `kbd`, one-line palette hints (full text in a tooltip) |
+| `--ui-text-xs` | 12px | Secondary text: field hints, errors, notes, small buttons, inputs, code blocks |
+| `--ui-text-sm` | 13px | Body text, lists, tables, buttons, node titles, the code editor |
+| `--ui-text-md` | 14px | Card and panel titles, docs body, section titles |
+| `--ui-text-lg` | 16px | Page section headings, dialog titles, the workflow title |
+| `--nd-font-size-xl` (studio) | 18px | The page title in the title bar, large headings |
+| `--ui-text-xl` | 20px | The wordmark and important metrics |
 
 Rules:
 
-- Text people read (hints, errors, notes, descriptions) is never smaller than `--nd-font-size-sm` (12px). Only short
-  labels such as badges, chips, counts and uppercase eyebrows use `--nd-font-size-2xs` or `--nd-font-size-xs`.
+- Text people read (hints, errors, notes, descriptions) is never smaller than `--ui-text-xs` (12px). Only short
+  labels such as badges, chips, counts and uppercase eyebrows use `--ui-text-2xs` or `--nd-font-size-xs`.
+- No other `--nd-*` property and no token of the studio's own: `src/lint/tokens.test.ts` refuses them.
 - `code`, `kbd` and `pre` may scale relative to their context (`0.92em`); `font-size: 0` is only for hiding text.
 - A new size needs a new step here first. The welcome page (`/welcome`) has its own display sizes.
 
@@ -146,7 +152,7 @@ Rules:
 ## Usage in the frontend
 
 ```html
-<link rel="stylesheet" href="nodestro-midnight-citron.css" />
+<!-- src/main.tsx: @nodestro/ui-tokens/tokens.css, then @nodestro/ui-themes/nodestro.css, then the components -->
 <html lang="en" data-theme="dark">
 ```
 
@@ -160,12 +166,12 @@ Component:
 
 ```css
 .agent-card {
-  color: var(--nd-text);
-  background: var(--nd-surface);
-  border: 1px solid var(--nd-border);
+  color: var(--ui-color-text);
+  background: var(--ui-color-surface);
+  border: 1px solid var(--ui-color-border);
 }
 .agent-card[aria-selected="true"] {
-  border-color: var(--nd-brand);
+  border-color: var(--ui-color-primary);
 }
 ```
 

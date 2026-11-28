@@ -3,7 +3,7 @@
 .conversation {
   display: flex;
   flex-direction: column;
-  gap: var(--nd-space-4);
+  gap: var(--ui-space-4);
   min-width: 0;
 }
 
@@ -11,8 +11,8 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding-bottom: var(--nd-space-3);
-  border-bottom: 1px solid var(--nd-border);
+  padding-bottom: var(--ui-space-3);
+  border-bottom: 1px solid var(--ui-color-border);
 }
 
 .conversation__title {
@@ -24,7 +24,7 @@
 
 .conversation__title h2 {
   margin: 0;
-  font-size: var(--nd-font-size-lg);
+  font-size: var(--ui-text-lg);
   overflow-wrap: anywhere;
 }
 
@@ -68,9 +68,9 @@
 
 .conversation__call {
   padding: 6px 10px;
-  border: 1px solid var(--nd-border);
-  border-radius: var(--nd-radius-sm);
-  background: var(--nd-surface);
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-sm);
+  background: var(--ui-color-surface);
 }
 
 .conversation__call summary {
@@ -92,8 +92,8 @@
   gap: 8px;
   position: sticky;
   bottom: 0;
-  padding: var(--nd-space-3) 0;
-  background: var(--nd-bg);
+  padding: var(--ui-space-3) 0;
+  background: var(--ui-color-bg);
 }
 
 .conversation__files {
@@ -119,9 +119,9 @@
   gap: 6px;
   margin-top: 4px;
   padding: 6px 10px;
-  border: 1px solid var(--nd-border);
-  border-left: 3px solid var(--nd-brand);
-  border-radius: var(--nd-radius-sm);
+  border: 1px solid var(--ui-color-border);
+  border-left: 3px solid var(--ui-color-primary);
+  border-radius: var(--ui-radius-sm);
 }
 
 .workflow-call__head,
@@ -144,8 +144,8 @@
   flex-direction: column;
   gap: 6px;
   padding: 8px 10px;
-  border: 1px solid var(--nd-border);
-  border-radius: var(--nd-radius-sm);
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-sm);
 }
 
 .workflow-tool__head code {
@@ -178,13 +178,13 @@
 .workflow-tool__table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--nd-font-size-sm, 0.875rem);
+  font-size: var(--ui-text-xs, 0.875rem);
 }
 
 .workflow-tool__table th,
 .workflow-tool__table td {
   padding: 4px 6px;
-  border-bottom: 1px solid var(--nd-border);
+  border-bottom: 1px solid var(--ui-color-border);
   text-align: left;
   vertical-align: top;
 }

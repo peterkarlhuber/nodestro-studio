@@ -133,7 +133,7 @@ from #121). Both have status `Needs external review`.
 
 ### ST-068 · Shared UI library: move the studio's components to @nodestro/ui-* step by step (N-16)
 
-- **Priority:** P3 Low · **Status:** Open (steps 1 to 5 done, step 6 in part) · **Refs:** N-16, N-17, nodestro-ui `docs/TODO.md`,
+- **Priority:** P3 Low · **Status:** Open (steps 1 to 5 and 7 done, step 6 in part) · **Refs:** N-16, N-17, nodestro-ui `docs/TODO.md`,
   `platform/internal-ui.txt`
 - **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`, `ui-help`) are vendored as
   tarballs in `frontend/vendor/`, pinned with their SHA-256 in `platform/internal-ui.txt`, checked by
@@ -157,8 +157,12 @@ from #121). Both have status `Needs external review`.
   a step and of an answer its `ToolCallRow` (as compact disclosures) and the web sources its `SourceList` (ai 0.5.0);
   the studio's look stays through `app.css`, the wording through `src/lib/uiTexts.tsx`; the lint refuses the old
   parts.
-- **Next steps, in order:** (6) buttons, fields, dialogs and sections from `components/ui.tsx`; (7) an alias layer `--nd-*: var(--ui-*)` and a
-  codemod, then drop `midnight-citron.css`. Each step keeps the existing tests and browser suites unchanged.
+  Step 7: the stylesheets use the shared `--ui-*` tokens directly (codemod after
+  `nodestro-ui/migration/nodestro-studio.json`; an alias layer was not needed, the values are equal), and
+  `styles/midnight-citron.css` is gone; `src/lint/tokens.test.ts` keeps the values equal to the theme and refuses new
+  `--nd-*` tokens but the two type steps without a shared step (`--nd-font-size-xs`, `--nd-font-size-xl`).
+- **Next steps, in order:** (6) buttons, fields, dialogs and sections from `components/ui.tsx`. Each step keeps the
+  existing tests and browser suites unchanged.
 - **Also:** nodestro-server (`image/Dockerfile`) and nodestro-desktop (`scripts/build_backend.sh`) run `npm ci` on a
   studio checkout without the SHA-256 check; add `node scripts/check-vendor.mjs` before it and
   `node scripts/check-vendor.mjs --installed` after it there, as the studio's workflows, Makefile and docs do.

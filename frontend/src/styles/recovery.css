@@ -4,28 +4,28 @@
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: var(--nd-space-6);
-  background: var(--nd-bg);
-  color: var(--nd-text);
+  padding: var(--ui-space-6);
+  background: var(--ui-color-bg);
+  color: var(--ui-color-text);
   box-sizing: border-box;
 }
 
 .recovery__card {
   width: min(640px, 100%);
-  padding: var(--nd-space-8);
-  background: var(--nd-surface);
-  border: 1px solid var(--nd-border);
-  border-radius: var(--nd-radius-xl);
-  box-shadow: var(--nd-shadow-popover);
+  padding: var(--ui-space-8);
+  background: var(--ui-color-surface);
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-xl);
+  box-shadow: var(--ui-shadow-lg);
   box-sizing: border-box;
 }
 
 .recovery__title {
   display: flex;
   align-items: center;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
   margin: 0;
-  font-size: var(--nd-font-size-2xl);
+  font-size: var(--ui-text-xl);
   line-height: 1.25;
 }
 
@@ -37,26 +37,26 @@
 .recovery__files {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--nd-font-size-sm);
+  font-size: var(--ui-text-xs);
 }
 
 .recovery__files th {
   text-align: left;
   font-weight: 600;
-  color: var(--nd-text-muted);
-  padding: var(--nd-space-1) var(--nd-space-2);
-  border-bottom: 1px solid var(--nd-border);
+  color: var(--ui-color-text-muted);
+  padding: var(--ui-space-1) var(--ui-space-2);
+  border-bottom: 1px solid var(--ui-color-border);
 }
 
 .recovery__files td {
-  padding: var(--nd-space-2);
-  border-bottom: 1px solid var(--nd-border);
+  padding: var(--ui-space-2);
+  border-bottom: 1px solid var(--ui-color-border);
   vertical-align: top;
   overflow-wrap: anywhere;
 }
 
 .recovery__left-alone {
-  color: var(--nd-danger);
+  color: var(--ui-color-danger);
 }
 
 .recovery__confirm {
@@ -66,12 +66,12 @@
 
 .recovery__command {
   display: flex;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
   align-items: center;
-  padding: var(--nd-space-2) var(--nd-space-3);
-  background: var(--nd-surface-raised);
-  border: 1px solid var(--nd-border);
-  border-radius: var(--nd-radius-sm);
+  padding: var(--ui-space-2) var(--ui-space-3);
+  background: var(--ui-color-surface-raised);
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-sm);
 }
 
 .recovery__command code {
@@ -84,7 +84,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
 }
 
 /* The heading takes the focus when the page opens (for screen readers); it is not a control, so no focus ring. */

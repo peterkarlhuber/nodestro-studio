@@ -66,15 +66,15 @@
   gap: 0.6rem;
   align-items: flex-start;
   padding: 0.5rem 0.65rem;
-  border: 1px solid var(--nd-border);
+  border: 1px solid var(--ui-color-border);
   border-radius: 8px;
   cursor: pointer;
   min-width: 0;
 }
 
 .missing-model__option:has(input:checked) {
-  border-color: var(--nd-brand);
-  box-shadow: inset 0 0 0 1px var(--nd-brand);
+  border-color: var(--ui-color-primary);
+  box-shadow: inset 0 0 0 1px var(--ui-color-primary);
 }
 
 .missing-model__option input {

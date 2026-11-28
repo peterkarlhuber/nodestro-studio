@@ -6,25 +6,25 @@
   min-width: 80px;
   overflow: hidden;
   border-radius: 999px;
-  background: var(--nd-surface-raised);
+  background: var(--ui-color-surface-raised);
   /* The track's edge keeps the bar visible on the panel background in both themes. */
-  box-shadow: inset 0 0 0 1px var(--nd-border);
+  box-shadow: inset 0 0 0 1px var(--ui-color-border);
 }
 
 .nd-progress__bar {
   position: absolute;
   inset: 0 auto 0 0;
   border-radius: 999px;
-  background: var(--nd-brand);
+  background: var(--ui-color-primary);
   transition: width 0.3s ease;
 }
 
 .nd-progress--danger .nd-progress__bar {
-  background: var(--nd-danger);
+  background: var(--ui-color-danger);
 }
 
 .nd-progress--idle .nd-progress__bar {
-  background: var(--nd-idle);
+  background: var(--ui-color-idle);
 }
 
 /* No measurable progress: a stripe that moves, never a value. */
@@ -54,7 +54,7 @@
 
 .nd-steps {
   display: grid;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -63,10 +63,10 @@
 .nd-steps__item {
   display: grid;
   grid-template-columns: 16px minmax(0, 1fr);
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
   align-items: start;
-  font-size: var(--nd-font-size-sm);
-  color: var(--nd-text-muted);
+  font-size: var(--ui-text-xs);
+  color: var(--ui-color-text-muted);
 }
 
 .nd-steps__item > svg {
@@ -84,59 +84,59 @@
 }
 
 .nd-steps__note {
-  color: var(--nd-text-subtle);
+  color: var(--ui-color-text-subtle);
   font-size: var(--nd-font-size-xs);
   overflow-wrap: anywhere;
 }
 
 .nd-steps__item--done > svg {
-  color: var(--nd-success);
+  color: var(--ui-color-success);
 }
 
 .nd-steps__item--running {
-  color: var(--nd-text);
+  color: var(--ui-color-text);
   font-weight: 620;
 }
 
 .nd-steps__item--running > svg {
-  color: var(--nd-running);
+  color: var(--ui-color-running);
 }
 
 .nd-steps__item--failed {
-  color: var(--nd-danger);
+  color: var(--ui-color-danger);
   font-weight: 620;
 }
 
 .nd-steps__item--skipped .nd-steps__label {
-  color: var(--nd-text-subtle);
+  color: var(--ui-color-text-subtle);
 }
 
 .nd-tech {
   font-size: var(--nd-font-size-xs);
-  color: var(--nd-text-muted);
+  color: var(--ui-color-text-muted);
 }
 
 .nd-tech > summary {
   cursor: pointer;
   width: fit-content;
-  border-radius: var(--nd-radius-sm);
+  border-radius: var(--ui-radius-sm);
 }
 
 .nd-tech > summary:focus-visible {
-  outline: 2px solid var(--nd-focus);
+  outline: 2px solid var(--ui-color-focus);
   outline-offset: 2px;
 }
 
 .nd-tech__body {
   display: grid;
-  gap: var(--nd-space-2);
-  margin-top: var(--nd-space-2);
+  gap: var(--ui-space-2);
+  margin-top: var(--ui-space-2);
   max-height: 260px;
   overflow: auto;
-  padding: var(--nd-space-2);
-  border: 1px solid var(--nd-border);
-  border-radius: var(--nd-radius-sm);
-  background: var(--nd-surface-raised);
+  padding: var(--ui-space-2);
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-sm);
+  background: var(--ui-color-surface-raised);
 }
 
 .nd-tech__body pre,
@@ -151,28 +151,28 @@
 
 .local-job {
   display: grid;
-  gap: var(--nd-space-2);
-  padding: var(--nd-space-3);
-  border: 1px solid var(--nd-border);
-  border-radius: var(--nd-radius-md, 8px);
-  background: var(--nd-surface);
+  gap: var(--ui-space-2);
+  padding: var(--ui-space-3);
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-md, 8px);
+  background: var(--ui-color-surface);
   min-width: 0;
 }
 
 .local-job--failed {
-  border-color: var(--nd-danger);
+  border-color: var(--ui-color-danger);
 }
 
 .local-job__head {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
   align-items: center;
   min-width: 0;
 }
 
 .local-job__title {
-  font-size: var(--nd-font-size-sm);
+  font-size: var(--ui-text-xs);
   font-weight: 650;
   overflow-wrap: anywhere;
 }
@@ -180,27 +180,27 @@
 .local-job__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
   margin-left: auto;
 }
 
 .local-job__facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px var(--nd-space-3);
+  gap: 4px var(--ui-space-3);
   font-size: var(--nd-font-size-xs);
-  color: var(--nd-text-muted);
+  color: var(--ui-color-text-muted);
   font-variant-numeric: tabular-nums;
 }
 
 .local-job__hint {
   font-size: var(--nd-font-size-xs);
-  color: var(--nd-text-muted);
+  color: var(--ui-color-text-muted);
 }
 
 .local-jobs {
   display: grid;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -211,5 +211,5 @@
   gap: 4px;
   min-width: 120px;
   font-size: var(--nd-font-size-xs);
-  color: var(--nd-text-muted);
+  color: var(--ui-color-text-muted);
 }

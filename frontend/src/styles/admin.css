@@ -10,11 +10,11 @@
   gap: 6px;
   min-height: 32px;
   padding: 4px 10px;
-  border: 1px solid var(--nd-border);
-  border-radius: var(--nd-radius-sm);
-  background: var(--nd-surface);
-  color: var(--nd-text);
-  font-size: var(--nd-font-size-sm);
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-sm);
+  background: var(--ui-color-surface);
+  color: var(--ui-color-text);
+  font-size: var(--ui-text-xs);
   cursor: pointer;
   list-style: none;
 }
@@ -40,10 +40,10 @@
   gap: 8px;
   width: min(300px, calc(100vw - 32px));
   padding: 12px;
-  border: 1px solid var(--nd-border);
-  border-radius: var(--nd-radius-md);
-  background: var(--nd-surface-raised);
-  box-shadow: var(--nd-shadow-popover);
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-md);
+  background: var(--ui-color-surface-raised);
+  box-shadow: var(--ui-shadow-lg);
 }
 
 .user-menu__panel p {
@@ -63,14 +63,14 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  border-bottom: 1px solid var(--nd-border);
-  background: var(--nd-warning-soft);
-  color: var(--nd-text);
-  font-size: var(--nd-font-size-sm);
+  border-bottom: 1px solid var(--ui-color-border);
+  background: var(--ui-color-warning-bg);
+  color: var(--ui-color-text);
+  font-size: var(--ui-text-xs);
 }
 
 .read-only-notice > svg {
-  color: var(--nd-warning);
+  color: var(--ui-color-warning);
 }
 
 .permission-note {
@@ -97,8 +97,8 @@
 }
 
 .field-problem {
-  color: var(--nd-danger);
-  font-size: var(--nd-font-size-sm);
+  color: var(--ui-color-danger);
+  font-size: var(--ui-text-xs);
 }
 
 /* A footer with many choices (e.g. the save conflict) wraps instead of cutting a button off. */
@@ -114,7 +114,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
 }
 
 .members__row {
@@ -122,9 +122,9 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--nd-space-2);
-  padding: var(--nd-space-2) 0;
-  border-bottom: 1px solid var(--nd-border);
+  gap: var(--ui-space-2);
+  padding: var(--ui-space-2) 0;
+  border-bottom: 1px solid var(--ui-color-border);
 }
 
 .members__who {
@@ -144,7 +144,7 @@
 .members__actions {
   display: flex;
   align-items: center;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
   flex: 0 1 auto;
   max-width: 100%;
 }
@@ -160,11 +160,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
   min-height: 100vh;
   max-width: 36rem;
   margin: 0 auto;
-  padding: var(--nd-space-4);
+  padding: var(--ui-space-4);
   text-align: center;
 }
 
