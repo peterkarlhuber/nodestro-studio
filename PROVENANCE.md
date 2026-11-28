@@ -12,6 +12,8 @@ files renamed since then for the English-only documentation policy: `docs/ARCHIT
 `docs/screenshots/ausfuehrung.png` → `execution.png`, `editor-dunkel.png` → `editor-dark.png`,
 `editor-hell.png` → `editor-light.png`. Removed since: `frontend/public/favicon.svg` and `docs/design/preview-dark.png`,
 `preview-light.png` (unreferenced design mockups showing a retired logo; removed with the 2026-11-02 logo change).
+`docs/design/nodestro-midnight-citron.css` was removed with ST-068 step 7 (2026-11-28): its values are the `nodestro`
+brand theme of `@nodestro/ui-themes`.
 
 Folders taken over byte for byte (files summarized):
 

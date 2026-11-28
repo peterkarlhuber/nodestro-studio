@@ -5,11 +5,11 @@
   grid-template-columns: max-content minmax(0, 1fr);
   gap: 6px 14px;
   margin: 0;
-  font-size: var(--nd-font-size-sm);
+  font-size: var(--ui-text-xs);
 }
 
 .skill-facts dt {
-  color: var(--nd-text-muted);
+  color: var(--ui-color-text-muted);
 }
 
 .skill-facts dd {
@@ -20,7 +20,7 @@
 .skill-issues {
   display: flex;
   flex-direction: column;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -29,7 +29,7 @@
 .skill-issues__item {
   display: flex;
   align-items: flex-start;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
   overflow-wrap: anywhere;
 }
 
@@ -39,11 +39,11 @@
 }
 
 .skill-issues__item--error svg {
-  color: var(--nd-danger);
+  color: var(--ui-color-danger);
 }
 
 .skill-issues__item--warning svg {
-  color: var(--nd-warning);
+  color: var(--ui-color-warning);
 }
 
 .skills__filters .nd-input[type="search"] {
@@ -71,8 +71,8 @@
   gap: 4px;
   max-height: 280px;
   overflow-y: auto;
-  padding: var(--nd-space-2);
-  border: 1px solid var(--nd-border);
+  padding: var(--ui-space-2);
+  border: 1px solid var(--ui-color-border);
   border-radius: 8px;
 }
 

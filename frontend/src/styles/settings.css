@@ -15,21 +15,21 @@
   --settings-nav-width: 15rem;
   display: grid;
   grid-template-columns: minmax(0, var(--settings-width)) 16px var(--settings-nav-width);
-  column-gap: var(--nd-space-3);
+  column-gap: var(--ui-space-3);
   align-items: start;
 }
 
 .settings {
   display: flex;
   flex-direction: column;
-  gap: var(--nd-space-4);
+  gap: var(--ui-space-4);
   min-width: 0;
 }
 
 /* A section reached by a link stays clear of the window edge. */
 .settings > section {
   min-width: 0;
-  scroll-margin-top: var(--nd-space-4);
+  scroll-margin-top: var(--ui-space-4);
 }
 
 /* Wide tables scroll inside their section instead of pushing the page wider. */
@@ -44,7 +44,7 @@
   align-self: stretch;
   width: 16px;
   min-height: 100%;
-  border-radius: var(--nd-radius-sm);
+  border-radius: var(--ui-radius-sm);
   cursor: col-resize;
   touch-action: none;
 }
@@ -57,9 +57,9 @@
   left: 50%;
   width: 2px;
   border-radius: 1px;
-  background: var(--nd-border);
+  background: var(--ui-color-border);
   transform: translateX(-50%);
-  transition: background var(--nd-duration-fast);
+  transition: background var(--ui-duration-fast);
 }
 
 .settings-resizer__grip {
@@ -70,27 +70,27 @@
   width: 16px;
   height: 36px;
   margin-top: 48px;
-  border: 1px solid var(--nd-border-strong);
-  border-radius: var(--nd-radius-sm);
-  background: var(--nd-surface);
-  color: var(--nd-text-muted);
+  border: 1px solid var(--ui-color-border-strong);
+  border-radius: var(--ui-radius-sm);
+  background: var(--ui-color-surface);
+  color: var(--ui-color-text-muted);
 }
 
 .settings-resizer:hover::before,
 .settings-resizer:focus-visible::before,
 .is-resizing .settings-resizer::before {
-  background: var(--nd-brand);
+  background: var(--ui-color-primary);
 }
 
 .settings-resizer:hover .settings-resizer__grip,
 .settings-resizer:focus-visible .settings-resizer__grip,
 .is-resizing .settings-resizer__grip {
-  border-color: var(--nd-brand);
-  color: var(--nd-brand);
+  border-color: var(--ui-color-primary);
+  color: var(--ui-color-primary);
 }
 
 .settings-resizer:focus-visible {
-  outline: 2px solid var(--nd-focus);
+  outline: 2px solid var(--ui-color-focus);
   outline-offset: 2px;
 }
 
@@ -98,28 +98,28 @@
 
 .settings-nav {
   position: sticky;
-  top: var(--nd-space-4);
+  top: var(--ui-space-4);
   display: flex;
   flex-direction: column;
-  gap: var(--nd-space-3);
+  gap: var(--ui-space-3);
   min-width: 0;
-  max-height: calc(100vh - 64px - 2 * var(--nd-space-4));
-  font-size: var(--nd-font-size-sm);
+  max-height: calc(100vh - 64px - 2 * var(--ui-space-4));
+  font-size: var(--ui-text-xs);
 }
 
 /* A long list on a short window scrolls on its own; the search above it stays in place. */
 .settings-nav__list {
   display: flex;
   flex-direction: column;
-  gap: var(--nd-space-3);
+  gap: var(--ui-space-3);
   min-height: 0;
   overflow-y: auto;
 }
 
 .settings-nav__title,
 .settings-nav__group-title {
-  color: var(--nd-text-muted);
-  font-size: var(--nd-font-size-2xs);
+  color: var(--ui-color-text-muted);
+  font-size: var(--ui-text-2xs);
   font-weight: 650;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -141,18 +141,18 @@
 .settings-nav a {
   display: block;
   padding: 4px 10px;
-  border-left: 2px solid var(--nd-border);
-  color: var(--nd-text);
+  border-left: 2px solid var(--ui-color-border);
+  color: var(--ui-color-text);
   text-decoration: none;
 }
 
 .settings-nav a:hover {
-  background: var(--nd-surface-hover);
+  background: var(--ui-color-surface-hover);
 }
 
 .settings-nav a[aria-current] {
-  border-left-color: var(--nd-brand);
-  color: var(--nd-brand);
+  border-left-color: var(--ui-color-primary);
+  color: var(--ui-color-primary);
   font-weight: 600;
 }
 
@@ -192,7 +192,7 @@
 .settings-search__icon {
   position: absolute;
   left: 10px;
-  color: var(--nd-text-muted);
+  color: var(--ui-color-text-muted);
   pointer-events: none;
 }
 
@@ -214,19 +214,19 @@
   height: 26px;
   padding: 0;
   border: 0;
-  border-radius: var(--nd-radius-sm);
+  border-radius: var(--ui-radius-sm);
   background: transparent;
-  color: var(--nd-text-muted);
+  color: var(--ui-color-text-muted);
   cursor: pointer;
 }
 
 .settings-search__clear:hover {
-  background: var(--nd-surface-hover);
-  color: var(--nd-text);
+  background: var(--ui-color-surface-hover);
+  color: var(--ui-color-text);
 }
 
 .settings-search__clear:focus-visible {
-  outline: 2px solid var(--nd-focus);
+  outline: 2px solid var(--ui-color-focus);
 }
 
 /* The hits lie over the content (leftwards from the navigation), never under it. */
@@ -241,10 +241,10 @@
   padding: 4px;
   overflow-y: auto;
   list-style: none;
-  border: 1px solid var(--nd-border-strong);
-  border-radius: var(--nd-radius-md);
-  background: var(--nd-surface-raised);
-  box-shadow: var(--nd-shadow-popover);
+  border: 1px solid var(--ui-color-border-strong);
+  border-radius: var(--ui-radius-md);
+  background: var(--ui-color-surface-raised);
+  box-shadow: var(--ui-shadow-lg);
 }
 
 .settings-search__list[hidden] {
@@ -256,34 +256,34 @@
   flex-direction: column;
   gap: 2px;
   padding: 8px 10px;
-  border-radius: var(--nd-radius-sm);
+  border-radius: var(--ui-radius-sm);
   cursor: pointer;
 }
 
 .settings-search__hit[aria-selected="true"] {
-  background: var(--nd-brand-soft);
-  box-shadow: inset 2px 0 0 var(--nd-brand);
+  background: var(--ui-color-primary-subtle);
+  box-shadow: inset 2px 0 0 var(--ui-color-primary);
 }
 
 .settings-search__label {
-  color: var(--nd-text);
+  color: var(--ui-color-text);
   font-weight: 620;
 }
 
 .settings-search__context {
-  color: var(--nd-text-muted);
+  color: var(--ui-color-text-muted);
   font-size: var(--nd-font-size-xs);
 }
 
 .settings-search__snippet {
-  color: var(--nd-text-muted);
+  color: var(--ui-color-text-muted);
   font-size: var(--nd-font-size-xs);
   line-height: 1.45;
 }
 
 .settings-search__status {
   margin: 4px 0 0;
-  color: var(--nd-text-muted);
+  color: var(--ui-color-text-muted);
   font-size: var(--nd-font-size-xs);
 }
 
@@ -293,17 +293,17 @@
 
 /* The setting a search (or a link) led to: a short highlight around it. */
 .settings-hit {
-  border-radius: var(--nd-radius-sm);
+  border-radius: var(--ui-radius-sm);
   animation: settings-hit 2.4s ease-out;
 }
 
 @keyframes settings-hit {
   0%,
   55% {
-    background: var(--nd-brand-soft);
+    background: var(--ui-color-primary-subtle);
     box-shadow:
-      0 0 0 6px var(--nd-brand-soft),
-      0 0 0 8px var(--nd-brand);
+      0 0 0 6px var(--ui-color-primary-subtle),
+      0 0 0 8px var(--ui-color-primary);
   }
 
   100% {
@@ -316,7 +316,7 @@
 @media (prefers-reduced-motion: reduce) {
   .settings-hit {
     animation: none;
-    outline: 2px solid var(--nd-brand);
+    outline: 2px solid var(--ui-color-primary);
     outline-offset: 4px;
   }
 }
@@ -326,17 +326,17 @@
 .settings-group {
   display: flex;
   flex-direction: column;
-  gap: var(--nd-space-3);
-  padding-top: var(--nd-space-3);
-  border-top: 1px solid var(--nd-border);
+  gap: var(--ui-space-3);
+  padding-top: var(--ui-space-3);
+  border-top: 1px solid var(--ui-color-border);
 }
 
 .settings-group__title {
   display: flex;
   align-items: center;
   margin: 0;
-  color: var(--nd-text);
-  font-size: var(--nd-font-size-sm);
+  color: var(--ui-color-text);
+  font-size: var(--ui-text-xs);
   font-weight: 680;
   letter-spacing: 0.01em;
 }
@@ -345,7 +345,7 @@
 .settings-columns {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
-  gap: var(--nd-space-3) var(--nd-space-6);
+  gap: var(--ui-space-3) var(--ui-space-6);
   align-items: start;
 }
 
@@ -354,7 +354,7 @@
 }
 
 .settings-advanced {
-  border-top: 1px solid var(--nd-border);
+  border-top: 1px solid var(--ui-color-border);
 }
 
 .settings-advanced > summary {
@@ -373,13 +373,13 @@
 }
 
 .settings-advanced > summary:focus-visible {
-  outline: 2px solid var(--nd-focus);
+  outline: 2px solid var(--ui-color-focus);
   outline-offset: 2px;
-  border-radius: var(--nd-radius-sm);
+  border-radius: var(--ui-radius-sm);
 }
 
 .settings-advanced__body {
-  padding: 0 0 var(--nd-space-3) 22px;
+  padding: 0 0 var(--ui-space-3) 22px;
 }
 
 /* ---- no room beside the content: navigation on top, as a sticky bar ---- */
@@ -387,7 +387,7 @@
 @container settings-page (max-width: 940px) {
   .settings-layout {
     grid-template-columns: minmax(0, 1fr);
-    row-gap: var(--nd-space-4);
+    row-gap: var(--ui-space-4);
   }
 
   .settings-resizer {
@@ -400,12 +400,12 @@
     order: -1;
     flex-flow: row wrap;
     align-items: flex-end;
-    gap: var(--nd-space-2) var(--nd-space-4);
+    gap: var(--ui-space-2) var(--ui-space-4);
     max-height: none;
-    margin: calc(-1 * var(--nd-space-2)) calc(-1 * var(--nd-space-2)) 0;
-    padding: var(--nd-space-2);
-    border-bottom: 1px solid var(--nd-border);
-    background: var(--nd-bg);
+    margin: calc(-1 * var(--ui-space-2)) calc(-1 * var(--ui-space-2)) 0;
+    padding: var(--ui-space-2);
+    border-bottom: 1px solid var(--ui-color-border);
+    background: var(--ui-color-bg);
   }
 
   .settings-return {
@@ -442,27 +442,27 @@
   flex: none;
   width: 34px;
   height: 34px;
-  border: 1px solid var(--nd-border);
+  border: 1px solid var(--ui-color-border);
   border-radius: 999px;
-  color: var(--nd-text);
+  color: var(--ui-color-text);
   transition:
-    background var(--nd-duration-fast),
-    border-color var(--nd-duration-fast);
+    background var(--ui-duration-fast),
+    border-color var(--ui-duration-fast);
 }
 
 .topbar-settings:hover {
-  background: var(--nd-surface-hover);
+  background: var(--ui-color-surface-hover);
   text-decoration: none;
 }
 
 .topbar-settings.active {
-  border-color: var(--nd-brand);
-  background: var(--nd-brand-soft);
-  color: var(--nd-brand);
+  border-color: var(--ui-color-primary);
+  background: var(--ui-color-primary-subtle);
+  color: var(--ui-color-primary);
 }
 
 .topbar-settings:focus-visible {
-  outline: 2px solid var(--nd-focus);
+  outline: 2px solid var(--ui-color-focus);
   outline-offset: 2px;
 }
 
@@ -488,9 +488,9 @@
   min-height: 24px;
   padding: 2px 6px;
   border: 0;
-  border-radius: var(--nd-radius-sm);
+  border-radius: var(--ui-radius-sm);
   background: none;
-  color: var(--nd-brand);
+  color: var(--ui-color-primary);
   font: inherit;
   font-size: var(--nd-font-size-xs);
   cursor: pointer;
@@ -501,12 +501,12 @@
 }
 
 .settings-changed__reset:focus-visible {
-  outline: 2px solid var(--nd-focus);
+  outline: 2px solid var(--ui-color-focus);
   outline-offset: 1px;
 }
 
 .settings-changed__reset:disabled {
-  color: var(--nd-text-subtle);
+  color: var(--ui-color-text-subtle);
   cursor: default;
 }
 

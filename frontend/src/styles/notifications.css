@@ -12,28 +12,28 @@
   width: 34px;
   height: 34px;
   padding: 0;
-  border: 1px solid var(--nd-border);
+  border: 1px solid var(--ui-color-border);
   border-radius: 999px;
   background: transparent;
-  color: var(--nd-text);
+  color: var(--ui-color-text);
   cursor: pointer;
   transition:
-    background var(--nd-duration-fast),
-    border-color var(--nd-duration-fast);
+    background var(--ui-duration-fast),
+    border-color var(--ui-duration-fast);
 }
 
 .notify-bell:hover {
-  background: var(--nd-surface-hover);
+  background: var(--ui-color-surface-hover);
 }
 
 .notify-bell.active {
-  border-color: var(--nd-brand);
-  background: var(--nd-brand-soft);
-  color: var(--nd-brand);
+  border-color: var(--ui-color-primary);
+  background: var(--ui-color-primary-subtle);
+  color: var(--ui-color-primary);
 }
 
 .notify-bell:focus-visible {
-  outline: 2px solid var(--nd-focus);
+  outline: 2px solid var(--ui-color-focus);
   outline-offset: 2px;
 }
 
@@ -43,10 +43,10 @@
   right: -6px;
   min-width: 18px;
   padding: 0 5px;
-  border: 2px solid var(--nd-topbar);
+  border: 2px solid var(--ui-color-chrome);
   border-radius: 999px;
-  background: var(--nd-brand);
-  color: var(--nd-brand-on);
+  background: var(--ui-color-primary);
+  color: var(--ui-color-on-primary);
   font-size: var(--nd-font-size-xs);
   font-weight: 700;
   line-height: 14px;
@@ -62,24 +62,24 @@
   flex-direction: column;
   width: min(400px, calc(100vw - 32px));
   max-height: min(560px, calc(100vh - 90px));
-  border: 1px solid var(--nd-border);
-  border-radius: var(--nd-radius-md);
-  background: var(--nd-surface-raised);
-  box-shadow: var(--nd-shadow-popover);
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-md);
+  background: var(--ui-color-surface-raised);
+  box-shadow: var(--ui-shadow-lg);
 }
 
 .notify-panel__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--nd-space-2);
+  gap: var(--ui-space-2);
   padding: 10px 12px;
-  border-bottom: 1px solid var(--nd-border);
+  border-bottom: 1px solid var(--ui-color-border);
 }
 
 .notify-panel__title {
   margin: 0;
-  font-size: var(--nd-font-size-base);
+  font-size: var(--ui-text-sm);
 }
 
 .notify-panel__title:focus {
@@ -87,7 +87,7 @@
 }
 
 .notify-panel__title:focus-visible {
-  outline: 2px solid var(--nd-focus);
+  outline: 2px solid var(--ui-color-focus);
   outline-offset: 2px;
 }
 
@@ -97,7 +97,7 @@
   align-items: center;
   gap: 6px;
   padding: 24px 16px;
-  color: var(--nd-text-muted);
+  color: var(--ui-color-text-muted);
   text-align: center;
 }
 
@@ -113,13 +113,13 @@
 .notify-panel__more {
   display: flex;
   justify-content: center;
-  border-top: 1px solid var(--nd-border);
+  border-top: 1px solid var(--ui-color-border);
 }
 
 .notify-panel__foot {
   margin: 0;
   padding: 8px 12px;
-  border-top: 1px solid var(--nd-border);
+  border-top: 1px solid var(--ui-color-border);
 }
 
 .notify-list {
@@ -136,7 +136,7 @@
   align-items: flex-start;
   gap: 10px;
   padding: 10px 12px;
-  border-bottom: 1px solid var(--nd-border);
+  border-bottom: 1px solid var(--ui-color-border);
 }
 
 .notify-item:last-child {
@@ -144,7 +144,7 @@
 }
 
 .notify-item--unread {
-  background: var(--nd-brand-soft);
+  background: var(--ui-color-primary-subtle);
 }
 
 .notify-item__icon {
@@ -154,23 +154,23 @@
   width: 26px;
   height: 26px;
   border-radius: 999px;
-  background: var(--nd-idle-soft);
-  color: var(--nd-idle);
+  background: var(--ui-color-idle-bg);
+  color: var(--ui-color-idle);
 }
 
 .notify-item--success .notify-item__icon {
-  background: var(--nd-success-soft);
-  color: var(--nd-success);
+  background: var(--ui-color-success-bg);
+  color: var(--ui-color-success);
 }
 
 .notify-item--warning .notify-item__icon {
-  background: var(--nd-warning-soft);
-  color: var(--nd-warning);
+  background: var(--ui-color-warning-bg);
+  color: var(--ui-color-warning);
 }
 
 .notify-item--error .notify-item__icon {
-  background: var(--nd-danger-soft);
-  color: var(--nd-danger);
+  background: var(--ui-color-danger-bg);
+  color: var(--ui-color-danger);
 }
 
 .notify-item__body {
@@ -194,8 +194,8 @@
 /* An agent's message is plain text: line breaks are kept, nothing is formatted or linked. */
 .notify-item__text {
   margin: 0;
-  color: var(--nd-text);
-  font-size: var(--nd-font-size-sm);
+  color: var(--ui-color-text);
+  font-size: var(--ui-text-xs);
   overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
@@ -207,8 +207,8 @@
   align-self: flex-start;
   padding: 0 6px;
   border-radius: 999px;
-  background: var(--nd-running-soft);
-  color: var(--nd-running);
+  background: var(--ui-color-running-bg);
+  color: var(--ui-color-running);
   font-size: var(--nd-font-size-xs);
   font-weight: 650;
 }
@@ -271,7 +271,7 @@
   align-items: center;
   gap: 6px;
   margin: 0;
-  font-size: var(--nd-font-size-sm);
+  font-size: var(--ui-text-xs);
 }
 
 .notify-settings fieldset {

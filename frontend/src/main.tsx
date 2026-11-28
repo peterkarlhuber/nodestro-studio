@@ -5,7 +5,6 @@ import "@nodestro/ui-tokens/tokens.css";
 import "@nodestro/ui-themes/nodestro.css";
 import "@nodestro/ui-core/styles.css";
 import "@nodestro/ui-ai/styles.css";
-import "./styles/midnight-citron.css";
 import "./styles/app.css";
 import "./styles/settings.css";
 import "./styles/onboarding.css";

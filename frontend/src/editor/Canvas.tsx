@@ -503,16 +503,16 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
         ariaLabelConfig={ariaLabelConfig}
         defaultEdgeOptions={{ type: "default" }}
       >
-        <Background variant={BackgroundVariant.Dots} gap={22} size={1} color="var(--nd-grid)" />
+        <Background variant={BackgroundVariant.Dots} gap={22} size={1} color="var(--ui-color-grid)" />
         <MiniMap
           pannable
           zoomable
           className="minimap"
           position="top-right"
-          nodeColor="var(--nd-surface-raised)"
-          nodeStrokeColor="var(--nd-border-strong)"
+          nodeColor="var(--ui-color-surface-raised)"
+          nodeStrokeColor="var(--ui-color-border-strong)"
           nodeBorderRadius={6}
-          maskColor="color-mix(in srgb, var(--nd-bg) 55%, transparent)"
+          maskColor="color-mix(in srgb, var(--ui-color-bg) 55%, transparent)"
           ariaLabel={t("editor.canvas.minimap")}
         />
       </ReactFlow>
