@@ -12,9 +12,9 @@
   backend's development switch is on, and no tool class is released. Texts in six languages, a help section
   (`verzweigungen#erweiterungspakete`), refusal reasons as their own sentences (`extension_store.refused_<reason>`),
   the help family `extension_store.*` and `apiErrorCodes.json` with the four new codes.
-- Lock (paired, not for merge as is): `nodestro-runtime` at the head of `claude/w7-ext-store` (RT-098 merged as
-  9cf9d9c, #232, plus a test fix for the component jobs); `nodestro-api` (#192) and `nodestro-sdk` (#154) at the heads
-  of their `claude/w7-ext-store`. Re-pin all three to their merge commits once they merge.
+- Lock: `nodestro-runtime` at its master merge of the RT-098 follow-up (#233, da47678; includes RT-098 #232 and
+  RT-096 #230), `nodestro-api` at its merge of API-081 (#192, 0f43604), `nodestro-sdk` at its merge of the store
+  client methods (#154, 0a0f8f3).
 
 ### N-20 studio interface (Welle 7)
 
