@@ -2,11 +2,12 @@
 // (AD-07). Saving now would silently replace that change, so the user chooses. The API has no precondition yet
 // (backend item: a version check with 409); the editor compares the server copy right before it saves.
 
+import { Button } from "@nodestro/ui-core";
 import { Copy, Download, Save } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import type { Workflow, WorkflowIn } from "../api/types";
-import { Button, Modal } from "../components/ui";
+import { Modal } from "../components/ui";
 import { formatDate } from "../lib/format";
 
 export type ConflictChoice = "reload" | "overwrite" | "copy" | "cancel";
@@ -47,13 +48,13 @@ export function SaveConflictDialog({
           <Button variant="ghost" onClick={() => onChoose("cancel")}>
             {t("admin.conflict.keepEditing")}
           </Button>
-          <Button icon={Copy} onClick={() => onChoose("copy")} data-testid="conflict-copy">
+          <Button icon={<Copy size={15} />} onClick={() => onChoose("copy")} data-testid="conflict-copy">
             {t("admin.conflict.copy")}
           </Button>
-          <Button icon={Download} onClick={() => onChoose("reload")} data-testid="conflict-reload">
+          <Button icon={<Download size={15} />} onClick={() => onChoose("reload")} data-testid="conflict-reload">
             {t("admin.conflict.reload")}
           </Button>
-          <Button variant="danger" icon={Save} onClick={() => onChoose("overwrite")} data-testid="conflict-overwrite">
+          <Button variant="danger" icon={<Save size={15} />} onClick={() => onChoose("overwrite")} data-testid="conflict-overwrite">
             {t("admin.conflict.overwrite")}
           </Button>
         </>

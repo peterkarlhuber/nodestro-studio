@@ -1,11 +1,11 @@
 // Small pieces shared by the panels of the "API & Export" dialog.
 
+import { IconButton } from "@nodestro/ui-core";
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { CheckIssue, WorkflowCheck } from "../api/types";
-import { IconButton } from "../components/ui";
 import { CheckList } from "../editor/CheckList";
 
 export function CopyButton({ text, label }: { text: string; label?: string }) {
@@ -13,7 +13,7 @@ export function CopyButton({ text, label }: { text: string; label?: string }) {
   const [copied, setCopied] = useState(false);
   return (
     <IconButton
-      icon={copied ? Check : Copy}
+      icon={copied ? <Check size={16} /> : <Copy size={16} />}
       label={copied ? t("publish.copied") : (label ?? t("publish.copy"))}
       onClick={() => {
         void navigator.clipboard?.writeText(text).then(() => {

@@ -1,4 +1,4 @@
-import { HelpTip, Tooltip } from "@nodestro/ui-core";
+import { Button, HelpTip, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Cable,
@@ -45,7 +45,7 @@ import {
 import { NoSendBadge } from "../components/NoSendBadge";
 import { toast } from "../components/toast";
 import { DeleteUsed, UsedByList, useUsedBy } from "../components/UsedBy";
-import { Badge, Button, Callout, EmptyState, Field, PageHeader, Section, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
+import { Badge, Callout, EmptyState, Field, PageHeader, Section, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
 import { isDraftTool, toolDescription, toolDisplayName } from "../lib/catalog";
 import { ToolDependencies } from "../python/DependencyPanel";
 import { PlanTable } from "../python/PlanTable";
@@ -533,7 +533,7 @@ function ToolDetail({
         />
       </Field>
       <div>
-        <Button icon={Play} busy={run.isPending} onClick={() => run.mutate()}>
+        <Button icon={<Play size={15} />} busy={run.isPending} onClick={() => run.mutate()}>
           {t("tools.run")}
         </Button>
       </div>
@@ -672,7 +672,7 @@ function WriteTool({ onSaved }: { onSaved: () => void }) {
         <div className="row-gap">
           <Tooltip help="tools.check">
             <Button
-              icon={FlaskConical}
+              icon={<FlaskConical size={15} />}
               busy={runCheck.isPending}
               onClick={() => runCheck.mutate(source)}
             >
@@ -682,7 +682,7 @@ function WriteTool({ onSaved }: { onSaved: () => void }) {
           <Tooltip help="tools.save">
             <Button
               variant="primary"
-              icon={Save}
+              icon={<Save size={15} />}
               busy={save.isPending}
               onClick={() => save.mutate(source)}
             >
@@ -813,7 +813,7 @@ function GenerateTool() {
         <div>
           <Button
             variant="primary"
-            icon={Sparkles}
+            icon={<Sparkles size={15} />}
             busy={start.isPending}
             disabled={needsDocker || requirement.trim().length < 10}
             onClick={() => start.mutate()}
@@ -881,7 +881,7 @@ function GenerateTool() {
                 <div className="row-gap">
                   <Button
                     variant="primary"
-                    icon={ShieldCheck}
+                    icon={<ShieldCheck size={15} />}
                     disabled={Boolean(job.dependency_plan.error)}
                     busy={decideDependencies.isPending}
                     onClick={() =>
@@ -891,7 +891,7 @@ function GenerateTool() {
                     {t("tools.generate.approveLibraries")}
                   </Button>
                   <Button
-                    icon={Code2}
+                    icon={<Code2 size={15} />}
                     onClick={() =>
                       decideDependencies.mutate({ id: job.id, choice: "without" })
                     }
@@ -900,7 +900,7 @@ function GenerateTool() {
                   </Button>
                   <Button
                     variant="danger"
-                    icon={X}
+                    icon={<X size={15} />}
                     onClick={() =>
                       decideDependencies.mutate({ id: job.id, choice: "cancel" })
                     }
@@ -955,7 +955,7 @@ function GenerateTool() {
                 <div className="row-gap">
                   <Button
                     variant="primary"
-                    icon={Check}
+                    icon={<Check size={15} />}
                     onClick={() =>
                       decide.mutate({ id: job.id, approved: true })
                     }
@@ -964,7 +964,7 @@ function GenerateTool() {
                   </Button>
                   <Button
                     variant="danger"
-                    icon={X}
+                    icon={<X size={15} />}
                     onClick={() =>
                       decide.mutate({ id: job.id, approved: false })
                     }

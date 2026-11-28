@@ -71,7 +71,7 @@ export function RunIllustration({ phase, onReplay, busy }: { phase: number; onRe
     <figure className="wl-run" aria-labelledby="wl-run-caption">
       <figcaption id="wl-run-caption" className="wl-run__caption">
         <span className="wl-run__label">{t("welcome.how.illustration")}</span>
-        <button type="button" className="nd-button wl-run__replay" onClick={onReplay} disabled={busy} data-testid="welcome-replay">
+        <button type="button" className="ui-button wl-run__replay" onClick={onReplay} disabled={busy} data-testid="welcome-replay">
           <RotateCcw size={13} aria-hidden /> {t("welcome.how.replay")}
         </button>
       </figcaption>

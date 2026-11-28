@@ -1,6 +1,7 @@
 // What the signed-in user may do, shown before they try (AD-04/AD-05). The desktop app has no logins and no roles:
 // there everything here renders nothing and every control stays as it is.
 
+import { Button } from "@nodestro/ui-core";
 import { useQueryClient } from "@tanstack/react-query";
 import { Lock, LogOut, UserRound } from "lucide-react";
 import { useState } from "react";
@@ -11,7 +12,7 @@ import { request, startLogin } from "../api/client";
 import { launchSession, markSignedOut } from "../api/session";
 import { problemText } from "../lib/errors";
 import { toast } from "./toast";
-import { Button, Select } from "./ui";
+import { Select } from "./ui";
 
 /** The role in the interface language ("viewer" → "Viewer"); unknown roles as they are. */
 export function roleName(t: (key: string, options?: Record<string, unknown>) => string, role: string | null | undefined): string {
@@ -104,7 +105,7 @@ export function UserMenu() {
             options={tenants.map(([id, role]) => ({ value: id, label: `${id} (${roleName(t, role)})` }))}
           />
         ) : null}
-        <Button variant="ghost" size="sm" icon={LogOut} busy={busy} onClick={() => void signOut()}>
+        <Button variant="ghost" size="sm" icon={<LogOut size={15} />} busy={busy} onClick={() => void signOut()}>
           {t("admin.user.logout")}
         </Button>
       </div>
@@ -135,7 +136,7 @@ export function DesktopSignOut() {
     <Button
       variant="ghost"
       size="sm"
-      icon={LogOut}
+      icon={<LogOut size={15} />}
       busy={busy}
       title={t("admin.desktop.signOutHint")}
       onClick={() => void signOut()}

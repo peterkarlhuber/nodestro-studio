@@ -1,4 +1,4 @@
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, Tooltip } from "@nodestro/ui-core";
 import { useQueryClient } from "@tanstack/react-query";
 import { Ban, Check, FilePlus2, PencilRuler, RotateCcw, Send, Sparkles, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ import { api } from "../api/client";
 import { keys, useSettings } from "../api/hooks";
 import type { ArchitectJob, ArchitectMode, ToolDraft, WorkflowIn } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, Field, Modal, Segmented, TextArea, Toggle } from "../components/ui";
+import { Callout, Field, Modal, Segmented, TextArea, Toggle } from "../components/ui";
 import { currentLanguage } from "../i18n";
 import { ErrorText, ProblemText, ProviderSetupLink, codedError } from "../lib/errors";
 import { formatCost } from "../lib/format";
@@ -284,7 +284,7 @@ export function ArchitectDialog({
             <Button variant="ghost" onClick={onClose}>
               {t("common.cancel")}
             </Button>
-            <Button variant="primary" icon={Sparkles} busy={busy} disabled={!description.trim()} onClick={() => void launch()}>
+            <Button variant="primary" icon={<Sparkles size={15} />} busy={busy} disabled={!description.trim()} onClick={() => void launch()}>
               {mode === "create" ? t("architect.form.startCreate") : t("architect.form.startRevise")}
             </Button>
           </>
@@ -292,7 +292,7 @@ export function ArchitectDialog({
       case "progress":
         return (
           <Tooltip help="architect.cancel">
-            <Button variant="danger" icon={Ban} onClick={() => void cancel()}>
+            <Button variant="danger" icon={<Ban size={15} />} onClick={() => void cancel()}>
               {t("architect.progress.cancel")}
             </Button>
           </Tooltip>
@@ -308,7 +308,7 @@ export function ArchitectDialog({
             </Button>
             <Button
               variant="primary"
-              icon={Send}
+              icon={<Send size={15} />}
               busy={busy}
               disabled={!answer.trim()}
               onClick={() =>
@@ -333,7 +333,7 @@ export function ArchitectDialog({
             </Button>
             <Button
               variant="danger"
-              icon={Trash2}
+              icon={<Trash2 size={15} />}
               onClick={() => {
                 void discard();
                 onClose();
@@ -344,14 +344,14 @@ export function ArchitectDialog({
           </>
         ) : (
           <>
-            <Button variant="ghost" icon={Trash2} onClick={() => setConfirmClose(true)}>
+            <Button variant="ghost" icon={<Trash2 size={15} />} onClick={() => setConfirmClose(true)}>
               {t("architect.review.discard")}
             </Button>
-            <Button variant="ghost" icon={RotateCcw} onClick={backToForm}>
+            <Button variant="ghost" icon={<RotateCcw size={15} />} onClick={backToForm}>
               {t("architect.review.refine")}
             </Button>
             <Tooltip help={job?.mode === "revise" ? "architect.applyRevision" : "architect.acceptCreate"}>
-              <Button variant="primary" icon={Check} busy={busy} onClick={() => void accept()}>
+              <Button variant="primary" icon={<Check size={15} />} busy={busy} onClick={() => void accept()}>
                 {job?.mode === "revise" ? t("architect.accept.apply") : t("architect.accept.create")}
               </Button>
             </Tooltip>
@@ -363,7 +363,7 @@ export function ArchitectDialog({
             <Button variant="ghost" onClick={close}>
               {t("common.close")}
             </Button>
-            <Button variant="primary" icon={RotateCcw} onClick={backToForm}>
+            <Button variant="primary" icon={<RotateCcw size={15} />} onClick={backToForm}>
               {t("architect.ended.retry")}
             </Button>
           </>

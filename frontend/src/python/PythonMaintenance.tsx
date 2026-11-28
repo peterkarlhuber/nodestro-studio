@@ -1,6 +1,6 @@
 // Settings › Maintenance: the managed Python environments, their size and owners, and cleanup.
 
-import { HelpTip, Tooltip } from "@nodestro/ui-core";
+import { Button, HelpTip, IconButton, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Package, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -9,7 +9,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { EnvironmentInfo } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, IconButton, Spinner } from "../components/ui";
+import { Badge, Callout, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, relativeTime } from "../lib/format";
 import { useDependencyRefresh } from "./DependencyDialog";
@@ -89,7 +89,7 @@ export function PythonMaintenance() {
                       <td>
                         {env.path || env.orphaned ? (
                           <IconButton
-                            icon={Trash2}
+                            icon={<Trash2 size={16} />}
                             label={env.orphaned ? t("python.maintenance.forget") : t("python.maintenance.remove")}
                             onClick={() => remove.mutate(env)}
                           />
@@ -105,7 +105,7 @@ export function PythonMaintenance() {
           )}
           <div className="row-gap">
             <Tooltip help="python.cleanup">
-              <Button icon={Trash2} busy={cleanup.isPending} onClick={() => cleanup.mutate()} data-testid="python-cleanup">
+              <Button icon={<Trash2 size={15} />} busy={cleanup.isPending} onClick={() => cleanup.mutate()} data-testid="python-cleanup">
                 {t("python.maintenance.cleanup", { count: orphaned })}
               </Button>
             </Tooltip>

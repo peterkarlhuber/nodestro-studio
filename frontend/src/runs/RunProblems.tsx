@@ -4,12 +4,13 @@
 // - steps that were still running or waiting when the run ended (Nodestro stopped): shown as "Not finished".
 // Small, separate pieces so the run banner, the run detail and the editor's run panel can each include them.
 
+import { Button } from "@nodestro/ui-core";
 import type { TFunction } from "i18next";
 import { AlertTriangle, History } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import type { NodeRun, Run, RunSummary, ToolCallRecord } from "../api/types";
-import { Badge, Button, Callout, StatusBadge } from "../components/ui";
+import { Badge, Callout, StatusBadge } from "../components/ui";
 import { problemText } from "../lib/errors";
 import { codedToolOutput } from "../lib/toolOutput";
 import { stepsInOrder } from "./runSummary";
@@ -211,7 +212,7 @@ export function InterruptedNotice({ run, onResume }: { run: Run; onResume?: () =
         {onResume ? (
           <>
             {t("admin.run.resumeHint")}{" "}
-            <Button size="sm" icon={History} onClick={onResume}>
+            <Button size="sm" icon={<History size={15} />} onClick={onResume}>
               {t("flow.resume.button")}
             </Button>
           </>

@@ -1,6 +1,7 @@
 // "Team leader" area of the run page (LRC-1): ask the orchestrators of a run questions (read-only answers) and give
 // them instructions that their next decision takes into account. Teams already working are never interrupted.
 
+import { Button } from "@nodestro/ui-core";
 import { HelpCircle, Loader2, MessageSquareText, Send, Users } from "lucide-react";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
@@ -9,7 +10,7 @@ import { useAccess } from "../api/access";
 import type { ChatTarget, LiveAnswer, RunChatView, RunMessage, TeamActivity } from "../api/types";
 import { PermissionNote } from "../components/Access";
 import { ReasoningView, ScopedThinkingDisplay } from "../components/ReasoningView";
-import { Badge, Button, Callout, DocLink, Field, Segmented, Spinner, StatusBadge, TextArea } from "../components/ui";
+import { Badge, Callout, DocLink, Field, Segmented, Spinner, StatusBadge, TextArea } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { STATUS_TONE, formatCost, formatNumber, formatTime } from "../lib/format";
 import { type ThinkingDisplay, useThinkingDisplay } from "../lib/thinkingDisplay";
@@ -291,7 +292,7 @@ function Composer({
         <span className={`small lrc-count ${text.length >= max ? "text-warning" : "muted"}`} aria-live="polite">
           {t("runChat.composer.count", { used: formatNumber(text.length), max: formatNumber(max) })}
         </span>
-        <Button variant="primary" icon={Send} onClick={submit} disabled={!canSend} data-testid="lrc-send">
+        <Button variant="primary" icon={<Send size={15} />} onClick={submit} disabled={!canSend} data-testid="lrc-send">
           {send.isPending ? t("runChat.composer.sending") : sendLabel}
         </Button>
       </div>

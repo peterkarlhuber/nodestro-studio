@@ -1,3 +1,4 @@
+import { Button, ConfirmIconButton } from "@nodestro/ui-core";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -8,7 +9,7 @@ import { useRef, useState } from "react";
 import { MemoryRouter } from "react-router-dom";
 
 import { PlatformHelp } from "../lib/platformHelp";
-import { Button, ConfirmIconButton, Field, Modal, Section, Segmented, Select, StatusBadge, TextArea, TextInput, Toggle } from "./ui";
+import { Field, Modal, Section, Segmented, Select, StatusBadge, TextArea, TextInput, Toggle } from "./ui";
 
 function DialogHarness({ autoFocus = false, cancelFirst = false }: { autoFocus?: boolean; cancelFirst?: boolean }) {
   const [open, setOpen] = useState(false);
@@ -70,7 +71,13 @@ describe("ui", () => {
 
   it("deletes only after a second, confirming click", async () => {
     const onConfirm = vi.fn();
-    render(<ConfirmIconButton icon={Trash2} label="Lauf löschen" onConfirm={onConfirm} />);
+    render(
+      <MemoryRouter>
+        <PlatformHelp>
+          <ConfirmIconButton icon={<Trash2 size={16} />} label="Lauf löschen" onConfirm={onConfirm} />
+        </PlatformHelp>
+      </MemoryRouter>,
+    );
     await userEvent.click(screen.getByRole("button", { name: "Lauf löschen" }));
     expect(onConfirm).not.toHaveBeenCalled();
     const confirm = screen.getByRole("button", { name: "Lauf löschen: Wirklich löschen?" });
@@ -155,7 +162,7 @@ describe("ui", () => {
   });
 
   it("gives the focus back to the delete button after Escape", async () => {
-    render(<ConfirmIconButton icon={Trash2} label="Lauf löschen" onConfirm={() => undefined} />);
+    render(<ConfirmIconButton icon={<Trash2 size={16} />} label="Lauf löschen" onConfirm={() => undefined} />);
     await userEvent.click(screen.getByRole("button", { name: "Lauf löschen" }));
     await userEvent.keyboard("{Escape}");
     expect(screen.getByRole("button", { name: "Lauf löschen" })).toHaveFocus();

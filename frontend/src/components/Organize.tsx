@@ -1,6 +1,7 @@
 // Favorites and tags for workflows, agent templates and tools, and the filter that uses them.
 // They are stored apart from the objects, so marking something never changes it.
 
+import { Button, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Star, Tag, X } from "lucide-react";
 import { type KeyboardEvent, useMemo, useState } from "react";
@@ -10,7 +11,7 @@ import { api } from "../api/client";
 import { keys, useOrganize } from "../api/hooks";
 import type { Organize, OrganizeKind, OrganizeState } from "../api/types";
 import { toast } from "./toast";
-import { Button, IconButton, Modal, Select } from "./ui";
+import { Modal, Select } from "./ui";
 
 const EMPTY: Organize = { favorite: false, tags: [] };
 
@@ -136,7 +137,7 @@ export function TagEditor({ kind, id, name }: { kind: OrganizeKind; id: string; 
   return (
     <>
       <IconButton
-        icon={Tag}
+        icon={<Tag size={16} />}
         label={t("organize.editTags", { name })}
         onClick={(event) => {
           event.preventDefault();
@@ -207,7 +208,7 @@ export function OrganizeFilter({
     <div className="organize-filter row-gap">
       <button
         type="button"
-        className={`nd-button nd-button--ghost nd-button--md ${value.favorites ? "nd-button--active" : ""}`}
+        className={`ui-button ui-button--ghost ${value.favorites ? "ui-button--active" : ""}`}
         aria-pressed={value.favorites}
         onClick={() => onChange({ ...value, favorites: !value.favorites })}
         data-testid="favorites-filter"

@@ -1,7 +1,7 @@
 // Stopping a run takes two clicks: "Cancel run", then "Really cancel?". Cancelling cannot be undone (a cancelled run
 // can only be continued as a new run), and the plain word "Cancel" is what every dialog uses to close itself.
 
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Square } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -10,7 +10,6 @@ import { useTranslation } from "react-i18next";
 import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import { toast } from "../components/toast";
-import { Button } from "../components/ui";
 
 /** How long the second step waits for its click before the button returns to its first step. */
 export const CONFIRM_MS = 5000;
@@ -38,7 +37,7 @@ export function CancelRunButton({ runId, size = "md" }: { runId: string; size?: 
   if (!armed)
     return (
       <Tooltip help="runs.cancel">
-        <Button size={size} icon={Square} busy={cancel.isPending} disabled={cancel.isPending} onClick={() => setArmed(true)}>
+        <Button size={size} icon={<Square size={15} />} busy={cancel.isPending} disabled={cancel.isPending} onClick={() => setArmed(true)}>
           {t("runs.cancelRun.button")}
         </Button>
       </Tooltip>
@@ -48,7 +47,7 @@ export function CancelRunButton({ runId, size = "md" }: { runId: string; size?: 
       ref={confirmRef}
       size={size}
       variant="danger"
-      icon={Square}
+      icon={<Square size={15} />}
       onClick={() => {
         setArmed(false);
         cancel.mutate();

@@ -3,6 +3,7 @@
 // Nothing changes before the user confirms; on cancel or error nothing else of Nodestro opens (except a cancel when
 // the user asked for the repair in the diagnosis: then the regular studio starts again, unchanged).
 
+import { Button } from "@nodestro/ui-core";
 import { Check, Copy, LockKeyhole, RefreshCw, ShieldCheck } from "lucide-react";
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import type { TFunction } from "i18next";
@@ -10,7 +11,7 @@ import { useTranslation } from "react-i18next";
 
 import { ApiError } from "../api/client";
 import { BrandLogo } from "../components/BrandLogo";
-import { Button, Callout, Spinner } from "../components/ui";
+import { Callout, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import {
   GENERIC_COMMAND,
@@ -135,7 +136,7 @@ export function ManualCommand({ command, label }: { command: string | null | und
       <span className="small muted">{label ?? t("recovery.manual")}</span>
       <div className="recovery__command">
         <code>{command}</code>
-        <Button size="sm" variant="ghost" icon={copied ? Check : Copy} onClick={copy}>
+        <Button size="sm" variant="ghost" icon={copied ? <Check size={15} /> : <Copy size={15} />} onClick={copy}>
           {t("recovery.copy")}
         </Button>
       </div>
@@ -238,7 +239,7 @@ export function RecoveryScreen() {
         </Callout>
         <ManualCommand command={GENERIC_COMMAND} label={t("recovery.genericManual")} />
         <div className="recovery__actions">
-          <Button icon={RefreshCw} onClick={() => void load()}>
+          <Button icon={<RefreshCw size={15} />} onClick={() => void load()}>
             {t("recovery.retry")}
           </Button>
         </div>
@@ -269,7 +270,7 @@ export function RecoveryScreen() {
         </Status>
         <ManualCommand command={phase.plan.command} />
         <div className="recovery__actions">
-          <Button icon={ShieldCheck} onClick={() => void load()}>
+          <Button icon={<ShieldCheck size={15} />} onClick={() => void load()}>
             {t("recovery.showAgain")}
           </Button>
         </div>
@@ -326,13 +327,13 @@ export function RecoveryScreen() {
             {t("recovery.cancel")}
           </Button>
           {error ? (
-            <Button icon={RefreshCw} onClick={() => void load()} disabled={busy}>
+            <Button icon={<RefreshCw size={15} />} onClick={() => void load()} disabled={busy}>
               {t("recovery.retry")}
             </Button>
           ) : isPrivate ? (
             <Button
               variant="primary"
-              icon={ShieldCheck}
+              icon={<ShieldCheck size={15} />}
               busy={busy}
               data-testid="recovery-continue"
               onClick={() => void repair(plan)}
@@ -342,7 +343,7 @@ export function RecoveryScreen() {
           ) : plan.repairable ? (
             <Button
               variant="primary"
-              icon={LockKeyhole}
+              icon={<LockKeyhole size={15} />}
               busy={busy}
               disabled={!confirmed}
               data-testid="recovery-repair"

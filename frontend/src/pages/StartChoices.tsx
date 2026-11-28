@@ -4,11 +4,12 @@
 // workflow by itself. Without a model connection (no AI provider for the default model) the empty state says so
 // first and links to Settings, the example comes first, and "Create with AI" says it needs a model (OB-01, OB-04).
 
+import { Button } from "@nodestro/ui-core";
 import { FilePlus2, KeyRound, LayoutTemplate, type LucideIcon, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { Button, Callout } from "../components/ui";
+import { Callout } from "../components/ui";
 
 const EXAMPLES = "/workflows/examples";
 
@@ -58,14 +59,14 @@ export function StartChoices({ variant, onAi, onManual, needsModel = false, aiNe
     return (
       <nav className="start-row" aria-label={t("workflows.start.label")}>
         <span className="muted small">{t("workflows.start.label")}</span>
-        <Button size="sm" variant="ghost" icon={Sparkles} onClick={onAi}>
+        <Button size="sm" variant="ghost" icon={<Sparkles size={15} />} onClick={onAi}>
           {t("workflows.start.ai")}
         </Button>
-        <Link to={EXAMPLES} className="nd-button nd-button--ghost nd-button--sm">
+        <Link to={EXAMPLES} className="ui-button ui-button--ghost ui-button--sm">
           <LayoutTemplate size={15} aria-hidden />
           {t("workflows.start.example")}
         </Link>
-        <Button size="sm" variant="ghost" icon={FilePlus2} onClick={onManual}>
+        <Button size="sm" variant="ghost" icon={<FilePlus2 size={15} />} onClick={onManual}>
           {t("workflows.start.manual")}
         </Button>
       </nav>

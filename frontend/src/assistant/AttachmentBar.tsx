@@ -1,10 +1,9 @@
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, IconButton, Tooltip } from "@nodestro/ui-core";
 import { AlertTriangle, Lightbulb, Plus, RefreshCw, X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { AttachRequest, Attachment, Conversation } from "../api/types";
-import { Button, IconButton } from "../components/ui";
 import { KIND_ICON } from "./MessageView";
 import { SnapshotDialog } from "./SnapshotDialog";
 import { type ContextOffer, draftFingerprint, offerKey, useAssistant } from "./store";
@@ -60,19 +59,19 @@ function Suggestions({
             <span className="chat-suggestion__actions">
               {draftOnly(offer) ? null : (
                 <Tooltip help="assistant.suggestion">
-                  <Button size="sm" icon={Plus} busy={busy} onClick={() => onAttach(offerRequest(offer, false))} data-testid="suggestion-add">
+                  <Button size="sm" icon={<Plus size={15} />} busy={busy} onClick={() => onAttach(offerRequest(offer, false))} data-testid="suggestion-add">
                     {offer.dirty ? t("assistant.suggest.addSaved") : t("assistant.suggest.add")}
                   </Button>
                 </Tooltip>
               )}
               {offer.dirty && offer.draft ? (
                 <Tooltip help="assistant.draft">
-                  <Button size="sm" icon={Plus} busy={busy} onClick={() => onAttach(offerRequest(offer, true))} data-testid="suggestion-add-draft">
+                  <Button size="sm" icon={<Plus size={15} />} busy={busy} onClick={() => onAttach(offerRequest(offer, true))} data-testid="suggestion-add-draft">
                     {t("assistant.suggest.addDraft")}
                   </Button>
                 </Tooltip>
               ) : null}
-              <IconButton icon={X} label={t("assistant.suggest.ignore")} onClick={() => useAssistant.getState().dismiss(offer)} />
+              <IconButton icon={<X size={16} />} label={t("assistant.suggest.ignore")} onClick={() => useAssistant.getState().dismiss(offer)} />
             </span>
           </div>
         );

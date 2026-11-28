@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, Container, FlaskConical, RefreshCw, XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { SandboxBackendStatus, SandboxCheck, SandboxMode, SandboxSelection, SandboxStatus, Settings } from "../api/types";
 import { dockerReasonKey, isDockerReason } from "../api/types";
-import { Badge, Button, Callout, DocLink, Segmented } from "../components/ui";
+import { Badge, Callout, DocLink, Segmented } from "../components/ui";
 import { ErrorText, TechnicalDetails } from "../lib/errors";
 import { formatDate, type Tone } from "../lib/format";
 import { DefaultMark } from "./SettingsDefaults";
@@ -294,7 +294,7 @@ function DockerDetails({
       ) : null}
       <div className="row-gap">
         <Button
-          icon={RefreshCw}
+          icon={<RefreshCw size={15} />}
           size="sm"
           busy={recheck.isPending}
           disabled={checking || waiting("recheck")}
@@ -305,7 +305,7 @@ function DockerDetails({
         {admin ? (
           <>
             <Button
-              icon={FlaskConical}
+              icon={<FlaskConical size={15} />}
               size="sm"
               busy={selfTest.isPending}
               disabled={checking || waiting("selfTest")}

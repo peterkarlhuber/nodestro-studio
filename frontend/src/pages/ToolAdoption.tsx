@@ -7,6 +7,7 @@
 // When an earlier version was the person's own (written in the editor or adopted), the dialog shows what the AI
 // changed since then, above the full code (ST-036).
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ShieldAlert, UserCheck } from "lucide-react";
 import { useState } from "react";
@@ -19,7 +20,7 @@ import type { SandboxSelection, ToolInfo, ToolVersion } from "../api/types";
 import { CodeEditor } from "../components/CodeEditor";
 import { TextDiff } from "../components/TextDiff";
 import { toast } from "../components/toast";
-import { Button, Callout, Field, Modal } from "../components/ui";
+import { Callout, Field, Modal } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { relativeTime } from "../lib/format";
 
@@ -147,7 +148,7 @@ export function AdoptTool({ tool }: { tool: ToolInfo }) {
     <>
       <div>
         <Button
-          icon={UserCheck}
+          icon={<UserCheck size={15} />}
           onClick={() => {
             setShown(tool);
             setConfirmed(false);
@@ -170,7 +171,7 @@ export function AdoptTool({ tool }: { tool: ToolInfo }) {
             </Button>
             <Button
               variant="danger"
-              icon={UserCheck}
+              icon={<UserCheck size={15} />}
               disabled={!confirmed}
               busy={adopt.isPending}
               onClick={() => adopt.mutate(item)}

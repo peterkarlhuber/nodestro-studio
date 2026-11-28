@@ -2,7 +2,7 @@
 // advice (small context, CPU only, memory, slow or too large models) and whether a model suits this hardware.
 // Speeds are only ever measured ones ("Measure speed"); nothing here estimates how fast a model will be.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Cpu, Gauge } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -21,7 +21,7 @@ import {
   useLocalModels,
 } from "../api/localModels";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout } from "../components/ui";
+import { Badge, Callout } from "../components/ui";
 import i18n from "../i18n";
 import { formatLargeBytes } from "../lib/format";
 
@@ -249,7 +249,7 @@ export function SpeedCell({ model, canMeasure }: { model: InstalledModel; canMea
         <span className="muted">{t("localModels.speed.notMeasured")}</span>
       )}
       <div>
-        <Button size="sm" variant="ghost" icon={Gauge} disabled={!canMeasure || running} busy={measure.isPending || running} onClick={() => measure.mutate()}>
+        <Button size="sm" variant="ghost" icon={<Gauge size={15} />} disabled={!canMeasure || running} busy={measure.isPending || running} onClick={() => measure.mutate()}>
           {speed ? t("localModels.speed.again") : t("localModels.speed.measure")}
         </Button>
       </div>

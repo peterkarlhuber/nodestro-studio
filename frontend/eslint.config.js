@@ -62,6 +62,23 @@ export const CHAT_GUARD = [
   { selector: `JSXAttribute[name.name='className'] TemplateElement[value.raw=${OLD_CHAT_CLASS}]`, message: CHAT_ONLY_SHARED },
 ];
 
+const BUTTON_ONLY_SHARED =
+  "Buttons are the shared Button, IconButton and ConfirmIconButton of @nodestro/ui-core (icon as an element, e.g. icon={<Plus size={15} />}; a link that looks like a button takes the ui-button classes).";
+const OLD_BUTTON_CLASS = "/(^|\\s)(nd-button|icon-button)(\\s|$|--)/";
+
+/** Selectors of the studio's former buttons (ST-068 step 6): one of its own, the shared one from elsewhere, its classes. */
+export const BUTTON_GUARD = [
+  {
+    selector:
+      "ImportDeclaration[importKind!='type'][source.value!='@nodestro/ui-core'] > ImportSpecifier[importKind!='type'][imported.name=/^(Button|IconButton|ConfirmIconButton)$/]",
+    message: BUTTON_ONLY_SHARED,
+  },
+  { selector: "ExportNamedDeclaration[source=null] > ExportSpecifier[local.name=/^(Button|IconButton|ConfirmIconButton)$/]", message: BUTTON_ONLY_SHARED },
+  { selector: ":matches(FunctionDeclaration, ClassDeclaration, VariableDeclarator)[id.name=/^(Button|IconButton|ConfirmIconButton)$/]", message: BUTTON_ONLY_SHARED },
+  { selector: `JSXAttribute[name.name='className'] Literal[value=${OLD_BUTTON_CLASS}]`, message: BUTTON_ONLY_SHARED },
+  { selector: `JSXAttribute[name.name='className'] TemplateElement[value.raw=${OLD_BUTTON_CLASS}]`, message: BUTTON_ONLY_SHARED },
+];
+
 export default tseslint.config(
   { ignores: ["dist", "node_modules", "e2e"] },
   {
@@ -78,11 +95,12 @@ export default tseslint.config(
     // ST-068: every help button is the shared HelpTip and every tooltip the shared Tooltip of @nodestro/ui-core,
     // with the studio's help registry (lib/platformHelp.tsx); the step, tool and budget approval cards are the
     // shared ApprovalCard of @nodestro/ui-ai, and chat messages, tool call rows and web sources its ChatMessage,
-    // ToolCallRow and SourceList. The studio's own versions are gone; this keeps them from coming back (tested in
+    // ToolCallRow and SourceList; buttons are the shared Button, IconButton and ConfirmIconButton of
+    // @nodestro/ui-core. The studio's own versions are gone; this keeps them from coming back (tested in
     // src/lint/helpGuard.test.ts).
     files: ["src/**/*.{ts,tsx}"],
     rules: {
-      "no-restricted-syntax": ["error", ...HELP_GUARD, ...TOOLTIP_GUARD, ...APPROVAL_GUARD, ...CHAT_GUARD],
+      "no-restricted-syntax": ["error", ...HELP_GUARD, ...TOOLTIP_GUARD, ...APPROVAL_GUARD, ...CHAT_GUARD, ...BUTTON_GUARD],
     },
   },
 );

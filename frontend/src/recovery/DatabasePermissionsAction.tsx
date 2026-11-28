@@ -2,13 +2,14 @@
 // nothing is repaired in this process: after a confirmation the backend stops cleanly and the desktop app starts it in
 // recovery mode, where RecoveryScreen shows the change and asks for the repair itself. Disabled while runs are active.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation } from "@tanstack/react-query";
 import { LockKeyhole } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { DiagnosticCheck } from "../api/types";
-import { Button, Callout, Modal, Spinner } from "../components/ui";
+import { Callout, Modal, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { recoveryApi, reloadWhenBack } from "./api";
 import { ManualCommand } from "./RecoveryScreen";
@@ -27,7 +28,7 @@ export function DatabasePermissionsAction({ check }: { check: DiagnosticCheck })
     <div className="stack-sm" data-testid="database-permissions-action">
       {check.params.restart === true ? (
         <div className="row-gap">
-          <Button size="sm" icon={LockKeyhole} disabled={busy} onClick={() => setOpen(true)} data-testid="database-permissions-repair">
+          <Button size="sm" icon={<LockKeyhole size={15} />} disabled={busy} onClick={() => setOpen(true)} data-testid="database-permissions-repair">
             {t("diagnostics.databasePermissions.repair")}
           </Button>
           {busy ? <span className="small muted">{t("diagnostics.databasePermissions.busy")}</span> : null}

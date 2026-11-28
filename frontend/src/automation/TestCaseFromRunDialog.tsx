@@ -1,7 +1,7 @@
 // Turn a failed run into a test case (Q-4): the server proposes the run's input with credentials and, by default,
 // personal data replaced. Nothing is stored until the person picks a series and adds the case.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FlaskConical, ShieldCheck } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +12,7 @@ import { api } from "../api/client";
 import { keys, useSuites } from "../api/hooks";
 import type { Run, SanitizeReport, TestCase } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, Field, Modal, Select, Spinner, TextInput, Toggle } from "../components/ui";
+import { Callout, Field, Modal, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { sanitizeSummary } from "../editor/TraceExportDialog";
 import { ErrorText } from "../lib/errors";
 import { formatDate } from "../lib/format";
@@ -76,7 +76,7 @@ export function TestCaseFromRunDialog({ run, open, onClose }: { run: Run; open: 
           </Button>
           <Button
             variant="primary"
-            icon={FlaskConical}
+            icon={<FlaskConical size={15} />}
             busy={add.isPending}
             disabled={!data || !name.trim() || (target === NEW && !suiteName.trim())}
             onClick={() => add.mutate()}

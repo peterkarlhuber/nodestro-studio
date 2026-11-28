@@ -2,7 +2,7 @@
 // its status and source, individual prices, reviews of large changes, the change history and the comparison with
 // the providers' bills. Orkexa calculates every cost; this page only shows and edits the price catalog.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, ConfirmIconButton, HelpTip, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, Coins, History, Pencil, Plus, Receipt, RefreshCw, Trash2, Undo2, XCircle } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -31,7 +31,7 @@ import {
 import { AWS_REGION_PATTERN, type Settings } from "../api/types";
 import { DefaultMark } from "./SettingsDefaults";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, Field, IconButton, Modal, Section, Segmented, Select, Spinner, TextInput } from "../components/ui";
+import { Badge, Callout, Field, Modal, Section, Segmented, Select, Spinner, TextInput } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatCost, formatDate, formatDateOrDay, formatNumber, formatPrice } from "../lib/format";
 import { PRICE_STATUS_TONE, STALENESS_TONE } from "../lib/pricing";
@@ -129,7 +129,7 @@ function SyncButton({ status }: { status: PricingOverview }) {
   });
   if (status.reference_read_only) return null;
   return (
-    <Button icon={RefreshCw} busy={sync.isPending} onClick={() => sync.mutate()}>
+    <Button icon={<RefreshCw size={15} />} busy={sync.isPending} onClick={() => sync.mutate()}>
       {t("pricing.sync.run")}
     </Button>
   );
@@ -176,13 +176,13 @@ function Reviews({ readOnly }: { readOnly: boolean }) {
               <div className="row-gap">
                 <Button
                   variant="primary"
-                  icon={CheckCircle2}
+                  icon={<CheckCircle2 size={15} />}
                   busy={decide.isPending}
                   onClick={() => decide.mutate({ version: review.version, decision: "approve" })}
                 >
                   {t("pricing.reviews.approve")}
                 </Button>
-                <Button icon={XCircle} busy={decide.isPending} onClick={() => decide.mutate({ version: review.version, decision: "reject" })}>
+                <Button icon={<XCircle size={15} />} busy={decide.isPending} onClick={() => decide.mutate({ version: review.version, decision: "reject" })}>
                   {t("pricing.reviews.reject")}
                 </Button>
               </div>
@@ -374,7 +374,7 @@ function PriceTable({ entries }: { entries: PriceEntry[] }) {
             setLimit(PAGE);
           }}
         />
-        <Button icon={Plus} onClick={() => setEditing("new")}>
+        <Button icon={<Plus size={15} />} onClick={() => setEditing("new")}>
           {t("pricing.override.add")}
         </Button>
       </div>
@@ -440,13 +440,13 @@ function PriceTable({ entries }: { entries: PriceEntry[] }) {
                 <td>{formatDateOrDay(entry.checked_at)}</td>
                 <td className="row-gap">
                   <IconButton
-                    icon={Pencil}
+                    icon={<Pencil size={16} />}
                     label={t("pricing.override.edit", { model: `${entry.provider}:${entry.model}` })}
                     onClick={() => setEditing(entry)}
                   />
                   {entry.overridden ? (
                     <ConfirmIconButton
-                      icon={Undo2}
+                      icon={<Undo2 size={16} />}
                       label={t("pricing.override.remove", { model: `${entry.provider}:${entry.model}` })}
                       confirmLabel={t("pricing.override.removeConfirm")}
                       busy={remove.isPending}
@@ -734,7 +734,7 @@ export function ReconciliationPanel() {
                 </Button>
                 {item.origin === "stored" ? (
                   <ConfirmIconButton
-                    icon={Trash2}
+                    icon={<Trash2 size={16} />}
                     label={t("pricing.billing.remove", { provider: t(`providers.names.${item.provider}`) })}
                     onConfirm={() => removeKey.mutate(item.provider)}
                   />
@@ -778,7 +778,7 @@ export function ReconciliationPanel() {
         <p className="muted">{t("pricing.reconciliation.onceKeysHint")}</p>
       </details>
       <div>
-        <Button variant="primary" icon={Receipt} busy={reconcile.isPending} disabled={!start || !end} onClick={() => reconcile.mutate()}>
+        <Button variant="primary" icon={<Receipt size={15} />} busy={reconcile.isPending} disabled={!start || !end} onClick={() => reconcile.mutate()}>
           {t("pricing.reconciliation.run")}
         </Button>
       </div>

@@ -2,7 +2,7 @@
 // administrator's decision per tool (classification, diff review of changed definitions). The runtime enforces every
 // rule; this page shows the state and edits the configuration. Texts from a service are shown as foreign text.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, ConfirmIconButton, HelpTip, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Activity, Ban, CheckCircle2, History, LogIn, LogOut, Pencil, PlugZap, Plus, RefreshCw, ShieldAlert, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ import {
   useMcpTools,
 } from "../api/mcp";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, IconButton, Modal, Section, Segmented, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
+import { Badge, Callout, EmptyState, Field, Modal, Section, Segmented, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText, ProblemText, codedError } from "../lib/errors";
 import { type Tone, formatDate, relativeTime } from "../lib/format";
 import { McpServerDependencies } from "../python/DependencyPanel";
@@ -111,7 +111,7 @@ export function ServicesTab() {
           {admin ? (
             <ImportButton kind="mcp" onImported={() => void queryClient.invalidateQueries({ queryKey: mcpKeys.all })} />
           ) : null}
-          <Button icon={Plus} onClick={() => setAdding(true)} disabled={!admin || status.data?.endpoint_list?.length === 0}>
+          <Button icon={<Plus size={15} />} onClick={() => setAdding(true)} disabled={!admin || status.data?.endpoint_list?.length === 0}>
             {t("tools.services.add")}
           </Button>
         </div>
@@ -350,9 +350,9 @@ function ServerDetail({ server, status, onRemoved }: { server: McpServer; status
         <div className="row-gap">
           {admin ? (
             <>
-              <IconButton icon={Pencil} label={t("tools.services.edit")} onClick={() => setEditing(true)} />
+              <IconButton icon={<Pencil size={16} />} label={t("tools.services.edit")} onClick={() => setEditing(true)} />
               <ConfirmIconButton
-                icon={Trash2}
+                icon={<Trash2 size={16} />}
                 label={t("tools.services.remove")}
                 confirmLabel={t("tools.services.removeConfirm")}
                 busy={remove.isPending}
@@ -371,16 +371,16 @@ function ServerDetail({ server, status, onRemoved }: { server: McpServer; status
       <div className="row-gap">
         {server.auth === "oauth" ? (
           server.token_set ? (
-            <Button variant="ghost" icon={LogOut} busy={signOut.isPending} onClick={() => signOut.mutate()}>
+            <Button variant="ghost" icon={<LogOut size={15} />} busy={signOut.isPending} onClick={() => signOut.mutate()}>
               {t("tools.services.oauth.signOut")}
             </Button>
           ) : (
-            <Button icon={LogIn} busy={signIn.isPending} onClick={() => signIn.mutate()} disabled={!status.available}>
+            <Button icon={<LogIn size={15} />} busy={signIn.isPending} onClick={() => signIn.mutate()} disabled={!status.available}>
               {t("tools.services.oauth.signIn")}
             </Button>
           )
         ) : null}
-        <Button icon={RefreshCw} busy={discover.isPending} onClick={() => discover.mutate()} disabled={!admin || !status.available}>
+        <Button icon={<RefreshCw size={15} />} busy={discover.isPending} onClick={() => discover.mutate()} disabled={!admin || !status.available}>
           {t("tools.services.test")}
         </Button>
         <Toggle
@@ -563,7 +563,7 @@ function ToolReview({ tool, status, embedded }: { tool: McpTool; status: McpStat
       <div className="row-gap">
         {tool.status !== "removed" ? (
           <Button
-            icon={CheckCircle2}
+            icon={<CheckCircle2 size={15} />}
             busy={decide.isPending && decide.variables === true}
             disabled={!admin || (downgrade && !downgradeConfirmed)}
             onClick={() => decide.mutate(true)}
@@ -572,7 +572,7 @@ function ToolReview({ tool, status, embedded }: { tool: McpTool; status: McpStat
           </Button>
         ) : null}
         {tool.status !== "rejected" ? (
-          <Button variant="ghost" icon={Ban} busy={decide.isPending && decide.variables === false} disabled={!admin} onClick={() => decide.mutate(false)}>
+          <Button variant="ghost" icon={<Ban size={15} />} busy={decide.isPending && decide.variables === false} disabled={!admin} onClick={() => decide.mutate(false)}>
             {t("tools.services.reject")}
           </Button>
         ) : null}

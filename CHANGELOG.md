@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Shared buttons (ST-068, 2026-11-28)
+
+- Every button of the studio (392 `Button`, 80 `IconButton` and 30 `ConfirmIconButton` uses) is now the shared one of
+  `@nodestro/ui-core` 0.2.4 (nodestro-ui #13); `components/ui.tsx` no longer has buttons of its own, and links that
+  look like buttons use the same `ui-button` classes. Look, texts ("Really delete?" in six languages) and behavior
+  stay: an icon button names itself in the shared tooltip, the two-step delete button keeps its second press,
+  Escape and focus return. New: a busy button keeps its place in the tab order and says it is busy to screen readers
+  (it was disabled before; a press still does nothing). `npm run lint` refuses buttons of the studio's own and the
+  former `nd-button` and `icon-button` classes. Lock: `nodestro-ui` at the merge of #13 (1c0ca7e), core 0.2.4.
+
 ### Shared design tokens only (ST-068, 2026-11-28)
 
 - The studio's own token layer is gone: every stylesheet uses the `--ui-*` tokens of `@nodestro/ui-tokens` and the

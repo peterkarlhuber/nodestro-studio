@@ -1,4 +1,4 @@
-import { HelpTip, Tooltip } from "@nodestro/ui-core";
+import { Button, HelpTip, IconButton, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   BookOpen,
@@ -46,7 +46,7 @@ import { CodeEditor } from "../components/CodeEditor";
 import { ModelPicker, providerLabel, useModelHint } from "../components/ModelPicker";
 import { AGENT_ICONS, AGENT_ICON_NAMES, agentIcon } from "../components/icons";
 import { toast } from "../components/toast";
-import { Button, Callout, Chip, Field, IconButton, Section, type SectionStatus, Segmented, Select, TextArea, TextInput, Toggle } from "../components/ui";
+import { Callout, Chip, Field, Section, type SectionStatus, Segmented, Select, TextArea, TextInput, Toggle } from "../components/ui";
 import { AgentTestDialog } from "./AgentTestDialog";
 import { DesignAgentDialog } from "./DesignAgentDialog";
 import { InputPreview } from "./InputPreview";
@@ -213,9 +213,9 @@ export function AgentInspector({ node }: { node: WorkflowNode }) {
       actions={
         <>
           <DiscussIcon offer={offer} />
-          <IconButton icon={Save} label={t("agent.saveAsTemplate")} onClick={saveTemplate} />
-          <IconButton icon={Copy} label={t("agent.duplicate")} onClick={() => duplicateNode(node.id)} />
-          <IconButton icon={Trash2} label={t("agent.delete")} onClick={() => removeWithUndo([node.id])} />
+          <IconButton icon={<Save size={16} />} label={t("agent.saveAsTemplate")} onClick={saveTemplate} />
+          <IconButton icon={<Copy size={16} />} label={t("agent.duplicate")} onClick={() => duplicateNode(node.id)} />
+          <IconButton icon={<Trash2 size={16} />} label={t("agent.delete")} onClick={() => removeWithUndo([node.id])} />
         </>
       }
     />
@@ -305,12 +305,12 @@ export function AgentForm({
 
       <div className="inspector__actions">
         <Tooltip help="agent.design">
-          <Button size="sm" icon={Sparkles} onClick={() => setDesignOpen(true)}>
+          <Button size="sm" icon={<Sparkles size={15} />} onClick={() => setDesignOpen(true)}>
             {t("agent.designWithAi")}
           </Button>
         </Tooltip>
         <Tooltip help="agent.test">
-          <Button size="sm" icon={FlaskConical} onClick={() => setTestOpen(true)}>
+          <Button size="sm" icon={<FlaskConical size={15} />} onClick={() => setTestOpen(true)}>
             {t("agentTest.button")}
           </Button>
         </Tooltip>
@@ -730,7 +730,7 @@ function KnowledgeSection({ agent, update, issues = [], ui }: SectionProps) {
             if (list.length) upload.mutate(list);
           }}
         />
-        <Button size="sm" icon={Upload} busy={upload.isPending} onClick={() => picker.current?.click()}>
+        <Button size="sm" icon={<Upload size={15} />} busy={upload.isPending} onClick={() => picker.current?.click()}>
           {t("agent.knowledge.upload")}
         </Button>
         <span className="field__hint">{t("agent.knowledge.uploadHint")}</span>
@@ -862,7 +862,7 @@ function MemorySection({ agent, update, onAssistant, ui }: SectionProps & { onAs
           </div>
           <div className="row-between">
             <Tooltip help="agent.memoryAssistant">
-              <Button size="sm" icon={Sparkles} onClick={onAssistant}>
+              <Button size="sm" icon={<Sparkles size={15} />} onClick={onAssistant}>
                 {t("agent.memory.setUpWithAi")}
               </Button>
             </Tooltip>
@@ -1047,7 +1047,7 @@ function QualitySection({ agent, update, issues = [], ui }: SectionProps) {
                   }
                 />
                 <IconButton
-                  icon={Trash2}
+                  icon={<Trash2 size={16} />}
                   label={t("agent.quality.removeCriterion")}
                   onClick={() => setQuality({ criteria: quality.criteria.filter((_, i) => i !== index) })}
                 />
@@ -1066,7 +1066,7 @@ function QualitySection({ agent, update, issues = [], ui }: SectionProps) {
           ))}
           <Button
             size="sm"
-            icon={Plus}
+            icon={<Plus size={15} />}
             onClick={() =>
               setQuality({ criteria: [...quality.criteria, { name: `criterion_${quality.criteria.length + 1}`, description: "", required: true }] })
             }
@@ -1255,7 +1255,7 @@ function AdvancedSection({
               <div className="row-between">
                 <span className="small muted">{t(`agent.advanced.role.${message.role}`)}</span>
                 <IconButton
-                  icon={Trash2}
+                  icon={<Trash2 size={16} />}
                   label={t("agent.advanced.removeMessage")}
                   onClick={() => update({ messages: agent.messages.filter((_, i) => i !== index) })}
                 />
@@ -1272,7 +1272,7 @@ function AdvancedSection({
           ))}
           <Button
             size="sm"
-            icon={Plus}
+            icon={<Plus size={15} />}
             onClick={() =>
               update({
                 messages: [

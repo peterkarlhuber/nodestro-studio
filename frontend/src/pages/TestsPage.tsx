@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Columns2, FlaskConical, History, Play, Plus, Save, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -17,7 +17,7 @@ import { FormFields } from "../components/FormFields";
 import { ModelPicker } from "../components/ModelPicker";
 import { Output } from "../components/Markdown";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, DisabledReason, EmptyState, Field, IconButton, Modal, PageHeader, Section, Select, Spinner, Stat, TextArea, TextInput } from "../components/ui";
+import { Badge, Callout, DisabledReason, EmptyState, Field, Modal, PageHeader, Section, Select, Spinner, Stat, TextArea, TextInput } from "../components/ui";
 import { RuleEditor, outputFieldsOf } from "../editor/FlowInspectors";
 import { sanitizeSummary } from "../editor/TraceExportDialog";
 import { newId, newRule } from "../lib/defaults";
@@ -59,7 +59,7 @@ export function TestsPage() {
         doc="automatisierung#testreihen"
         description={t("automation.benchmark.description")}
         actions={
-          <Button variant="primary" icon={Plus} onClick={() => setCreating(true)}>
+          <Button variant="primary" icon={<Plus size={15} />} onClick={() => setCreating(true)}>
             {t("automation.benchmark.new")}
           </Button>
         }
@@ -98,7 +98,7 @@ export function TestsPage() {
                     <td className="num">{suite.cases.length}</td>
                     <td>{formatDate(suite.updated_at)}</td>
                     <td>
-                      <IconButton icon={Trash2} label={t("automation.benchmark.delete")} onClick={() => remove.mutate(suite.id)} />
+                      <IconButton icon={<Trash2 size={16} />} label={t("automation.benchmark.delete")} onClick={() => remove.mutate(suite.id)} />
                     </td>
                   </tr>
                 ))}
@@ -171,7 +171,7 @@ function CaseEditor({
           <Field label={t("automation.columns.name")}>
             <TextInput value={value.name} onChange={(e) => set({ name: e.target.value })} />
           </Field>
-          <IconButton icon={Trash2} label={t("automation.benchmark.removeCase")} onClick={onRemove} />
+          <IconButton icon={<Trash2 size={16} />} label={t("automation.benchmark.removeCase")} onClick={onRemove} />
         </div>
         {value.origin ? (
           <p className="muted small" data-testid="case-origin">
@@ -204,7 +204,7 @@ function CaseEditor({
         ))}
         <Button
           size="sm"
-          icon={Plus}
+          icon={<Plus size={15} />}
           onClick={() =>
             set({ checks: [...value.checks, newRule({ label: t("automation.benchmark.checkN", { n: value.checks.length + 1 }), operator: "contains" })] })
           }
@@ -436,11 +436,11 @@ export function SuitePage() {
         }
         actions={
           <>
-            <Button icon={Save} disabled={!dirty} busy={save.isPending} onClick={() => save.mutate()}>
+            <Button icon={<Save size={15} />} disabled={!dirty} busy={save.isPending} onClick={() => save.mutate()}>
               {t("common.save")}
             </Button>
             <DisabledReason reason={dirty ? t("automation.benchmark.saveFirst") : null}>
-              <Button variant="primary" icon={Play} disabled={!draft.cases.length} onClick={() => setStarting(true)}>
+              <Button variant="primary" icon={<Play size={15} />} disabled={!draft.cases.length} onClick={() => setStarting(true)}>
                 {t("automation.benchmark.run")}
               </Button>
             </DisabledReason>
@@ -492,7 +492,7 @@ export function SuitePage() {
         ))}
         <div>
           <Button
-            icon={Plus}
+            icon={<Plus size={15} />}
             onClick={() => setDraft({ ...draft, cases: [...draft.cases, newCase(t("automation.benchmark.caseN", { n: draft.cases.length + 1 }))] })}
           >
             {t("automation.benchmark.addCase")}
@@ -503,7 +503,7 @@ export function SuitePage() {
             <h2 className="panel__title">
               {t("automation.benchmark.runs")} <HelpTip id="automation.benchmarkCompare" topic={t("automation.benchmark.compareTitle")} />
             </h2>
-            <Button size="sm" icon={Columns2} disabled={picked.length !== 2} onClick={() => setComparing(true)}>
+            <Button size="sm" icon={<Columns2 size={15} />} disabled={picked.length !== 2} onClick={() => setComparing(true)}>
               {t("compare.button", { count: picked.length })}
             </Button>
           </div>

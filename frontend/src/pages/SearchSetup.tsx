@@ -3,6 +3,7 @@
 // open): the person reads the notes and picks one. Providers the installation does not offer in its mode (DDGS on a
 // server) are not shown; the runtime refuses them anyway (`connection.provider_unsupported_mode`).
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -17,7 +18,7 @@ import {
   offersProvider,
 } from "../api/connections";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, Modal, TextInput } from "../components/ui";
+import { Badge, Callout, Field, Modal, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 
 /** The providers with a note of their own, in the order the dialog shows them; others follow with a plain card. */

@@ -209,7 +209,7 @@ async function screen(name) {
     }
     // Longer translations must not push the page sideways or cut a button label off.
     const layout = await page.evaluate(() => {
-      const clipped = [...document.querySelectorAll("button, a.nd-button, [role=tab]")]
+      const clipped = [...document.querySelectorAll("button, a.ui-button, [role=tab]")]
         .filter((element) => element.checkVisibility() && element.textContent.trim() && element.scrollWidth > element.clientWidth + 1)
         .map((element) => element.textContent.trim().slice(0, 60));
       return { overflow: document.documentElement.scrollWidth - window.innerWidth, clipped };

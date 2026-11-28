@@ -257,7 +257,7 @@ export function AppShell() {
         <button
           ref={phoneNav.toggle}
           type="button"
-          className="nav-toggle icon-button"
+          className="nav-toggle ui-icon-button"
           aria-expanded={phoneNav.open}
           aria-controls="main-navigation"
           aria-label={phoneNav.open ? t("a11y.nav.close") : t("a11y.nav.open")}

@@ -1,6 +1,7 @@
 // Start a workflow test series: pick the version, limits and whether the AI judge rates the results,
 // and optionally other models for single agents to compare them with the same cases (Q-2).
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Play } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +11,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { BenchmarkRun, BenchmarkStart, Suite } from "../api/types";
 import { ModelPicker } from "../components/ModelPicker";
-import { Button, Callout, Field, Modal, Select, Spinner, Toggle } from "../components/ui";
+import { Callout, Field, Modal, Select, Spinner, Toggle } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { agentNodes, changedModels, nodeName } from "./models";
 import { EstimateView, type Limits, LimitFields } from "./shared";
@@ -65,7 +66,7 @@ export function BenchmarkStartDialog({
           </Button>
           <Button
             variant="primary"
-            icon={Play}
+            icon={<Play size={15} />}
             busy={start.isPending}
             disabled={!plan.data || needsConfirm || needsLimit}
             onClick={() => start.mutate()}

@@ -3,6 +3,7 @@
 // default search provider, the person chooses), and a copy without one still works: its workflow check names the
 // missing connection until one is chosen in the agent.
 
+import { Button } from "@nodestro/ui-core";
 import { Globe } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,7 +11,7 @@ import { Link } from "react-router-dom";
 
 import { useConnectionStatus, useConnectionTypes, useConnections } from "../api/connections";
 import type { ExampleDetail } from "../api/types";
-import { Button, Field, Select } from "../components/ui";
+import { Field, Select } from "../components/ui";
 import { SearchSetupDialog } from "../pages/SearchSetup";
 
 export function ExampleServices({

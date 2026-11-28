@@ -4,6 +4,7 @@
 // indeterminate bar. Jobs live on the server, so a reload of the page shows them again (and after a restart of
 // Nodestro the last ones are still listed, a running one as interrupted).
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Play, RotateCcw, X } from "lucide-react";
 import { useEffect, useRef } from "react";
@@ -23,7 +24,7 @@ import {
   shareOf,
 } from "../components/Progress";
 import { toast } from "../components/toast";
-import { Badge, Button } from "../components/ui";
+import { Badge } from "../components/ui";
 import { problemText } from "../lib/errors";
 import { formatLargeBytes, formatTime } from "../lib/format";
 
@@ -190,14 +191,14 @@ export function JobCard({
         <Badge tone={STATE_TONE[job.state]}>{t(`localModels.jobs.state.${job.state}`)}</Badge>
         <div className="local-job__actions">
           {running ? (
-            <Button size="sm" icon={X} busy={cancelling} disabled={!canAct} onClick={onCancel} aria-label={`${t("common.cancel")}: ${title}`}>
+            <Button size="sm" icon={<X size={15} />} busy={cancelling} disabled={!canAct} onClick={onCancel} aria-label={`${t("common.cancel")}: ${title}`}>
               {t("common.cancel")}
             </Button>
           ) : null}
           {retry ? (
             <Button
               size="sm"
-              icon={resumes(job) ? Play : RotateCcw}
+              icon={resumes(job) ? <Play size={15} /> : <RotateCcw size={15} />}
               busy={retrying}
               disabled={!canAct}
               onClick={onRetry}

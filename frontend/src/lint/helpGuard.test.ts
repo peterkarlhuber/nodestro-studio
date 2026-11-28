@@ -132,3 +132,31 @@ describe("the chat guard (ST-068 step 4)", () => {
     for (const [file, text] of Object.entries(styles)) expect(text, file).not.toMatch(/\.(chat-answer|tool-calls__body|web-sources__item|web-sources__text)\b/);
   });
 });
+
+describe("the button guard (ST-068 step 6)", () => {
+  it.each([
+    ["a button of its own", "export const Button = () => null;\n"],
+    ["an icon button of its own", "export function IconButton() {\n  return null;\n}\n"],
+    ["a two-step button of its own", "export function ConfirmIconButton() {\n  return null;\n}\n"],
+    ["the shared button from elsewhere", 'import { Button } from "../components/ui";\nexport const a = <Button>Save</Button>;\n'],
+    ["a re-export of its own", 'import { Button } from "@nodestro/ui-core";\nexport { Button };\n'],
+    ["the former button class", 'export const a = <a className="nd-button nd-button--sm" href="/x">Open</a>;\n'],
+    ["the former icon button class", "export const a = (x: string) => <a className={`icon-button ${x}`} href=\"/x\" aria-label=\"Open\" />;\n"],
+  ])("fails on %s", async (_name, code) => {
+    expect(await problems(code)).not.toEqual([]);
+  });
+
+  it("passes the shared buttons, their classes on a link and other classes", async () => {
+    expect(
+      await problems(
+        'import { Button, ConfirmIconButton, IconButton } from "@nodestro/ui-core";\nimport { Plus, Trash2 } from "lucide-react";\nexport const a = (\n  <>\n    <Button icon={<Plus size={15} />}>Add</Button>\n    <IconButton icon={<Plus size={16} />} label="Add" />\n    <ConfirmIconButton icon={<Trash2 size={16} />} label="Delete" onConfirm={() => undefined} />\n    <a className="ui-button ui-button--sm" href="/x">Open</a>\n    <button className="wl-icon-button" aria-label="Menu" />\n  </>\n);\n',
+      ),
+    ).toEqual([]);
+  });
+
+  it("finds no style for the former button classes in the stylesheets", () => {
+    const welcome = readFileSync(`${FRONTEND}/src/welcome/welcome.css`, "utf-8");
+    for (const [file, text] of Object.entries({ ...styles, "welcome.css": welcome })) expect(text, file).not.toMatch(/(^|[^\w-])\.(nd-button|icon-button)\b/m);
+    expect(styles["app.css"]).toMatch(/\.ui-icon-button \{/);
+  });
+});

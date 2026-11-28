@@ -2,7 +2,7 @@
 // stays out, the generated ZIP and the export history. An AI-written guide is optional and only
 // written on request (it costs one request and has to be reviewed before it can be included).
 
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, ConfirmIconButton, Tooltip } from "@nodestro/ui-core";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Download, PackageOpen, Sparkles, Trash2, X } from "lucide-react";
 import { useState } from "react";
@@ -20,7 +20,7 @@ import type {
 } from "../api/types";
 import { toast } from "../components/toast";
 import { Output } from "../components/Markdown";
-import { Badge, Button, Callout, ConfirmIconButton, Field, Section, Segmented, Select, Spinner } from "../components/ui";
+import { Badge, Callout, Field, Section, Segmented, Select, Spinner } from "../components/ui";
 import { currentLanguage, LANGUAGE_NAMES, LANGUAGES } from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatCost, formatDate } from "../lib/format";
@@ -397,7 +397,7 @@ export function ApiExport({
           {!draft ? (
             <div>
               <Button
-                icon={Sparkles}
+                icon={<Sparkles size={15} />}
                 onClick={() => setGuideOpen(true)}
                 busy={writeGuide.isPending}
                 data-testid="api-guide-write"
@@ -441,7 +441,7 @@ export function ApiExport({
               </div>
               <div className="row-gap">
                 <Button
-                  icon={Check}
+                  icon={<Check size={15} />}
                   onClick={() =>
                     decide.mutate({ guide: draft, decision: "accept" })
                   }
@@ -449,7 +449,7 @@ export function ApiExport({
                   {t("publish.guide.accept")}
                 </Button>
                 <Button
-                  icon={X}
+                  icon={<X size={15} />}
                   variant="ghost"
                   onClick={() =>
                     decide.mutate({ guide: draft, decision: "discard" })
@@ -484,7 +484,7 @@ export function ApiExport({
         <Tooltip help="publish.export">
           <Button
             variant="primary"
-            icon={PackageOpen}
+            icon={<PackageOpen size={15} />}
             disabled={!check.data?.ok || !current}
             busy={portable ? build.isPending : create.isPending}
             onClick={() => (portable ? build.mutate() : create.mutate())}
@@ -536,7 +536,7 @@ export function ApiExport({
                 ) : null}
                 {canEdit ? (
                   <ConfirmIconButton
-                    icon={Trash2}
+                    icon={<Trash2 size={16} />}
                     label={t("publish.export.delete", { file: record.file_name })}
                     busy={remove.isPending && remove.variables === record.id}
                     onConfirm={() => remove.mutate(record.id)}

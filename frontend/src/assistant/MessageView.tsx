@@ -1,5 +1,5 @@
 import { ChatMessage as ChatMessageView } from "@nodestro/ui-ai";
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, Tooltip } from "@nodestro/ui-core";
 import {
   ArrowUpRight,
   BookOpen,
@@ -22,7 +22,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import type { AssistantStep, AttachmentKind, ChatMessage, ContextRef, Handover } from "../api/types";
 import { ReasoningView } from "../components/ReasoningView";
-import { Button, Callout } from "../components/ui";
+import { Callout } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { formatTokens } from "../lib/format";
 import { SentFileChips } from "./AssistantFiles";
@@ -116,7 +116,7 @@ function HandoverCard({ handover }: { handover: Handover }) {
         <Button
           size="sm"
           variant="primary"
-          icon={ArrowUpRight}
+          icon={<ArrowUpRight size={15} />}
           onClick={() => {
             useAssistant.getState().startHandover(handover);
             navigate(handoverPath(handover));
@@ -235,7 +235,7 @@ export function MessageView({
         <div className="chat-meta">
           <UsageLine message={message} />
           {canRetry && (message.status === "failed" || message.status === "cancelled") ? (
-            <Button size="sm" variant="ghost" icon={RotateCcw} onClick={onRetry} data-testid="chat-retry">
+            <Button size="sm" variant="ghost" icon={<RotateCcw size={15} />} onClick={onRetry} data-testid="chat-retry">
               {t("assistant.message.retry")}
             </Button>
           ) : null}

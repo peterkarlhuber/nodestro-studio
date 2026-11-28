@@ -2,14 +2,14 @@
 // download. Nothing was sent; a person opens the file and sends it. "Open in mail program" is the same download of
 // the .eml file: the browser hands it to the mail program the person chooses.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { ConfirmIconButton, HelpTip } from "@nodestro/ui-core";
 import { Download, Mail, MailX, Trash2, Webhook } from "lucide-react";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
 import type { EmailDraftPreview, ResultFile, WebhookDraftPreview } from "../api/types";
-import { Badge, ConfirmIconButton } from "../components/ui";
+import { Badge } from "../components/ui";
 import { formatBytes, formatDate } from "../lib/format";
 
 /** The draft preview of a result file a draft tool wrote, or null for every other file. */
@@ -87,12 +87,12 @@ export function DraftCard({
       </dl>
       {email ? <p className="muted small">{t("drafts.card.bodyHidden")}</p> : null}
       <div className="draft-card__actions">
-        <a className="nd-button nd-button--default nd-button--sm" href={href} download={file.name}>
+        <a className="ui-button ui-button--secondary ui-button--sm" href={href} download={file.name}>
           <Download size={14} aria-hidden /> {t(email ? "drafts.card.downloadEml" : "drafts.card.downloadJson")}
         </a>
         {email ? (
           <a
-            className="nd-button nd-button--ghost nd-button--sm"
+            className="ui-button ui-button--ghost ui-button--sm"
             href={href}
             download={file.name}
             title={t("drafts.card.openInMailHint")}
@@ -101,7 +101,7 @@ export function DraftCard({
             <Mail size={14} aria-hidden /> {t("drafts.card.openInMail")}
           </a>
         ) : null}
-        <ConfirmIconButton icon={Trash2} label={t("flow.files.delete", { name: file.name })} onConfirm={onDelete} />
+        <ConfirmIconButton icon={<Trash2 size={16} />} label={t("flow.files.delete", { name: file.name })} onConfirm={onDelete} />
       </div>
       {email ? (
         <p className="muted small" id={`draft-open-${file.id}`}>

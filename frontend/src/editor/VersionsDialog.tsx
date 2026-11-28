@@ -2,7 +2,7 @@
 // optional description. Restoring a version saves it as a new version, so no version is lost.
 // Undo/redo in the editor is independent of this and unchanged.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { History, Pencil, RotateCcw, Save } from "lucide-react";
 import { useState } from "react";
@@ -14,7 +14,7 @@ import type { VersionSummary, Workflow } from "../api/types";
 import { WorkflowTestStatus } from "../automation/WorkflowTestStatus";
 import { TextDiff } from "../components/TextDiff";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, IconButton, Modal, Spinner, TextInput } from "../components/ui";
+import { Badge, Callout, Field, Modal, Spinner, TextInput } from "../components/ui";
 import { ErrorText, LocalError } from "../lib/errors";
 import { formatDate } from "../lib/format";
 import { type FieldChange, type StepChange, hasChanges, versionChanges } from "../lib/versionDiff";
@@ -130,12 +130,12 @@ function VersionRow({
         {version.restored_from ? <Badge>{t("versions.restoredFrom", { number: version.restored_from })}</Badge> : null}
         <span className="muted small">{t("versions.size", { count: version.agents })}</span>
         <span className="version-row__actions">
-          <IconButton icon={Pencil} label={t("versions.describe")} onClick={() => setEditing(!editing)} />
+          <IconButton icon={<Pencil size={16} />} label={t("versions.describe")} onClick={() => setEditing(!editing)} />
           <Button size="sm" variant="ghost" onClick={() => setOpen(!open)} aria-expanded={open}>
             {open ? t("versions.hideChanges") : t("versions.showChanges")}
           </Button>
           {!version.current ? (
-            <Button size="sm" icon={RotateCcw} onClick={() => onRestore(version)}>
+            <Button size="sm" icon={<RotateCcw size={15} />} onClick={() => onRestore(version)}>
               {t("versions.restore")}
             </Button>
           ) : null}
@@ -221,7 +221,7 @@ export function VersionsDialog({
             placeholder={t("versions.notePlaceholder")}
             onChange={(event) => setNote(event.target.value)}
           />
-          <Button icon={Save} variant="primary" busy={saveNow.isPending} disabled={!dirty} onClick={() => saveNow.mutate()}>
+          <Button icon={<Save size={15} />} variant="primary" busy={saveNow.isPending} disabled={!dirty} onClick={() => saveNow.mutate()}>
             {t("versions.saveVersion")}
           </Button>
         </div>
@@ -250,7 +250,7 @@ export function VersionsDialog({
             </Button>
             {dirty ? (
               <Button
-                icon={Save}
+                icon={<Save size={15} />}
                 busy={restore.isPending && restore.variables?.saveFirst}
                 onClick={() => pending && restore.mutate({ version: pending, saveFirst: true })}
                 data-testid="restore-save-first"
@@ -260,7 +260,7 @@ export function VersionsDialog({
             ) : null}
             <Button
               variant={dirty ? "danger" : "primary"}
-              icon={RotateCcw}
+              icon={<RotateCcw size={15} />}
               busy={restore.isPending && !restore.variables?.saveFirst}
               onClick={() => pending && restore.mutate({ version: pending })}
             >

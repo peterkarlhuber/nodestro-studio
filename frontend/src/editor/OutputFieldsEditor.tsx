@@ -1,10 +1,10 @@
-import { HelpTip, Tooltip } from "@nodestro/ui-core";
+import { Button, HelpTip, IconButton, Tooltip } from "@nodestro/ui-core";
 import type { TFunction } from "i18next";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import type { OutputField, OutputFieldSource, OutputFieldType } from "../api/types";
-import { Button, IconButton, Select, TextInput } from "../components/ui";
+import { Select, TextInput } from "../components/ui";
 import { helpEntry } from "../lib/help";
 import { fieldNameProblem } from "../lib/validation";
 
@@ -84,7 +84,7 @@ export function OutputFieldsEditor({
               </div>
               <div className="output-field__remove">
                 <IconButton
-                  icon={Trash2}
+                  icon={<Trash2 size={16} />}
                   label={t("agent.output.removeField", { name: field.name || index + 1 })}
                   onClick={() => onChange(fields.filter((_, i) => i !== index))}
                 />
@@ -142,7 +142,7 @@ export function OutputFieldsEditor({
       </div>
       <Button
         size="sm"
-        icon={Plus}
+        icon={<Plus size={15} />}
         onClick={() =>
           onChange([...fields, { name: `field_${fields.length + 1}`, type: "string", description: "", required: true }])
         }

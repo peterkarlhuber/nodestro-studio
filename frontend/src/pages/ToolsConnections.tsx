@@ -2,6 +2,7 @@
 // mail, webhooks). Each has settings from its type's schema and one secret that is written only: the interface never
 // gets it back, it only shows whether one is set and where it is kept. The runtime enforces every rule.
 
+import { Button, ConfirmIconButton, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Cable, CheckCircle2, History, KeyRound, Pencil, Plus, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -28,20 +29,7 @@ import {
 import { PermissionNote } from "../components/Access";
 import { ExportButton, ImportButton } from "../components/ExchangeDialog";
 import { toast } from "../components/toast";
-import {
-  Badge,
-  Button,
-  Callout,
-  ConfirmIconButton,
-  EmptyState,
-  Field,
-  IconButton,
-  Modal,
-  Section,
-  Select,
-  Spinner,
-  TextInput,
-} from "../components/ui";
+import { Badge, Callout, EmptyState, Field, Modal, Section, Select, Spinner, TextInput } from "../components/ui";
 import { ErrorText, ProblemText, codedError } from "../lib/errors";
 import { type Tone, formatDate, relativeTime } from "../lib/format";
 import { TestSendButton } from "./ConnectionTestSend";
@@ -96,13 +84,13 @@ export function ConnectionsTab() {
         {admin ? (
           <div className="row-gap">
             {searchType ? (
-              <Button icon={Search} onClick={() => setSettingUpSearch(true)}>
+              <Button icon={<Search size={15} />} onClick={() => setSettingUpSearch(true)}>
                 {t("tools.connections.search.open")}
               </Button>
             ) : null}
             <ExportButton kind="connections" disabled={!list.length} />
             <ImportButton kind="connections" onImported={refresh} />
-            <Button icon={Plus} onClick={() => setAdding(true)} disabled={!types.data?.length}>
+            <Button icon={<Plus size={15} />} onClick={() => setAdding(true)} disabled={!types.data?.length}>
               {t("tools.connections.add")}
             </Button>
           </div>
@@ -227,9 +215,9 @@ function ConnectionDetail({
         </div>
         {admin ? (
           <div className="row-gap">
-            <IconButton icon={Pencil} label={t("tools.connections.edit")} onClick={() => setEditing(true)} />
+            <IconButton icon={<Pencil size={16} />} label={t("tools.connections.edit")} onClick={() => setEditing(true)} />
             <ConfirmIconButton
-              icon={Trash2}
+              icon={<Trash2 size={16} />}
               label={t("tools.connections.remove")}
               confirmLabel={t("tools.connections.removeConfirm")}
               busy={remove.isPending}
@@ -242,7 +230,7 @@ function ConnectionDetail({
         <div data-testid="connection-in-use">
           <Callout tone="warning">
             <ProblemText item={codedError(inUse)} compact />{" "}
-            <Button variant="ghost" icon={Trash2} busy={remove.isPending} onClick={() => remove.mutate(true)}>
+            <Button variant="ghost" icon={<Trash2 size={15} />} busy={remove.isPending} onClick={() => remove.mutate(true)}>
               {t("tools.connections.removeAnyway")}
             </Button>
           </Callout>
@@ -286,7 +274,7 @@ function ConnectionDetail({
         {admin ? (
           <div className="row-gap">
             {type?.checkable !== false ? (
-              <Button icon={CheckCircle2} busy={check.isPending} onClick={() => check.mutate()}>
+              <Button icon={<CheckCircle2 size={15} />} busy={check.isPending} onClick={() => check.mutate()}>
                 {t("tools.connections.checkButton")}
               </Button>
             ) : null}
@@ -363,7 +351,7 @@ function SecretPanel({
             />
           </Field>
           <div className="row-gap">
-            <Button icon={KeyRound} busy={save.isPending && save.variables !== ""} disabled={!secret} onClick={() => save.mutate(secret)}>
+            <Button icon={<KeyRound size={15} />} busy={save.isPending && save.variables !== ""} disabled={!secret} onClick={() => save.mutate(secret)}>
               {t(connection.secret_set ? "tools.connections.secretReplace" : "tools.connections.secretSave")}
             </Button>
             {connection.secret_set ? (

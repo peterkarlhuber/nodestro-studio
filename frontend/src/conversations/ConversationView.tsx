@@ -2,6 +2,7 @@
 // composer with files. An answer that is being written streams in live (the run's events); a tool call that waits
 // for a person shows its approval card in the answer.
 
+import { Button, ConfirmIconButton, IconButton } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Check, Download, Paperclip, Pencil, Send, Square, Trash2, X } from "lucide-react";
 import { type KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
@@ -19,7 +20,7 @@ import {
 import { useTemplates } from "../api/hooks";
 import { GrantedContentBadge, GrantedContentNotice } from "../components/GrantedContent";
 import { toast } from "../components/toast";
-import { Button, Callout, Chip, ConfirmIconButton, IconButton, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
+import { Callout, Chip, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatCost } from "../lib/format";
 import { useAnswerStream } from "./answerStream";
@@ -143,15 +144,15 @@ function ConversationHeader({
               }}
               data-testid="conversation-title-input"
             />
-            <IconButton icon={Check} label={t("common.save")} type="submit" disabled={change.isPending} />
-            <IconButton icon={X} label={t("common.cancel")} onClick={() => setEditing(false)} />
+            <IconButton icon={<Check size={16} />} label={t("common.save")} type="submit" disabled={change.isPending} />
+            <IconButton icon={<X size={16} />} label={t("common.cancel")} onClick={() => setEditing(false)} />
           </form>
         ) : (
           <>
             <h2 data-testid="conversation-title">{conversation.title || t("conversations.untitled")}</h2>
             {canEdit ? (
               <IconButton
-                icon={Pencil}
+                icon={<Pencil size={16} />}
                 label={t("conversations.rename")}
                 onClick={() => {
                   setTitle(conversation.title);
@@ -193,13 +194,13 @@ function ConversationHeader({
           label={t("conversations.offline")}
           description={t("conversations.offlineHint")}
         />
-        <a className="nd-button nd-button--ghost nd-button--sm" href={conversationsApi.exportUrl(conversation.id)} download data-testid="conversation-export">
+        <a className="ui-button ui-button--ghost ui-button--sm" href={conversationsApi.exportUrl(conversation.id)} download data-testid="conversation-export">
           <Download size={15} aria-hidden />
           {t("conversations.export")}
         </a>
         {canEdit ? (
           <ConfirmIconButton
-            icon={Trash2}
+            icon={<Trash2 size={16} />}
             label={t("conversations.delete")}
             busy={remove.isPending}
             onConfirm={() => remove.mutate()}
@@ -329,18 +330,18 @@ function Composer({
               }}
               data-testid="conversation-file-input"
             />
-            <Button icon={Paperclip} onClick={() => input.current?.click()} data-testid="conversation-attach">
+            <Button icon={<Paperclip size={15} />} onClick={() => input.current?.click()} data-testid="conversation-attach">
               {t("conversations.attach")}
             </Button>
           </>
         ) : null}
         <span className="muted small">{t("conversations.enterHint")}</span>
         {answeringId ? (
-          <Button variant="danger" icon={Square} busy={cancel.isPending} onClick={() => cancel.mutate(answeringId)} data-testid="conversation-stop">
+          <Button variant="danger" icon={<Square size={15} />} busy={cancel.isPending} onClick={() => cancel.mutate(answeringId)} data-testid="conversation-stop">
             {t("conversations.stop")}
           </Button>
         ) : (
-          <Button type="submit" variant="primary" icon={Send} busy={send.isPending} disabled={empty || busy} data-testid="conversation-send">
+          <Button type="submit" variant="primary" icon={<Send size={15} />} busy={send.isPending} disabled={empty || busy} data-testid="conversation-send">
             {t("conversations.send")}
           </Button>
         )}

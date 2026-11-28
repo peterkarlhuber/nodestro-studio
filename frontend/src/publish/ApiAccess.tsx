@@ -1,6 +1,6 @@
 // Who may call the API (keys with permissions) and from where (this computer, or the network).
 
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, ConfirmIconButton, IconButton, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Ban, KeyRound, PlugZap, RefreshCw, ShieldAlert, Trash2, Wifi } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +10,7 @@ import { useAccess } from "../api/access";
 import { api } from "../api/client";
 import type { ApiOverview, ApiScope, NetworkConfig, NewApiKey } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, Field, IconButton, Modal, TextInput, Toggle } from "../components/ui";
+import { Badge, Callout, Field, Modal, TextInput, Toggle } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 import { apiKeys } from "./ApiDialog";
@@ -140,7 +140,7 @@ export function ApiAccess({ overview, onChanged }: { overview: ApiOverview; onCh
               </div>
             </Field>
             <Button
-              icon={KeyRound}
+              icon={<KeyRound size={15} />}
               disabled={!name.trim() || !scopes.length}
               busy={create.isPending}
               onClick={() => create.mutate()}
@@ -174,11 +174,11 @@ export function ApiAccess({ overview, onChanged }: { overview: ApiOverview; onCh
                   <td>{key.last_used_at ? formatDate(key.last_used_at) : t("publish.keys.never")}</td>
                   <td className="api-key-actions">
                     {key.revoked_at ? (
-                      <ConfirmIconButton icon={Trash2} label={t("publish.keys.delete")} onConfirm={() => remove.mutate(key.id)} />
+                      <ConfirmIconButton icon={<Trash2 size={16} />} label={t("publish.keys.delete")} onConfirm={() => remove.mutate(key.id)} />
                     ) : (
                       <>
-                        <IconButton icon={RefreshCw} label={t("publish.keys.rotate")} onClick={() => rotate.mutate(key.id)} />
-                        <IconButton icon={Ban} label={t("publish.keys.revoke")} onClick={() => revoke.mutate(key.id)} />
+                        <IconButton icon={<RefreshCw size={16} />} label={t("publish.keys.rotate")} onClick={() => rotate.mutate(key.id)} />
+                        <IconButton icon={<Ban size={16} />} label={t("publish.keys.revoke")} onClick={() => revoke.mutate(key.id)} />
                       </>
                     )}
                   </td>

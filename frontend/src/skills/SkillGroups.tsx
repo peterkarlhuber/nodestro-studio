@@ -1,6 +1,7 @@
 // Skill groups (NAL-B4): named sets of skills that are added to an agent in one step. A group is only a shortcut:
 // every skill it adds is then assigned on its own, in its current version.
 
+import { Button, ConfirmIconButton } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FolderPlus, Layers, Pencil, Plus, Save, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -9,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useAccess } from "../api/access";
 import { type Skill, type SkillGroup, skillKeys, skillsApi, useSkillGroups } from "../api/skills";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, Modal, Spinner, TextArea, TextInput } from "../components/ui";
+import { Badge, Callout, EmptyState, Field, Modal, Spinner, TextArea, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { changedText } from "../lib/format";
 import { matchingSkills } from "./skillSearch";
@@ -31,7 +32,7 @@ export function SkillGroups({ skills, onSelect }: { skills: Skill[]; onSelect: (
     onError: toast.error,
   });
   const newButton = canEdit ? (
-    <Button icon={FolderPlus} onClick={() => setEditing("new")}>
+    <Button icon={<FolderPlus size={15} />} onClick={() => setEditing("new")}>
       {t("skills.groups.new")}
     </Button>
   ) : null;
@@ -62,11 +63,11 @@ export function SkillGroups({ skills, onSelect }: { skills: Skill[]; onSelect: (
                 <h3>{group.name}</h3>
                 {canEdit ? (
                   <span className="row-gap">
-                    <Button size="sm" variant="ghost" icon={Pencil} onClick={() => setEditing(group)}>
+                    <Button size="sm" variant="ghost" icon={<Pencil size={15} />} onClick={() => setEditing(group)}>
                       {t("skills.groups.edit")}
                     </Button>
                     <ConfirmIconButton
-                      icon={Trash2}
+                      icon={<Trash2 size={16} />}
                       label={t("skills.groups.delete", { name: group.name })}
                       busy={remove.isPending}
                       onConfirm={() => remove.mutate(group)}
@@ -141,7 +142,7 @@ export function SkillGroupDialog({ group, skills, onClose }: { group: SkillGroup
           <Button variant="ghost" onClick={onClose}>
             {t("common.cancel")}
           </Button>
-          <Button variant="primary" icon={group ? Save : Plus} disabled={!name.trim()} busy={save.isPending} onClick={() => save.mutate()}>
+          <Button variant="primary" icon={group ? <Save size={15} /> : <Plus size={15} />} disabled={!name.trim()} busy={save.isPending} onClick={() => save.mutate()}>
             {group ? t("common.save") : t("skills.groups.create")}
           </Button>
         </>

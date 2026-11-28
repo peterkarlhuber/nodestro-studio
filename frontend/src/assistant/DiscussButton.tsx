@@ -1,8 +1,6 @@
-import { Tooltip } from "@nodestro/ui-core";
+import { Button, IconButton, Tooltip } from "@nodestro/ui-core";
 import { MessageSquare } from "lucide-react";
 import { useTranslation } from "react-i18next";
-
-import { Button, IconButton } from "../components/ui";
 import { type ContextOffer, useAssistant } from "./store";
 
 /**
@@ -21,7 +19,7 @@ export function DiscussButton({ offer, size }: { offer: ContextOffer | null; siz
   if (!offer) return null;
   return (
     <Tooltip help="assistant.discuss">
-      <Button icon={MessageSquare} variant="ghost" size={size} onClick={() => discussOffer(offer)} data-testid="discuss-assistant">
+      <Button icon={<MessageSquare size={15} />} variant="ghost" size={size} onClick={() => discussOffer(offer)} data-testid="discuss-assistant">
         <span className="title-actions__label">{t("assistant.discuss")}</span>
       </Button>
     </Tooltip>
@@ -32,5 +30,5 @@ export function DiscussButton({ offer, size }: { offer: ContextOffer | null; siz
 export function DiscussIcon({ offer, paths, label }: { offer: ContextOffer | null; paths?: string[]; label?: string }) {
   const { t } = useTranslation();
   if (!offer) return null;
-  return <IconButton icon={MessageSquare} label={label ?? t("assistant.discuss")} onClick={() => discussOffer(offer, paths)} data-testid="discuss-assistant" />;
+  return <IconButton icon={<MessageSquare size={16} />} label={label ?? t("assistant.discuss")} onClick={() => discussOffer(offer, paths)} data-testid="discuss-assistant" />;
 }

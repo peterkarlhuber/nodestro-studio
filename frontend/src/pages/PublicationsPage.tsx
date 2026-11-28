@@ -2,6 +2,7 @@
 // publication date and export history. A central overview only: publishing, versions, keys and exports stay in the
 // workflow's "API & Export" dialog, which each entry opens.
 
+import { Button } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { Download, Globe, Plug } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -10,7 +11,7 @@ import { Link, useSearchParams } from "react-router-dom";
 
 import { api } from "../api/client";
 import type { ExportRecord, PublicationOverviewItem } from "../api/types";
-import { Badge, Button, Callout, EmptyState, PageHeader, Select, Spinner, TextInput } from "../components/ui";
+import { Badge, Callout, EmptyState, PageHeader, Select, Spinner, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { type Tone, formatBytes, formatDate } from "../lib/format";
 import {
@@ -101,7 +102,7 @@ function PublicationRow({ item }: { item: PublicationOverviewItem }) {
       </td>
       <td>
         <Link
-          className="nd-button nd-button--default nd-button--sm publications__open"
+          className="ui-button ui-button--secondary ui-button--sm publications__open"
           to={apiDialogHref(item.workflow_id)}
           aria-label={t("publications.openFor", { open: openLabel, name: item.name })}
           data-testid="publication-open-api"

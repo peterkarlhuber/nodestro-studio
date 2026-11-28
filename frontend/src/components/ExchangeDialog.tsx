@@ -5,7 +5,7 @@
 // or none. Neither the file, the preview nor the result ever holds a secret value: the dialog shows only the labels of
 // the secrets to enter again, with a link to the place where each is entered.
 
-import { HelpTip as PlatformHelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip as PlatformHelpTip } from "@nodestro/ui-core";
 import { useMutation } from "@tanstack/react-query";
 import { Download, FileUp, KeyRound, Upload } from "lucide-react";
 import { useRef, useState } from "react";
@@ -15,7 +15,7 @@ import { EXCHANGE_FORMATS, type ExchangeKind, type ImportItem, type ImportReport
 import { ErrorText, problemText } from "../lib/errors";
 import { SecretsToReenter } from "../pages/SettingsData";
 import { toast } from "./toast";
-import { Badge, Button, Callout, Field, Modal, TextInput } from "./ui";
+import { Badge, Callout, Field, Modal, TextInput } from "./ui";
 
 /** The things an import never takes over that have a text of their own (others are named as they come). */
 const LEFT_OUT = ["enabled", "tool_approvals", "secrets", "vectors", "provenance"] as const;
@@ -110,7 +110,7 @@ export function ImportButton({
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button icon={Upload} onClick={() => setOpen(true)} disabled={disabled} data-testid={`exchange-import-${kind}`}>
+      <Button icon={<Upload size={15} />} onClick={() => setOpen(true)} disabled={disabled} data-testid={`exchange-import-${kind}`}>
         {t("exchange.import")}
       </Button>
       {open ? <ImportDialog kind={kind} onClose={() => setOpen(false)} onImported={onImported} /> : null}
@@ -174,7 +174,7 @@ export function ImportDialog({
             ) : null}
             <Button
               variant="primary"
-              icon={FileUp}
+              icon={<FileUp size={15} />}
               busy={apply.isPending}
               disabled={!canApply(preview.data ?? null) || Boolean(stale) || preview.isPending}
               onClick={() => apply.mutate()}
@@ -204,7 +204,7 @@ export function ImportDialog({
                 choose(chosen);
               }}
             />
-            <Button icon={Upload} busy={preview.isPending} onClick={() => input.current?.click()} data-autofocus>
+            <Button icon={<Upload size={15} />} busy={preview.isPending} onClick={() => input.current?.click()} data-autofocus>
               {t("exchange.choose")}
             </Button>
             {file ? <span className="small">{file.name}</span> : null}
@@ -244,7 +244,7 @@ export function ExportButton({ kind, collection, disabled }: { kind: ExchangeKin
   return (
     <Button
       variant="ghost"
-      icon={Download}
+      icon={<Download size={15} />}
       busy={run.isPending}
       disabled={disabled || (kind === "collection" && !collection)}
       onClick={() => run.mutate()}

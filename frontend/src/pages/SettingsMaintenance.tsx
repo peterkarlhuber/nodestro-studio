@@ -1,6 +1,6 @@
 // Settings panels for keeping an installation healthy: system diagnosis and backup/restore.
 
-import { HelpTip, Tooltip } from "@nodestro/ui-core";
+import { Button, HelpTip, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Activity, Archive, CheckCircle2, Download, Plug, RefreshCw, Save, Upload, XCircle, AlertTriangle } from "lucide-react";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
@@ -11,7 +11,7 @@ import { api } from "../api/client";
 import type { BackupContents, BackupInfo, DiagnosticCheck, DiagnosticStatus } from "../api/types";
 import { dockerReasonKey } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, Modal, Section, Spinner, TextInput } from "../components/ui";
+import { Badge, Callout, Field, Modal, Section, Spinner, TextInput } from "../components/ui";
 import { codeSuffix } from "../lib/codes";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatDate, formatNumber } from "../lib/format";
@@ -81,14 +81,14 @@ export function DiagnosticsPanel() {
       <p className="muted small">{t("diagnostics.intro")}</p>
       <div className="row-gap">
         <Button
-          icon={RefreshCw}
+          icon={<RefreshCw size={15} />}
           busy={diagnostics.isFetching}
           onClick={() => (enabled ? void diagnostics.refetch() : setEnabled(true))}
         >
           {data ? t("diagnostics.again") : t("diagnostics.run")}
         </Button>
         <Tooltip help="settings.connection">
-          <Button icon={Plug} busy={connection.isPending} onClick={() => connection.mutate()}>
+          <Button icon={<Plug size={15} />} busy={connection.isPending} onClick={() => connection.mutate()}>
             {t("diagnostics.connection")}
           </Button>
         </Tooltip>
@@ -225,12 +225,12 @@ export function BackupPanel() {
         }}
       />
       <div className="row-gap">
-        <a className="nd-button nd-button--primary nd-button--md" href={api.backupUrl} download data-testid="backup-download">
+        <a className="ui-button ui-button--primary" href={api.backupUrl} download data-testid="backup-download">
           <Download size={15} aria-hidden /> {t("backup.download")}
         </a>
         <input ref={fileInput} type="file" accept=".zip,application/zip" hidden data-testid="backup-file" onChange={onFile} />
         <Tooltip help="settings.restore">
-          <Button icon={Upload} busy={inspect.isPending} onClick={() => fileInput.current?.click()}>
+          <Button icon={<Upload size={15} />} busy={inspect.isPending} onClick={() => fileInput.current?.click()}>
             {t("backup.restoreFromFile")}
           </Button>
         </Tooltip>
@@ -345,7 +345,7 @@ export function InputStoragePanel() {
         <Spinner />
       )}
       <div className="row-gap">
-        <Button icon={RefreshCw} busy={cleanup.isPending && cleanup.variables === null} onClick={() => cleanup.mutate(null)}>
+        <Button icon={<RefreshCw size={15} />} busy={cleanup.isPending && cleanup.variables === null} onClick={() => cleanup.mutate(null)}>
           {t("inputs.storage.cleanUnused")}
         </Button>
         <label className="row-gap small">
@@ -437,7 +437,7 @@ function AssistantFileRetentionField() {
       </Field>
       <div>
         <Button
-          icon={Save}
+          icon={<Save size={15} />}
           disabled={parsed.invalid || !changed}
           busy={save.isPending}
           onClick={() => save.mutate(parsed.value)}

@@ -1,4 +1,4 @@
-import { HelpTip, Tooltip } from "@nodestro/ui-core";
+import { Button, HelpTip, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, ExternalLink, FileImage, FileText, Search, Trash2, Upload } from "lucide-react";
 import { type DragEvent, useEffect, useRef, useState } from "react";
@@ -13,7 +13,7 @@ import { DiscussIcon } from "../assistant/DiscussButton";
 import { ExportButton, ImportButton } from "../components/ExchangeDialog";
 import { toast } from "../components/toast";
 import { DeleteUsed, UsedByList, useUsedBy } from "../components/UsedBy";
-import { Badge, Button, Callout, EmptyState, Field, PageHeader, Spinner, TextInput } from "../components/ui";
+import { Badge, Callout, EmptyState, Field, PageHeader, Spinner, TextInput } from "../components/ui";
 import i18n from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatNumber, relativeTime } from "../lib/format";
@@ -93,7 +93,7 @@ export function KnowledgePage() {
             <ExportButton kind="collection" collection={collection && collection !== NONE ? collection : undefined} />
             {canEdit ? <ImportButton kind="collection" onImported={() => void refresh()} /> : null}
             <Tooltip help="knowledge.upload">
-              <Button variant="primary" icon={Upload} busy={upload.isPending} onClick={() => input.current?.click()}>
+              <Button variant="primary" icon={<Upload size={15} />} busy={upload.isPending} onClick={() => input.current?.click()}>
                 {t("knowledge.upload")}
               </Button>
             </Tooltip>
@@ -221,7 +221,7 @@ export function KnowledgePage() {
                 maxLength={SEARCH_QUERY_CHARS}
                 data-testid="knowledge-search-input"
               />
-              <Button type="submit" icon={Search} busy={search.isPending}>
+              <Button type="submit" icon={<Search size={15} />} busy={search.isPending}>
                 {t("knowledge.search")}
               </Button>
             </form>

@@ -1,6 +1,7 @@
 // Which local model suits this agent's task on the computer (or server) that runs the model server (ST-044). Shown
 // next to the model picker for an agent on a local model; it never changes the model by itself.
 
+import { Button } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { Cpu } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -9,7 +10,6 @@ import { useAccess } from "../api/access";
 import { localApi, localKeys } from "../api/localModels";
 import type { AgentConfig } from "../api/types";
 import { useModelName } from "../components/ModelPicker";
-import { Button } from "../components/ui";
 import { formatLargeBytes } from "../lib/format";
 import { agentTask, reasonText } from "../lib/localRecommend";
 

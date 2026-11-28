@@ -1,11 +1,12 @@
 // The question before unsaved changes would be lost (leaving the page, opening another item).
 // Shared by the workflow editor and the agent library, so both ask the same way.
 
+import { Button } from "@nodestro/ui-core";
 import { RotateCcw, Save } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Button, Modal } from "./ui";
+import { Modal } from "./ui";
 
 export function UnsavedChangesModal({
   open,
@@ -41,11 +42,11 @@ export function UnsavedChangesModal({
           <Button ref={stayRef} variant="ghost" onClick={onStay} data-testid="unsaved-stay">
             {t("common.keepEditing")}
           </Button>
-          <Button variant="danger" icon={RotateCcw} onClick={onDiscard} data-testid="unsaved-discard">
+          <Button variant="danger" icon={<RotateCcw size={15} />} onClick={onDiscard} data-testid="unsaved-discard">
             {t("common.discard")}
           </Button>
           {onSave ? (
-            <Button variant="primary" icon={Save} busy={saving} onClick={onSave} data-testid="unsaved-save">
+            <Button variant="primary" icon={<Save size={15} />} busy={saving} onClick={onSave} data-testid="unsaved-save">
               {t("editor.page.saveAndContinue")}
             </Button>
           ) : null}

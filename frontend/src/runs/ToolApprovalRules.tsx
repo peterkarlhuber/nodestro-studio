@@ -2,6 +2,7 @@
 // (assignments that existed when approvals were introduced), advance approvals for unattended runs, and the audit
 // trail. Reading needs "read"; the activation step, granting, revoking and the audit trail need "admin".
 
+import { Button, ConfirmIconButton } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Ban, Plus, ShieldCheck } from "lucide-react";
 import { useState } from "react";
@@ -12,18 +13,7 @@ import { api } from "../api/client";
 import { PermissionNote } from "../components/Access";
 import { keys, useBatches, useSchedules, useTools } from "../api/hooks";
 import type { ToolApprovalEvent, ToolInfo, ToolPreGrant } from "../api/types";
-import {
-  Badge,
-  Button,
-  Callout,
-  ConfirmIconButton,
-  DocLink,
-  Field,
-  Section,
-  Select,
-  Spinner,
-  TextInput,
-} from "../components/ui";
+import { Badge, Callout, DocLink, Field, Section, Select, Spinner, TextInput } from "../components/ui";
 import { toast } from "../components/toast";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
@@ -189,7 +179,7 @@ function ActivationPanel() {
       {admin && (data.legacy === null || !data.legacy.publications_stamped_at) ? (
         <div className="row-gap">
           <ConfirmIconButton
-            icon={ShieldCheck}
+            icon={<ShieldCheck size={16} />}
             label={data.legacy === null ? t("approvals.rules.stamp") : t("approvals.rules.stampFinish")}
             confirmLabel={t("approvals.rules.stampConfirm")}
             busy={stamp.isPending}
@@ -280,7 +270,7 @@ function PreGrants() {
                     <td>
                       {state === "active" || state === "outdated" ? (
                         <ConfirmIconButton
-                          icon={Ban}
+                          icon={<Ban size={16} />}
                           label={t("approvals.rules.revoke")}
                           confirmLabel={t("approvals.rules.revokeConfirm")}
                           busy={revoke.isPending && revoke.variables?.id === grant.id}
@@ -388,7 +378,7 @@ function NewPreGrant({ onCreated }: { onCreated: () => void }) {
         </Callout>
       ) : null}
       <div>
-        <Button type="submit" icon={Plus} busy={create.isPending} disabled={!tool || !target || create.isPending}>
+        <Button type="submit" icon={<Plus size={15} />} busy={create.isPending} disabled={!tool || !target || create.isPending}>
           {t("approvals.rules.grant")}
         </Button>
       </div>

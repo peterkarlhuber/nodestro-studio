@@ -2,6 +2,7 @@
 // conversations; the open conversation shows on the right. Shown only while the server serves conversations
 // (``features`` of /api/meta); every request is still checked by the API, which shows each person only their own.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MessagesSquare, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -19,7 +20,7 @@ import {
 import { useMeta, useTemplates } from "../api/hooks";
 import type { AgentTemplate } from "../api/types";
 import { ModelPicker } from "../components/ModelPicker";
-import { Button, Callout, EmptyState, Field, Modal, PageHeader, Select, Spinner, TextInput, Toggle } from "../components/ui";
+import { Callout, EmptyState, Field, Modal, PageHeader, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatCost, relativeTime } from "../lib/format";
 import { NotFoundPage } from "../pages/NotFoundPage";
@@ -72,7 +73,7 @@ function Conversations() {
         description={t("conversations.description")}
         actions={
           canStart ? (
-            <Button variant="primary" icon={Plus} onClick={() => setCreating(true)} data-testid="conversation-new">
+            <Button variant="primary" icon={<Plus size={15} />} onClick={() => setCreating(true)} data-testid="conversation-new">
               {t("conversations.new")}
             </Button>
           ) : null

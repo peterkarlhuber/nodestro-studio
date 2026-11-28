@@ -2,7 +2,7 @@
 // the files of the conversation (use again, download, show what was read, save to knowledge, delete) and the files
 // a sent message carried, each with the path it takes to the model (natively, extracted text, overview ...).
 
-import { Tooltip } from "@nodestro/ui-core";
+import { ConfirmIconButton, IconButton, Tooltip } from "@nodestro/ui-core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Archive,
@@ -32,7 +32,7 @@ import type { AssistantFile, AssistantFileSupport, FileDeliveryMode, FormatGroup
 import { AdoptDialog } from "../components/AdoptDialog";
 import { toast } from "../components/toast";
 import { ProgressBar, formatPercent } from "../components/Progress";
-import { Callout, ConfirmIconButton, IconButton, Modal, Spinner } from "../components/ui";
+import { Callout, Modal, Spinner } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatBytes, relativeTime } from "../lib/format";
 import type { ComposerFiles } from "./useComposerFiles";
@@ -116,7 +116,7 @@ export function AttachFilesButton({ files }: { files: ComposerFiles }) {
   const accept = (files.support?.formats ?? []).flatMap((format) => format.extensions).join(",");
   return (
     <>
-      <IconButton icon={Upload} label={t("assistantFiles.attach")} onClick={() => input.current?.click()} data-testid="assistant-attach-files" />
+      <IconButton icon={<Upload size={16} />} label={t("assistantFiles.attach")} onClick={() => input.current?.click()} data-testid="assistant-attach-files" />
       <input
         ref={input}
         type="file"
@@ -191,7 +191,7 @@ export function ComposerFileChips({ files }: { files: ComposerFiles }) {
                   <ModeTag mode={file.mode} notes={file.mode_notes} />
                 </span>
               </span>
-              <IconButton icon={X} label={t("assistantFiles.remove", { name: file.name })} onClick={() => void remove(file)} data-testid="composer-file-remove" />
+              <IconButton icon={<X size={16} />} label={t("assistantFiles.remove", { name: file.name })} onClick={() => void remove(file)} data-testid="composer-file-remove" />
             </li>
           );
         })}
@@ -221,7 +221,7 @@ export function ComposerFileChips({ files }: { files: ComposerFiles }) {
               ) : null}
             </span>
             {item.status === "error" ? (
-              <IconButton icon={X} label={t("assistantFiles.dismiss", { name: item.name })} onClick={() => files.dismiss(item.key)} />
+              <IconButton icon={<X size={16} />} label={t("assistantFiles.dismiss", { name: item.name })} onClick={() => files.dismiss(item.key)} />
             ) : null}
           </li>
         ))}
@@ -315,19 +315,19 @@ export function ConversationFiles({ conversationId, files }: { conversationId: s
                   <span className="chat-file__actions">
                     {file.sent_at !== null ? (
                       <IconButton
-                        icon={RotateCcw}
+                        icon={<RotateCcw size={16} />}
                         label={chosen.has(file.id) ? t("assistantFiles.list.reused") : t("assistantFiles.list.reuseName", { name: file.name })}
                         disabled={chosen.has(file.id) || files.selected.length >= files.limit}
                         onClick={() => files.reuse(file)}
                         data-testid="conversation-file-reuse"
                       />
                     ) : null}
-                    <IconButton icon={Eye} label={t("assistantFiles.list.preview", { name: file.name })} onClick={() => setPreview(file)} data-testid="conversation-file-preview" />
-                    <a className="icon-button" href={api.assistantFileUrl(conversationId, file.id)} download={file.name} aria-label={t("assistantFiles.list.download", { name: file.name })} title={t("assistantFiles.list.download", { name: file.name })}>
+                    <IconButton icon={<Eye size={16} />} label={t("assistantFiles.list.preview", { name: file.name })} onClick={() => setPreview(file)} data-testid="conversation-file-preview" />
+                    <a className="ui-icon-button" href={api.assistantFileUrl(conversationId, file.id)} download={file.name} aria-label={t("assistantFiles.list.download", { name: file.name })} title={t("assistantFiles.list.download", { name: file.name })}>
                       <Download size={16} aria-hidden />
                     </a>
-                    <IconButton icon={BookOpen} label={t("assistantFiles.list.saveKnowledge", { name: file.name })} onClick={() => setAdopting(file)} data-testid="conversation-file-adopt" />
-                    <ConfirmIconButton icon={Trash2} label={t("assistantFiles.list.delete", { name: file.name })} onConfirm={() => void remove(file)} data-testid="conversation-file-delete" />
+                    <IconButton icon={<BookOpen size={16} />} label={t("assistantFiles.list.saveKnowledge", { name: file.name })} onClick={() => setAdopting(file)} data-testid="conversation-file-adopt" />
+                    <ConfirmIconButton icon={<Trash2 size={16} />} label={t("assistantFiles.list.delete", { name: file.name })} onConfirm={() => void remove(file)} data-testid="conversation-file-delete" />
                   </span>
                 </li>
               );

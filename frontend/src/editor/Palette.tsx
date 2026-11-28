@@ -1,4 +1,4 @@
-import { HelpTip, Tooltip } from "@nodestro/ui-core";
+import { HelpTip, IconButton, Tooltip } from "@nodestro/ui-core";
 import type { TFunction } from "i18next";
 import { Bot, Flag, GitBranch, Hand, Network, PanelLeftClose, PanelLeftOpen, Play, Sparkles, Users, Workflow } from "lucide-react";
 import { type DragEvent, type Ref, memo, useState } from "react";
@@ -9,7 +9,7 @@ import type { AgentConfig, ContractFieldSummary, NodeType } from "../api/types";
 import { agentIcon } from "../components/icons";
 import { descriptionLabel } from "../components/Markdown";
 import { useModelName } from "../components/ModelPicker";
-import { IconButton, TextInput } from "../components/ui";
+import { TextInput } from "../components/ui";
 import { helpEntry } from "../lib/help";
 import { DRAG_TYPE, type DragPayload } from "./Canvas";
 import { useEditorLayout } from "./layout";
@@ -129,7 +129,7 @@ function PaletteView({ onDesign, panelRef }: { onDesign: () => void; panelRef?: 
           </h2>
         ) : null}
         <IconButton
-          icon={open ? PanelLeftClose : PanelLeftOpen}
+          icon={open ? <PanelLeftClose size={16} /> : <PanelLeftOpen size={16} />}
           label={open ? t("editor.panels.hidePalette") : t("editor.panels.showPalette")}
           className="palette__toggle"
           aria-expanded={open}

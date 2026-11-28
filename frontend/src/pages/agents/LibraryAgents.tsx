@@ -2,6 +2,7 @@
 // Reading stores nothing; "Use as my template" copies the agent (version 1, origin builtin:...). A newer Nodestro
 // version never changes a copy.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { BookOpen, Copy, WifiOff } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +13,7 @@ import { useLibraryAgents } from "../../api/hooks";
 import type { AgentTemplate, LibraryAgentSummary } from "../../api/types";
 import { agentIcon } from "../../components/icons";
 import { toast } from "../../components/toast";
-import { Badge, Button, Callout, Modal, Section, Spinner } from "../../components/ui";
+import { Badge, Callout, Modal, Section, Spinner } from "../../components/ui";
 import { currentLanguage } from "../../i18n";
 import { ErrorText } from "../../lib/errors";
 import { ExampleServices } from "../../library/ExampleServices";
@@ -128,7 +129,7 @@ function LibraryAgentDialog({
           <Button variant="ghost" onClick={onClose}>
             {t("common.cancel")}
           </Button>
-          <Button variant="primary" icon={Copy} busy={copy.isPending} disabled={!data} onClick={() => copy.mutate()}>
+          <Button variant="primary" icon={<Copy size={15} />} busy={copy.isPending} disabled={!data} onClick={() => copy.mutate()}>
             {t("agentLibrary.use")}
           </Button>
         </>

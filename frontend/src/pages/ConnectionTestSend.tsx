@@ -2,14 +2,14 @@
 // the mail connection's own test address or to the webhook's address, after a confirmation that names exactly where
 // it goes. The runtime allows five per connection and hour and records each attempt with the person who sent it.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { Button, HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Send } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { type Connection, connectionKeys, connectionsApi } from "../api/connections";
-import { Button, Callout, Modal } from "../components/ui";
+import { Callout, Modal } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 
 /** Where a test of this connection goes: the smtp test address or the webhook address (null: none set). */
@@ -24,7 +24,7 @@ export function TestSendButton({ connection }: { connection: Connection }) {
   return (
     <>
       <span className="row-gap">
-        <Button icon={Send} onClick={() => setOpen(true)}>
+        <Button icon={<Send size={15} />} onClick={() => setOpen(true)}>
           {t("drafts.testSend.button")}
         </Button>
         <HelpTip id="tools.testSend" topic={t("drafts.testSend.button")} />
@@ -58,7 +58,7 @@ function TestSendDialog({ connection, onClose }: { connection: Connection; onClo
             <Button variant="ghost" onClick={onClose}>
               {t("common.cancel")}
             </Button>
-            <Button variant="primary" icon={Send} busy={send.isPending} disabled={!target} onClick={() => send.mutate()}>
+            <Button variant="primary" icon={<Send size={15} />} busy={send.isPending} disabled={!target} onClick={() => send.mutate()}>
               {t("drafts.testSend.confirm")}
             </Button>
           </>

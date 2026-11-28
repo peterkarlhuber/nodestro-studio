@@ -135,8 +135,8 @@ Rules:
   confirmation), and gives the focus back to the element that opened it when it closes.
 - **Destructive actions:** use a confirmation dialog for things that cannot be recovered and affect more than one
   item or other workflows (deleting a workflow, clearing memory, deleting an API). Use the inline two-step button
-  (`ConfirmIconButton`, "Delete?") for a single, cheap item in a list (a run, a file, a key). Both return the focus
-  to the trigger on Escape.
+  (`ConfirmIconButton` of `@nodestro/ui-core`, "Really delete?") for a single, cheap item in a list (a run, a file,
+  a key). Both return the focus to the trigger on Escape.
 - **Keyboard:** everything that can be done with the pointer has a keyboard path; on the canvas, steps are connected
   through *Connections* in the inspector.
 - **Touch:** interactive targets are at least 24×24px, and 44px high under `pointer: coarse` where space allows.
@@ -161,6 +161,10 @@ Switching the theme:
 ```js
 document.documentElement.dataset.theme = "light"; // or "dark"
 ```
+
+Buttons are the shared `Button`, `IconButton` and `ConfirmIconButton` of `@nodestro/ui-core` (`npm run lint`
+refuses others); the icon is an element (`icon={<Plus size={15} />}`, 16 px in icon buttons), and a link that looks
+like a button takes the classes `ui-button ui-button--secondary ui-button--sm`. Their look is in `styles/app.css`.
 
 Component:
 

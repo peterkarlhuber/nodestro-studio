@@ -2,6 +2,7 @@
 // Agent writes a tool from it, its tests run only in the isolating sandbox, and a person reviews and approves the
 // tool on the Tools page before any agent can use it.
 
+import { Button } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ExternalLink, Sparkles } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +11,7 @@ import { Link } from "react-router-dom";
 
 import { keys } from "../api/hooks";
 import { skillsApi } from "../api/skills";
-import { Button, Callout, Field, Modal, TextArea } from "../components/ui";
+import { Callout, Field, Modal, TextArea } from "../components/ui";
 import { ErrorText, SandboxSetupLink, codedError } from "../lib/errors";
 
 /** Where the tool jobs are followed and approved. */
@@ -50,7 +51,7 @@ export function ScriptToolDialog({
             <Button variant="ghost" onClick={onClose}>
               {t("common.cancel")}
             </Button>
-            <Button variant="primary" icon={Sparkles} busy={draft.isPending} onClick={() => draft.mutate()}>
+            <Button variant="primary" icon={<Sparkles size={15} />} busy={draft.isPending} onClick={() => draft.mutate()}>
               {t("skills.scriptTool.submit")}
             </Button>
           </>

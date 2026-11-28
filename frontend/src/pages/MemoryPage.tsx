@@ -1,4 +1,4 @@
-import { HelpTip, Tooltip } from "@nodestro/ui-core";
+import { Button, ConfirmIconButton, HelpTip, IconButton, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Brain, FilePlus, Save, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { toast } from "../components/toast";
 import { UsedByList, UsedByWarning, useUsedBy } from "../components/UsedBy";
-import { Button, Callout, ConfirmIconButton, EmptyState, Field, IconButton, Modal, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
+import { Callout, EmptyState, Field, Modal, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatDate } from "../lib/format";
 import type { MemoryFile } from "../api/types";
@@ -46,7 +46,7 @@ export function MemoryPage() {
         doc="memory"
         description={t("memory.description")}
         actions={
-          <Button icon={FilePlus} onClick={() => setNewOpen(true)}>
+          <Button icon={<FilePlus size={15} />} onClick={() => setNewOpen(true)}>
             {t("memory.new")}
           </Button>
         }
@@ -156,7 +156,7 @@ function SpaceDetail({ space, onCleared }: { space: string; onCleared: () => voi
         <span className="row-gap">
           <DiscussIcon offer={offer} paths={current ? [current] : []} label={current ? t("assistant.discussFile", { name: current }) : undefined} />
         <Tooltip help="memory.clear">
-          <Button size="sm" variant="danger" icon={Trash2} onClick={() => setConfirmClear(true)}>
+          <Button size="sm" variant="danger" icon={<Trash2 size={15} />} onClick={() => setConfirmClear(true)}>
             {t("memory.clear")}
           </Button>
         </Tooltip>
@@ -190,7 +190,7 @@ function SpaceDetail({ space, onCleared }: { space: string; onCleared: () => voi
             }}
           >
             <TextInput value={newPath} onChange={(e) => setNewPath(e.target.value)} placeholder={t("memory.newFilePlaceholder")} aria-label={t("memory.newFile")} />
-            <IconButton icon={FilePlus} label={t("memory.createFile")} type="submit" />
+            <IconButton icon={<FilePlus size={16} />} label={t("memory.createFile")} type="submit" />
           </form>
         </div>
         {current ? <MemoryFileEditor key={current} space={space} path={current} onChanged={refresh} onDeleted={() => setPath(null)} /> : null}
@@ -259,8 +259,8 @@ function MemoryFileEditor({
       <div className="row-between">
         <code>{path}</code>
         <div className="row-gap">
-          <ConfirmIconButton icon={Trash2} label={t("memory.deleteFile")} busy={remove.isPending} onConfirm={() => remove.mutate()} />
-          <Button size="sm" variant="primary" icon={Save} disabled={content === file.data?.content} busy={save.isPending} onClick={() => save.mutate()}>
+          <ConfirmIconButton icon={<Trash2 size={16} />} label={t("memory.deleteFile")} busy={remove.isPending} onConfirm={() => remove.mutate()} />
+          <Button size="sm" variant="primary" icon={<Save size={15} />} disabled={content === file.data?.content} busy={save.isPending} onClick={() => save.mutate()}>
             {t("common.save")}
           </Button>
         </div>

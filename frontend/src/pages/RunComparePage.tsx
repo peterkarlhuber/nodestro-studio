@@ -209,7 +209,7 @@ export function RunComparePage() {
         crumbs={<Link to="/executions">{t("nav.executions")}</Link>}
         actions={
           idA && idB ? (
-            <button type="button" className="nd-button nd-button--ghost nd-button--md" onClick={() => setParams({ a: idB, b: idA })}>
+            <button type="button" className="ui-button ui-button--ghost" onClick={() => setParams({ a: idB, b: idA })}>
               <ArrowLeftRight size={14} aria-hidden /> {t("compare.swap")}
             </button>
           ) : null
