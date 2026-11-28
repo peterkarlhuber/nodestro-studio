@@ -1,5 +1,5 @@
 /* Nodestro Studio · layout and components on the shared tokens of @nodestro/ui-tokens with the nodestro brand theme
-   of @nodestro/ui-themes (ST-068 step 7, formerly the studio's own Midnight Citron tokens, same values). Colours come
+   of @nodestro/ui-themes (ST-068 step 7, formerly the studio's own Midnight Citron tokens, same values). Colors come
    only from --ui-* roles, so both themes work without overrides. */
 
 /* Two steps of the studio's type scale the shared scale has no step for (it has 12 and 20 px): they stay here, so
@@ -2085,7 +2085,7 @@ details[open] > summary > .section__chevron {
   text-overflow: ellipsis;
 }
 
-/* Dividers: a thin line with a wide, invisible grip; brand coloured while hovered, focused or dragged. */
+/* Dividers: a thin line with a wide, invisible grip; brand colored while hovered, focused or dragged. */
 .splitter {
   position: relative;
   z-index: 6;
@@ -2211,7 +2211,7 @@ body.is-resizing--y * {
   stroke-width: 2;
 }
 
-/* A clicked connection: thicker, in the brand colour, with a soft halo, so it is clearly the one Delete removes. */
+/* A clicked connection: thicker, in the brand color, with a soft halo, so it is clearly the one Delete removes. */
 .canvas .react-flow__edge.edge--selected .react-flow__edge-path {
   stroke: var(--ui-color-primary);
   stroke-width: 3.5;
