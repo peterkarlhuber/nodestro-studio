@@ -9,7 +9,8 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { LANGUAGES } from "../i18n";
-import { REMEMBER_TEXTS, type RememberChoice as StudioChoice } from "./ToolApprovalCard";
+import { STEP_APPROVAL_TEXTS } from "./ApprovalCard";
+import { TOOL_APPROVAL_TEXTS } from "./ToolApprovalCard";
 
 afterEach(cleanup);
 
@@ -19,11 +20,11 @@ describe("@nodestro/ui-ai as the studio uses it", () => {
   });
 
   it("still has every key the studio answers with its own texts", () => {
-    for (const key of Object.keys(REMEMBER_TEXTS)) expect(aiMessages.en).toHaveProperty([key]);
+    for (const key of [...Object.keys(TOOL_APPROVAL_TEXTS), ...Object.keys(STEP_APPROVAL_TEXTS)]) expect(aiMessages.en).toHaveProperty([key]);
   });
 
   it("takes the studio's choice as it is and answers with the studio's texts", async () => {
-    const choice: StudioChoice = { duration: "call", scope: "agent", until: "" };
+    const choice: RememberChoice = { duration: "call", scope: "agent", until: "" };
     const onChange = vi.fn<(value: RememberChoice) => void>();
     render(
       <UiTextProvider locale="de" translate={(key, values) => (key === "ai.remember.scopes.agent" ? `Agent ${values?.agent}` : undefined)}>

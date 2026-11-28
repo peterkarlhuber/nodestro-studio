@@ -1,10 +1,11 @@
 // A pending approval: what the person reviews, an optional comment (for people only), an optional note to the agent
-// (the only text of the decision later agents read), and approve or reject.
+// (the only text of the decision later agents read), and approve or reject. The card is the shared one of
+// @nodestro/ui-ai (ST-068); the data, the decision and the note to the agent stay here.
 // Nothing is ever approved automatically; the run waits until someone decides here.
 
+import { ApprovalCard, type ApprovalDecision } from "@nodestro/ui-ai";
 import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Check, Hand, X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -13,11 +14,12 @@ import { api } from "../api/client";
 import { keys, useApprovals } from "../api/hooks";
 import type { PendingApproval, Run } from "../api/types";
 import { Output, outputFieldsOf, stepFieldsOf } from "../components/Markdown";
-import { Button, Callout, DisabledReason, Field, Section, TextArea } from "../components/ui";
+import { Callout, Field, Section, TextArea } from "../components/ui";
 import { toast } from "../components/toast";
 import { useEditor } from "../editor/store";
 import { ErrorText } from "../lib/errors";
 import { formatDate, formatNumber } from "../lib/format";
+import { type StudioTextMap, StudioTexts } from "../lib/uiTexts";
 
 /** The longest note to the agent the runtime accepts (``approval.agent_note_too_long`` beyond it). */
 export const AGENT_NOTE_MAX_CHARS = 2000;
@@ -31,24 +33,34 @@ export function belongsTo(runId: string, approval: Pick<PendingApproval, "run_id
 }
 
 /** The approval of one node, looked up among the pending ones (also inside a sub-workflow). */
-export function ApprovalCard({ runId, nodeId }: { runId: string; nodeId: string }) {
+export function NodeApproval({ runId, nodeId }: { runId: string; nodeId: string }) {
   const approvals = useApprovals();
   const pending = approvals.data?.find((item) => item.run_id === runId && item.node_id === nodeId);
   if (!pending) return null;
   return <ApprovalForm approval={pending} />;
 }
 
+/** The package texts of the step approval card, in the studio's words (unchanged by the move onto the package). */
+export const STEP_APPROVAL_TEXTS: StudioTextMap = {
+  "ai.approval.approve": "approvals.approve",
+  "ai.approval.reject": "approvals.reject",
+  "ai.approval.comment": "approvals.comment",
+  "ai.approval.commentRequired": "approvals.commentRequired",
+  "ai.approval.commentHint": "approvals.commentHint",
+  "ai.approval.commentFirst": "approvals.commentFirst",
+  "ai.approval.nothingToReview": "approvals.nothingToShow",
+};
+
 export function ApprovalForm({ approval, showContext = false }: { approval: PendingApproval; showContext?: boolean }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
-  const [comment, setComment] = useState("");
   const [agentNote, setAgentNote] = useState("");
   // The run's workflow names the fields of a structured result; the card works without it as well.
   const waitingRun = useQuery({ queryKey: keys.run(approval.run_id), queryFn: () => api.run(approval.run_id), staleTime: 60_000 });
   const decide = useMutation({
-    mutationFn: (decision: "approved" | "rejected") =>
+    mutationFn: ({ decision, comment }: { decision: "approved" | "rejected"; comment: string }) =>
       api.decideApproval(approval.run_id, approval.node_id, decision, comment, approval.allow_agent_note ? agentNote : ""),
-    onSuccess: (run: Run, decision) => {
+    onSuccess: (run: Run, { decision }) => {
       toast.success(decision === "approved" ? t("approvals.approvedToast") : t("approvals.rejectedToast"));
       // The answer is the run as it was when the decision was taken (still paused: it continues right after).
       // The editor reads its run again until it continues, also when the approval belongs to a team or a
@@ -67,107 +79,85 @@ export function ApprovalForm({ approval, showContext = false }: { approval: Pend
       for (const delay of FOLLOW_UP_MS) window.setTimeout(refresh, delay);
     },
   });
-  const commentMissing = approval.require_comment_on_reject && !comment.trim();
   const rejectHint =
     approval.on_reject === "stop"
       ? t("approvals.rejectStops")
       : approval.has_rejected_branch
         ? t("approvals.rejectBranch")
         : t("approvals.rejectEnds");
+  const pending = decide.isPending ? (decide.variables?.decision === "approved" ? "approve" : "reject") : null;
+  const send = (decision: "approved" | "rejected") => (choice: ApprovalDecision) => decide.mutate({ decision, comment: choice.comment });
   return (
-    // An article, not a region landmark: the approvals page lists many of them, possibly with equal names (AX-09).
-    // The name carries where each one waits, so they can be told apart.
-    <article
-      className="approval-card"
-      aria-label={t("approvals.cardLabel", {
-        name: showContext
-          ? [approval.label, approval.path.join(" › ") || approval.workflow_name, approval.waiting_since ? formatDate(approval.waiting_since) : ""]
-              .filter(Boolean)
-              .join(" · ")
-          : approval.label,
-      })}
-    >
-      <header className="approval-card__head">
-        <Hand size={15} aria-hidden />
-        <div>
-          <strong>{approval.label}</strong>
-          {showContext ? (
-            <div className="muted small">
+    <StudioTexts texts={STEP_APPROVAL_TEXTS}>
+      {/* The shared card (@nodestro/ui-ai), like the tool and workflow tool cards: an article, not a region landmark,
+          since the approvals page lists many of them, possibly with equal names (AX-09). The name carries where each
+          one waits, so they can be told apart. The person decides with the comment the card holds. */}
+      <ApprovalCard
+        kind="step"
+        data-testid="step-approval"
+        title={approval.label}
+        label={t("approvals.cardLabel", {
+          name: showContext
+            ? [approval.label, approval.path.join(" › ") || approval.workflow_name, approval.waiting_since ? formatDate(approval.waiting_since) : ""]
+                .filter(Boolean)
+                .join(" · ")
+            : approval.label,
+        })}
+        context={
+          showContext ? (
+            <>
               <Link to={`/executions/${approval.root_run_id}`}>{approval.path.join(" › ") || approval.workflow_name}</Link>
               {approval.waiting_since ? ` · ${t("approvals.waitingSince", { time: formatDate(approval.waiting_since) })}` : ""}
               {approval.trigger !== "manual" ? ` · ${t(`approvals.trigger.${approval.trigger}`)}` : ""}
+            </>
+          ) : undefined
+        }
+        help={<HelpTip id="flow.approval" topic={t("editor.nodes.approval")} />}
+        instructions={approval.instructions || undefined}
+        allowComment={approval.allow_comment}
+        requireCommentOnReject={approval.require_comment_on_reject}
+        extra={
+          approval.allow_agent_note ? (
+            <div className="approval-card__note">
+              <Field label={t("approvals.agentNote")} hint={t("approvals.agentNoteHint")}>
+                <TextArea
+                  rows={3}
+                  value={agentNote}
+                  maxLength={AGENT_NOTE_MAX_CHARS}
+                  onChange={(e) => setAgentNote(e.target.value)}
+                  data-testid="approval-agent-note"
+                />
+              </Field>
+              <span
+                className={`small approval-card__count ${agentNote.length >= AGENT_NOTE_MAX_CHARS ? "text-warning" : "muted"}`}
+                aria-live="polite"
+              >
+                {t("approvals.agentNoteCount", { used: formatNumber(agentNote.length), max: formatNumber(AGENT_NOTE_MAX_CHARS) })}
+              </span>
             </div>
-          ) : null}
-        </div>
-        <HelpTip id="flow.approval" topic={t("editor.nodes.approval")} />
-      </header>
-      {approval.instructions ? <p className="approval-card__instructions">{approval.instructions}</p> : null}
-      {approval.items.length ? (
-        <div className="stack-sm">
-          {approval.items.map((item) => (
-            <Section key={item.node_id} title={item.label} className="approval-card__item" defaultOpen={approval.items.length === 1}>
-              <Output
-                value={item.value}
-                fields={outputFieldsOf(waitingRun.data?.workflow.nodes, item.node_id, item.value)}
-                steps={stepFieldsOf(waitingRun.data?.workflow.nodes, item.value)}
-              />
-            </Section>
-          ))}
-        </div>
-      ) : (
-        <p className="muted small">{t("approvals.nothingToShow")}</p>
-      )}
-      {approval.allow_comment ? (
-        <Field
-          label={approval.require_comment_on_reject ? t("approvals.commentRequired") : t("approvals.comment")}
-          hint={t("approvals.commentHint")}
-        >
-          <TextArea rows={3} value={comment} maxLength={4000} onChange={(e) => setComment(e.target.value)} />
-        </Field>
-      ) : null}
-      {approval.allow_agent_note ? (
-        <div className="approval-card__note">
-          <Field label={t("approvals.agentNote")} hint={t("approvals.agentNoteHint")}>
-            <TextArea
-              rows={3}
-              value={agentNote}
-              maxLength={AGENT_NOTE_MAX_CHARS}
-              onChange={(e) => setAgentNote(e.target.value)}
-              data-testid="approval-agent-note"
-            />
-          </Field>
-          <span
-            className={`small approval-card__count ${agentNote.length >= AGENT_NOTE_MAX_CHARS ? "text-warning" : "muted"}`}
-            aria-live="polite"
-          >
-            {t("approvals.agentNoteCount", { used: formatNumber(agentNote.length), max: formatNumber(AGENT_NOTE_MAX_CHARS) })}
-          </span>
-        </div>
-      ) : null}
-      <p className="muted small">{rejectHint}</p>
-      {decide.error ? (
-        <Callout tone="danger">
-          <ErrorText error={decide.error} />
-        </Callout>
-      ) : null}
-      <div className="row-gap approval-card__actions">
-        <Button variant="primary" icon={Check} busy={decide.isPending && decide.variables === "approved"} disabled={decide.isPending} onClick={() => decide.mutate("approved")}>
-          {t("approvals.approve")}
-        </Button>
-        {/* TX-10: the reason sits next to the button, not only in a native tooltip touch and keyboard users never see. */}
-        <DisabledReason reason={commentMissing ? t("approvals.commentFirst") : undefined} placement="below">
-          <Button
-            variant="danger"
-            icon={X}
-            busy={decide.isPending && decide.variables === "rejected"}
-            disabled={decide.isPending}
-            onClick={() => decide.mutate("rejected")}
-          >
-            {t("approvals.reject")}
-          </Button>
-        </DisabledReason>
-      </div>
-    </article>
+          ) : null
+        }
+        rejectHint={rejectHint}
+        error={decide.error ? <ErrorText error={decide.error} /> : null}
+        pending={pending}
+        onApprove={send("approved")}
+        onReject={send("rejected")}
+      >
+        {approval.items.length ? (
+          <div className="stack-sm">
+            {approval.items.map((item) => (
+              <Section key={item.node_id} title={item.label} className="approval-card__item" defaultOpen={approval.items.length === 1}>
+                <Output
+                  value={item.value}
+                  fields={outputFieldsOf(waitingRun.data?.workflow.nodes, item.node_id, item.value)}
+                  steps={stepFieldsOf(waitingRun.data?.workflow.nodes, item.value)}
+                />
+              </Section>
+            ))}
+          </div>
+        ) : null}
+      </ApprovalCard>
+    </StudioTexts>
   );
 }
 

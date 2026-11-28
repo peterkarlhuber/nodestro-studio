@@ -1,12 +1,13 @@
+import { formatCountdown } from "@nodestro/ui-ai";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { ToolApprovalRequest } from "../api/types";
-import { ToolApprovalForm, ToolCallApprovalNote, formatCountdown } from "./ToolApprovalCard";
+import { ToolApprovalForm, ToolCallApprovalNote } from "./ToolApprovalCard";
 
 const inMinutes = (minutes: number) => new Date(Date.now() + minutes * 60_000).toISOString();
 
@@ -57,13 +58,20 @@ afterEach(() => {
 });
 
 describe("ToolApprovalForm", () => {
+  it("is the shared approval card of @nodestro/ui-ai, named after the tool (ST-068)", () => {
+    render(wrap(<ToolApprovalForm request={request()} />));
+    const card = screen.getByRole("article", { name: "Tool-Aufruf mailer" });
+    expect(card).toHaveClass("ui-approval", "ui-approval--tool");
+    expect(card).toHaveAttribute("data-testid", "tool-approval");
+  });
+
   it("shows the tool, what it may do, the exact arguments and the time left", () => {
     render(wrap(<ToolApprovalForm request={request()} />));
     expect(screen.getByText("Tool-Aufruf: mailer")).toBeInTheDocument();
     expect(screen.getByText("Ändert Daten")).toBeInTheDocument();
     expect(screen.getByText("Wirkt nach außen")).toBeInTheDocument();
-    expect(screen.getByTestId("tool-approval-arguments")).toHaveTextContent('"to": "kunde@example.org"');
-    expect(screen.getByTestId("tool-approval-deadline")).toHaveTextContent(/Zeit für die Entscheidung: 1[45]:\d\d/);
+    expect(screen.getByLabelText("Argumente, genau so, wie sie gesendet werden")).toHaveTextContent('"to": "kunde@example.org"');
+    expect(screen.getByText(/^Zeit für die Entscheidung: 1[45]:\d\d$/)).toBeInTheDocument();
   });
 
   it("marks a tool without a classification as changing and external", () => {
@@ -96,7 +104,7 @@ describe("ToolApprovalForm", () => {
 
   it("cannot be decided once the time is up", () => {
     render(wrap(<ToolApprovalForm request={request({ deadline: inMinutes(-1) })} />));
-    expect(screen.getByTestId("tool-approval-deadline")).toHaveTextContent("Die Zeit ist abgelaufen");
+    expect(screen.getByText(/^Die Zeit ist abgelaufen/)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Diesen Aufruf erlauben" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Ablehnen" })).toBeDisabled();
   });
@@ -166,7 +174,7 @@ describe("ToolApprovalForm scope and duration (access model v2, N-06)", () => {
     const fetch = serveAccess(false);
     render(wrap(<ToolApprovalForm request={request()} />));
     await waitFor(() => expect(fetch).toHaveBeenCalledWith("/api/access/state", expect.anything()));
-    expect(screen.queryByTestId("tool-approval-remember")).not.toBeInTheDocument();
+    expect(screen.queryByRole("group", { name: "Diese Entscheidung merken" })).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Diesen Aufruf erlauben" }));
     await waitFor(() => expect(posted(fetch, "/api/runs/run_1/tool-approvals/tap_1")).toHaveLength(1));
     expect(posted(fetch, "/api/access/grants")).toEqual([]);
@@ -175,7 +183,7 @@ describe("ToolApprovalForm scope and duration (access model v2, N-06)", () => {
   it("decides only this call by default", async () => {
     const fetch = serveAccess(true);
     render(wrap(<ToolApprovalForm request={request()} />));
-    expect(await screen.findByTestId("tool-approval-remember")).toBeInTheDocument();
+    expect(await screen.findByRole("group", { name: "Diese Entscheidung merken" })).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Diesen Aufruf erlauben" }));
     await waitFor(() => expect(posted(fetch, "/api/runs/run_1/tool-approvals/tap_1")).toHaveLength(1));
     expect(posted(fetch, "/api/access/grants")).toEqual([]);
@@ -184,7 +192,7 @@ describe("ToolApprovalForm scope and duration (access model v2, N-06)", () => {
   it("saves a grant for the asking agent until revoked when approving", async () => {
     const fetch = serveAccess(true);
     render(wrap(<ToolApprovalForm request={request()} />));
-    await screen.findByTestId("tool-approval-remember");
+    await screen.findByRole("group", { name: "Diese Entscheidung merken" });
     await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until_revoked");
     expect(await screen.findByRole("option", { name: "Dieser Agent (wf_1/writer)" })).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Diesen Aufruf erlauben" }));
@@ -210,7 +218,7 @@ describe("ToolApprovalForm scope and duration (access model v2, N-06)", () => {
   it("saves a deny for every agent until a date when rejecting, and needs the date first", async () => {
     const fetch = serveAccess(true);
     render(wrap(<ToolApprovalForm request={request()} />));
-    await screen.findByTestId("tool-approval-remember");
+    await screen.findByRole("group", { name: "Diese Entscheidung merken" });
     await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until");
     await userEvent.selectOptions(screen.getByLabelText("Für wen"), "all");
     expect(screen.getByRole("button", { name: "Ablehnen" })).toBeDisabled();
@@ -231,16 +239,17 @@ describe("ToolApprovalForm scope and duration (access model v2, N-06)", () => {
     const fetch = serveAccess(true);
     const shown = request(overrides as Partial<ToolApprovalRequest>);
     const { unmount } = render(wrap(<ToolApprovalForm request={shown} />));
-    await screen.findByTestId("tool-approval-remember");
+    await screen.findByRole("group", { name: "Diese Entscheidung merken" });
     await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until_revoked");
-    expect(screen.getByTestId("tool-approval-remember-reject-only")).toHaveTextContent(note);
+    // The note sits in the remember options, in the studio's words.
+    expect(within(screen.getByRole("group", { name: "Diese Entscheidung merken" })).getByText(new RegExp(note))).toBeInTheDocument();
     await screen.findByRole("option", { name: "Dieser Agent (wf_1/writer)" });
     await userEvent.click(screen.getByRole("button", { name: "Diesen Aufruf erlauben" }));
     await waitFor(() => expect(posted(fetch, "/api/runs/run_1/tool-approvals/tap_1")).toHaveLength(1));
     expect(posted(fetch, "/api/access/grants")).toEqual([]);
     unmount();
     render(wrap(<ToolApprovalForm request={shown} />));
-    await screen.findByTestId("tool-approval-remember");
+    await screen.findByRole("group", { name: "Diese Entscheidung merken" });
     await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until_revoked");
     await screen.findByRole("option", { name: "Dieser Agent (wf_1/writer)" });
     await userEvent.click(screen.getByRole("button", { name: "Ablehnen" }));
@@ -255,7 +264,7 @@ describe("ToolApprovalForm scope and duration (access model v2, N-06)", () => {
       return json(request({ status: "approved" }));
     });
     render(wrap(<ToolApprovalForm request={request()} />));
-    await screen.findByTestId("tool-approval-remember");
+    await screen.findByRole("group", { name: "Diese Entscheidung merken" });
     await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until_revoked");
     await screen.findByRole("option", { name: "Dieser Agent (wf_1/writer)" });
     await userEvent.click(screen.getByRole("button", { name: "Diesen Aufruf erlauben" }));
@@ -270,7 +279,7 @@ describe("ToolApprovalForm scope and duration (access model v2, N-06)", () => {
       return json(request({ status: "approved" }));
     });
     render(wrap(<ToolApprovalForm request={request()} />));
-    await screen.findByTestId("tool-approval-remember");
+    await screen.findByRole("group", { name: "Diese Entscheidung merken" });
     await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until_revoked");
     await screen.findByRole("option", { name: "Dieser Agent (wf_1/writer)" });
     await userEvent.click(screen.getByRole("button", { name: "Diesen Aufruf erlauben" }));

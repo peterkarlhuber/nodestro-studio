@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Shared approval cards (ST-068, 2026-11-28)
+
+- The step and tool approval cards are now the shared `ApprovalCard` of `@nodestro/ui-ai` 0.3.0 (nodestro-ui #10),
+  like the workflow tool card: all three look and behave the same. The data, the decision, the note to the agent and
+  the remembered grant or deny stay in the studio, texts unchanged in six languages. A reject blocked by a missing
+  reason stays focusable with the reason next to it; the time left and the arguments are labelled as before.
+  `npm run lint` refuses an approval card or remember options of the studio's own. Lock: `nodestro-ui` at the merge
+  of #10, ai 0.3.0, core 0.2.3.
+
 ### Shared tooltips (ST-068, 2026-11-28)
 
 - Every tooltip of a button, badge or value (31 `Tooltip` and 49 `Hint` uses) is now the shared `Tooltip` of

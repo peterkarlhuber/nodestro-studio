@@ -116,11 +116,11 @@ try {
   const card = page.getByTestId("tool-approval").first();
   await card.waitFor();
   check((await card.textContent()).includes("Tool-Aufruf: send_message"), "The inbox shows the tool call");
-  const shown = JSON.parse(await card.getByTestId("tool-approval-arguments").textContent());
+  const shown = JSON.parse(await card.getByLabel("Argumente, genau so, wie sie gesendet werden").textContent());
   check(JSON.stringify(shown) === JSON.stringify(ARGUMENTS), "The arguments are shown exactly, markup as text");
   check((await card.locator("b").count()) === 0, "Markup in the arguments is not rendered");
   check((await card.textContent()).includes("Nicht eingestuft"), "A tool without a statement is marked as not classified");
-  check(/Zeit für die Entscheidung: \d+:\d\d/.test(await card.getByTestId("tool-approval-deadline").textContent()), "The time left is shown");
+  check(/Zeit für die Entscheidung: \d+:\d\d/.test(await card.getByText(/^Zeit für die Entscheidung: /).textContent()), "The time left is shown");
   const badge = page.locator(".nav-item__badge").first();
   check((await badge.textContent()).trim() === "1", "The navigation badge counts the waiting call");
   await shot("approvals-01-inbox");
