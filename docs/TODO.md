@@ -107,8 +107,7 @@ from #121). Both have status `Needs external review`.
 - **Done (Welle 7):** the agent editor's list and "Add workflow as tool" dialog, the approval card of a workflow tool's
   start, the workflow part of a conversation's tool call (run, cards, files), result files as attachments, newer
   versions reported, six languages, help and documentation; component and browser tests.
-- **Open:** (a) the dialog shows only while `/api/meta` lists `workflow_tools` (nodestro-api branch
-  `claude/w7-n20-ui`); until the pinned api has it, the browser test adds the feature to the meta answer; (b) an
+- **Open:** (a) done: the dialog shows only while `/api/meta` lists `workflow_tools` (nodestro-api #191, pinned); (b) an
   approval step inside the workflow is decided with the conversation's card (label, instructions, comment) because
   `GET /api/approvals` lists only paused top-level runs while the agent's run keeps running; results to review and a
   note to the agent show only when the list has the step; (c) a tool call waiting inside the workflow shows its card

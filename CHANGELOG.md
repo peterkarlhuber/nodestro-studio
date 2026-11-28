@@ -17,7 +17,8 @@
   `workflow_tool.*` codes), help entries and a documentation section (`agenten#workflow-tools`).
 - Tests: `src/workflowTools/workflowTools.test.tsx`; the conversations browser suite (its server switches workflow
   tools and tool approvals on for itself) covers the start card, the workflow's approval step, the result file and
-  the dialog. No new suite or CI job.
+  the dialog against the real `/api/meta` feature. No new suite or CI job.
+- Lock: `nodestro-api` 74b3238 (#191: `workflow_tools` in `/api/meta` features), `nodestro-runtime` b4d11ad (master).
 ### N-22 R1 paired CI (2026-11-27)
 
 - CI (N-22 R1): the component jobs (`platform`, `components-at-master`) close the hosted runner's interpreter

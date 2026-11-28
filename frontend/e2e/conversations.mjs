@@ -143,15 +143,7 @@ try {
   check(gone.status() === 404, "The deleted conversation answers 404");
 
   // ---- workflows as tools (N-20) --------------------------------------------------------------------------------
-  // Until the pinned api lists ``workflow_tools`` in /api/meta's features (nodestro-api claude/w7-n20-ui), the test
-  // adds it to the answer; the server has the switch on either way, so every other route is the real one.
-  if (!meta.features.includes("workflow_tools")) {
-    await page.route("**/api/meta", async (route) => {
-      const response = await route.fetch();
-      const body = await response.json();
-      await route.fulfill({ response, json: { ...body, features: [...body.features, "workflow_tools"] } });
-    });
-  }
+  check(meta.features.includes("workflow_tools"), "The server names the workflow tools feature");
   const templates = await api("/agents/templates");
   const accountant = templates.find((item) => item.agent.name === "Accountant");
   check(accountant.agent.workflow_tools?.[0]?.version === 1, "The Accountant calls the Quote workflow in version 1");
