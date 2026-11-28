@@ -14,6 +14,22 @@ export const HELP_GUARD = [
   { selector: "JSXAttribute[name.name='className'] TemplateElement[value.raw=/(^|\\s)help-tip(\\s|$|--)/]", message: HELP_ONLY_SHARED },
 ];
 
+const TOOLTIP_ONLY_SHARED =
+  "Tooltips are the shared Tooltip of @nodestro/ui-core (import it from there; help texts by id: <Tooltip help=\"<id>\">).";
+
+/**
+ * Selectors of the studio's former tooltips (components/Tooltip.tsx and Hint in components/ui.tsx): a Tooltip from
+ * anywhere else, a Tooltip or Hint of its own (also as a re-export), the module, the bubble's class.
+ */
+export const TOOLTIP_GUARD = [
+  { selector: "ImportDeclaration[source.value!='@nodestro/ui-core'] > ImportSpecifier[imported.name=/^(Tooltip|Hint)$/]", message: TOOLTIP_ONLY_SHARED },
+  { selector: "ImportDeclaration[source.value=/(^|\\/)components\\/Tooltip$|^\\.\\/Tooltip$/]", message: TOOLTIP_ONLY_SHARED },
+  { selector: "ExportNamedDeclaration[source=null] > ExportSpecifier[local.name=/^(Tooltip|Hint)$/]", message: TOOLTIP_ONLY_SHARED },
+  { selector: ":matches(FunctionDeclaration, ClassDeclaration, VariableDeclarator)[id.name=/^(Tooltip|Hint)$/]", message: TOOLTIP_ONLY_SHARED },
+  { selector: "JSXAttribute[name.name='className'] Literal[value=/(^|\\s)tooltip(\\s|$|__|--)/]", message: TOOLTIP_ONLY_SHARED },
+  { selector: "JSXAttribute[name.name='className'] TemplateElement[value.raw=/(^|\\s)tooltip(\\s|$|__|--)/]", message: TOOLTIP_ONLY_SHARED },
+];
+
 export default tseslint.config(
   { ignores: ["dist", "node_modules", "e2e"] },
   {
@@ -27,12 +43,12 @@ export default tseslint.config(
     },
   },
   {
-    // ST-068: every help button is the shared HelpTip of @nodestro/ui-core with the studio's help registry
-    // (lib/platformHelp.tsx). The studio's own help tooltip is gone; this keeps it from coming back (tested in
-    // src/lint/helpGuard.test.ts).
+    // ST-068: every help button is the shared HelpTip and every tooltip the shared Tooltip of @nodestro/ui-core,
+    // with the studio's help registry (lib/platformHelp.tsx). The studio's own help tooltip, Tooltip and Hint are
+    // gone; this keeps them from coming back (tested in src/lint/helpGuard.test.ts).
     files: ["src/**/*.{ts,tsx}"],
     rules: {
-      "no-restricted-syntax": ["error", ...HELP_GUARD],
+      "no-restricted-syntax": ["error", ...HELP_GUARD, ...TOOLTIP_GUARD],
     },
   },
 );

@@ -1,3 +1,4 @@
+import { Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Columns2, FileDown, FileUp, Rows3, Trash2 } from "lucide-react";
 import type { TFunction } from "i18next";
@@ -10,7 +11,7 @@ import { RUNS_MAX, RUNS_PAGE, useRunList, useWorkflows } from "../api/hooks";
 import type { RunStatus, RunSummary, WorkflowSummary } from "../api/types";
 import { toast } from "../components/toast";
 import { ListProblemsChip } from "../runs/RunProblems";
-import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Hint, PageHeader, Select, Spinner, StatusBadge } from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, EmptyState, PageHeader, Select, Spinner, StatusBadge } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { RunReason } from "../runs/RunReason";
 import { changedText, formatCost, formatDate, formatDuration, formatNumber, formatTokens } from "../lib/format";
@@ -182,7 +183,7 @@ export function ExecutionsPage() {
               data-testid="trace-file"
               onChange={onFiles}
             />
-            <Hint id="runs.compare">
+            <Tooltip help="runs.compare">
               <Button
                 icon={Columns2}
                 disabled={picked.length !== 2}
@@ -190,12 +191,12 @@ export function ExecutionsPage() {
               >
                 {t("compare.button", { count: picked.length })}
               </Button>
-            </Hint>
-            <Hint id="runs.importTrace">
+            </Tooltip>
+            <Tooltip help="runs.importTrace">
               <Button icon={FileUp} busy={importing.isPending} onClick={() => fileInput.current?.click()}>
                 {t("executions.import")}
               </Button>
-            </Hint>
+            </Tooltip>
           </>
         }
       />
@@ -266,11 +267,11 @@ export function ExecutionsPage() {
                           {run.workflow_name}
                         </Link>
                         {run.imported_at ? (
-                          <Hint id="runs.imported">
+                          <Tooltip help="runs.imported">
                             <span>
                               <Badge icon={FileDown}>{t("executions.importedBadge")}</Badge>
                             </span>
-                          </Hint>
+                          </Tooltip>
                         ) : null}
                         {run.trigger && run.trigger !== "manual" ? <Badge>{t(`flow.trigger.${run.trigger}`)}</Badge> : null}
                       </div>

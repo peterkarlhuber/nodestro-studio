@@ -1,3 +1,4 @@
+import { Tooltip } from "@nodestro/ui-core";
 import {
   ArrowUpRight,
   BookOpen,
@@ -20,7 +21,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import type { AssistantStep, AttachmentKind, ChatMessage, ContextRef, Handover } from "../api/types";
 import { ReasoningView } from "../components/ReasoningView";
-import { Button, Callout, Hint } from "../components/ui";
+import { Button, Callout } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { formatTokens } from "../lib/format";
 import { SentFileChips } from "./AssistantFiles";
@@ -106,7 +107,7 @@ function HandoverCard({ handover }: { handover: Handover }) {
       </div>
       <p className="small handover-card__text">{handover.instruction}</p>
       <p className="muted small">{t("assistant.handover.note")}</p>
-      <Hint id="assistant.handover">
+      <Tooltip help="assistant.handover">
         <Button
           size="sm"
           variant="primary"
@@ -118,7 +119,7 @@ function HandoverCard({ handover }: { handover: Handover }) {
         >
           {t(`assistant.handover.${target}.open`)}
         </Button>
-      </Hint>
+      </Tooltip>
     </div>
   );
 }
@@ -127,7 +128,7 @@ function UsageLine({ message }: { message: ChatMessage }) {
   const { t } = useTranslation();
   if (!message.usage) return null;
   return (
-    <Hint id="assistant.cost">
+    <Tooltip help="assistant.cost">
       <span className="chat-usage" tabIndex={0}>
         {t("assistant.message.usage", {
           tokens: formatTokens(message.usage.total_tokens),
@@ -135,7 +136,7 @@ function UsageLine({ message }: { message: ChatMessage }) {
         })}
         {message.estimated ? ` · ${t("assistant.message.estimated")}` : ""}
       </span>
-    </Hint>
+    </Tooltip>
   );
 }
 

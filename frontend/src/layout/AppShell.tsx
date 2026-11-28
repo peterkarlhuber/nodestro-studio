@@ -1,3 +1,4 @@
+import { Tooltip } from "@nodestro/ui-core";
 import {
   Activity,
   BookMarked,
@@ -40,7 +41,7 @@ import { DesktopSignOut, LoginProblemNotice, ReadOnlyNotice, UserMenu } from "..
 import { BrandLogo, BrandMark } from "../components/BrandLogo";
 import { Toaster } from "../components/toast";
 import { MissingModelHost } from "../missingModel/MissingModelDialog";
-import { Hint, Segmented, Tooltip } from "../components/ui";
+import { Segmented } from "../components/ui";
 import { isLanguage, setLanguage, storedLanguage } from "../i18n";
 import { setDefaultModel } from "../lib/defaults";
 import { anyProviderConfigured, missingProviders, providerOf } from "../lib/providers";
@@ -277,7 +278,7 @@ export function AppShell() {
               <KeyRound size={11} aria-hidden /> <span className="topbar__badge-label">{providerChip}</span>
             </Link>
           ) : null}
-          <Hint id="assistant.open">
+          <Tooltip help="assistant.open">
             <button
               type="button"
               className={`assistant-toggle ${assistantOpen ? "active" : ""}`}
@@ -289,7 +290,7 @@ export function AppShell() {
               <Sparkles size={15} aria-hidden />
               <span className="assistant-toggle__label">{t("assistant.title")}</span>
             </button>
-          </Hint>
+          </Tooltip>
           <NotificationBell />
           <SettingsEntry />
           <UserMenu />

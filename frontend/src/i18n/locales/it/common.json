@@ -23,7 +23,6 @@
   "removeItem": "Rimuovi {{name}}",
   "docsFor": "Documentazione: {{title}}",
   "readInDocs": "Leggi nella documentazione",
-  "moreInDocs": "Altro nella documentazione →",
   "help": "Aiuto",
   "helpFor": "Aiuto: {{label}}",
   "technicalDetails": "Dettagli tecnici",

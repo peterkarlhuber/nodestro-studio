@@ -1,3 +1,4 @@
+import { Tooltip } from "@nodestro/ui-core";
 import { useQueryClient } from "@tanstack/react-query";
 import { Ban, Check, FilePlus2, PencilRuler, RotateCcw, Send, Sparkles, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -8,7 +9,7 @@ import { api } from "../api/client";
 import { keys, useSettings } from "../api/hooks";
 import type { ArchitectJob, ArchitectMode, ToolDraft, WorkflowIn } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, Field, Hint, Modal, Segmented, TextArea, Toggle } from "../components/ui";
+import { Button, Callout, Field, Modal, Segmented, TextArea, Toggle } from "../components/ui";
 import { currentLanguage } from "../i18n";
 import { ErrorText, ProblemText, ProviderSetupLink, codedError } from "../lib/errors";
 import { formatCost } from "../lib/format";
@@ -290,11 +291,11 @@ export function ArchitectDialog({
         );
       case "progress":
         return (
-          <Hint id="architect.cancel">
+          <Tooltip help="architect.cancel">
             <Button variant="danger" icon={Ban} onClick={() => void cancel()}>
               {t("architect.progress.cancel")}
             </Button>
-          </Hint>
+          </Tooltip>
         );
       case "question":
         return (
@@ -349,11 +350,11 @@ export function ArchitectDialog({
             <Button variant="ghost" icon={RotateCcw} onClick={backToForm}>
               {t("architect.review.refine")}
             </Button>
-            <Hint id={job?.mode === "revise" ? "architect.applyRevision" : "architect.acceptCreate"}>
+            <Tooltip help={job?.mode === "revise" ? "architect.applyRevision" : "architect.acceptCreate"}>
               <Button variant="primary" icon={Check} busy={busy} onClick={() => void accept()}>
                 {job?.mode === "revise" ? t("architect.accept.apply") : t("architect.accept.create")}
               </Button>
-            </Hint>
+            </Tooltip>
           </>
         );
       default:

@@ -2,6 +2,7 @@
 // stays out, the generated ZIP and the export history. An AI-written guide is optional and only
 // written on request (it costs one request and has to be reviewed before it can be included).
 
+import { Tooltip } from "@nodestro/ui-core";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Download, PackageOpen, Sparkles, Trash2, X } from "lucide-react";
 import { useState } from "react";
@@ -19,18 +20,7 @@ import type {
 } from "../api/types";
 import { toast } from "../components/toast";
 import { Output } from "../components/Markdown";
-import {
-  Badge,
-  Button,
-  Callout,
-  ConfirmIconButton,
-  Field,
-  Hint,
-  Section,
-  Segmented,
-  Select,
-  Spinner,
-} from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, Field, Section, Segmented, Select, Spinner } from "../components/ui";
 import { currentLanguage, LANGUAGE_NAMES, LANGUAGES } from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatCost, formatDate } from "../lib/format";
@@ -491,7 +481,7 @@ export function ApiExport({
       </Section>
 
       <div>
-        <Hint id="publish.export">
+        <Tooltip help="publish.export">
           <Button
             variant="primary"
             icon={PackageOpen}
@@ -504,7 +494,7 @@ export function ApiExport({
               ? t("publish.export.portable.build")
               : t("publish.export.create")}
           </Button>
-        </Hint>
+        </Tooltip>
       </div>
       <ExportJobs
         publicationId={publication.id}

@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { HelpTip, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   BookOpen,
@@ -46,21 +46,7 @@ import { CodeEditor } from "../components/CodeEditor";
 import { ModelPicker, providerLabel, useModelHint } from "../components/ModelPicker";
 import { AGENT_ICONS, AGENT_ICON_NAMES, agentIcon } from "../components/icons";
 import { toast } from "../components/toast";
-import {
-  Button,
-  Callout,
-  Chip,
-  Field,
-  Hint,
-  IconButton,
-  Section,
-  type SectionStatus,
-  Segmented,
-  Select,
-  TextArea,
-  TextInput,
-  Toggle,
-} from "../components/ui";
+import { Button, Callout, Chip, Field, IconButton, Section, type SectionStatus, Segmented, Select, TextArea, TextInput, Toggle } from "../components/ui";
 import { AgentTestDialog } from "./AgentTestDialog";
 import { DesignAgentDialog } from "./DesignAgentDialog";
 import { InputPreview } from "./InputPreview";
@@ -318,16 +304,16 @@ export function AgentForm({
       </div>
 
       <div className="inspector__actions">
-        <Hint id="agent.design">
+        <Tooltip help="agent.design">
           <Button size="sm" icon={Sparkles} onClick={() => setDesignOpen(true)}>
             {t("agent.designWithAi")}
           </Button>
-        </Hint>
-        <Hint id="agent.test">
+        </Tooltip>
+        <Tooltip help="agent.test">
           <Button size="sm" icon={FlaskConical} onClick={() => setTestOpen(true)}>
             {t("agentTest.button")}
           </Button>
-        </Hint>
+        </Tooltip>
         {actions}
       </div>
 
@@ -875,11 +861,11 @@ function MemorySection({ agent, update, onAssistant, ui }: SectionProps & { onAs
             </Button>
           </div>
           <div className="row-between">
-            <Hint id="agent.memoryAssistant">
+            <Tooltip help="agent.memoryAssistant">
               <Button size="sm" icon={Sparkles} onClick={onAssistant}>
                 {t("agent.memory.setUpWithAi")}
               </Button>
-            </Hint>
+            </Tooltip>
             {agent.memory.space ? (
               <Link className="small" to={`/memory?space=${encodeURIComponent(agent.memory.space)}`}>
                 {t("agent.memory.viewContent")}

@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { HelpTip, Tooltip } from "@nodestro/ui-core";
 import type { TFunction } from "i18next";
 import { Bot, Flag, GitBranch, Hand, Network, PanelLeftClose, PanelLeftOpen, Play, Sparkles, Users, Workflow } from "lucide-react";
 import { type DragEvent, type Ref, memo, useState } from "react";
@@ -9,7 +9,6 @@ import type { AgentConfig, ContractFieldSummary, NodeType } from "../api/types";
 import { agentIcon } from "../components/icons";
 import { descriptionLabel } from "../components/Markdown";
 import { useModelName } from "../components/ModelPicker";
-import { Tooltip } from "../components/Tooltip";
 import { IconButton, TextInput } from "../components/ui";
 import { helpEntry } from "../lib/help";
 import { DRAG_TYPE, type DragPayload } from "./Canvas";
@@ -140,7 +139,7 @@ function PaletteView({ onDesign, panelRef }: { onDesign: () => void; panelRef?: 
       </div>
       <div className="palette__items">
         <Item compact={compact} icon={Bot} label={t("editor.nodes.agent")} hint={t("editor.palette.emptyAgent")} payload={add("agent")} />
-        <Tooltip content={compact ? `${t("editor.palette.describe")}: ${design.text}` : design.text} doc={design.doc}>
+        <Tooltip content={compact ? `${t("editor.palette.describe")}: ${design.text}` : design.text} help="workflow.paletteDesign">
           <button type="button" className="palette__item" onClick={onDesign} aria-label={compact ? t("editor.palette.describe") : undefined}>
             <span className="palette__icon palette__icon--brand">
               <Sparkles size={14} aria-hidden />

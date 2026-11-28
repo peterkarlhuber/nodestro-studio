@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { HelpTip, Tooltip } from "@nodestro/ui-core";
 import {
   AlertTriangle,
   BookMarked,
@@ -20,7 +20,7 @@ import type { SkillSelection } from "../api/skills";
 import type { AdoptSource, KnowledgeProposal, KnowledgeRef, NodeRun, Run, WorkflowNode } from "../api/types";
 import { AdoptDialog } from "../components/AdoptDialog";
 import { Output, outputFieldsOf, stepFieldsOf } from "../components/Markdown";
-import { Badge, Button, Callout, StatusBadge, Tooltip } from "../components/ui";
+import { Badge, Button, Callout, StatusBadge } from "../components/ui";
 import { ApprovalCard } from "../runs/ApprovalCard";
 import { ToolOutputProblem } from "../runs/ToolOutputProblem";
 import { NodeToolApprovals, ToolCallApprovalNote } from "../runs/ToolApprovalCard";

@@ -5,11 +5,11 @@
 // While dragging only the CSS variable on the layout changes (no re-render per pixel); the final width is stored
 // when the pointer is released. Escape during a drag puts the edge back where it was.
 
+import { Tooltip } from "@nodestro/ui-core";
 import { GripVertical } from "lucide-react";
 import { type KeyboardEvent, type PointerEvent, type RefObject, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Tooltip } from "../components/Tooltip";
 import { LARGE_STEP, SETTINGS_WIDTH, SETTINGS_WIDTH_VARIABLE, STEP, clampWidth } from "./settingsWidth";
 
 interface Props {

@@ -1,8 +1,9 @@
+import { Tooltip } from "@nodestro/ui-core";
 import { Flag, ShieldAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import type { ExampleFeature, ExampleSummary } from "../api/types";
-import { Badge, Hint } from "../components/ui";
+import { Badge } from "../components/ui";
 import { CATEGORY_ICONS, PATTERN_ICONS } from "./examples";
 
 /** Features worth a badge on the card (the building blocks beyond plain agents). */
@@ -72,19 +73,19 @@ export function ExampleCard({
           {example.teams ? <> · {t("library.teams", { count: example.teams })}</> : null} · {t(`library.level.${example.level}`)}
         </span>
         <div className="row-gap">
-          <Hint id={`library.${example.pattern}`}>
+          <Tooltip help={`library.${example.pattern}`}>
             <span className="example-card__pattern" tabIndex={0}>
               <PatternIcon size={12} aria-hidden /> {t(`library.pattern.${example.pattern}`)}
             </span>
-          </Hint>
+          </Tooltip>
           {example.sensitive ? (
-            <Hint id="library.sensitive">
+            <Tooltip help="library.sensitive">
               <span tabIndex={0}>
                 <Badge tone="warning" icon={ShieldAlert}>
                   {t("library.sensitive")}
                 </Badge>
               </span>
-            </Hint>
+            </Tooltip>
           ) : null}
         </div>
       </footer>

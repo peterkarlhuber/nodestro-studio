@@ -9,13 +9,14 @@
 //
 // Workflows without an origin (made otherwise, or from a server before RT-055) show neither.
 
+import { Tooltip } from "@nodestro/ui-core";
 import { CloudOff } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
 import { useExample } from "../api/hooks";
 import type { InputField, WorkflowOrigin } from "../api/types";
-import { Badge, Tooltip } from "../components/ui";
+import { Badge } from "../components/ui";
 
 /** The origin when it is a copy of an example the interface understands; null otherwise. */
 export function exampleOrigin(origin: WorkflowOrigin | null | undefined): WorkflowOrigin | null {

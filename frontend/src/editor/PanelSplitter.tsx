@@ -4,10 +4,10 @@
 // While dragging, only a CSS variable on the editor changes, so neither the canvas nor the panels
 // re-render on every pixel; the final size goes to the layout store when the pointer is released.
 
+import { Tooltip } from "@nodestro/ui-core";
 import { type KeyboardEvent, type PointerEvent, type RefObject, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Tooltip } from "../components/Tooltip";
 import { CANVAS_MIN, type EditorPanel, PANEL_BOUNDS, PANEL_SHARE, clampSize, useEditorLayout } from "./layout";
 
 /** The CSS variable on the editor that holds each panel's size. */

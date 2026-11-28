@@ -134,10 +134,11 @@ Rules:
 - **Keyboard:** everything that can be done with the pointer has a keyboard path; on the canvas, steps are connected
   through *Connections* in the inspector.
 - **Touch:** interactive targets are at least 24×24px, and 44px high under `pointer: coarse` where space allows.
-- **Tooltips:** use the shared `HelpTip` of `@nodestro/ui-core` for help icons and `Tooltip`/`Hint`
-  (components/Tooltip.tsx) for buttons and values, never a custom bubble. It renders in
-  the top layer (above modal dialogs), stays inside the window, opens on hover, keyboard focus and tap, closes on
-  Escape without closing a dialog, and never traps the focus. Help text explains effect, prerequisites and
+- **Tooltips:** use the shared `HelpTip` of `@nodestro/ui-core` for help icons and its `Tooltip` for buttons, badges
+  and values (`<Tooltip help="<id>">` for a help id's text and link), never a custom bubble (`npm run lint` refuses
+  one). Both render in the top layer (above modal dialogs, inside the open dialog), stay inside the window, open on
+  hover and keyboard focus (a help icon also on tap), and never trap the focus. Escape closes a help panel without
+  closing a dialog; it hides a tooltip and still reaches the dialog. Help text explains effect, prerequisites and
   consequences instead of repeating the label (see `docs/design/SETTINGS_PAGE.md`).
 - **Resizable areas:** a draggable edge is a focusable `role="separator"` with `aria-valuenow/min/max`, arrow keys
   (Shift for larger steps), Home/End and a double-click reset (editor panels, settings width).

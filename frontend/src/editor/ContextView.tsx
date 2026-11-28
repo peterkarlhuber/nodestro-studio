@@ -2,12 +2,13 @@
 // of its context (examples, tools, knowledge, memory, output format). Used for the preview in the
 // inspector (before a run) and for the "Context" tab of a finished run.
 
+import { Tooltip } from "@nodestro/ui-core";
 import { BookOpen, Brain, FileText, MessagesSquare, ShieldCheck, Wrench } from "lucide-react";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { ExampleMessage, KnowledgeConfig, KnowledgeRef, OutputConfig, PromptSegment } from "../api/types";
-import { Badge, Chip, Tooltip } from "../components/ui";
+import { Badge, Chip } from "../components/ui";
 import { problemText } from "../lib/errors";
 import { redact } from "../lib/redact";
 

@@ -1,9 +1,10 @@
+import { Tooltip } from "@nodestro/ui-core";
 import { AlertTriangle, Lightbulb, Plus, RefreshCw, X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { AttachRequest, Attachment, Conversation } from "../api/types";
-import { Button, Hint, IconButton } from "../components/ui";
+import { Button, IconButton } from "../components/ui";
 import { KIND_ICON } from "./MessageView";
 import { SnapshotDialog } from "./SnapshotDialog";
 import { type ContextOffer, draftFingerprint, offerKey, useAssistant } from "./store";
@@ -58,18 +59,18 @@ function Suggestions({
             </span>
             <span className="chat-suggestion__actions">
               {draftOnly(offer) ? null : (
-                <Hint id="assistant.suggestion">
+                <Tooltip help="assistant.suggestion">
                   <Button size="sm" icon={Plus} busy={busy} onClick={() => onAttach(offerRequest(offer, false))} data-testid="suggestion-add">
                     {offer.dirty ? t("assistant.suggest.addSaved") : t("assistant.suggest.add")}
                   </Button>
-                </Hint>
+                </Tooltip>
               )}
               {offer.dirty && offer.draft ? (
-                <Hint id="assistant.draft">
+                <Tooltip help="assistant.draft">
                   <Button size="sm" icon={Plus} busy={busy} onClick={() => onAttach(offerRequest(offer, true))} data-testid="suggestion-add-draft">
                     {t("assistant.suggest.addDraft")}
                   </Button>
-                </Hint>
+                </Tooltip>
               ) : null}
               <IconButton icon={X} label={t("assistant.suggest.ignore")} onClick={() => useAssistant.getState().dismiss(offer)} />
             </span>
@@ -117,7 +118,7 @@ function AttachmentChip({
       ) : null}
       {missing ? <span className="chat-tag chat-tag--danger">{t("assistant.attachments.missing")}</span> : null}
       {(changed || attachment.variant === "draft") && !missing ? (
-        <Hint id="assistant.refresh">
+        <Tooltip help="assistant.refresh">
           <button
             type="button"
             className="chat-attachment__action"
@@ -127,7 +128,7 @@ function AttachmentChip({
           >
             <RefreshCw size={11} aria-hidden />
           </button>
-        </Hint>
+        </Tooltip>
       ) : null}
       <button
         type="button"

@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { HelpTip, Tooltip } from "@nodestro/ui-core";
 import { useQuery } from "@tanstack/react-query";
 import { Download, FileDown, FlaskConical, History, Pencil, ShieldCheck } from "lucide-react";
 import { useMemo, useState, type ReactNode } from "react";
@@ -14,8 +14,7 @@ import { TestCaseFromRunDialog } from "../automation/TestCaseFromRunDialog";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { Output, outputFieldsOf, stepFieldsOf } from "../components/Markdown";
-import { Tooltip } from "../components/Tooltip";
-import { Button, Callout, Hint, PageHeader, Spinner, Stat, StatusBadge } from "../components/ui";
+import { Button, Callout, PageHeader, Spinner, Stat, StatusBadge } from "../components/ui";
 import { prefersReducedMotion } from "../lib/motion";
 import { NodeRunDetails, startFiles } from "../editor/RunDetails";
 import { liveUsage, runWaitsForBudget, runWaitsForToolApproval, waitsForToolApproval } from "../editor/store";
@@ -165,25 +164,25 @@ export function RunDetailPage() {
           <>
             <DiscussButton offer={offer} />
             {resumable ? (
-              <Hint id="flow.resume">
+              <Tooltip help="flow.resume">
                 <Button variant="primary" icon={History} onClick={() => setResumeOpen(true)}>
                   {t("flow.resume.button")}
                 </Button>
-              </Hint>
+              </Tooltip>
             ) : null}
             {proposable ? (
-              <Hint id="automation.caseFromRun">
+              <Tooltip help="automation.caseFromRun">
                 <Button icon={FlaskConical} onClick={() => setCaseOpen(true)} data-testid="case-from-run-open">
                   {t("automation.benchmark.fromRun.button")}
                 </Button>
-              </Hint>
+              </Tooltip>
             ) : null}
             {live || paused ? <CancelRunButton runId={data.id} /> : null}
-            <Hint id="runs.exportTrace">
+            <Tooltip help="runs.exportTrace">
               <Button variant="ghost" icon={Download} onClick={() => setExportOpen(true)}>
                 {t("runs.detail.exportTrace")}
               </Button>
-            </Hint>
+            </Tooltip>
             {imported ? null : (
               <Link className="nd-button nd-button--default nd-button--md" to={`/workflows/${data.workflow_id}`}>
                 <Pencil size={15} aria-hidden /> {t("runs.detail.openInEditor")}

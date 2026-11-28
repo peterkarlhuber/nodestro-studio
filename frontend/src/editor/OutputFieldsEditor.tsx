@@ -1,10 +1,9 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { HelpTip, Tooltip } from "@nodestro/ui-core";
 import type { TFunction } from "i18next";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import type { OutputField, OutputFieldSource, OutputFieldType } from "../api/types";
-import { Tooltip } from "../components/Tooltip";
 import { Button, IconButton, Select, TextInput } from "../components/ui";
 import { helpEntry } from "../lib/help";
 import { fieldNameProblem } from "../lib/validation";

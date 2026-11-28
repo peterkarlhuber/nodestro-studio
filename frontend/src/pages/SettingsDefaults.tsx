@@ -8,12 +8,13 @@
 //   "Reset" puts the default into the input and the person saves as usual; elsewhere "Reset" saves at once, exactly
 //   like changing the control.
 
+import { Tooltip } from "@nodestro/ui-core";
 import { RotateCcw } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { useSettingsDefaults } from "../api/hooks";
 import type { SettingsDefaults } from "../api/types";
-import { Badge, Tooltip } from "../components/ui";
+import { Badge } from "../components/ui";
 
 export type DefaultSetting = keyof SettingsDefaults;
 

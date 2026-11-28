@@ -1,3 +1,4 @@
+import { Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Copy, Diamond, FilePlus2, FileUp, Network, Plus, Sparkles, Trash2 } from "lucide-react";
 import { type ChangeEvent, useRef, useState } from "react";
@@ -21,23 +22,7 @@ import {
 } from "../components/Organize";
 import { toast, useToasts } from "../components/toast";
 import { ExampleGallery } from "../library/ExampleGallery";
-import {
-  Badge,
-  Button,
-  Callout,
-  EmptyState,
-  Field,
-  Hint,
-  IconButton,
-  Modal,
-  PageHeader,
-  Section,
-  Segmented,
-  Spinner,
-  StatusBadge,
-  TextArea,
-  TextInput,
-} from "../components/ui";
+import { Badge, Button, Callout, EmptyState, Field, IconButton, Modal, PageHeader, Section, Segmented, Spinner, StatusBadge, TextArea, TextInput } from "../components/ui";
 import { newNode } from "../lib/defaults";
 import { ErrorText, LocalError } from "../lib/errors";
 import { changedText } from "../lib/format";
@@ -226,11 +211,11 @@ export function WorkflowsPage() {
             <input ref={fileInput} type="file" accept="application/json,.json" hidden onChange={onImport} />
             {canEdit ? (
               <>
-                <Hint id="workflow.import">
+                <Tooltip help="workflow.import">
                   <Button icon={FileUp} onClick={() => fileInput.current?.click()}>
                     {t("common.import")}
                   </Button>
-                </Hint>
+                </Tooltip>
                 <Button variant="primary" icon={Plus} onClick={() => setCreateOpen(true)}>
                   {t("workflows.new")}
                 </Button>

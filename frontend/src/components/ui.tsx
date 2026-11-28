@@ -1,6 +1,6 @@
 // Small, token-styled building blocks used across the app.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { HelpTip, Tooltip } from "@nodestro/ui-core";
 import {
   AlertTriangle,
   Ban,
@@ -49,10 +49,8 @@ import { Link } from "react-router-dom";
 import type { NodeStatus, RunStatus } from "../api/types";
 import { useDocumentTitle } from "../lib/documentTitle";
 import { STATUS_TONE, type Tone } from "../lib/format";
-import { type HelpId, docPath, helpEntry } from "../lib/help";
-import { Tooltip } from "./Tooltip";
+import { type HelpId, docPath } from "../lib/help";
 
-export { Tooltip };
 
 type ButtonVariant = "default" | "primary" | "ghost" | "danger";
 
@@ -936,17 +934,6 @@ export function DocLink({ to, label }: { to: string; label?: string }) {
       <Link to={docPath(to)} className="doc-link" aria-label={text}>
         <BookOpen size={14} aria-hidden />
       </Link>
-    </Tooltip>
-  );
-}
-
-/** Wraps a button or value with a help text (help.<id> in the language files; hover and keyboard focus). */
-export function Hint({ id, children }: { id: HelpId; children: Parameters<typeof Tooltip>[0]["children"] }) {
-  const { t } = useTranslation();
-  const help = helpEntry(t, id);
-  return (
-    <Tooltip content={help.text} doc={help.doc}>
-      {children}
     </Tooltip>
   );
 }

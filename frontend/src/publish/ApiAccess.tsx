@@ -1,5 +1,6 @@
 // Who may call the API (keys with permissions) and from where (this computer, or the network).
 
+import { Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Ban, KeyRound, PlugZap, RefreshCw, ShieldAlert, Trash2, Wifi } from "lucide-react";
 import { useState } from "react";
@@ -9,7 +10,7 @@ import { useAccess } from "../api/access";
 import { api } from "../api/client";
 import type { ApiOverview, ApiScope, NetworkConfig, NewApiKey } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, Field, Hint, IconButton, Modal, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, Field, IconButton, Modal, TextInput, Toggle } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 import { apiKeys } from "./ApiDialog";
@@ -201,11 +202,11 @@ export function ApiAccess({ overview, onChanged }: { overview: ApiOverview; onCh
             {network.running ? t("publish.network.running", { port: network.port }) : t("publish.network.off")}
           </Badge>
           {network.tls ? <Badge tone="success">{t("publish.network.tls")}</Badge> : null}
-          <Hint id="publish.network">
+          <Tooltip help="publish.network">
             <Button size="sm" variant="ghost" onClick={() => setNetworkOpen(true)} data-testid="api-network-settings">
               {t("publish.network.configure")}
             </Button>
-          </Hint>
+          </Tooltip>
         </div>
         {network.error_code ? (
           <Callout tone="danger">

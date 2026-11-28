@@ -1,3 +1,4 @@
+import { Tooltip } from "@nodestro/ui-core";
 import { Handle, type NodeProps, Position } from "@xyflow/react";
 import { AlertTriangle, FileText, Flag, GitBranch, Hand, Network, Play, ShieldCheck, Workflow, XCircle } from "lucide-react";
 import { type ReactNode, memo } from "react";
@@ -6,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import type { NodeRun, WorkflowNode } from "../api/types";
 import { useMeta, useWorkflows } from "../api/hooks";
 import { agentIcon } from "../components/icons";
-import { StatusBadge, Tooltip } from "../components/ui";
+import { StatusBadge } from "../components/ui";
 import { WaitingForYouBadge } from "../runs/WaitingForYouBadge";
 import { formatTokens } from "../lib/format";
 import { waitsForToolApproval } from "./store";

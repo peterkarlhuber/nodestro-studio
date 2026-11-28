@@ -1,4 +1,4 @@
-import { HelpTip } from "@nodestro/ui-core";
+import { HelpTip, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, ExternalLink, FileImage, FileText, Search, Trash2, Upload } from "lucide-react";
 import { type DragEvent, useEffect, useRef, useState } from "react";
@@ -13,11 +13,10 @@ import { DiscussIcon } from "../assistant/DiscussButton";
 import { ExportButton, ImportButton } from "../components/ExchangeDialog";
 import { toast } from "../components/toast";
 import { DeleteUsed, UsedByList, useUsedBy } from "../components/UsedBy";
-import { Badge, Button, Callout, EmptyState, Field, Hint, PageHeader, Spinner, TextInput, Tooltip } from "../components/ui";
+import { Badge, Button, Callout, EmptyState, Field, PageHeader, Spinner, TextInput } from "../components/ui";
 import i18n from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatNumber, relativeTime } from "../lib/format";
-import { helpEntry } from "../lib/help";
 import { KNOWLEDGE_ACCEPT, SEARCH_QUERY_CHARS, checkSearchQuery, knowledgeSearchError } from "../lib/knowledge";
 
 const NONE = "\u0000none";
@@ -93,11 +92,11 @@ export function KnowledgePage() {
             {/* N-14: the selected collection as an exchange file, and a collection from such a file. */}
             <ExportButton kind="collection" collection={collection && collection !== NONE ? collection : undefined} />
             {canEdit ? <ImportButton kind="collection" onImported={() => void refresh()} /> : null}
-            <Hint id="knowledge.upload">
+            <Tooltip help="knowledge.upload">
               <Button variant="primary" icon={Upload} busy={upload.isPending} onClick={() => input.current?.click()}>
                 {t("knowledge.upload")}
               </Button>
-            </Hint>
+            </Tooltip>
           </div>
         }
       />
@@ -267,7 +266,6 @@ function KnowledgeRow({
   usersLoaded: boolean;
 }) {
   const { t } = useTranslation();
-  const chunksHelp = helpEntry(t, "knowledge.chunks");
   const [description, setDescription] = useState(file.description);
   const [collection, setCollection] = useState(file.collection ?? "");
   const save = useMutation({
@@ -317,7 +315,7 @@ function KnowledgeRow({
         <span className="muted small">
           {formatBytes(file.size)} · {file.media_type}
           {" · "}
-          <Tooltip content={chunksHelp.text} doc={chunksHelp.doc}>
+          <Tooltip help="knowledge.chunks">
             <span className="has-tip" tabIndex={0}>
               {file.chunks
                 ? t("knowledge.chunksIndexed", { count: file.chunks })
@@ -389,15 +387,15 @@ function DocumentInfo({ file, onChanged }: { file: KnowledgeFile; onChanged: () 
   return (
     <div className="row-gap small">
       {file.source_format ? (
-        <Hint id="files.formats">
+        <Tooltip help="files.formats">
           <span tabIndex={0}>
             <Badge tone="running">{t("knowledge.converted", { format: file.source_format.toUpperCase() })}</Badge>
           </span>
-        </Hint>
+        </Tooltip>
       ) : null}
       {file.scanned ? (
         <>
-          <Hint id="files.ocr">
+          <Tooltip help="files.ocr">
             <span tabIndex={0}>
               <Badge tone={file.ocr === "done" ? (file.ocr_uncertain ? "warning" : "success") : "warning"}>
                 {file.ocr === "done"
@@ -407,7 +405,7 @@ function DocumentInfo({ file, onChanged }: { file: KnowledgeFile; onChanged: () 
                     : t("knowledge.ocr.scan")}
               </Badge>
             </span>
-          </Hint>
+          </Tooltip>
           {file.ocr !== "done" ? (
             settings.data?.ocr_enabled && settings.data.ocr_available ? (
               <Button size="sm" busy={recognise.isPending} onClick={() => recognise.mutate()}>

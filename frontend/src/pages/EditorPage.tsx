@@ -1,3 +1,4 @@
+import { Tooltip } from "@nodestro/ui-core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Download, History, Play, Plug, RotateCcw, Save, Sparkles } from "lucide-react";
 import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -18,7 +19,7 @@ import type { ArchitectJob, Run, Workflow } from "../api/types";
 import { MountWhenOpened } from "../components/MountWhenOpened";
 import { toast } from "../components/toast";
 import { UnsavedChangesModal } from "../components/UnsavedChanges";
-import { Button, DisabledReason, DocLink, Hint, MenuButton, Modal, Spinner } from "../components/ui";
+import { Button, DisabledReason, DocLink, MenuButton, Modal, Spinner } from "../components/ui";
 import { Canvas, type CanvasIssues } from "../editor/Canvas";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { Inspector } from "../editor/Inspector";
@@ -455,14 +456,14 @@ export function EditorPage() {
           <div className="title-actions">
             <DiscussButton offer={offer} />
             {dirty ? (
-              <Hint id="workflow.discard">
+              <Tooltip help="workflow.discard">
                 <Button icon={RotateCcw} variant="ghost" onClick={() => setDiscardOpen(true)}>
                   <span className="title-actions__label">{t("common.discard")}</span>
                 </Button>
-              </Hint>
+              </Tooltip>
             ) : null}
             {editDenied ? null : (
-              <Hint id="architect.open">
+              <Tooltip help="architect.open">
                 <Button
                   icon={Sparkles}
                   variant="ghost"
@@ -474,13 +475,13 @@ export function EditorPage() {
                 >
                   <span className="title-actions__label">{t("architect.button")}</span>
                 </Button>
-              </Hint>
+              </Tooltip>
             )}
-            <Hint id="publish.open">
+            <Tooltip help="publish.open">
               <Button icon={Plug} variant="ghost" onClick={() => setApiOpen(true)} data-testid="open-api">
                 <span className="title-actions__label">{t("publish.button")}</span>
               </Button>
-            </Hint>
+            </Tooltip>
             {/* Secondary actions share one menu, so the title bar keeps Save and Start in one row. */}
             <MenuButton
               label={t("editor.page.moreActions")}
@@ -489,11 +490,11 @@ export function EditorPage() {
                 { label: t("editor.page.exportFile"), icon: Download, onSelect: () => void exportWorkflow(), testId: "export-workflow" },
               ]}
             />
-            <Hint id="workflow.save">
+            <Tooltip help="workflow.save">
               <Button icon={Save} busy={saving} disabled={!dirty || Boolean(editDenied)} title={editDenied ?? undefined} onClick={() => void save().then((ok) => ok && toast.success(t("common.saved")))}>
                 {t("common.save")}
               </Button>
-            </Hint>
+            </Tooltip>
             <DisabledReason
               reason={runDenied ?? (!liveRunId ? startReason : null)}
               action={

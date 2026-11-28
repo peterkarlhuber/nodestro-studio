@@ -1,7 +1,7 @@
+import { Tooltip } from "@nodestro/ui-core";
 import { Hand } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-import { Tooltip } from "../components/ui";
 
 /** The badge of a step or run that waits for a person to decide one of its tool calls. */
 export function WaitingForYouBadge() {

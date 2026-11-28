@@ -1,5 +1,6 @@
 // Status of the workflow's API, publishing a saved version, published versions and rollback.
 
+import { Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CheckCircle2, Power, RotateCcw, Rocket, Save, ShieldAlert, ShieldCheck, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +11,7 @@ import { api } from "../api/client";
 import type { ApiOverview } from "../api/types";
 import { WorkflowTestStatus } from "../automation/WorkflowTestStatus";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, Hint, Modal, Spinner, StatusBadge, TextArea, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Callout, Field, Modal, Spinner, StatusBadge, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 import type { ApiTab } from "./ApiDialog";
@@ -154,11 +155,11 @@ export function ApiOverviewPanel({
           ) : null}
           <div className="row-gap">
             {publication.enabled ? (
-              <Hint id="publish.disable">
+              <Tooltip help="publish.disable">
                 <Button icon={Power} variant="ghost" onClick={() => setOffOpen(true)}>
                   {t("publish.overview.switchOff")}
                 </Button>
-              </Hint>
+              </Tooltip>
             ) : (
               <>
                 <Button icon={Power} onClick={() => enable.mutate(true)} busy={enable.isPending}>
@@ -241,7 +242,7 @@ export function ApiOverviewPanel({
               </Field>
             ) : null}
             <div>
-              <Hint id="publish.publish">
+              <Tooltip help="publish.publish">
                 <Button
                   variant="primary"
                   icon={Rocket}
@@ -252,7 +253,7 @@ export function ApiOverviewPanel({
                 >
                   {needsReason ? t("publish.gate.publishWithReason", { version }) : t("publish.overview.publish", { version })}
                 </Button>
-              </Hint>
+              </Tooltip>
             </div>
           </>
         ) : null}
@@ -284,11 +285,11 @@ export function ApiOverviewPanel({
                 ) : null}
                 {release.note ? <span className="small">{release.note}</span> : null}
                 {!release.active ? (
-                  <Hint id="publish.rollback">
+                  <Tooltip help="publish.rollback">
                     <Button size="sm" variant="ghost" icon={RotateCcw} onClick={() => activateRelease.mutate(release.number)}>
                       {t("publish.versions.activate")}
                     </Button>
-                  </Hint>
+                  </Tooltip>
                 ) : null}
               </li>
             ))}

@@ -1,6 +1,6 @@
 // Settings panels for keeping an installation healthy: system diagnosis and backup/restore.
 
-import { HelpTip } from "@nodestro/ui-core";
+import { HelpTip, Tooltip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Activity, Archive, CheckCircle2, Download, Plug, RefreshCw, Save, Upload, XCircle, AlertTriangle } from "lucide-react";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
@@ -11,7 +11,7 @@ import { api } from "../api/client";
 import type { BackupContents, BackupInfo, DiagnosticCheck, DiagnosticStatus } from "../api/types";
 import { dockerReasonKey } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, Hint, Modal, Section, Spinner, TextInput } from "../components/ui";
+import { Badge, Button, Callout, Field, Modal, Section, Spinner, TextInput } from "../components/ui";
 import { codeSuffix } from "../lib/codes";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatDate, formatNumber } from "../lib/format";
@@ -87,11 +87,11 @@ export function DiagnosticsPanel() {
         >
           {data ? t("diagnostics.again") : t("diagnostics.run")}
         </Button>
-        <Hint id="settings.connection">
+        <Tooltip help="settings.connection">
           <Button icon={Plug} busy={connection.isPending} onClick={() => connection.mutate()}>
             {t("diagnostics.connection")}
           </Button>
-        </Hint>
+        </Tooltip>
         {overall ? (
           <Badge tone={STATUS_TONE[overall]}>{t(`diagnostics.overall.${overall}`)}</Badge>
         ) : null}
@@ -229,11 +229,11 @@ export function BackupPanel() {
           <Download size={15} aria-hidden /> {t("backup.download")}
         </a>
         <input ref={fileInput} type="file" accept=".zip,application/zip" hidden data-testid="backup-file" onChange={onFile} />
-        <Hint id="settings.restore">
+        <Tooltip help="settings.restore">
           <Button icon={Upload} busy={inspect.isPending} onClick={() => fileInput.current?.click()}>
             {t("backup.restoreFromFile")}
           </Button>
-        </Hint>
+        </Tooltip>
       </div>
       {local.data?.length ? (
         <Section title={t("backup.local", { count: local.data.length })}>

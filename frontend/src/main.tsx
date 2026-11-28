@@ -7,7 +7,6 @@ import "@nodestro/ui-core/styles.css";
 import "@nodestro/ui-ai/styles.css";
 import "./styles/midnight-citron.css";
 import "./styles/app.css";
-import "./styles/tooltip.css";
 import "./styles/settings.css";
 import "./styles/onboarding.css";
 import "./styles/admin.css";
