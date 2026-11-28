@@ -67,7 +67,8 @@
     "test": "Führt nur diesen Agenten mit einer Testeingabe aus und zeigt Antwort, Tools, Tokens und Kosten. Kostet API-Guthaben, ist aber kein Workflow-Lauf.",
     "preview": "Zeigt, was der Agent beim nächsten Lauf bekommt: System-Prompt, Aufgabe mit eingesetzten Eingaben und weiteren Kontext. Ohne API-Aufruf.",
     "paletteDesign": "Beschreibe in eigenen Worten, was ein Agent tun soll. Der Agenten-Architekt schlägt eine vollständige Konfiguration vor; das kostet eine Anfrage an das Assistenzmodell.",
-    "outputFieldSource": "Kennzahl: Der Wert wird nur übernommen, wenn ein Tool ihn in diesem oder einem früheren Schritt berechnet hat (zum Beispiel der Rechner oder table_totals). Sonst bekommt der Agent eine Korrektur; danach stoppt der Schritt, damit keine Entscheidung auf einer geschätzten Zahl beruht."
+    "outputFieldSource": "Kennzahl: Der Wert wird nur übernommen, wenn ein Tool ihn in diesem oder einem früheren Schritt berechnet hat (zum Beispiel der Rechner oder table_totals). Sonst bekommt der Agent eine Korrektur; danach stoppt der Schritt, damit keine Entscheidung auf einer geschätzten Zahl beruht.",
+    "workflowTools": "Ein Agent kann einen gespeicherten Workflow in einer festen Version als Tool starten. Was der Workflow insgesamt darf, entscheidet, ob jeder Start auf eine Freigabe wartet. Standardmäßig aus: Eine Administration schaltet Workflow-Tools ein."
   },
   "tools": {
     "kind": "Eingebaut: mit Nodestro ausgeliefert. Eigenes Tool: selbst geschrieben. Von KI erstellt: vom Coding Agent geschrieben und von dir freigegeben.",
@@ -86,7 +87,8 @@
     "callApproval": "Eine Person entscheidet über jeden Aufruf dieses Tools, mit den genauen Argumenten. Ohne Entscheidung innerhalb der Frist gilt der Aufruf als abgelehnt.",
     "servicesLocal": "Ein lokaler MCP-Server läuft in einem isolierten Container. Seine Pakete werden geprüft und freigegeben wie die Bibliotheken eines Tools.",
     "servicesOAuth": "Manche Dienste verlangen eine Anmeldung. Nodestro öffnet ihre Anmeldeseite und bewahrt den Zugang verschlüsselt auf.",
-    "testSend": "Schickt eine feste Testnachricht: an die Testadresse einer Mailserver-Verbindung oder an die Adresse eines Webhooks. Du verschickst sie selbst; höchstens 5 pro Verbindung und Stunde, jede wird aufgezeichnet."
+    "testSend": "Schickt eine feste Testnachricht: an die Testadresse einer Mailserver-Verbindung oder an die Adresse eines Webhooks. Du verschickst sie selbst; höchstens 5 pro Verbindung und Stunde, jede wird aufgezeichnet.",
+    "workflowCall": "Der Agent will einen gespeicherten Workflow in seiner festen Version starten. Die Karte zeigt die Argumente und was der Workflow darf, Unterworkflows und verschachtelte Workflow-Tools eingeschlossen. Ohne Entscheidung innerhalb der Frist gilt der Start als abgelehnt."
   },
   "knowledge": {
     "upload": "PDFs, Bilder (PNG, JPEG, GIF, WebP) und Textformate. Bilder bis 5 MB, Dokumente bis 20 MB. Texte und PDFs werden für die Suche indexiert.",

@@ -61,6 +61,17 @@ Below it you switch on the **Server tools from Anthropic**: *Web search*, *Web f
 
 The agent decides by itself whether and when to call a tool, based on its name and description. How often it may do so is controlled by [Max. tool rounds and Parallel tools](/docs/agenten#limits); whether it must is controlled by [Tool choice](/docs/agenten#tool-choice).
 
+## Workflows as tools {#workflow-tools}
+<!-- keywords: workflow tool, workflow as tool, fixed version, nested workflow, approval, arguments, result files -->
+
+An agent can start a saved workflow as a tool. This is **off by default**: the section **Workflows as tools** in the agent's **Tools** offers it only when your administrator switched workflow tools on. While they are off, an agent that already has workflow tools shows them with a note and does not start until they are removed.
+
+- **Adding**: **Add workflow as tool** opens a dialog. Choose the workflow and one of its saved versions. Before you add it, the dialog shows the tool name the model sees, the arguments the model fills in (the fields of the workflow's start form; file fields are never offered, so a workflow that needs files at its start cannot be added) and what the workflow may do.
+- **Fixed version**: the agent always calls the version you chose. When a newer version is saved, the editor and the conversation only report it; nothing changes until you change the agent.
+- **What it may do**: the highest access (reads only, changes data, deletes) and reach (stays in Nodestro, reaches outside) of everything inside, at every depth: its agents and their models, tools, result files, sub-workflows, teams and nested workflow tools. Anything unknown counts as changing and external. Every call computes it again, and the higher value counts.
+- **Approval**: a workflow that may change something waits for your approval before every start. The card names the workflow and its fixed version and shows the arguments and what it may do; the decision holds for this start only. Approval steps and tool calls inside the workflow appear as cards in the answer as well.
+- **Result**: the workflow's output goes back to the agent; its result files are attachments of the answer and download from the workflow's run.
+
 ## Assigning knowledge {#wissen}
 <!-- keywords: assign knowledge, files, pdf, context, on demand, search, citations -->
 

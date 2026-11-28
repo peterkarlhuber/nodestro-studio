@@ -1391,5 +1391,12 @@
     "version_newer": "El archivo procede de una versión más reciente de Nodestro (versión {{version}}; esta lee hasta la versión {{supported}}). Actualiza Nodestro primero.",
     "zip_bomb": "{{name}} en el archivo se descomprimiría a mucho más que su tamaño, así que el archivo no se usa.",
     "zip_invalid": "El archivo no es un ZIP legible."
+  },
+  "workflow_tool": {
+    "approval_required": "Este flujo de trabajo puede modificar algo y su inicio no se puede confirmar aquí porque las aprobaciones de herramientas están desactivadas.",
+    "disabled": "Las herramientas de flujo están desactivadas aquí, así que {{node}} no puede iniciarse. Quita sus herramientas de flujo o consulta a tu administración.",
+    "missing": "El flujo de trabajo de la herramienta {{name}} (o su versión fija) ya no existe.",
+    "name_taken": "La herramienta de flujo {{name}} tiene el nombre de otra herramienta del agente. Elige otro nombre.",
+    "not_waiting": "El agente que inició este flujo de trabajo ya no lo espera (estado: {{status}}), así que la decisión no se tomó."
   }
 }

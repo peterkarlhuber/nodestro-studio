@@ -67,7 +67,8 @@
     "test": "Executa apenas este agente com uma entrada de teste e mostra resposta, ferramentas, tokens e custo. Consome crédito da API, mas não é uma execução do fluxo de trabalho.",
     "preview": "Mostra o que o agente recebe na próxima execução: prompt do sistema, tarefa com as entradas inseridas e o restante do contexto. Sem chamada à API.",
     "paletteDesign": "Descreva com suas palavras o que um agente deve fazer. O Arquiteto de agentes propõe uma configuração completa; isso custa uma solicitação ao modelo do assistente.",
-    "outputFieldSource": "Indicador-chave: o valor só é aceito se uma ferramenta o calculou nesta etapa ou em uma anterior (por exemplo a calculadora ou table_totals). Caso contrário, o agente recebe uma correção; depois a etapa para, para que nenhuma decisão se baseie em um número estimado."
+    "outputFieldSource": "Indicador-chave: o valor só é aceito se uma ferramenta o calculou nesta etapa ou em uma anterior (por exemplo a calculadora ou table_totals). Caso contrário, o agente recebe uma correção; depois a etapa para, para que nenhuma decisão se baseie em um número estimado.",
+    "workflowTools": "Um agente pode iniciar um fluxo de trabalho salvo em uma versão fixa como ferramenta. O que o fluxo de trabalho pode fazer como um todo decide se cada início espera uma aprovação. Desligado por padrão: uma administração liga as ferramentas de fluxo."
   },
   "tools": {
     "kind": "Integrada: vem com o Nodestro. Ferramenta própria: escrita por você. Criada por IA: escrita pelo agente de programação e aprovada por você.",
@@ -86,7 +87,8 @@
     "callApproval": "Uma pessoa decide sobre cada chamada desta ferramenta, com os argumentos exatos. Sem decisão dentro do prazo, a chamada conta como rejeitada.",
     "servicesLocal": "Um servidor MCP local roda em um contêiner isolado. Os pacotes dele são revisados e aprovados como as bibliotecas de uma ferramenta.",
     "servicesOAuth": "Alguns serviços exigem login. O Nodestro abre a página de login deles e guarda o acesso criptografado.",
-    "testSend": "Envia uma mensagem de teste fixa: para o endereço de teste de uma conexão de servidor de e-mail ou para o endereço de um webhook. Você mesmo envia; no máximo 5 por conexão e hora, e cada um é registrado."
+    "testSend": "Envia uma mensagem de teste fixa: para o endereço de teste de uma conexão de servidor de e-mail ou para o endereço de um webhook. Você mesmo envia; no máximo 5 por conexão e hora, e cada um é registrado.",
+    "workflowCall": "O agente quer iniciar um fluxo de trabalho salvo em sua versão fixa. O cartão mostra os argumentos e o que o fluxo de trabalho pode fazer, com subfluxos e ferramentas de fluxo aninhadas. Sem decisão dentro do prazo, o início conta como rejeitado."
   },
   "knowledge": {
     "upload": "PDFs, imagens (PNG, JPEG, GIF, WebP) e formatos de texto. Imagens de até 5 MB, documentos de até 20 MB. Textos e PDFs são indexados para a pesquisa.",

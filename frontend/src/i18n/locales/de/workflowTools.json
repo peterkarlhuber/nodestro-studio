@@ -1,0 +1,79 @@
+{
+  "fixedVersion": "Version {{version}} (fest)",
+  "newerVersion": "Neuer: Version {{version}}",
+  "noArguments": "Keine Argumente.",
+  "effect": {
+    "label": "Was der Workflow darf",
+    "title": "Was der Workflow darf, in jeder Tiefe",
+    "unknownEffect": "Noch nicht berechnet. Jeder Aufruf berechnet es vor dem Start neu.",
+    "memory": "Nutzt dauerhaftes Memory",
+    "approvals_one": "{{count}} Freigabeschritt",
+    "approvals_other": "{{count}} Freigabeschritte",
+    "scope": "Zählt alles darin: seine Agenten und Modelle, Tools, Ergebnisdateien, Unterworkflows, Teams und verschachtelte Workflow-Tools. Jeder Aufruf berechnet es neu, und der höhere Wert zählt.",
+    "raised": "Er darf jetzt mehr als beim Hinzufügen. Der Aufruf wird mit dem aktuellen Wert gefragt.",
+    "contains_one": "Enthält {{count}} weiteren Workflow",
+    "contains_other": "Enthält {{count}} weitere Workflows",
+    "nestedItem": "{{name}} (Version {{version}})",
+    "unknown": "Unbekannt, zählt als ändernd und nach außen wirkend: {{items}}"
+  },
+  "approval": {
+    "title": "Workflow „{{name}}“ starten",
+    "asTool": "als Tool {{tool}}",
+    "help": "Über Workflows als Tools",
+    "argumentsList": "Argumente nach Feld",
+    "everyStart": "Ein Workflow, der etwas ändern darf, wird vor jedem Start gefragt. Diese Entscheidung gilt nur für diesen Start und wird nicht gemerkt.",
+    "rejectHint": "Bei Ablehnung startet der Workflow nicht, und der Agent erfährt, dass er abgelehnt wurde. Ohne Entscheidung gilt der Start als abgelehnt.",
+    "startedToast": "Start erlaubt"
+  },
+  "call": {
+    "label": "Workflow {{name}}, Version {{version}}",
+    "openRun": "Lauf des Workflows öffnen",
+    "waiting": "Der Workflow wartet auf eine Entscheidung",
+    "stepWaiting": "Ein Freigabeschritt des Workflows wartet auf dich.",
+    "stepRejectHint": "Was eine Ablehnung bewirkt, legt der Freigabeschritt des Workflows fest.",
+    "toolWaiting": "Ein Tool-Aufruf des Workflows („{{tool}}“) wartet auf Freigabe.",
+    "openApprovals": "Freigaben öffnen",
+    "files": "Ergebnisdateien des Workflows",
+    "filesAttached_one": "{{count}} Ergebnisdatei, an die Antwort angehängt: {{names}}",
+    "filesAttached_other": "{{count}} Ergebnisdateien, an die Antwort angehängt: {{names}}",
+    "attachments": "Anhänge der Antwort"
+  },
+  "updates": {
+    "intro": "Für Workflow-Tools dieses Agenten gibt es eine neuere Version. Der Agent behält seine feste Version, bis ihn jemand ändert:",
+    "item": "{{name}} nutzt Version {{version}}, die neueste ist {{latest}}"
+  },
+  "section": {
+    "title": "Workflows als Tools",
+    "help": "Über Workflows als Tools",
+    "off": "Workflow-Tools sind hier ausgeschaltet. Dieser Agent startet nicht, solange er Workflow-Tools hat: Entferne sie oder bitte deine Administration, sie einzuschalten.",
+    "add": "Workflow als Tool hinzufügen",
+    "remove": "Workflow-Tool {{name}} entfernen",
+    "full": "Höchstens {{max}} Workflow-Tools pro Agent.",
+    "hint": "Der Agent kann einen gespeicherten Workflow in einer festen Version starten und erhält sein Ergebnis und seine Dateien."
+  },
+  "dialog": {
+    "title": "Workflow als Tool hinzufügen",
+    "description": "Der Agent ruft den Workflow in der Version auf, die du hier wählst. Eine neuere Version wird nur gemeldet und nie von selbst verwendet.",
+    "workflow": "Workflow",
+    "chooseWorkflow": "Workflow wählen",
+    "noVersions": "Dieser Workflow hat noch keine gespeicherte Version. Speichere ihn zuerst.",
+    "version": "Version",
+    "versionHint": "Fest: Der Agent ruft immer diese Version auf.",
+    "versionOption": "Version {{version}} · {{date}}",
+    "preview": "Vorschau des Tools",
+    "arguments": "Argumente, die das Modell ausfüllt",
+    "argName": "Name",
+    "argType": "Typ",
+    "argDescription": "Beschreibung",
+    "required": "Pflicht",
+    "blocked": "Dieser Workflow braucht beim Start Dateien ({{fields}}). Ein Modell kann keine Dateifelder ausfüllen, deshalb kann er nicht als Tool laufen.",
+    "asked": "Dieser Workflow darf etwas ändern: Jeder Start wartet im Gespräch oder im Lauf auf Freigabe.",
+    "name": "Tool-Name",
+    "nameHint": "Der Name, den das Modell sieht.",
+    "name_invalid": "Nur Buchstaben, Ziffern, _ und -, höchstens 64 Zeichen.",
+    "name_taken": "Der Agent hat schon ein Tool mit diesem Namen.",
+    "toolDescription": "Beschreibung für das Modell (optional)",
+    "toolDescriptionHint": "Wird an die eigene Beschreibung des Workflows angehängt.",
+    "add": "Hinzufügen"
+  }
+}

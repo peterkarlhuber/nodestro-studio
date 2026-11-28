@@ -67,7 +67,8 @@
     "test": "Exécute uniquement cet agent avec une entrée de test et affiche la réponse, les outils, les tokens et le coût. Consomme du crédit API, mais n’est pas une exécution du workflow.",
     "preview": "Montre ce que l’agent reçoit à la prochaine exécution : prompt système, tâche avec les entrées insérées et le reste du contexte. Sans appel à l’API.",
     "paletteDesign": "Décrivez avec vos mots ce qu’un agent doit faire. L’Architecte d’agents propose une configuration complète ; cela coûte une requête au modèle de l’assistant.",
-    "outputFieldSource": "Indicateur clé : la valeur n’est acceptée que si un outil l’a calculée dans cette étape ou une étape précédente (par exemple la calculatrice ou table_totals). Sinon, l’agent reçoit une correction ; ensuite l’étape s’arrête, afin qu’aucune décision ne repose sur un chiffre estimé."
+    "outputFieldSource": "Indicateur clé : la valeur n’est acceptée que si un outil l’a calculée dans cette étape ou une étape précédente (par exemple la calculatrice ou table_totals). Sinon, l’agent reçoit une correction ; ensuite l’étape s’arrête, afin qu’aucune décision ne repose sur un chiffre estimé.",
+    "workflowTools": "Un agent peut démarrer un workflow enregistré dans une version fixe comme outil. Ce que le workflow peut faire dans son ensemble décide si chaque démarrage attend une validation. Désactivé par défaut : une administration active les outils workflow."
   },
   "tools": {
     "kind": "Intégré : livré avec Nodestro. Outil personnel : écrit par vous. Créé par l’IA : écrit par le Coding Agent et validé par vous.",
@@ -86,7 +87,8 @@
     "callApproval": "Une personne décide de chaque appel de cet outil, avec les arguments exacts. Sans décision dans le délai, l’appel compte comme refusé.",
     "servicesLocal": "Un serveur MCP local s’exécute dans un conteneur isolé. Ses paquets sont vérifiés et approuvés comme les bibliothèques d’un outil.",
     "servicesOAuth": "Certains services exigent une connexion. Nodestro ouvre leur page de connexion et conserve l’accès chiffré.",
-    "testSend": "Envoie un message de test fixe : à l’adresse de test d’une connexion de serveur de messagerie ou à l’adresse d’un webhook. Vous l’envoyez vous-même ; au maximum 5 par connexion et par heure, chacun est enregistré."
+    "testSend": "Envoie un message de test fixe : à l’adresse de test d’une connexion de serveur de messagerie ou à l’adresse d’un webhook. Vous l’envoyez vous-même ; au maximum 5 par connexion et par heure, chacun est enregistré.",
+    "workflowCall": "L’agent veut démarrer un workflow enregistré dans sa version fixe. La carte montre les arguments et ce que le workflow peut faire, sous-workflows et outils workflow imbriqués compris. Sans décision dans le délai, le démarrage compte comme refusé."
   },
   "knowledge": {
     "upload": "PDF, images (PNG, JPEG, GIF, WebP) et formats texte. Images jusqu’à 5 Mo, documents jusqu’à 20 Mo. Les textes et les PDF sont indexés pour la recherche.",

@@ -1,0 +1,79 @@
+{
+  "fixedVersion": "Version {{version}} (fixe)",
+  "newerVersion": "Plus récente : version {{version}}",
+  "noArguments": "Aucun argument.",
+  "effect": {
+    "label": "Ce que le workflow peut faire",
+    "title": "Ce que le workflow peut faire, à toute profondeur",
+    "unknownEffect": "Pas encore calculé. Chaque appel le recalcule avant le démarrage.",
+    "memory": "Utilise une mémoire persistante",
+    "approvals_one": "{{count}} étape de validation",
+    "approvals_other": "{{count}} étapes de validation",
+    "scope": "Compte tout ce qu’il contient : ses agents et modèles, outils, fichiers de résultat, sous-workflows, équipes et outils workflow imbriqués. Chaque appel le recalcule, et la valeur la plus haute compte.",
+    "raised": "Il peut faire plus maintenant qu’au moment de l’ajout. L’appel est demandé avec la valeur actuelle.",
+    "contains_one": "Contient {{count}} autre workflow",
+    "contains_other": "Contient {{count}} autres workflows",
+    "nestedItem": "{{name}} (version {{version}})",
+    "unknown": "Inconnu, traité comme modifiant et externe : {{items}}"
+  },
+  "approval": {
+    "title": "Démarrer le workflow « {{name}} »",
+    "asTool": "comme outil {{tool}}",
+    "help": "À propos des workflows comme outils",
+    "argumentsList": "Arguments par champ",
+    "everyStart": "Un workflow qui peut modifier quelque chose est demandé avant chaque démarrage. Cette décision vaut pour ce démarrage seulement et n’est pas mémorisée.",
+    "rejectHint": "En cas de refus, le workflow ne démarre pas et l’agent apprend qu’il a été refusé. Sans décision, le démarrage compte comme refusé.",
+    "startedToast": "Démarrage autorisé"
+  },
+  "call": {
+    "label": "Workflow {{name}}, version {{version}}",
+    "openRun": "Ouvrir l’exécution du workflow",
+    "waiting": "Le workflow attend une décision",
+    "stepWaiting": "Une étape de validation du workflow vous attend.",
+    "stepRejectHint": "L’effet d’un refus est défini par l’étape de validation du workflow.",
+    "toolWaiting": "Un appel d’outil du workflow (« {{tool}} ») attend une validation.",
+    "openApprovals": "Ouvrir les validations",
+    "files": "Fichiers de résultat du workflow",
+    "filesAttached_one": "{{count}} fichier de résultat, joint à la réponse : {{names}}",
+    "filesAttached_other": "{{count}} fichiers de résultat, joints à la réponse : {{names}}",
+    "attachments": "Pièces jointes de la réponse"
+  },
+  "updates": {
+    "intro": "Une version plus récente existe pour des outils workflow de cet agent. L’agent garde sa version fixe jusqu’à ce que quelqu’un le modifie :",
+    "item": "{{name}} utilise la version {{version}}, la plus récente est {{latest}}"
+  },
+  "section": {
+    "title": "Workflows comme outils",
+    "help": "À propos des workflows comme outils",
+    "off": "Les outils workflow sont désactivés ici. Cet agent ne démarre pas tant qu’il a des outils workflow : retirez-les ou demandez à votre administration de les activer.",
+    "add": "Ajouter un workflow comme outil",
+    "remove": "Retirer l’outil workflow {{name}}",
+    "full": "Au plus {{max}} outils workflow par agent.",
+    "hint": "L’agent peut démarrer un workflow enregistré dans une version fixe et reçoit son résultat et ses fichiers."
+  },
+  "dialog": {
+    "title": "Ajouter un workflow comme outil",
+    "description": "L’agent appelle le workflow dans la version que vous choisissez ici. Une version plus récente est seulement signalée et jamais utilisée d’elle-même.",
+    "workflow": "Workflow",
+    "chooseWorkflow": "Choisissez un workflow",
+    "noVersions": "Ce workflow n’a pas encore de version enregistrée. Enregistrez-le d’abord.",
+    "version": "Version",
+    "versionHint": "Fixe : l’agent appelle toujours cette version.",
+    "versionOption": "Version {{version}} · {{date}}",
+    "preview": "Aperçu de l’outil",
+    "arguments": "Arguments que le modèle remplit",
+    "argName": "Nom",
+    "argType": "Genre",
+    "argDescription": "Explication",
+    "required": "obligatoire",
+    "blocked": "Ce workflow a besoin de fichiers au démarrage ({{fields}}). Un modèle ne peut pas remplir de champs de fichier, il ne peut donc pas fonctionner comme outil.",
+    "asked": "Ce workflow peut modifier quelque chose : chaque démarrage attend une validation dans la conversation ou l’exécution.",
+    "name": "Nom de l’outil",
+    "nameHint": "Le nom que voit le modèle.",
+    "name_invalid": "Uniquement des lettres, des chiffres, _ et -, au plus 64 caractères.",
+    "name_taken": "L’agent a déjà un outil de ce nom.",
+    "toolDescription": "Explication pour le modèle (facultatif)",
+    "toolDescriptionHint": "Ajoutée à la propre explication du workflow.",
+    "add": "Ajouter"
+  }
+}

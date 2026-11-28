@@ -1,0 +1,79 @@
+{
+  "fixedVersion": "Version {{version}} (fixed)",
+  "newerVersion": "Newer: version {{version}}",
+  "noArguments": "No arguments.",
+  "effect": {
+    "label": "What the workflow may do",
+    "title": "What the workflow may do, at every depth",
+    "unknownEffect": "Not computed yet. Every call computes it again before the start.",
+    "memory": "Uses persistent memory",
+    "approvals_one": "{{count}} approval step",
+    "approvals_other": "{{count}} approval steps",
+    "scope": "Counts everything inside: its agents and models, tools, result files, sub-workflows, teams and nested workflow tools. Every call computes it again, and the higher value counts.",
+    "raised": "It may do more now than when it was added. The call is asked with the current value.",
+    "contains_one": "Contains {{count}} more workflow",
+    "contains_other": "Contains {{count}} more workflows",
+    "nestedItem": "{{name}} (version {{version}})",
+    "unknown": "Unknown, counted as changing and external: {{items}}"
+  },
+  "approval": {
+    "title": "Start workflow “{{name}}”",
+    "asTool": "as tool {{tool}}",
+    "help": "About workflows as tools",
+    "argumentsList": "Arguments by field",
+    "everyStart": "A workflow that may change something is asked before every start. This decision holds for this start only and is not remembered.",
+    "rejectHint": "When rejected, the workflow does not start and the agent learns that it was refused. Without a decision, the start counts as rejected.",
+    "startedToast": "Start allowed"
+  },
+  "call": {
+    "label": "Workflow {{name}}, version {{version}}",
+    "openRun": "Open the workflow's run",
+    "waiting": "The workflow waits for a decision",
+    "stepWaiting": "An approval step of the workflow waits for you.",
+    "stepRejectHint": "What rejecting does is set in the workflow's approval step.",
+    "toolWaiting": "A tool call of the workflow (“{{tool}}”) waits for approval.",
+    "openApprovals": "Open approvals",
+    "files": "Result files of the workflow",
+    "filesAttached_one": "{{count}} result file, attached to the answer: {{names}}",
+    "filesAttached_other": "{{count}} result files, attached to the answer: {{names}}",
+    "attachments": "Attachments of the answer"
+  },
+  "updates": {
+    "intro": "A newer version exists for workflow tools of this agent. The agent keeps its fixed version until someone changes it:",
+    "item": "{{name}} uses version {{version}}, the newest is {{latest}}"
+  },
+  "section": {
+    "title": "Workflows as tools",
+    "help": "About workflows as tools",
+    "off": "Workflow tools are switched off here. This agent does not start while it has workflow tools: remove them, or ask your administrator to switch them on.",
+    "add": "Add workflow as tool",
+    "remove": "Remove workflow tool {{name}}",
+    "full": "At most {{max}} workflow tools per agent.",
+    "hint": "The agent can start a saved workflow in a fixed version and receives its result and files."
+  },
+  "dialog": {
+    "title": "Add a workflow as a tool",
+    "description": "The agent calls the workflow in the version you choose here. A newer version is only reported and never used by itself.",
+    "workflow": "Workflow",
+    "chooseWorkflow": "Choose a workflow",
+    "noVersions": "This workflow has no saved version yet. Save it first.",
+    "version": "Version",
+    "versionHint": "Fixed: the agent always calls this version.",
+    "versionOption": "Version {{version}} · {{date}}",
+    "preview": "Preview of the tool",
+    "arguments": "Arguments the model fills in",
+    "argName": "Name",
+    "argType": "Type",
+    "argDescription": "Description",
+    "required": "required",
+    "blocked": "This workflow needs files at its start ({{fields}}). A model cannot fill in file fields, so it cannot run as a tool.",
+    "asked": "This workflow may change something: every start waits for approval in the conversation or the run.",
+    "name": "Tool name",
+    "nameHint": "The name the model sees.",
+    "name_invalid": "Use only letters, digits, _ and -, at most 64 characters.",
+    "name_taken": "The agent already has a tool with this name.",
+    "toolDescription": "Description for the model (optional)",
+    "toolDescriptionHint": "Added to the workflow's own description.",
+    "add": "Add"
+  }
+}

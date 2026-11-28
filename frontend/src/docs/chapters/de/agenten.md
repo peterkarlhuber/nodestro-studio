@@ -61,6 +61,17 @@ Darunter schaltest du die **Server-Tools von Anthropic** ein: *Websuche*, *Web-A
 
 Der Agent entscheidet selbst, ob und wann er ein Tool aufruft, anhand des Namens und der Beschreibung. Wie oft er das darf, steuern [Max. Tool-Runden und Parallele Tools](/docs/agenten#limits); ob er muss, steuert [Tool-Choice](/docs/agenten#tool-choice).
 
+## Workflows als Tools {#workflow-tools}
+<!-- keywords: Workflow-Tool, Workflow als Tool, feste Version, verschachtelter Workflow, Freigabe, Argumente, Ergebnisdateien -->
+
+Ein Agent kann einen gespeicherten Workflow als Tool starten. Das ist **standardmäßig aus**: Der Bereich **Workflows als Tools** in den **Tools** des Agenten bietet es nur an, wenn deine Administration Workflow-Tools eingeschaltet hat. Solange sie aus sind, zeigt ein Agent, der schon Workflow-Tools hat, sie mit einem Hinweis und startet nicht, bis sie entfernt sind.
+
+- **Hinzufügen**: **Workflow als Tool hinzufügen** öffnet einen Dialog. Wähle den Workflow und eine seiner gespeicherten Versionen. Vor dem Hinzufügen zeigt der Dialog den Tool-Namen, den das Modell sieht, die Argumente, die das Modell ausfüllt (die Felder des Startformulars; Dateifelder werden nie angeboten, deshalb kann ein Workflow, der beim Start Dateien braucht, nicht hinzugefügt werden), und was der Workflow darf.
+- **Feste Version**: Der Agent ruft immer die gewählte Version auf. Wird eine neuere Version gespeichert, melden Editor und Gespräch sie nur; nichts ändert sich, bis du den Agenten änderst.
+- **Was er darf**: der höchste Zugriff (liest nur, ändert Daten, löscht) und die höchste Reichweite (bleibt in Nodestro, wirkt nach außen) von allem darin, in jeder Tiefe: seine Agenten und ihre Modelle, Tools, Ergebnisdateien, Unterworkflows, Teams und verschachtelte Workflow-Tools. Unbekanntes zählt als ändernd und nach außen wirkend. Jeder Aufruf berechnet es neu, und der höhere Wert zählt.
+- **Freigabe**: Ein Workflow, der etwas ändern darf, wartet vor jedem Start auf deine Freigabe. Die Karte nennt den Workflow und seine feste Version und zeigt die Argumente und was er darf; die Entscheidung gilt nur für diesen Start. Freigabeschritte und Tool-Aufrufe im Workflow erscheinen ebenfalls als Karten in der Antwort.
+- **Ergebnis**: Die Ausgabe des Workflows geht an den Agenten zurück; seine Ergebnisdateien sind Anhänge der Antwort und werden aus dem Lauf des Workflows heruntergeladen.
+
 ## Wissen zuweisen {#wissen}
 <!-- keywords: wissen zuweisen, dateien, pdf, kontext, bei bedarf, durchsuchen, zitate -->
 
