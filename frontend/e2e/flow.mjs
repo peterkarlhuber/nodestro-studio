@@ -168,7 +168,7 @@ try {
   await dialog.getByRole("button", { name: "Starten" }).click();
 
   // ---- 3. the run pauses at the approval ---------------------------------------------------
-  await page.locator(".approval-card").first().waitFor({ timeout: 20000 });
+  await page.getByTestId("step-approval").first().waitFor({ timeout: 20000 });
   check(true, "The run panel shows the waiting approval");
   check((await page.locator(".nav-item__badge").first().textContent())?.trim() === "1", "The navigation counts one open approval");
   await shot("flow-02-paused");
@@ -176,7 +176,7 @@ try {
   check(first.status === "paused", "The run is paused");
 
   await page.goto(`${base}/approvals`);
-  const card = page.locator(".approval-card").first();
+  const card = page.getByTestId("step-approval").first();
   await card.getByText("Ton und Zusage prüfen.").waitFor();
   check(await card.getByText("Es tut uns leid", { exact: false }).isVisible(), "The reviewer sees the result to approve");
   check(

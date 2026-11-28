@@ -69,3 +69,23 @@ describe("the tooltip guard", () => {
     for (const [file, text] of Object.entries(styles)) expect(text, file).not.toMatch(/(^|[^-\w])\.tooltip\b/m);
   });
 });
+
+describe("the approval card guard", () => {
+  it.each([
+    ["a card of its own", "export function ApprovalCard() {\n  return null;\n}\n"],
+    ["remember options of its own", "export const RememberOptions = () => null;\n"],
+    ["the studio's former remember fields", "function RememberDecision() {\n  return null;\n}\nexport const a = RememberDecision;\n"],
+    ["the shared card from elsewhere", 'import { ApprovalCard } from "../runs/cards";\nexport const a = ApprovalCard;\n'],
+    ["a re-export of the shared card", 'import { ApprovalCard } from "@nodestro/ui-ai";\nexport { ApprovalCard };\n'],
+  ])("fails on %s", async (_name, code) => {
+    expect(await problems(code)).not.toEqual([]);
+  });
+
+  it("passes the shared card", async () => {
+    expect(
+      await problems(
+        'import { ApprovalCard } from "@nodestro/ui-ai";\nexport const a = <ApprovalCard title="x" onApprove={() => {}} onReject={() => {}} />;\n',
+      ),
+    ).toEqual([]);
+  });
+});

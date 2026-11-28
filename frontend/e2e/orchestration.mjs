@@ -114,7 +114,7 @@ try {
   check(waitingLimits.includes("2 von 8") && waitingLimits.includes("Wartet auf Freigabe: 1") && waitingLimits.includes("Erfolgreich: 1"), "The overview counts the decisions and the team runs by status while the run waits");
   await shot("orchestration-02-waiting");
 
-  const approval = page.locator(".approval-card").first();
+  const approval = page.getByTestId("step-approval").first();
   await approval.waitFor();
   check((await approval.textContent()).includes("Entwurf prüfen"), "The team's approval step is shown on the parent's run page");
   await approval.getByRole("button", { name: "Freigeben" }).click();
@@ -180,7 +180,7 @@ try {
   const second = await api(`/workflows/${lead.id}/runs`, "POST", { input: "Noch ein Text" });
   await settled(second.id, ["paused"]);
   await page.goto(`${base}/executions/${second.id}`);
-  const card = page.locator(".approval-card").first();
+  const card = page.getByTestId("step-approval").first();
   await card.waitFor();
   await card.getByRole("button", { name: "Ablehnen" }).click();
   const stopped = await settled(second.id, ["cancelled", "failed", "succeeded"]);

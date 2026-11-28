@@ -294,7 +294,7 @@ describe("the conversation area", () => {
     );
     show("/conversations/conv_1");
     const card = await screen.findByTestId("tool-approval");
-    expect(within(card).getByTestId("tool-approval-arguments")).toHaveTextContent("a@example.org");
+    expect(within(card).getByLabelText("Argumente, genau so, wie sie gesendet werden")).toHaveTextContent("a@example.org");
   });
 });
 

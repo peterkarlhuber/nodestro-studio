@@ -49,6 +49,13 @@ afterEach(() => {
 });
 
 describe("ApprovalForm", () => {
+  it("is the shared approval card of @nodestro/ui-ai, named after where it waits (ST-068)", () => {
+    render(wrap(<ApprovalForm approval={{ ...approval([DRAFT]), path: ["Team"], waiting_since: null }} showContext />));
+    const card = screen.getByRole("article", { name: /Freigabe · Team/ });
+    expect(card).toHaveClass("ui-approval", "ui-approval--step");
+    expect(card).toHaveAttribute("data-testid", "step-approval");
+  });
+
   it("shows each item to review as a section, opened when it is the only one", () => {
     const one = render(wrap(<ApprovalForm approval={approval([DRAFT])} />));
     expect(sections(one.container).map((item) => item.open)).toEqual([true]);
@@ -72,9 +79,11 @@ describe("ApprovalForm", () => {
     render(wrap(<ApprovalForm approval={{ ...approval([DRAFT]), allow_comment: true, require_comment_on_reject: true }} />));
     const reject = screen.getByRole("button", { name: "Ablehnen" });
     expect(reject).toHaveAttribute("aria-disabled", "true");
-    expect(screen.getByTestId("disabled-reason")).toHaveTextContent("Gib zuerst einen Grund für die Ablehnung an.");
+    // The reason sits next to the button and describes it.
+    expect(reject).toHaveAccessibleDescription("Gib zuerst einen Grund für die Ablehnung an.");
+    expect(screen.getByText("Gib zuerst einen Grund für die Ablehnung an.")).toBeVisible();
     fireEvent.change(screen.getByRole("textbox"), { target: { value: "Zahlen fehlen" } });
-    expect(screen.queryByTestId("disabled-reason")).toBeNull();
+    expect(screen.queryByText("Gib zuerst einen Grund für die Ablehnung an.")).toBeNull();
     expect(screen.getByRole("button", { name: "Ablehnen" })).not.toHaveAttribute("aria-disabled");
   });
 

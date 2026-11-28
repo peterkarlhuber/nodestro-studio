@@ -2,11 +2,10 @@
 // will be sent, the time left, an optional comment, and approve or reject. Nothing is approved automatically;
 // a question nobody answers in time counts as rejected, and a decision about a changed call is refused.
 
-import { RememberOptions } from "@nodestro/ui-ai";
-import { HelpTip, type Translate, UiTextProvider } from "@nodestro/ui-core";
+import { ApprovalCard, type ApprovalDecision, DEFAULT_REMEMBER, type RememberChoice } from "@nodestro/ui-ai";
+import { HelpTip } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Check, ShieldQuestion, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -14,10 +13,11 @@ import { useAccess } from "../api/access";
 import { ApiError, api } from "../api/client";
 import { keys, useAccessGrantsEnabled, useToolApprovals } from "../api/hooks";
 import type { AccessDeny, AccessGrant, Run, ToolApprovalRequest, ToolCallApproval } from "../api/types";
-import { Badge, Button, Callout, Field, Spinner, TextArea } from "../components/ui";
+import { Badge, Callout, Spinner } from "../components/ui";
 import { toast } from "../components/toast";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
+import { type StudioTextMap, StudioTexts } from "../lib/uiTexts";
 import { WorkflowToolApprovalForm, mayBeWorkflowTool, workflowToolOf } from "../workflowTools/WorkflowToolApproval";
 
 /** Seconds until ``deadline`` (negative once it passed), updated every second. */
@@ -28,12 +28,6 @@ export function useSecondsLeft(deadline: string): number {
     return () => window.clearInterval(timer);
   }, []);
   return Math.floor((new Date(deadline).getTime() - at) / 1000);
-}
-
-export function formatCountdown(seconds: number): string {
-  const safe = Math.max(0, seconds);
-  const minutes = Math.floor(safe / 60);
-  return `${minutes}:${String(safe % 60).padStart(2, "0")}`;
 }
 
 /**
@@ -51,18 +45,6 @@ export function ToolApprovalContext({ request }: { request: Pick<ToolApprovalReq
 
 /** Codes of a decision that came too late or about another call: the list is reloaded to show what is current. */
 const CONFLICTS = new Set(["tool.approval_stale", "tool.approval_expired", "tool.approval_decided"]);
-
-/** How long a decision on the card holds (access model v2, N-06): this call only, or as a grant or deny. */
-export type RememberFor = "call" | "until_revoked" | "until";
-/** For whom it holds: the agent that asked, or every agent. */
-export type RememberScope = "agent" | "all";
-
-export interface RememberChoice {
-  duration: RememberFor;
-  scope: RememberScope;
-  /** ``until``: the end, as a datetime-local value. */
-  until: string;
-}
 
 /**
  * Whether approving can be remembered as a grant (L-2): never for a tool that deletes for good (each such call needs a
@@ -96,10 +78,18 @@ export function rememberedRule(request: Pick<ToolApprovalRequest, "tool" | "node
 }
 
 /**
- * The keys of the package's remember options, answered with the studio's own texts (the wording stays as it was before
- * the card used the package).
+ * The package texts of the tool approval card and its remember options, in the studio's words (unchanged by the move
+ * onto the package card). Scope and duration show only while grants and denies are on and to someone who may write
+ * them (``admin``); what is stored stays the studio's decision.
  */
-export const REMEMBER_TEXTS = {
+export const TOOL_APPROVAL_TEXTS: StudioTextMap = {
+  "ai.approval.approve": "approvals.tool.approve",
+  "ai.approval.reject": "approvals.reject",
+  "ai.approval.comment": "approvals.comment",
+  "ai.approval.commentHint": "approvals.tool.commentHint",
+  "ai.approval.arguments": "approvals.tool.arguments",
+  "ai.approval.timeLeft": "approvals.tool.timeLeft",
+  "ai.approval.expired": "approvals.tool.expired",
   "ai.remember.title": "approvals.tool.remember.title",
   "ai.remember.duration": "approvals.tool.remember.duration",
   "ai.remember.durations.call": "approvals.tool.remember.durations.call",
@@ -110,47 +100,9 @@ export const REMEMBER_TEXTS = {
   "ai.remember.scopes.all": "approvals.tool.remember.scopes.all",
   "ai.remember.until": "approvals.tool.remember.until",
   "ai.remember.hint": "approvals.tool.remember.hint",
-} as const;
-type RememberText = keyof typeof REMEMBER_TEXTS;
-
-/**
- * Scope and duration of a decision, shown only while grants and denies are on and to someone who may write them
- * (``admin``); hidden otherwise, so the card stays as before. The fields are the shared package's (N-16,
- * @nodestro/ui-ai RememberOptions) with the studio's texts; what is stored stays the studio's decision.
- */
-function RememberDecision({
-  request,
-  workflowId,
-  choice,
-  onChange,
-}: {
-  request: ToolApprovalRequest;
-  workflowId: string | undefined;
-  choice: RememberChoice;
-  onChange: (choice: RememberChoice) => void;
-}) {
-  const { t, i18n } = useTranslation();
-  const agent = workflowId ? `${workflowId}/${request.node_id}` : request.node_id;
-  const translate = useCallback<Translate>(
-    (key, values) => {
-      if (!(key in REMEMBER_TEXTS)) return undefined;
-      const studioKey = REMEMBER_TEXTS[key as RememberText];
-      return t(studioKey, values);
-    },
-    [t],
-  );
-  return (
-    <UiTextProvider locale={i18n.language} translate={translate}>
-      <RememberOptions value={choice} onChange={onChange} agent={agent} data-testid="tool-approval-remember">
-        {choice.duration !== "call" && !grantable(request) ? (
-          <p className="small" data-testid="tool-approval-remember-reject-only">
-            {request.capability.access === "destructive" ? t("approvals.tool.remember.onlyRejectDestructive") : t("approvals.tool.remember.onlyRejectMcp")}
-          </p>
-        ) : null}
-      </RememberOptions>
-    </UiTextProvider>
-  );
-}
+  "ai.remember.rejectOnly.destructive": "approvals.tool.remember.onlyRejectDestructive",
+  "ai.remember.rejectOnly.mcp": "approvals.tool.remember.onlyRejectMcp",
+};
 
 /**
  * The card of one request: a workflow tool's start (N-20) gets the workflow's card (version, arguments, what it may
@@ -176,8 +128,7 @@ export function ToolApprovalForm({ request, showContext = false }: { request: To
 function StandardToolApprovalForm({ request, showContext = false }: { request: ToolApprovalRequest; showContext?: boolean }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
-  const [comment, setComment] = useState("");
-  const [choice, setChoice] = useState<RememberChoice>({ duration: "call", scope: "agent", until: "" });
+  const [choice, setChoice] = useState<RememberChoice>(DEFAULT_REMEMBER);
   // Scope and duration only while grants and denies are on (N-06) and for someone who may write them.
   const accessOn = useAccessGrantsEnabled();
   const admin = useAccess().can("admin");
@@ -190,13 +141,7 @@ function StandardToolApprovalForm({ request, showContext = false }: { request: T
     enabled: canRemember,
   });
   const workflowId = run.data?.workflow_id;
-  // A chosen grant or deny must be complete before deciding: a date for "until", the agent's workflow for "agent".
-  const incomplete =
-    canRemember &&
-    choice.duration !== "call" &&
-    ((choice.duration === "until" && !choice.until) || (choice.scope === "agent" && !workflowId));
   const secondsLeft = useSecondsLeft(request.deadline);
-  const expired = secondsLeft <= 0;
   const refresh = () => {
     void queryClient.invalidateQueries({ queryKey: keys.toolApprovals });
     void queryClient.invalidateQueries({ queryKey: keys.run(request.run_id) });
@@ -222,9 +167,9 @@ function StandardToolApprovalForm({ request, showContext = false }: { request: T
     },
   });
   const decide = useMutation({
-    mutationFn: (decision: "approved" | "rejected") =>
+    mutationFn: ({ decision, comment }: { decision: "approved" | "rejected"; comment: string }) =>
       api.decideToolApproval(request.run_id, request.id, decision, request.arguments_hash, comment),
-    onSuccess: (_answer, decision) => {
+    onSuccess: (_answer, { decision }) => {
       toast.success(decision === "approved" ? t("approvals.tool.approvedToast") : t("approvals.tool.rejectedToast"));
       const rule = canRemember && (decision === "rejected" || grantable(request)) ? rememberedRule(request, workflowId, choice) : null;
       if (rule) remember.mutate({ decision, rule });
@@ -235,13 +180,19 @@ function StandardToolApprovalForm({ request, showContext = false }: { request: T
     },
   });
   const { access, reach } = request.capability;
+  const pending = decide.isPending ? (decide.variables?.decision === "approved" ? "approve" : "reject") : null;
+  const send = (decision: "approved" | "rejected") => (made: ApprovalDecision) => decide.mutate({ decision, comment: made.comment });
   return (
-    <section className="approval-card" aria-label={t("approvals.tool.cardLabel", { name: request.tool })} data-testid="tool-approval">
-      <header className="approval-card__head">
-        <ShieldQuestion size={15} aria-hidden />
-        <div>
-          <strong>{t("approvals.tool.title", { name: request.tool })}</strong>
-          <div className="muted small">
+    <StudioTexts texts={TOOL_APPROVAL_TEXTS}>
+      {/* The shared card (@nodestro/ui-ai), like the step and workflow tool cards. A chosen grant or deny must be
+          complete before deciding: a date for "until" (the card checks it) and the agent's workflow for "agent". */}
+      <ApprovalCard
+        kind="tool"
+        data-testid="tool-approval"
+        title={t("approvals.tool.title", { name: request.tool })}
+        label={t("approvals.tool.cardLabel", { name: request.tool })}
+        context={
+          <>
             {showContext ? (
               <>
                 <Link to={`/executions/${request.run_id}`}>
@@ -251,60 +202,45 @@ function StandardToolApprovalForm({ request, showContext = false }: { request: T
               </>
             ) : null}
             {t("approvals.waitingSince", { time: formatDate(request.requested_at) })}
-          </div>
-        </div>
-        <HelpTip id="tools.callApproval" topic={t("approvals.tool.help")} />
-      </header>
-      <div className="row-gap">
-        <Badge tone={access === "destructive" ? "danger" : access === "write" ? "warning" : "idle"}>
-          {t(`approvals.tool.access.${access}`, { defaultValue: access })}
-        </Badge>
-        <Badge tone={reach === "external" ? "warning" : "idle"}>{t(`approvals.tool.reach.${reach}`, { defaultValue: reach })}</Badge>
-        {request.capability.source === "default" ? <Badge tone="idle">{t("approvals.tool.capabilityUnknown")}</Badge> : null}
-      </div>
-      <span className="nd-field-label">{t("approvals.tool.arguments")}</span>
-      <pre className="code-block" data-testid="tool-approval-arguments">
-        {JSON.stringify(request.input, null, 2)}
-      </pre>
-      <p className={`small ${expired ? "text-danger" : "muted"}`} data-testid="tool-approval-deadline">
-        {expired ? t("approvals.tool.expired") : t("approvals.tool.timeLeft", { time: formatCountdown(secondsLeft) })}
-      </p>
-      <Field label={t("approvals.comment")} hint={t("approvals.tool.commentHint")}>
-        <TextArea rows={2} value={comment} maxLength={4000} onChange={(e) => setComment(e.target.value)} />
-      </Field>
-      {canRemember ? <RememberDecision request={request} workflowId={workflowId} choice={choice} onChange={setChoice} /> : null}
-      <p className="muted small">{t("approvals.tool.rejectHint")}</p>
-      {decide.error ? (
-        <Callout tone="danger">
-          <ErrorText error={decide.error} />
-        </Callout>
-      ) : null}
-      {remember.error ? (
-        <Callout tone="danger">
-          <strong>{t("approvals.tool.remember.failed")}</strong> <ErrorText error={remember.error} />
-        </Callout>
-      ) : null}
-      <div className="row-gap">
-        <Button
-          variant="primary"
-          icon={Check}
-          busy={decide.isPending && decide.variables === "approved"}
-          disabled={decide.isPending || expired || (incomplete && grantable(request))}
-          onClick={() => decide.mutate("approved")}
-        >
-          {t("approvals.tool.approve")}
-        </Button>
-        <Button
-          variant="danger"
-          icon={X}
-          busy={decide.isPending && decide.variables === "rejected"}
-          disabled={decide.isPending || expired || incomplete}
-          onClick={() => decide.mutate("rejected")}
-        >
-          {t("approvals.reject")}
-        </Button>
-      </div>
-    </section>
+          </>
+        }
+        help={<HelpTip id="tools.callApproval" topic={t("approvals.tool.help")} />}
+        badges={
+          <>
+            <Badge tone={access === "destructive" ? "danger" : access === "write" ? "warning" : "idle"}>
+              {t(`approvals.tool.access.${access}`, { defaultValue: access })}
+            </Badge>
+            <Badge tone={reach === "external" ? "warning" : "idle"}>{t(`approvals.tool.reach.${reach}`, { defaultValue: reach })}</Badge>
+            {request.capability.source === "default" ? <Badge tone="idle">{t("approvals.tool.capabilityUnknown")}</Badge> : null}
+          </>
+        }
+        arguments={request.input}
+        secondsLeft={secondsLeft}
+        allowComment
+        rememberAgent={canRemember ? (workflowId ? `${workflowId}/${request.node_id}` : request.node_id) : null}
+        remember={choice}
+        onRememberChange={setChoice}
+        rememberIncomplete={choice.scope === "agent" && !workflowId}
+        rejectOnly={grantable(request) ? null : request.capability.access === "destructive" ? "destructive" : "mcp"}
+        rejectHint={t("approvals.tool.rejectHint")}
+        error={
+          decide.error || remember.error ? (
+            <>
+              {decide.error ? <ErrorText error={decide.error} /> : null}
+              {remember.error ? (
+                <>
+                  {decide.error ? " " : null}
+                  <strong>{t("approvals.tool.remember.failed")}</strong> <ErrorText error={remember.error} />
+                </>
+              ) : null}
+            </>
+          ) : null
+        }
+        pending={pending}
+        onApprove={send("approved")}
+        onReject={send("rejected")}
+      />
+    </StudioTexts>
   );
 }
 
